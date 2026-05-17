@@ -1,82 +1,119 @@
-// main.js
-const LEVELS_FILE = "levels.json";
-const PENDING_FILE = "pending.json";
+// =====================
+// LEVEL DATA (YOUR LIST)
+// =====================
+let levels = [
+  {
+    id: "10565740",
+    rank: 1,
+    name: "Bloodbath",
+    creator: "Riot",
+    diff: "Extreme Demon",
+    points: "23.99",
+    img: "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    video: "https://www.youtube.com/embed/vBBZvXb0HrA",
+    victorList: ["sadboi202"]
+  },
+  {
+    id: "3979721",
+    rank: 2,
+    name: "Cataclysm",
+    creator: "GGboy",
+    diff: "Extreme Demon",
+    points: "20.92",
+    img: "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv...",
+    video: "https://www.youtube.com/embed/8x0gpGutHUE",
+    victorList: ["sadboi202"]
+  },
+  {
+    id: "7054561",
+    rank: 3,
+    name: "Poltergeist",
+    creator: "AndromedaGMD",
+    diff: "Insane Demon",
+    points: "15.94",
+    img: "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv...",
+    video: "https://www.youtube.com/embed/N05ijX3vz9U",
+    victorList: ["sadboi202"]
+  },
+  {
+    id: "4284013",
+    rank: 4,
+    name: "Nine Circles",
+    creator: "Zobros",
+    diff: "Hard Demon",
+    points: "11.16",
+    img: "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlvL...",
+    video: "https://www.youtube.com/embed/DO36t7DV0ec",
+    victorList: ["sadboi202"]
+  },
+  {
+    id: "6939821",
+    rank: 5,
+    name: "Jawbreaker",
+    creator: "ZenthicAlpha",
+    diff: "Hard Demon",
+    points: "11.14",
+    img: "https://imgs.search.brave.com/...",
+    video: "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
+    victorList: ["daBlooKat121"]
+  },
+  {
+    id: "111205474",
+    rank: 6,
+    name: "Thermal Madness",
+    creator: "ManiacDan",
+    diff: "Hard Demon",
+    points: "8.01",
+    img: "https://imgs.search.brave.com/...",
+    video: "",
+    victorList: ["daBlooKat121"]
+  },
+  {
+    id: "7",
+    rank: 7,
+    name: "Solar Circles",
+    creator: "D4rkGryf",
+    diff: "Medium Demon",
+    points: "5.91",
+    img: "https://imgs.search.brave.com/...",
+    video: "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
+    victorList: ["daBlooKat121"]
+  }
+];
 
-// Local cache
-let levels = [];
-let pending = [];
-let isAdmin = false; // You can toggle this for admin view
-
-// DOM elements
+// =====================
+// DOM
+// =====================
 const listEl = document.getElementById("list");
-const queueEl = document.getElementById("queue");
 const searchEl = document.getElementById("search");
-const submissionTypeEl = document.getElementById("submissionType");
-const newLevelFields = document.getElementById("newLevelFields");
-const existingLevelWrap = document.getElementById("existingLevelWrap");
-const existingLevelEl = document.getElementById("existingLevel");
-const adminStatus = document.getElementById("adminStatus");
 
-// Escape HTML to prevent XSS
+// =====================
+// UTIL
+// =====================
 function escapeHTML(str) {
   return String(str ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+    .replace(/>/g, "&gt;");
 }
 
-// Create a quick SVG thumbnail if no image
-function makeThumb(title, accent = "#ff4b4b") {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
-    <rect width="640" height="360" fill="${accent}"/>
-    <text x="50%" y="50%" text-anchor="middle" font-size="40" fill="#fff">${escapeHTML(title)}</text>
-  </svg>`;
-  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+function makeThumb(title) {
+  return `data:image/svg+xml;charset=UTF-8,` + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
+      <rect width="640" height="360" fill="#1a1a2e"/>
+      <text x="50%" y="50%" text-anchor="middle" font-size="40" fill="white">
+        ${title}
+      </text>
+    </svg>
+  `);
 }
 
-// Load JSON from GitHub Pages
-async function loadJSON(url) {
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return [];
-    return await res.json();
-  } catch {
-    return [];
-  }
-}
-
-// Save JSON (needs GitHub Actions webhook or similar to work online)
-async function saveJSON(file, data) {
-  try {
-    await fetch(`/api/update-json`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ file, data })
-    });
-  } catch (err) {
-    console.error("Failed saving JSON:", err);
-  }
-}
-
-// Initialize site
-async function init() {
-  levels = await loadJSON(LEVELS_FILE);
-  pending = await loadJSON(PENDING_FILE);
-  renderAll();
-  populateLevelSelect();
-}
-
-// Render both list and queue
-function renderAll() {
-  renderList();
-  renderQueue();
-}
-
-// Render demon list
+// =====================
+// RENDER LIST
+// =====================
 function renderList(filter = "") {
   const q = filter.toLowerCase();
+
   const filtered = levels.filter(l =>
     l.name.toLowerCase().includes(q) ||
     l.creator.toLowerCase().includes(q) ||
@@ -91,110 +128,43 @@ function renderList(filter = "") {
   listEl.innerHTML = filtered.map(l => `
     <div class="row" onclick="openLevel('${l.id}')">
       <div class="rank">#${l.rank}</div>
-      <div class="thumb"><img src="${l.img || makeThumb(l.name)}" /></div>
+
+      <div class="thumb">
+        <img src="${l.img || makeThumb(l.name)}" />
+      </div>
+
       <div class="info">
         <div class="title">${escapeHTML(l.name)}</div>
         <div class="sub">by ${escapeHTML(l.creator)}</div>
-        <div class="points">${escapeHTML(l.points)} points • ${escapeHTML(l.diff)}</div>
+        <div class="points">${l.points} pts • ${l.diff}</div>
       </div>
     </div>
   `).join("");
 }
 
-// Render submission queue (admin only)
-function renderQueue() {
-  if (!isAdmin) {
-    queueEl.innerHTML = "<div class='empty'>Queue hidden. Admin only.</div>";
-    return;
-  }
-
-  if (!pending.length) {
-    queueEl.innerHTML = `<div class="empty">No submissions waiting.</div>`;
-    return;
-  }
-
-  queueEl.innerHTML = pending.map(item => `
-    <div class="queue-item">
-      <strong>${escapeHTML(item.type)} submission by ${escapeHTML(item.username)}</strong><br>
-      Level: ${escapeHTML(item.levelName || item.newLevel?.name || "N/A")}<br>
-      Record: ${escapeHTML(item.recordLink || "N/A")}<br>
-      Raw footage: ${escapeHTML(item.rawFootage || "N/A")}
-    </div>
-  `).join("");
-}
-
-// Populate existing level dropdown
-function populateLevelSelect() {
-  existingLevelEl.innerHTML = levels.map(l =>
-    `<option value="${l.id}">#${l.rank} - ${escapeHTML(l.name)}</option>`
-  ).join("");
-}
-
-// Submit new record or level
-async function submitForm() {
-  const type = submissionTypeEl.value;
-  const username = document.getElementById("username").value.trim();
-  const recordLink = document.getElementById("recordLink").value.trim();
-  const rawFootage = document.getElementById("rawFootage").value.trim();
-
-  if (!username || !recordLink || !rawFootage) {
-    alert("Fill username, record link, and raw footage.");
-    return;
-  }
-
-  const item = {
-    id: String(Date.now()) + Math.random().toString(16).slice(2),
-    type,
-    username,
-    recordLink,
-    rawFootage,
-    status: "pending"
-  };
-
-  if (type === "record") {
-    const levelId = existingLevelEl.value;
-    const level = levels.find(l => l.id === levelId);
-    if (!level) { alert("Pick a level."); return; }
-    item.levelRank = level.rank;
-    item.levelName = level.name;
-    item.levelId = level.id;
-  } else {
-    item.newLevel = {
-      name: document.getElementById("newName").value.trim(),
-      creator: document.getElementById("newCreator").value.trim(),
-      id: document.getElementById("newLevelId").value.trim(),
-      diff: document.getElementById("newDiff").value.trim(),
-      points: document.getElementById("newPoints").value.trim() || "0",
-      img: document.getElementById("newImg").value.trim() || "",
-      video: document.getElementById("newVideo").value.trim() || ""
-    };
-  }
-
-  pending.unshift(item);
-  renderQueue();
-  await saveJSON(PENDING_FILE, pending);
-
-  alert("Submission sent for review!");
-  document.querySelectorAll("#username, #recordLink, #rawFootage, #newName, #newCreator, #newLevelId, #newDiff, #newPoints, #newImg, #newVideo").forEach(i => i.value = "");
-}
-
-// Event listeners
-submissionTypeEl.addEventListener("change", () => {
-  const isNew = submissionTypeEl.value === "newLevel";
-  newLevelFields.style.display = isNew ? "block" : "none";
-  existingLevelWrap.style.display = isNew ? "none" : "block";
-});
-
-document.getElementById("submitBtn").addEventListener("click", submitForm);
-searchEl.addEventListener("input", e => renderList(e.target.value));
-
-// Level detail page
+// =====================
+// OPEN LEVEL
+// =====================
 function openLevel(id) {
   const level = levels.find(l => l.id === id);
-  if (!level) return alert("Level not found.");
-  localStorage.setItem("currentLevel", JSON.stringify(level));
-  window.location.href = "level.html";
+  if (!level) return;
+
+  alert(
+    `#${level.rank} ${level.name}\n` +
+    `Creator: ${level.creator}\n` +
+    `Difficulty: ${level.diff}\n` +
+    `Points: ${level.points}`
+  );
 }
 
-// Initialize everything
-init();
+// =====================
+// SEARCH
+// =====================
+searchEl.addEventListener("input", e => {
+  renderList(e.target.value);
+});
+
+// =====================
+// INIT
+// =====================
+renderList();
