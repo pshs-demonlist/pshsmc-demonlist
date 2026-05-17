@@ -149,12 +149,32 @@ function openLevel(id) {
   const level = levels.find(l => l.id === id);
   if (!level) return;
 
-  alert(
-    `#${level.rank} ${level.name}\n` +
-    `Creator: ${level.creator}\n` +
-    `Difficulty: ${level.diff}\n` +
-    `Points: ${level.points}`
-  );
+  const video = level.video
+    ? `<iframe width="100%" height="315" src="${level.video}" frameborder="0" allowfullscreen></iframe>`
+    : "No video";
+
+  const victorList = level.victorList?.length
+    ? level.victorList.join(", ")
+    : "None";
+
+  document.body.innerHTML = `
+    <div style="padding:20px;font-family:Arial;background:#0b0d12;color:white;">
+      <button onclick="location.reload()" style="margin-bottom:20px;padding:10px;">
+        ← Back
+      </button>
+
+      <h1>#${level.rank} ${level.name}</h1>
+      <p><b>Creator:</b> ${level.creator}</p>
+      <p><b>Difficulty:</b> ${level.diff}</p>
+      <p><b>Points:</b> ${level.points}</p>
+
+      <h3>Victors</h3>
+      <p>${victorList}</p>
+
+      <h3>Preview</h3>
+      ${video}
+    </div>
+  `;
 }
 
 // =====================
