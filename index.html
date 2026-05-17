@@ -4,135 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSHS-MC Demonlist</title>
+
 <style>
 :root{
   --bg:#0b0d12; --panel:#111522; --line:#1e2438; --text:#e9eefc;
-  --muted:#9aa3b2; --accent:#ff4b4b; --good:#36d399; --warn:#fbbf24;
+  --muted:#9aa3b2; --accent:#ff4b4b;
 }
-*{ box-sizing:border-box; }
+
+*{box-sizing:border-box}
+
 body{
-  margin:0; font-family:Arial, Helvetica, sans-serif; background:var(--bg); color:var(--text);
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
+
 header{
-  background:var(--panel); border-bottom:1px solid var(--line);
-  padding:16px 18px; font-size:20px; font-weight:700;
-  position:sticky; top:0; z-index:10;
+  background:var(--panel);
+  padding:16px;
+  font-size:20px;
+  font-weight:700;
+  border-bottom:1px solid var(--line);
 }
-.wrap{ max-width:1100px; margin:20px auto; padding:0 16px 32px; }
-.section{ background:#0f1320; border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:16px; }
-.section h3{ margin:0 0 12px; font-size:16px; }
-.topbar{ display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 0; }
-.btn{ border:none; border-radius:8px; padding:10px 14px; background:#1b2238; color:var(--text); cursor:pointer; font-weight:700; }
-.btn:hover{ filter:brightness(1.08); }
-.btn-primary{ background:#2d3a63; }
-.badge{ display:inline-block; margin-top:8px; padding:4px 8px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:#dce4f5; background:#0b0f1a; }
-.muted{ color:var(--muted); font-size:13px; }
-#search, .input, .select{
-  width:100%; padding:12px 14px; border-radius:8px; border:1px solid var(--line);
-  background:#0b0f1a; color:var(--text); outline:none; font-size:14px;
+
+.wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
 }
-#search::placeholder, .input::placeholder{ color:var(--muted); }
-.grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-.list{ border:1px solid var(--line); border-radius:10px; overflow:hidden; }
-.row{ display:flex; gap:14px; padding:14px; border-bottom:1px solid var(--line); background:#0f1320; cursor:pointer; transition:.15s; }
-.row:hover{ background:#171c2d; }
-.rank{ width:60px; color:var(--accent); font-weight:700; font-size:18px; flex-shrink:0; }
-.thumb{ width:160px; height:90px; background:#222; border-radius:6px; overflow:hidden; flex-shrink:0; }
-.thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-.info{ flex:1; min-width:0; }
-.title{ font-size:18px; font-weight:700; }
-.sub{ font-size:13px; color:var(--muted); margin-top:4px; word-break:break-word; }
-.points{ font-size:13px; color:#cfd6e6; margin-top:6px; }
-@media (max-width:700px){
-  .row{ flex-direction:column; }
-  .thumb{ width:100%; height:auto; aspect-ratio:16/9; }
-  .grid{ grid-template-columns:1fr; }
+
+.section{
+  background:#0f1320;
+  border:1px solid var(--line);
+  padding:14px;
+  border-radius:10px;
+  margin-bottom:16px;
 }
+
+#search{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background:#0b0f1a;
+  color:white;
+}
+
+.list{
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.row{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+}
+
+.row:hover{background:#171c2d}
+
+.rank{width:50px;color:var(--accent);font-weight:700}
+
+.thumb img{
+  width:140px;height:80px;object-fit:cover;border-radius:6px;
+}
+
+.info{flex:1}
+
+.title{font-weight:700;font-size:18px}
+
+.sub{color:var(--muted);font-size:13px}
+
 </style>
 </head>
+
 <body>
+
 <header>PSHS-MC Demonlist</header>
+
 <div class="wrap">
 
-  <!-- Search -->
   <div class="section">
-    <h3>Search</h3>
-    <input id="search" type="text" placeholder="Search demons, creators, difficulty..." />
+    <input id="search" placeholder="Search demons..." />
   </div>
 
-  <!-- Levels List -->
   <div class="section">
     <h3>Levels</h3>
-    <div class="list" id="list">
-      <div class="empty">Loading demons...</div>
-    </div>
+    <div class="list" id="list"></div>
   </div>
 
-  <!-- Submission Section -->
-  <div class="section">
-    <h3>Submit a record or propose a new level</h3>
-    <div class="grid">
-      <div>
-        <label class="muted">Submission type</label>
-        <select id="submissionType" class="select">
-          <option value="record">Record submission</option>
-          <option value="newLevel">New level proposal</option>
-        </select>
-      </div>
-      <div id="existingLevelWrap">
-        <label class="muted">Choose level</label>
-        <select id="existingLevel" class="select"></select>
-      </div>
-    </div>
-
-    <div class="grid" style="margin-top:12px;">
-      <div>
-        <label class="muted">Username</label>
-        <input id="username" class="input" type="text" placeholder="Your username" />
-      </div>
-      <div>
-        <label class="muted">Record link (YouTube)</label>
-        <input id="recordLink" class="input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
-      </div>
-    </div>
-
-    <div class="grid" style="margin-top:12px;">
-      <div>
-        <label class="muted">Raw footage link</label>
-        <input id="rawFootage" class="input" type="text" placeholder="Google Drive / YouTube / other link" />
-      </div>
-      <div>
-        <label class="muted">Notes (optional)</label>
-        <input id="notes" class="input" type="text" placeholder="Any extra notes" />
-      </div>
-    </div>
-
-    <!-- New level fields -->
-    <div id="newLevelFields" style="display:none; margin-top:12px;">
-      <h3>New level details</h3>
-      <div class="grid">
-        <div><label class="muted">Level name</label><input id="newName" class="input" type="text" /></div>
-        <div><label class="muted">Creator</label><input id="newCreator" class="input" type="text" /></div>
-      </div>
-      <div class="grid" style="margin-top:12px;">
-        <div><label class="muted">Level ID</label><input id="newLevelId" class="input" type="text" /></div>
-        <div><label class="muted">Difficulty</label><input id="newDiff" class="input" type="text" /></div>
-      </div>
-      <div class="grid" style="margin-top:12px;">
-        <div><label class="muted">Points</label><input id="newPoints" class="input" type="text" /></div>
-        <div><label class="muted">Thumbnail URL</label><input id="newImg" class="input" type="text" /></div>
-      </div>
-      <div style="margin-top:12px;">
-        <label class="muted">Video URL</label><input id="newVideo" class="input" type="text" />
-      </div>
-    </div>
-
-    <div class="topbar" style="margin-top:12px;">
-      <button class="btn btn-primary" id="submitBtn">Send for review</button>
-    </div>
-  </div>
 </div>
 
 <script src="main.js"></script>
+
 </body>
 </html>
