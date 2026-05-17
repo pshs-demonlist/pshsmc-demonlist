@@ -5,7 +5,7 @@ const PENDING_FILE = "pending.json";
 // Local cache
 let levels = [];
 let pending = [];
-let isAdmin = false;
+let isAdmin = false; // You can toggle this for admin view
 
 // DOM elements
 const listEl = document.getElementById("list");
@@ -17,7 +17,7 @@ const existingLevelWrap = document.getElementById("existingLevelWrap");
 const existingLevelEl = document.getElementById("existingLevel");
 const adminStatus = document.getElementById("adminStatus");
 
-// Utility
+// Escape HTML to prevent XSS
 function escapeHTML(str) {
   return String(str ?? "")
     .replace(/&/g, "&amp;")
@@ -27,6 +27,7 @@ function escapeHTML(str) {
     .replace(/'/g, "&#39;");
 }
 
+// Create a quick SVG thumbnail if no image
 function makeThumb(title, accent = "#ff4b4b") {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
     <rect width="640" height="360" fill="${accent}"/>
@@ -35,7 +36,7 @@ function makeThumb(title, accent = "#ff4b4b") {
   return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
 
-// Load JSON files from GitHub Pages
+// Load JSON from GitHub Pages
 async function loadJSON(url) {
   try {
     const res = await fetch(url);
@@ -46,7 +47,7 @@ async function loadJSON(url) {
   }
 }
 
-// Save JSON to GitHub (requires Actions webhook)
+// Save JSON (needs GitHub Actions webhook or similar to work online)
 async function saveJSON(file, data) {
   try {
     await fetch(`/api/update-json`, {
@@ -59,7 +60,7 @@ async function saveJSON(file, data) {
   }
 }
 
-// Initialize
+// Initialize site
 async function init() {
   levels = await loadJSON(LEVELS_FILE);
   pending = await loadJSON(PENDING_FILE);
@@ -67,7 +68,13 @@ async function init() {
   populateLevelSelect();
 }
 
-// Render list
+// Render both list and queue
+function renderAll() {
+  renderList();
+  renderQueue();
+}
+
+// Render demon list
 function renderList(filter = "") {
   const q = filter.toLowerCase();
   const filtered = levels.filter(l =>
@@ -82,7 +89,7 @@ function renderList(filter = "") {
   }
 
   listEl.innerHTML = filtered.map(l => `
-    <div class="row" onclick="openLevel(${l.id})">
+    <div class="row" onclick="openLevel('${l.id}')">
       <div class="rank">#${l.rank}</div>
       <div class="thumb"><img src="${l.img || makeThumb(l.name)}" /></div>
       <div class="info">
@@ -94,8 +101,13 @@ function renderList(filter = "") {
   `).join("");
 }
 
-// Render queue
+// Render submission queue (admin only)
 function renderQueue() {
+  if (!isAdmin) {
+    queueEl.innerHTML = "<div class='empty'>Queue hidden. Admin only.</div>";
+    return;
+  }
+
   if (!pending.length) {
     queueEl.innerHTML = `<div class="empty">No submissions waiting.</div>`;
     return;
@@ -105,19 +117,20 @@ function renderQueue() {
     <div class="queue-item">
       <strong>${escapeHTML(item.type)} submission by ${escapeHTML(item.username)}</strong><br>
       Level: ${escapeHTML(item.levelName || item.newLevel?.name || "N/A")}<br>
-      Record: ${escapeHTML(item.recordLink || "N/A")}
+      Record: ${escapeHTML(item.recordLink || "N/A")}<br>
+      Raw footage: ${escapeHTML(item.rawFootage || "N/A")}
     </div>
   `).join("");
 }
 
-// Populate existing level select
+// Populate existing level dropdown
 function populateLevelSelect() {
   existingLevelEl.innerHTML = levels.map(l =>
     `<option value="${l.id}">#${l.rank} - ${escapeHTML(l.name)}</option>`
   ).join("");
 }
 
-// Submit form
+// Submit new record or level
 async function submitForm() {
   const type = submissionTypeEl.value;
   const username = document.getElementById("username").value.trim();
@@ -174,6 +187,14 @@ submissionTypeEl.addEventListener("change", () => {
 
 document.getElementById("submitBtn").addEventListener("click", submitForm);
 searchEl.addEventListener("input", e => renderList(e.target.value));
+
+// Level detail page
+function openLevel(id) {
+  const level = levels.find(l => l.id === id);
+  if (!level) return alert("Level not found.");
+  localStorage.setItem("currentLevel", JSON.stringify(level));
+  window.location.href = "level.html";
+}
 
 // Initialize everything
 init();
