@@ -9,7 +9,7 @@ let levels = [
     creator: "Riot",
     diff: "Extreme Demon",
     points: "23.99",
-    img: "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    img: "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanJn",
     video: "https://www.youtube.com/embed/vBBZvXb0HrA",
     victorList: ["sadboi202"]
   },
@@ -75,7 +75,7 @@ let levels = [
     creator: "D4rkGryf",
     diff: "Medium Demon",
     points: "5.91",
-    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2ItNGFmOC1hZmIzLTZjNjhjYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
+    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2BeYWY4LWFmYjMtNmM2OGNiODgxNTVkLnBuZyIsIndpZHRoIj6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
     video: "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
     victorList: ["daBlooKat121"]
   }
@@ -101,7 +101,7 @@ function makeThumb(title) {
   return `data:image/svg+xml;charset=UTF-8,` + encodeURIComponent(`
     <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
       <rect width="640" height="360" fill="#1a1a2e"/>
-      <text x="50%" y="50%" text-anchor="middle" font-size="40" fill="white">
+      <text x="50%" y="50%" text-anchor="middle" font-size="40" fill="white" font-family="sans-serif">
         ${title}
       </text>
     </svg>
@@ -125,56 +125,46 @@ function renderList(filter = "") {
     return;
   }
 
-  listEl.innerHTML = filtered.map(l => `
-    <div class="row" onclick="openLevel('${l.id}')">
-      <div class="rank">#${l.rank}</div>
+  // Passing 'event' into openLevel directly to halt event bubbling if wrapped in link tags
+  listEl.innerHTML = filtered.map(l => {
+    const fallbackThumb = makeThumb(l.name);
+    return `
+      <div class="row" onclick="openLevel(event, '${l.id}')" style="cursor: pointer;">
+        <div class="rank">#${l.rank}</div>
 
-      <div class="thumb">
-        <img src="${l.img || makeThumb(l.name)}" />
-      </div>
+        <div class="thumb">
+          <img src="${l.img || fallbackThumb}" onerror="this.onerror=null; this.src='${fallbackThumb}';" alt="${escapeHTML(l.name)}" />
+        </div>
 
-      <div class="info">
-        <div class="title">${escapeHTML(l.name)}</div>
-        <div class="sub">by ${escapeHTML(l.creator)}</div>
-        <div class="points">${l.points} pts • ${l.diff}</div>
+        <div class="info">
+          <div class="title">${escapeHTML(l.name)}</div>
+          <div class="sub">by ${escapeHTML(l.creator)}</div>
+          <div class="points">${l.points} pts • ${l.diff}</div>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 // =====================
 // OPEN LEVEL
 // =====================
-function openLevel(id) {
+function openLevel(event, id) {
+  // Prevent the browser from following href paths or bubbling up if this is wrapped inside an <a> tag
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   const level = levels.find(l => l.id === id);
   if (!level) return;
 
-  const video = level.video
-    ? `<iframe width="100%" height="315" src="${level.video}" frameborder="0" allowfullscreen></iframe>`
-    : "No video";
-
-  const victorList = level.victorList?.length
-    ? level.victorList.join(", ")
-    : "None";
-
-  document.body.innerHTML = `
-    <div style="padding:20px;font-family:Arial;background:#0b0d12;color:white;">
-      <button onclick="location.reload()" style="margin-bottom:20px;padding:10px;">
-        ← Back
-      </button>
-
-      <h1>#${level.rank} ${level.name}</h1>
-      <p><b>Creator:</b> ${level.creator}</p>
-      <p><b>Difficulty:</b> ${level.diff}</p>
-      <p><b>Points:</b> ${level.points}</p>
-
-      <h3>Victors</h3>
-      <p>${victorList}</p>
-
-      <h3>Preview</h3>
-      ${video}
-    </div>
-  `;
+  alert(
+    `#${level.rank} ${level.name}\n` +
+    `Creator: ${level.creator}\n` +
+    `Difficulty: ${level.diff}\n` +
+    `Points: ${level.points}`
+  );
 }
 
 // =====================
