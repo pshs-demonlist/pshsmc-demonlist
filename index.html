@@ -237,7 +237,7 @@
 </div>
 
 <script>
-// MANUALLY ADJUSTABLE DATA LOG
+// MANUALLY ADJUSTABLE DATA LOG - SYNTAX BUG FIXED HERE
 const demonData = [
   {
     "id": "10565740",
@@ -250,7 +250,7 @@ const demonData = [
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
     "victorList": [
       { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA" },
-      { "name": "(TAMAYO)", "video": "https://drive.google.com/file/d/1mtuw9yGknN_jo-Ae9kyrUF4MI4GlASxccCSfEY4lBNI/preview" },
+      { "name": "(TAMAYO)", "video": "https://drive.google.com/file/d/1mtuw9yGknN_jo-Ae9kyrUF4MI4GlASxccCSfEY4lBNI/preview" }
     ]
   },
   {
@@ -313,10 +313,10 @@ const demonData = [
     "creator": "pocke",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img":
+    "img": "",
     "video": "https://docs.google.com/videos/d/1tTiyZ0FN_auItLeHvYHNcmhl5mHeOReLXjfqL9W4zCA/preview",
     "victorList": [
-      { "name": "daBlooKat121", "video": "https://docs.google.com/videos/d/1tTiyZ0FN_auItLeHvYHNcmhl5mHeOReLXjfqL9W4zCA/preview" },
+      { "name": "daBlooKat121", "video": "https://docs.google.com/videos/d/1tTiyZ0FN_auItLeHvYHNcmhl5mHeOReLXjfqL9W4zCA/preview" }
     ]
   },
   {
@@ -326,7 +326,7 @@ const demonData = [
     "creator": "zyphur",
     "verifier": "sSeanyboii",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAireWNoIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
     "victorList": [
        { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
@@ -378,7 +378,6 @@ const backBtn = document.getElementById("backBtn");
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
 
-// CLEAN RE-ENGINEERED RECORD PARSER: Only links actual victors + verifier cleanly without creator contamination
 function cleanVictorList(list, verifierName = "") {
   let parsed = [];
   
@@ -429,7 +428,6 @@ function calculatePoints(rank) {
   return "0.00";
 }
 
-// LEADERBOARD UPDATER: Strictly looks at victors and verifiers, completely ignoring creator names
 function generateLeaderboard() {
   const scores = {};
 
@@ -498,7 +496,7 @@ function renderList(data) {
     if (cleanedParticipants.length) {
       victorHTML = cleanedParticipants.map(v => {
         const tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
-        return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
+        return `<span class="victor-link" onclick="event.stopPropagation(); showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
 
