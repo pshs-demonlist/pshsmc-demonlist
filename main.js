@@ -1,180 +1,288 @@
-// =====================
-// LEVEL DATA (YOUR LIST)
-// =====================
-let levels = [
-  {
-    id: "10565740",
-    rank: 1,
-    name: "Bloodbath",
-    creator: "Riot",
-    diff: "Extreme Demon",
-    points: "23.99",
-    img: "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanJn",
-    video: "https://www.youtube.com/embed/vBBZvXb0HrA",
-    victorList: ["sadboi202"]
-  },
-  {
-    id: "3979721",
-    rank: 2,
-    name: "Cataclysm",
-    creator: "GGboy",
-    diff: "Extreme Demon",
-    points: "20.92",
-    img: "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv...",
-    video: "https://www.youtube.com/embed/8x0gpGutHUE",
-    victorList: ["sadboi202"]
-  },
-  {
-    id: "7054561",
-    rank: 3,
-    name: "Poltergeist",
-    creator: "AndromedaGMD",
-    diff: "Insane Demon",
-    points: "15.94",
-    img: "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv...",
-    video: "https://www.youtube.com/embed/N05ijX3vz9U",
-    victorList: ["sadboi202"]
-  },
-  {
-    id: "4284013",
-    rank: 4,
-    name: "Nine Circles",
-    creator: "Zobros",
-    diff: "Hard Demon",
-    points: "11.16",
-    img: "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlvL...",
-    video: "https://www.youtube.com/embed/DO36t7DV0ec",
-    victorList: ["sadboi202"]
-  },
-  {
-    id: "6939821",
-    rank: 5,
-    name: "Jawbreaker",
-    creator: "ZenthicAlpha",
-    diff: "Hard Demon",
-    points: "11.14",
-    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
-    video: "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
-    victorList: ["daBlooKat121"]
-  },
-  {
-    id: "111205474",
-    rank: 6,
-    name: "Thermal Madness",
-    creator: "ManiacDan",
-    diff: "Hard Demon",
-    points: "8.01",
-    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
-    video: "",
-    victorList: ["daBlooKat121"]
-  },
-  {
-    id: "7",
-    rank: 7,
-    name: "Solar Circles",
-    creator: "D4rkGryf",
-    diff: "Medium Demon",
-    points: "5.91",
-    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2BeYWY4LWFmYjMtNmM2OGNiODgxNTVkLnBuZyIsIndpZHRoIj6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
-    video: "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
-    victorList: ["daBlooKat121"]
-  }
-];
+const OWNER = "pshs-demonlist";
+const REPO = "pshs-demonlist";
+const BASE = `https://${OWNER}.github.io/${REPO}/`;
 
-// =====================
-// DOM
-// =====================
 const listEl = document.getElementById("list");
+const listPage = document.getElementById("listPage");
+const detailPage = document.getElementById("detailPage");
 const searchEl = document.getElementById("search");
+const queueEl = document.getElementById("queue");
+const submissionTypeEl = document.getElementById("submissionType");
+const newLevelFields = document.getElementById("newLevelFields");
+const existingLevelWrap = document.getElementById("existingLevelWrap");
+const existingLevelEl = document.getElementById("existingLevel");
 
-// =====================
-// UTIL
-// =====================
-function escapeHTML(str) {
+let levels = [];
+let pending = [];
+
+function escapeHTML(str){
   return String(str ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
-function makeThumb(title) {
-  return `data:image/svg+xml;charset=UTF-8,` + encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360">
-      <rect width="640" height="360" fill="#1a1a2e"/>
-      <text x="50%" y="50%" text-anchor="middle" font-size="40" fill="white" font-family="sans-serif">
-        ${title}
-      </text>
-    </svg>
-  `);
+function normalizeVideo(url){
+  const s = String(url || "").trim();
+  if(!s) return "";
+  if(s.includes("drive.google.com/file/d/")){
+    const match = s.match(/\/file\/d\/([^/]+)/);
+    if(match) return `https://drive.google.com/file/d/${match[1]}/preview`;
+  }
+  if(s.includes("/embed/")) return s;
+  const watchMatch = s.match(/[?&]v=([^&]+)/);
+  if(watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  return s;
 }
 
-// =====================
-// RENDER LIST
-// =====================
-function renderList(filter = "") {
-  const q = filter.toLowerCase();
+function makeThumb(title, accent = "#ff4b4b", accent2 = "#111522") {
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="${accent2}"/>
+        <stop offset="100%" stop-color="${accent}"/>
+      </linearGradient>
+    </defs>
+    <rect width="640" height="360" fill="url(#g)"/>
+    <text x="50%" y="52%" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#ffffff">${escapeHTML(title)}</text>
+    <text x="50%" y="65%" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#dce4f5">PSHS-MC Demonlist</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
 
-  const filtered = levels.filter(l =>
-    l.name.toLowerCase().includes(q) ||
-    l.creator.toLowerCase().includes(q) ||
-    l.diff.toLowerCase().includes(q)
-  );
+async function loadJSON(path, fallback = []){
+  try{
+    const res = await fetch(path, { cache: "no-store" });
+    if(!res.ok) return fallback;
+    const data = await res.json();
+    return Array.isArray(data) ? data : fallback;
+  }catch{
+    return fallback;
+  }
+}
 
-  if (!filtered.length) {
+function victorText(list){
+  return Array.isArray(list) && list.length ? list.join(", ") : "N/A";
+}
+
+function populateLevelSelect(){
+  existingLevelEl.innerHTML = levels.map(d =>
+    `<option value="${d.id}">#${d.rank} - ${escapeHTML(d.name)}</option>`
+  ).join("");
+}
+
+function renderList(filter = ""){
+  const q = filter.toLowerCase().trim();
+  const filtered = levels.filter(d => {
+    const victors = victorText(d.victorList).toLowerCase();
+    return (d.name || "").toLowerCase().includes(q) ||
+      (d.creator || "").toLowerCase().includes(q) ||
+      (d.diff || "").toLowerCase().includes(q) ||
+      victors.includes(q);
+  });
+
+  if(!filtered.length){
     listEl.innerHTML = `<div class="empty">No demons found.</div>`;
     return;
   }
 
-  // Passing 'event' into openLevel directly to halt event bubbling if wrapped in link tags
-  listEl.innerHTML = filtered.map(l => {
-    const fallbackThumb = makeThumb(l.name);
+  listEl.innerHTML = filtered.map(d => `
+    <div class="row" onclick="openLevel('${d.id}')">
+      <div class="rank">#${d.rank}</div>
+      <div class="thumb"><img src="${escapeHTML(d.img || makeThumb(d.name || 'Level'))}" alt="${escapeHTML(d.name)}" /></div>
+      <div class="info">
+        <div class="title">${escapeHTML(d.name)}</div>
+        <div class="sub">published by ${escapeHTML(d.creator)}</div>
+        <div class="sub">Victor List: ${escapeHTML(victorText(d.victorList))}</div>
+        <div class="points">${escapeHTML(d.points)} points • ${escapeHTML(d.diff)}</div>
+        <div class="badge">ID ${escapeHTML(d.id)}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function openLevel(id){
+  const d = levels.find(x => String(x.id) === String(id));
+  if(!d) return;
+
+  listPage.style.display = "none";
+  detailPage.style.display = "block";
+
+  document.getElementById("dTitle").textContent = `#${d.rank} – ${d.name}`;
+  document.getElementById("dInfo").textContent = `published by ${d.creator} • ID ${d.id}`;
+
+  const video = normalizeVideo(d.video);
+  document.getElementById("video").innerHTML = video
+    ? `<iframe src="${video}" allowfullscreen></iframe>`
+    : `<div class="no-video">No video linked yet.</div>`;
+
+  document.getElementById("stats").innerHTML = `
+    <div class="stat">Difficulty: ${escapeHTML(d.diff)}</div>
+    <div class="stat">Points: ${escapeHTML(d.points)}</div>
+    <div class="stat">Level ID: ${escapeHTML(d.id)}</div>
+    <div class="stat">Victor List: ${escapeHTML(victorText(d.victorList))}</div>
+  `;
+}
+
+function back(){
+  detailPage.style.display = "none";
+  listPage.style.display = "block";
+}
+
+function renderQueue(){
+  if(!pending.length){
+    queueEl.innerHTML = `<div class="empty">No submissions waiting.</div>`;
+    return;
+  }
+
+  queueEl.innerHTML = pending.map(item => {
+    const title = item.type === "newLevel"
+      ? `New level proposal: ${escapeHTML(item.newLevel?.name || "Unnamed")}`
+      : `Record submission for: ${escapeHTML(item.levelName || "Unknown")}`;
+
     return `
-      <div class="row" onclick="openLevel(event, '${l.id}')" style="cursor: pointer;">
-        <div class="rank">#${l.rank}</div>
-
-        <div class="thumb">
-          <img src="${l.img || fallbackThumb}" onerror="this.onerror=null; this.src='${fallbackThumb}';" alt="${escapeHTML(l.name)}" />
+      <div class="queue-item">
+        <div class="queue-top">
+          <div>
+            <div class="queue-title">${title}</div>
+            <div class="queue-meta">
+              type: ${escapeHTML(item.type)} • submitted by ${escapeHTML(item.username)} • status: <strong>${escapeHTML(item.status)}</strong>
+            </div>
+          </div>
+          <div class="badge">${escapeHTML(item.type)}</div>
         </div>
 
-        <div class="info">
-          <div class="title">${escapeHTML(l.name)}</div>
-          <div class="sub">by ${escapeHTML(l.creator)}</div>
-          <div class="points">${l.points} pts • ${l.diff}</div>
+        <div class="queue-meta" style="margin-top:8px;">
+          record: ${escapeHTML(item.recordLink || "none")}<br/>
+          raw footage: ${escapeHTML(item.rawFootage || "none")}<br/>
+          notes: ${escapeHTML(item.notes || "none")}
         </div>
+
+        ${item.type === "newLevel" ? `
+          <div class="queue-meta" style="margin-top:8px;">
+            creator: ${escapeHTML(item.newLevel.creator)} • ID: ${escapeHTML(item.newLevel.id)} • diff: ${escapeHTML(item.newLevel.diff)} • points: ${escapeHTML(item.newLevel.points)}
+          </div>
+        ` : `
+          <div class="queue-meta" style="margin-top:8px;">
+            will add to Victor List on approval: ${escapeHTML(item.username)}
+          </div>
+        `}
       </div>
     `;
   }).join("");
 }
 
-// =====================
-// OPEN LEVEL
-// =====================
-function openLevel(event, id) {
-  // Prevent the browser from following href paths or bubbling up if this is wrapped inside an <a> tag
-  if (event) {
-    event.preventDefault();
-    event.stopPropagation();
+function openGitHubSubmission(type){
+  const username = document.getElementById("username").value.trim();
+  const recordLink = document.getElementById("recordLink").value.trim();
+  const rawFootage = document.getElementById("rawFootage").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+
+  if(!username || !recordLink || !rawFootage){
+    alert("Fill in username, record link, and raw footage.");
+    return;
   }
 
-  const level = levels.find(l => l.id === id);
-  if (!level) return;
+  const bodyLines = [];
 
-  alert(
-    `#${level.rank} ${level.name}\n` +
-    `Creator: ${level.creator}\n` +
-    `Difficulty: ${level.diff}\n` +
-    `Points: ${level.points}`
-  );
+  bodyLines.push(`type: ${type}`);
+  bodyLines.push(`username: ${username}`);
+  bodyLines.push(`recordLink: ${recordLink}`);
+  bodyLines.push(`rawFootage: ${rawFootage}`);
+  bodyLines.push(`notes: ${notes || ""}`);
+
+  if(type === "record"){
+    const level = levels.find(x => String(x.id) === String(existingLevelEl.value));
+    if(!level){
+      alert("Pick a level first.");
+      return;
+    }
+    bodyLines.push(`levelId: ${level.id}`);
+    bodyLines.push(`levelName: ${level.name}`);
+  }else{
+    const newName = document.getElementById("newName").value.trim();
+    const newCreator = document.getElementById("newCreator").value.trim();
+    const newLevelId = document.getElementById("newLevelId").value.trim();
+    const newDiff = document.getElementById("newDiff").value.trim();
+    const newPoints = document.getElementById("newPoints").value.trim();
+    const newImg = document.getElementById("newImg").value.trim();
+    const newVideo = document.getElementById("newVideo").value.trim();
+
+    if(!newName || !newCreator || !newLevelId || !newDiff){
+      alert("Fill in level name, creator, level ID, and difficulty for a new level.");
+      return;
+    }
+
+    bodyLines.push(`name: ${newName}`);
+    bodyLines.push(`creator: ${newCreator}`);
+    bodyLines.push(`newLevelId: ${newLevelId}`);
+    bodyLines.push(`diff: ${newDiff}`);
+    bodyLines.push(`points: ${newPoints || "0"}`);
+    bodyLines.push(`img: ${newImg || ""}`);
+    bodyLines.push(`video: ${newVideo || ""}`);
+  }
+
+  const title = type === "record"
+    ? `Record submission: ${username}`
+    : `New level proposal: ${document.getElementById("newName").value.trim()}`;
+
+  const issueUrl =
+    `https://github.com/${OWNER}/${REPO}/issues/new` +
+    `?title=${encodeURIComponent(title)}` +
+    `&labels=${encodeURIComponent("submission")}` +
+    `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+
+  window.open(issueUrl, "_blank", "noopener,noreferrer");
+
+  document.getElementById("username").value = "";
+  document.getElementById("recordLink").value = "";
+  document.getElementById("rawFootage").value = "";
+  document.getElementById("notes").value = "";
+  document.getElementById("newName").value = "";
+  document.getElementById("newCreator").value = "";
+  document.getElementById("newLevelId").value = "";
+  document.getElementById("newDiff").value = "";
+  document.getElementById("newPoints").value = "";
+  document.getElementById("newImg").value = "";
+  document.getElementById("newVideo").value = "";
 }
 
-// =====================
-// SEARCH
-// =====================
-searchEl.addEventListener("input", e => {
-  renderList(e.target.value);
+submissionTypeEl.addEventListener("change", () => {
+  const isNew = submissionTypeEl.value === "newLevel";
+  newLevelFields.style.display = isNew ? "block" : "none";
+  existingLevelWrap.style.display = isNew ? "none" : "block";
 });
 
-// =====================
-// INIT
-// =====================
-renderList();
+document.getElementById("submitBtn").addEventListener("click", () => {
+  openGitHubSubmission(submissionTypeEl.value);
+});
+
+searchEl.addEventListener("input", e => renderList(e.target.value));
+
+async function init(){
+  levels = await loadJSON("./levels.json", []);
+  pending = await loadJSON("./pending.json", []);
+
+  levels = levels.map((d, i) => ({
+    rank: Number(d.rank ?? i + 1),
+    name: d.name ?? "Unnamed",
+    creator: d.creator ?? "Unknown",
+    id: String(d.id ?? String(Date.now() + i)),
+    diff: d.diff ?? "Unknown",
+    points: d.points ?? "0",
+    img: d.img ?? makeThumb(d.name ?? "Level"),
+    video: d.video ?? "",
+    victorList: Array.isArray(d.victorList) ? d.victorList : []
+  }));
+
+  populateLevelSelect();
+  renderList("");
+  renderQueue();
+}
+
+window.back = back;
+window.openLevel = openLevel;
+window.addEventListener("load", init);
