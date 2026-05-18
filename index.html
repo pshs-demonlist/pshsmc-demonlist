@@ -45,7 +45,6 @@
   .empty{padding:16px;color:var(--muted);border:1px solid var(--line);border-radius:10px;background:#0f1320}
   .tiny{font-size:12px;color:var(--muted);margin-top:8px}
   
-  /* Clickable Victor tag elements */
   .victor-link {
     color: var(--accent);
     text-decoration: none;
@@ -56,7 +55,6 @@
     text-decoration: underline;
   }
   
-  /* Clickable Level Rows inside Player Profiles */
   .profile-level-item {
     padding: 12px;
     background: #111522;
@@ -79,12 +77,11 @@
   }
   .tag-verifier {
     font-size: 11px;
-    color: var(--good);
+    color: #ffb703;
     margin-left: 4px;
-    font-weight: normal;
+    font-weight: bold;
   }
 
-  /* Leaderboard Styling */
   .leaderboard-table {
     width: 100%;
     border-collapse: collapse;
@@ -115,9 +112,9 @@
     font-weight: bold;
     width: 60px;
   }
-  .lb-rank-1 { color: #ffd700; }  /* Gold */
-  .lb-rank-2 { color: #c0c0c0; }  /* Silver */
-  .lb-rank-3 { color: #cd7f32; }  /* Bronze */
+  .lb-rank-1 { color: #ffd700; }
+  .lb-rank-2 { color: #c0c0c0; }
+  .lb-rank-3 { color: #cd7f32; }
   .lb-name {
     font-weight: bold;
     color: var(--text);
@@ -315,7 +312,7 @@ const demonData = [
     "creator": "zyphur",
     "verifier": "zyphur",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOin1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
     "victorList": [
        { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
@@ -367,23 +364,28 @@ const backBtn = document.getElementById("backBtn");
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
 
+// CLEAN RE-ENGINEERED RECORD PARSER: Only links actual victors + verifier cleanly without creator contamination
 function cleanVictorList(list, verifierName = "") {
   let parsed = [];
   
   if (verifierName && verifierName.trim().length > 0) {
-    parsed.push({ name: verifierName.trim(), video: "" });
+    parsed.push({ name: verifierName.trim(), isVerifier: true });
   }
 
   if (list) {
     list.forEach(entry => {
+      let entName = "";
+      let entVid = "";
+      
       if (typeof entry === 'object' && entry !== null) {
-        parsed.push({ name: entry.name.trim(), video: entry.video ? entry.video.trim() : "" });
+        entName = entry.name ? entry.name.trim() : "";
+        entVid = entry.video ? entry.video.trim() : "";
       } else if (typeof entry === 'string') {
-        if (entry.includes(",")) {
-          entry.split(",").forEach(name => parsed.push({ name: name.trim(), video: "" }));
-        } else {
-          parsed.push({ name: entry.trim(), video: "" });
-        }
+        entName = entry.trim();
+      }
+
+      if (entName) {
+        parsed.push({ name: entName, video: entVid, isVerifier: false });
       }
     });
   }
@@ -391,8 +393,11 @@ function cleanVictorList(list, verifierName = "") {
   let uniqueMap = {};
   parsed.forEach(item => {
     const lowName = item.name.toLowerCase();
-    if (!uniqueMap[lowName] || (!uniqueMap[lowName].video && item.video)) {
-      uniqueMap[lowName] = item;
+    if (!uniqueMap[lowName]) {
+      uniqueMap[lowName] = { name: item.name, video: item.video || "", isVerifier: item.isVerifier };
+    } else {
+      if (item.isVerifier) uniqueMap[lowName].isVerifier = true;
+      if (item.video && !uniqueMap[lowName].video) uniqueMap[lowName].video = item.video;
     }
   });
 
@@ -410,16 +415,16 @@ function calculatePoints(rank) {
   return "0.00";
 }
 
-// AUTOMATIC LEADERBOARD GENERATION ENGINE
+// LEADERBOARD UPDATER: Strictly looks at victors and verifiers, completely ignoring creator names
 function generateLeaderboard() {
   const scores = {};
 
   demonData.forEach(level => {
     const pts = parseFloat(calculatePoints(level.rank));
-    const victors = cleanVictorList(level.victorList, level.verifier);
+    const eligiblePlayers = cleanVictorList(level.victorList, level.verifier);
 
-    victors.forEach(v => {
-      const standardName = v.name.trim();
+    eligiblePlayers.forEach(p => {
+      const standardName = p.name.trim();
       const key = standardName.toLowerCase();
 
       if (!scores[key]) {
@@ -429,7 +434,6 @@ function generateLeaderboard() {
     });
   });
 
-  // Convert map to array, sort by points high-to-low
   const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
 
   leaderboardBody.innerHTML = "";
@@ -474,13 +478,12 @@ function renderList(data) {
     };
 
     const calculatedPoints = calculatePoints(item.rank);
-    const cleanedVictors = cleanVictorList(item.victorList, item.verifier);
+    const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
     
     let victorHTML = "None";
-    if (cleanedVictors.length) {
-      victorHTML = cleanedVictors.map(v => {
-        const isVerifier = item.verifier && v.name.toLowerCase() === item.verifier.toLowerCase();
-        const tagText = isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+    if (cleanedParticipants.length) {
+      victorHTML = cleanedParticipants.map(v => {
+        const tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
         return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
@@ -492,8 +495,8 @@ function renderList(data) {
       </div>
       <div class="info">
         <div class="title">${item.name}</div>
-        <div class="sub">By ${item.creator} • ${item.diff}</div>
-        <div class="sub">Victor List: ${victorHTML}</div>
+        <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
+        <div class="sub">Records: ${victorHTML}</div>
         <div class="points">${calculatedPoints} points</div>
         <div class="badge">ID ${item.id}</div>
       </div>
@@ -529,6 +532,7 @@ searchInput.oninput = () => {
   const filtered = demonData.filter(item => 
     item.name.toLowerCase().includes(query) || 
     item.creator.toLowerCase().includes(query) || 
+    item.verifier.toLowerCase().includes(query) || 
     item.diff.toLowerCase().includes(query)
   );
   renderList(filtered);
@@ -543,18 +547,17 @@ function showDetail(item) {
   detailPage.style.display = "block";
   
   const currentPoints = calculatePoints(item.rank);
-  const cleanedVictors = cleanVictorList(item.victorList, item.verifier);
+  const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
   
   let victorHTML = "None registered";
-  if (cleanedVictors.length) {
-    victorHTML = cleanedVictors.map(v => {
-      const isVerifier = item.verifier && v.name.toLowerCase() === item.verifier.toLowerCase();
-      const tagText = isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+  if (cleanedParticipants.length) {
+    victorHTML = cleanedParticipants.map(v => {
+      const tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
       return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
     }).join(", ");
   }
   
-  document.getElementById("dTitle").textContent = `${item.name} (By ${item.creator})`;
+  document.getElementById("dTitle").textContent = `${item.name} (Created by ${item.creator})`;
   document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — ${currentPoints} Points`;
   
   const videoWrap = document.getElementById("video");
@@ -567,7 +570,8 @@ function showDetail(item) {
   const statsWrap = document.getElementById("stats");
   statsWrap.innerHTML = `
     <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
-    <div class="stat"><h4>Verified Victors</h4><p>${victorHTML}</p></div>
+    <div class="stat"><h4>Level Verifier</h4><p>${item.verifier || 'Unknown'}</p></div>
+    <div class="stat"><h4>Total Records</h4><p>${cleanedParticipants.length}</p></div>
   `;
 }
 
@@ -602,18 +606,17 @@ function showProfile(playerName, initialLevelId = null) {
   completionsContainer.innerHTML = "";
 
   demonData.forEach(level => {
-    const victors = cleanVictorList(level.victorList, level.verifier);
-    const match = victors.find(v => v.name.toLowerCase() === playerName.toLowerCase());
+    const participants = cleanVictorList(level.victorList, level.verifier);
+    const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
     
     if (match) {
       const pts = parseFloat(calculatePoints(level.rank));
       totalPoints += pts;
 
-      const isVerifier = level.verifier && playerName.toLowerCase() === level.verifier.toLowerCase();
-      const badgeHTML = isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
+      const badgeHTML = match.isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
 
       let runtimeVideoUrl = match.video;
-      if (!runtimeVideoUrl && isVerifier && level.video) {
+      if (!runtimeVideoUrl && match.isVerifier && level.video) {
         runtimeVideoUrl = level.video;
       }
 
@@ -623,7 +626,7 @@ function showProfile(playerName, initialLevelId = null) {
       div.innerHTML = `
         <div>
           <strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}
-          <div class="muted">by ${level.creator}</div>
+          <div class="muted">Created by ${level.creator}</div>
         </div>
         <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
       `;
