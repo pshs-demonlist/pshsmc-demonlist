@@ -20,6 +20,7 @@
   .btn:hover{filter:brightness(1.08)}
   .btn-primary{background:#2d3a63}
   .badge{display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#dce4f5;background:#0b0f1a}
+  .badge-verifier{background:var(--danger);color:#fff;border-color:var(--accent)}
   .muted{color:var(--muted);font-size:13px}
   #search,.input,.select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#0b0f1a;color:var(--text);outline:none;font-size:14px}
   #search::placeholder,.input::placeholder{color:var(--muted)}
@@ -54,8 +55,10 @@
   .victor-link:hover {
     text-decoration: underline;
   }
+  
+  /* Clickable Level Rows inside Player Profiles */
   .profile-level-item {
-    padding: 10px;
+    padding: 12px;
     background: #111522;
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -63,6 +66,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .profile-level-item:hover {
+    background: #171d2f;
+    border-color: var(--muted);
+  }
+  .profile-level-item.active-video {
+    border-color: var(--accent);
+    background: #151a2b;
+  }
+  .tag-verifier {
+    font-size: 11px;
+    color: var(--good);
+    margin-left: 4px;
+    font-weight: normal;
   }
 
   @media (max-width:700px){
@@ -151,7 +170,7 @@
     </div>
 
     <div class="section">
-      <h3>Approved List Completions</h3>
+      <h3>Approved List Completions <span class="muted" style="font-weight:normal; font-size:12px;">(Click a level to load completion video)</span></h3>
       <div id="pCompletions"></div>
     </div>
   </div>
@@ -159,13 +178,14 @@
 
 <script>
 // MANUALLY ADJUSTABLE DATA LOG
-// To map player completion videos, pass an object { name: "...", video: "..." } inside the victorList array instead of just a string!
+// Setting up sample data with custom videos inside victorLists
 const demonData = [
   {
     "id": "10565740",
     "rank": 1,
     "name": "Bloodbath",
     "creator": "Riot",
+    "verifier": "Riot",
     "diff": "Extreme Demon",
     "img": "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
@@ -178,6 +198,7 @@ const demonData = [
     "rank": 2,
     "name": "Cataclysm",
     "creator": "GGboy",
+    "verifier": "sadboi202",
     "diff": "Extreme Demon",
     "img": "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
@@ -190,6 +211,7 @@ const demonData = [
     "rank": 3,
     "name": "Poltergeist",
     "creator": "AndromedaGMD",
+    "verifier": "AndromedaGMD",
     "diff": "Insane Demon",
     "img": "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/cmF0ZS1teS10aHVt/Ym5haWwtbm8taS1k/aWRudC1iZWF0LXBv/bHRlcmdlaXN0LXYw/LXJuN2w2eHFsdXVw/YzEucG5nP3dpZHRo/PTEyODAmZm9ybWF0/PXBuZyZhdXRvPXdl/YnAmcz1jNjEwYzZi/NjZmMWJiMGQzN2Q0/ZTE0NzQ0ODY5OGZl/OWI4OGQ4YTgw",
     "video": "https://www.youtube.com/embed/N05ijX3vz9U",
@@ -200,6 +222,7 @@ const demonData = [
     "rank": 4,
     "name": "Nine Circles",
     "creator": "Zobros",
+    "verifier": "Zobros",
     "diff": "Hard Demon",
     "img": "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlv/L2NhY2hlL2RhdGEv/aW1hZ2UvZ2VvbWV0/cnktZGFzaC1uaW5l/LWNpcmNsZXMtbTE5/MngxMDgud2VicA",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
@@ -210,28 +233,36 @@ const demonData = [
     "rank": 5,
     "name": "Jawbreaker",
     "creator": "ZenthicAlpha",
+    "verifier": "ZenthicAlpha",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTZ2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
     "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
-    "victorList": ["daBlooKat121", "sSeanyboii"]
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview" },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
+    ]
   },
   {
     "id": "114532158",
     "rank": 6,
     "name": "Troll Madness",
     "creator": "zyphur",
+    "verifier": "zyphur",
     "diff": "Hard Demon",
     "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
-    "victorList": ["sSeanyboii"]
+    "victorList": [
+       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
+    ]
   },
   {
     "id": "111205474",
     "rank": 7,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
+    "verifier": "ManiacDan",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
     "video": "",
     "victorList": ["daBlooKat121"]
   },
@@ -240,8 +271,9 @@ const demonData = [
     "rank": 8,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
+    "verifier": "daBlooKat121",
     "diff": "Medium Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2ItNGFmOC1hZmIzLTZjNjhjYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTY2ZDQyYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
     "video": "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
     "victorList": ["daBlooKat121"]
   }
@@ -264,25 +296,38 @@ const backBtn = document.getElementById("backBtn");
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
 
-// Standardizes entries inside victorList arrays to uniform JS Objects
-function cleanVictorList(list) {
-  if (!list) return [];
+function cleanVictorList(list, verifierName = "") {
   let parsed = [];
-  list.forEach(entry => {
-    if (typeof entry === 'object' && entry !== null) {
-      parsed.push({ name: entry.name.trim(), video: entry.video ? entry.video.trim() : "" });
-    } else if (typeof entry === 'string') {
-      if (entry.includes(",")) {
-        entry.split(",").forEach(name => parsed.push({ name: name.trim(), video: "" }));
-      } else {
-        parsed.push({ name: entry.trim(), video: "" });
+  
+  if (verifierName && verifierName.trim().length > 0) {
+    parsed.push({ name: verifierName.trim(), video: "" });
+  }
+
+  if (list) {
+    list.forEach(entry => {
+      if (typeof entry === 'object' && entry !== null) {
+        parsed.push({ name: entry.name.trim(), video: entry.video ? entry.video.trim() : "" });
+      } else if (typeof entry === 'string') {
+        if (entry.includes(",")) {
+          entry.split(",").forEach(name => parsed.push({ name: name.trim(), video: "" }));
+        } else {
+          parsed.push({ name: entry.trim(), video: "" });
+        }
       }
+    });
+  }
+
+  let uniqueMap = {};
+  parsed.forEach(item => {
+    const lowName = item.name.toLowerCase();
+    if (!uniqueMap[lowName] || (!uniqueMap[lowName].video && item.video)) {
+      uniqueMap[lowName] = item;
     }
   });
-  return parsed.filter(item => item.name.length > 0);
+
+  return Object.values(uniqueMap).filter(item => item.name.length > 0);
 }
 
-// DYNAMIC POINT CALCULATION ENGINE
 function calculatePoints(rank) {
   const r = Number(rank);
   if (r <= 75) {
@@ -312,13 +357,15 @@ function renderList(data) {
     };
 
     const calculatedPoints = calculatePoints(item.rank);
-    const cleanedVictors = cleanVictorList(item.victorList);
+    const cleanedVictors = cleanVictorList(item.victorList, item.verifier);
     
     let victorHTML = "None";
     if (cleanedVictors.length) {
-      victorHTML = cleanedVictors.map(v => 
-        `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>`
-      ).join(", ");
+      victorHTML = cleanedVictors.map(v => {
+        const isVerifier = item.verifier && v.name.toLowerCase() === item.verifier.toLowerCase();
+        const tagText = isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+        return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
+      }).join(", ");
     }
 
     row.innerHTML = `
@@ -379,13 +426,15 @@ function showDetail(item) {
   detailPage.style.display = "block";
   
   const currentPoints = calculatePoints(item.rank);
-  const cleanedVictors = cleanVictorList(item.victorList);
+  const cleanedVictors = cleanVictorList(item.victorList, item.verifier);
   
   let victorHTML = "None registered";
   if (cleanedVictors.length) {
-    victorHTML = cleanedVictors.map(v => 
-      `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>`
-    ).join(", ");
+    victorHTML = cleanedVictors.map(v => {
+      const isVerifier = item.verifier && v.name.toLowerCase() === item.verifier.toLowerCase();
+      const tagText = isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+      return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
+    }).join(", ");
   }
   
   document.getElementById("dTitle").textContent = `${item.name} (By ${item.creator})`;
@@ -405,8 +454,25 @@ function showDetail(item) {
   `;
 }
 
-// EXTENDED POINTERCRATE USER PROFILE GENERATOR
-function showProfile(playerName, fromLevelId = null) {
+// HELPER FUNCTION TO INJECT VIDEO INTO PROFILE VIDEO PLAYER
+function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
+  const specVideoSec = document.getElementById("pSpecificVideoSection");
+  const specVideoBox = document.getElementById("pProfileVideo");
+  const specVideoTitle = document.getElementById("pSpecificVideoTitle");
+
+  if (videoUrl) {
+    specVideoSec.style.display = "block";
+    specVideoTitle.textContent = `${playerName}'s ${levelName} Completion Proof`;
+    specVideoBox.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+  } else {
+    specVideoSec.style.display = "block";
+    specVideoTitle.textContent = `${playerName}'s ${levelName} Completion Proof`;
+    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No custom video run linked for this player's completion.</div>`;
+  }
+}
+
+// INTERACTIVE PLAYER PROFILE SHEET
+function showProfile(playerName, initialLevelId = null) {
   listPage.style.display = "none";
   detailPage.style.display = "none";
   profilePage.style.display = "block";
@@ -414,57 +480,75 @@ function showProfile(playerName, fromLevelId = null) {
   document.getElementById("pName").textContent = playerName;
 
   let totalPoints = 0;
-  let specificCompletionVideo = null;
-  let specificLevelName = "";
+  let autoSelectElement = null;
+  let fallbackElement = null;
   
   const completionsContainer = document.getElementById("pCompletions");
   completionsContainer.innerHTML = "";
 
   demonData.forEach(level => {
-    const victors = cleanVictorList(level.victorList);
-    // Find matching victor entries
+    const victors = cleanVictorList(level.victorList, level.verifier);
     const match = victors.find(v => v.name.toLowerCase() === playerName.toLowerCase());
     
     if (match) {
       const pts = parseFloat(calculatePoints(level.rank));
       totalPoints += pts;
 
-      // Track the context video link if clicked from a specific level view page
-      if (fromLevelId && level.id === fromLevelId && match.video) {
-        specificCompletionVideo = match.video;
-        specificLevelName = level.name;
+      const isVerifier = level.verifier && playerName.toLowerCase() === level.verifier.toLowerCase();
+      const badgeHTML = isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
+
+      // Determine what video link applies to this level record row entry
+      let runtimeVideoUrl = match.video;
+      if (!runtimeVideoUrl && isVerifier && level.video) {
+        runtimeVideoUrl = level.video; // fallback to level video if they verified it
       }
 
       const div = document.createElement("div");
       div.className = "profile-level-item";
+      
       div.innerHTML = `
         <div>
-          <strong>#${level.rank} - ${level.name}</strong> 
-          <span class="muted">by ${level.creator}</span>
+          <strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}
+          <div class="muted">by ${level.creator}</div>
         </div>
         <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
       `;
+
+      // Interactive Click Event to load the specific video embed execution engine
+      div.onclick = () => {
+        // Clear active styles on previous items
+        document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
+        div.classList.add('active-video');
+        
+        updateProfileVideoPlayer(playerName, level.name, runtimeVideoUrl);
+      };
+
       completionsContainer.appendChild(div);
+
+      // Track items for initial automatic layout selection display logic
+      if (initialLevelId && level.id === initialLevelId) {
+        autoSelectElement = div;
+      }
+      if (!fallbackElement) {
+        fallbackElement = div;
+      }
     }
   });
 
   document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
   
-  // Dynamic User Video Context Rendering engine rules
-  const specVideoSec = document.getElementById("pSpecificVideoSection");
-  const specVideoBox = document.getElementById("pProfileVideo");
-  
-  if (specificCompletionVideo) {
-    specVideoSec.style.display = "block";
-    document.getElementById("pSpecificVideoTitle").textContent = `${playerName}'s ${specificLevelName} Completion Proof`;
-    specVideoBox.innerHTML = `<iframe src="${specificCompletionVideo}" allowfullscreen></iframe>`;
+  // Set initial video context based on where they navigated from
+  if (autoSelectElement) {
+    autoSelectElement.click();
+  } else if (fallbackElement) {
+    fallbackElement.click(); // If viewed out-of-context, default select the highest-ranked completion video
   } else {
-    specVideoSec.style.display = "none";
-    specVideoBox.innerHTML = "";
+    document.getElementById("pSpecificVideoSection").style.display = "none";
   }
 
   if(completionsContainer.innerHTML === "") {
     completionsContainer.innerHTML = '<div class="empty">No approved completions listed.</div>';
+    document.getElementById("pSpecificVideoSection").style.display = "none";
   }
 }
 
