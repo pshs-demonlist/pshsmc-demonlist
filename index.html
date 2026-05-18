@@ -144,6 +144,12 @@
     <div class="back" id="profileBackBtn">← Back to level details</div>
     <h2 id="pName" style="margin-bottom: 4px;"></h2>
     <h3 id="pTotalPoints" style="color: var(--good); margin: 0 0 20px 0;"></h3>
+    
+    <div id="pSpecificVideoSection" style="margin-bottom: 20px; display: none;">
+      <h3 id="pSpecificVideoTitle">Completion Video</h3>
+      <div class="video" id="pProfileVideo"></div>
+    </div>
+
     <div class="section">
       <h3>Approved List Completions</h3>
       <div id="pCompletions"></div>
@@ -152,6 +158,8 @@
 </div>
 
 <script>
+// MANUALLY ADJUSTABLE DATA LOG
+// To map player completion videos, pass an object { name: "...", video: "..." } inside the victorList array instead of just a string!
 const demonData = [
   {
     "id": "10565740",
@@ -161,7 +169,9 @@ const demonData = [
     "diff": "Extreme Demon",
     "img": "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA" }
+    ]
   },
   {
     "id": "3979721",
@@ -171,7 +181,9 @@ const demonData = [
     "diff": "Extreme Demon",
     "img": "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE" }
+    ]
   },
   {
     "id": "7054561",
@@ -252,18 +264,22 @@ const backBtn = document.getElementById("backBtn");
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
 
-// Helper to reliably separate combined user strings inside victorList arrays
+// Standardizes entries inside victorList arrays to uniform JS Objects
 function cleanVictorList(list) {
   if (!list) return [];
   let parsed = [];
   list.forEach(entry => {
-    if (entry.includes(",")) {
-      entry.split(",").forEach(name => parsed.push(name.trim()));
-    } else {
-      parsed.push(entry.trim());
+    if (typeof entry === 'object' && entry !== null) {
+      parsed.push({ name: entry.name.trim(), video: entry.video ? entry.video.trim() : "" });
+    } else if (typeof entry === 'string') {
+      if (entry.includes(",")) {
+        entry.split(",").forEach(name => parsed.push({ name: name.trim(), video: "" }));
+      } else {
+        parsed.push({ name: entry.trim(), video: "" });
+      }
     }
   });
-  return parsed.filter(name => name.length > 0);
+  return parsed.filter(item => item.name.length > 0);
 }
 
 // DYNAMIC POINT CALCULATION ENGINE
@@ -300,8 +316,8 @@ function renderList(data) {
     
     let victorHTML = "None";
     if (cleanedVictors.length) {
-      victorHTML = cleanedVictors.map(name => 
-        `<span class="victor-link" onclick="showProfile('${name}')">${name}</span>`
+      victorHTML = cleanedVictors.map(v => 
+        `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>`
       ).join(", ");
     }
 
@@ -367,8 +383,8 @@ function showDetail(item) {
   
   let victorHTML = "None registered";
   if (cleanedVictors.length) {
-    victorHTML = cleanedVictors.map(name => 
-      `<span class="victor-link" onclick="showProfile('${name}')">${name}</span>`
+    victorHTML = cleanedVictors.map(v => 
+      `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>`
     ).join(", ");
   }
   
@@ -389,8 +405,8 @@ function showDetail(item) {
   `;
 }
 
-// POINTERCRATE USER SHEET GENERATOR
-function showProfile(playerName) {
+// EXTENDED POINTERCRATE USER PROFILE GENERATOR
+function showProfile(playerName, fromLevelId = null) {
   listPage.style.display = "none";
   detailPage.style.display = "none";
   profilePage.style.display = "block";
@@ -398,15 +414,26 @@ function showProfile(playerName) {
   document.getElementById("pName").textContent = playerName;
 
   let totalPoints = 0;
+  let specificCompletionVideo = null;
+  let specificLevelName = "";
+  
   const completionsContainer = document.getElementById("pCompletions");
   completionsContainer.innerHTML = "";
 
-  // Scan your manual database arrays to compute user profile data logs
   demonData.forEach(level => {
     const victors = cleanVictorList(level.victorList);
-    if (victors.includes(playerName)) {
+    // Find matching victor entries
+    const match = victors.find(v => v.name.toLowerCase() === playerName.toLowerCase());
+    
+    if (match) {
       const pts = parseFloat(calculatePoints(level.rank));
       totalPoints += pts;
+
+      // Track the context video link if clicked from a specific level view page
+      if (fromLevelId && level.id === fromLevelId && match.video) {
+        specificCompletionVideo = match.video;
+        specificLevelName = level.name;
+      }
 
       const div = document.createElement("div");
       div.className = "profile-level-item";
@@ -423,6 +450,19 @@ function showProfile(playerName) {
 
   document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
   
+  // Dynamic User Video Context Rendering engine rules
+  const specVideoSec = document.getElementById("pSpecificVideoSection");
+  const specVideoBox = document.getElementById("pProfileVideo");
+  
+  if (specificCompletionVideo) {
+    specVideoSec.style.display = "block";
+    document.getElementById("pSpecificVideoTitle").textContent = `${playerName}'s ${specificLevelName} Completion Proof`;
+    specVideoBox.innerHTML = `<iframe src="${specificCompletionVideo}" allowfullscreen></iframe>`;
+  } else {
+    specVideoSec.style.display = "none";
+    specVideoBox.innerHTML = "";
+  }
+
   if(completionsContainer.innerHTML === "") {
     completionsContainer.innerHTML = '<div class="empty">No approved completions listed.</div>';
   }
