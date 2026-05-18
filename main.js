@@ -2,7 +2,7 @@ const OWNER = "pshs-demonlist";
 const REPO = "pshsmc-demonlist";
 
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxArDrHVZUjycS2rGyZ4CzdTXvvqdqbaBCmndWGvJSvtiFU22qPh6_WOiOItAvhEYR3mA/exec";
+  "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
 
 /* =====================
    DOM
