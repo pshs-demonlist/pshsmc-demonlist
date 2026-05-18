@@ -119,7 +119,6 @@
 </div>
 
 <script>
-// UNTOUCHED RAW DATA STRUCTURE
 const demonData = [
   {
     "id": "10565740",
@@ -172,7 +171,7 @@ const demonData = [
     "creator": "ZenthicAlpha",
     "diff": "Hard Demon",
     "points": "11.14",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLT76ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
     "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
     "victorList": ["daBlooKat121"]
   },
@@ -213,7 +212,6 @@ const demonData = [
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
 
-// DOM MANIPULATION ROOT
 const listContainer = document.getElementById("list");
 const searchInput = document.getElementById("search");
 const existingLevelSelect = document.getElementById("existingLevel");
@@ -226,8 +224,6 @@ const listPage = document.getElementById("listPage");
 const detailPage = document.getElementById("detailPage");
 const backBtn = document.getElementById("backBtn");
 
-// RENDERING INTERFACE LOGIC
-<script>
 function renderList(data) {
   listContainer.innerHTML = "";
 
@@ -241,58 +237,24 @@ function renderList(data) {
     row.className = "row";
     row.onclick = () => showDetail(item);
 
-    // POINTS SYSTEM
-    const points =
-      item.points ||
-      Math.max(
-        18.7,
-        (
-          18.7 +
-          (350 - 18.7) *
-            Math.exp(-0.0185 * (Number(item.rank) - 1))
-        ).toFixed(2)
-      );
+    const calculatedPoints = item.points || Math.max(18.7, (18.7 + (350 - 18.7) * Math.exp(-0.0185 * (Number(item.rank) - 1))).toFixed(2));
 
     row.innerHTML = `
       <div class="rank">#${item.rank}</div>
-
       <div class="thumb">
-        <img 
-          src="${item.img}" 
-          alt="${item.name}" 
-          onerror="this.src='https://placehold.co/160x90?text=Processing...'"
-        >
+        <img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'">
       </div>
-
       <div class="info">
         <div class="title">${item.name}</div>
-
-        <div class="sub">
-          By ${item.creator} • ${item.diff}
-        </div>
-
-        <div class="sub">
-          Victor List: ${
-            item.victorList && item.victorList.length
-              ? item.victorList.join(", ")
-              : "None"
-          }
-        </div>
-
-        <div class="points">
-          ${points} points
-        </div>
-
-        <div class="badge">
-          ID ${item.id}
-        </div>
+        <div class="sub">By ${item.creator} • ${item.diff}</div>
+        <div class="sub">Victor List: ${item.victorList && item.victorList.length ? item.victorList.join(", ") : "None"}</div>
+        <div class="points">${calculatedPoints} points</div>
+        <div class="badge">ID ${item.id}</div>
       </div>
     `;
-
     listContainer.appendChild(row);
   });
 }
-</script>
 
 function initSelectOptions() {
   existingLevelSelect.innerHTML = "";
@@ -306,10 +268,9 @@ function initSelectOptions() {
   });
 }
 
-// FORM VIEWS SPLIT TOGGLE
 submissionType.onchange = () => {
   if (submissionType.value === "record") {
-    existingLevelWrap.style.style.display = "block";
+    existingLevelWrap.style.display = "block";
     newLevelFields.style.display = "none";
   } else {
     existingLevelWrap.style.display = "none";
@@ -317,7 +278,6 @@ submissionType.onchange = () => {
   }
 };
 
-// SEARCH DATA FILTERING
 searchInput.oninput = () => {
   const query = searchInput.value.toLowerCase().trim();
   const filtered = demonData.filter(item => 
@@ -328,7 +288,6 @@ searchInput.oninput = () => {
   renderList(filtered);
 };
 
-// DISPLAY DETAILS PAGE
 function showDetail(item) {
   listPage.style.display = "none";
   detailPage.style.display = "block";
@@ -340,7 +299,7 @@ function showDetail(item) {
   if(item.video) {
     videoWrap.innerHTML = `<iframe src="${item.video}" allowfullscreen></iframe>`;
   } else {
-    videoWrap.innerHTML = `<div class="no-video">No layout documentation video embedded.</div>`;
+    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
   }
   
   const statsWrap = document.getElementById("stats");
@@ -355,7 +314,6 @@ backBtn.onclick = () => {
   listPage.style.display = "block";
 };
 
-// FORM POST ASYNC DISPATCH PIPELINE
 submitBtn.onclick = async () => {
   const type = submissionType.value;
   const username = document.getElementById("username").value.trim();
@@ -426,7 +384,6 @@ submitBtn.onclick = async () => {
   }
 };
 
-// INITIATE LIFECYCLE
 window.onload = () => {
   renderList(demonData);
   initSelectOptions();
