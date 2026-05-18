@@ -1,5 +1,5 @@
 const OWNER = "pshs-demonlist";
-const REPO = "pshs-demonlist";
+const REPO = "pshsmc-demonlist";
 const BASE = `https://${OWNER}.github.io/${REPO}/`;
 
 const listEl = document.getElementById("list");
@@ -175,79 +175,104 @@ function renderQueue(){
   }).join("");
 }
 
-function openGitHubSubmission(type){
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_IGI7fXpq-BMe9-Ly3PXaMfflnr2053TQ03D2S8g_pJ1pnsTdaACduT6pJwGkH805wQ/exec";
+
+async function submitToSheet(payload) {
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    console.error("Sheet submit failed:", e);
+  }
+}
+
+function openBackupGitHub(payload) {
+  const title =
+    payload.type === "record"
+      ? `Record: ${payload.username}`
+      : `New Level: ${payload.newName}`;
+
+  const body = JSON.stringify(payload, null, 2);
+
+  const url =
+    `https://github.com/${OWNER}/${REPO}/issues/new` +
+    `?title=${encodeURIComponent(title)}` +
+    `&body=${encodeURIComponent(body)}` +
+    `&labels=submission`;
+
+  window.open(url, "_blank");
+}
+
+function buildPayload(type) {
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
   const rawFootage = document.getElementById("rawFootage").value.trim();
   const notes = document.getElementById("notes").value.trim();
 
-  if(!username || !recordLink || !rawFootage){
-    alert("Fill in username, record link, and raw footage.");
-    return;
+  if (!username || !recordLink || !rawFootage) {
+    alert("Fill required fields");
+    return null;
   }
 
-  const bodyLines = [];
-
-  bodyLines.push(`type: ${type}`);
-  bodyLines.push(`username: ${username}`);
-  bodyLines.push(`recordLink: ${recordLink}`);
-  bodyLines.push(`rawFootage: ${rawFootage}`);
-  bodyLines.push(`notes: ${notes || ""}`);
-
-  if(type === "record"){
+  if (type === "record") {
     const level = levels.find(x => String(x.id) === String(existingLevelEl.value));
-    if(!level){
-      alert("Pick a level first.");
-      return;
-    }
-    bodyLines.push(`levelId: ${level.id}`);
-    bodyLines.push(`levelName: ${level.name}`);
-  }else{
-    const newName = document.getElementById("newName").value.trim();
-    const newCreator = document.getElementById("newCreator").value.trim();
-    const newLevelId = document.getElementById("newLevelId").value.trim();
-    const newDiff = document.getElementById("newDiff").value.trim();
-    const newPoints = document.getElementById("newPoints").value.trim();
-    const newImg = document.getElementById("newImg").value.trim();
-    const newVideo = document.getElementById("newVideo").value.trim();
+    if (!level) return null;
 
-    if(!newName || !newCreator || !newLevelId || !newDiff){
-      alert("Fill in level name, creator, level ID, and difficulty for a new level.");
-      return;
-    }
-
-    bodyLines.push(`name: ${newName}`);
-    bodyLines.push(`creator: ${newCreator}`);
-    bodyLines.push(`newLevelId: ${newLevelId}`);
-    bodyLines.push(`diff: ${newDiff}`);
-    bodyLines.push(`points: ${newPoints || "0"}`);
-    bodyLines.push(`img: ${newImg || ""}`);
-    bodyLines.push(`video: ${newVideo || ""}`);
+    return {
+      type: "record",
+      username,
+      recordLink,
+      rawFootage,
+      notes,
+      levelName: level.name,
+      id: level.id,
+      creator: level.creator
+    };
   }
 
-  const title = type === "record"
-    ? `Record submission: ${username}`
-    : `New level proposal: ${document.getElementById("newName").value.trim()}`;
+  const newName = document.getElementById("newName").value.trim();
+  const newCreator = document.getElementById("newCreator").value.trim();
+  const newLevelId = document.getElementById("newLevelId").value.trim();
+  const newDiff = document.getElementById("newDiff").value.trim();
+  const newPoints = document.getElementById("newPoints").value.trim();
 
-  const issueUrl =
-    `https://github.com/${OWNER}/${REPO}/issues/new` +
-    `?title=${encodeURIComponent(title)}` +
-    `&labels=${encodeURIComponent("submission")}` +
-    `&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+  if (!newName || !newCreator || !newLevelId || !newDiff) {
+    alert("Fill level details");
+    return null;
+  }
 
-  window.open(issueUrl, "_blank", "noopener,noreferrer");
+  return {
+    type: "newLevel",
+    username,
+    recordLink,
+    rawFootage,
+    notes,
+    newName,
+    newCreator,
+    newLevelId,
+    newDiff,
+    newPoints
+  };
+}
 
-  document.getElementById("username").value = "";
-  document.getElementById("recordLink").value = "";
-  document.getElementById("rawFootage").value = "";
-  document.getElementById("notes").value = "";
-  document.getElementById("newName").value = "";
-  document.getElementById("newCreator").value = "";
-  document.getElementById("newLevelId").value = "";
-  document.getElementById("newDiff").value = "";
-  document.getElementById("newPoints").value = "";
-  document.getElementById("newImg").value = "";
-  document.getElementById("newVideo").value = "";
+async function submitForm() {
+  const type = submissionTypeEl.value;
+  const payload = buildPayload(type);
+  if (!payload) return;
+
+  // 1. send to sheets
+  submitToSheet(payload);
+
+  // 2. backup to github
+  openBackupGitHub(payload);
+
+  // 3. clear form
+  document.querySelectorAll("input").forEach(i => i.value = "");
+
+  alert("Submitted!");
 }
 
 submissionTypeEl.addEventListener("change", () => {
