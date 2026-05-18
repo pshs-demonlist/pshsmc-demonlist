@@ -84,6 +84,50 @@
     font-weight: normal;
   }
 
+  /* Leaderboard Styling */
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .leaderboard-table th, .leaderboard-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .leaderboard-table th {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .leaderboard-table tr:last-child td {
+    border-bottom: none;
+  }
+  .leaderboard-row {
+    cursor: pointer;
+    transition: 0.15s;
+  }
+  .leaderboard-row:hover {
+    background: #171c2d;
+  }
+  .lb-rank {
+    font-weight: bold;
+    width: 60px;
+  }
+  .lb-rank-1 { color: #ffd700; }  /* Gold */
+  .lb-rank-2 { color: #c0c0c0; }  /* Silver */
+  .lb-rank-3 { color: #cd7f32; }  /* Bronze */
+  .lb-name {
+    font-weight: bold;
+    color: var(--text);
+  }
+  .lb-points {
+    text-align: right !important;
+    font-weight: bold;
+    color: var(--good);
+  }
+
   @media (max-width:700px){
     .row{flex-direction:column}
     .thumb{width:100%;height:auto;aspect-ratio:16/9}
@@ -101,12 +145,31 @@
       <input id="search" type="text" placeholder="Search demons, creators, or difficulty..." />
     </div>
 
-    <div class="section">
-      <h3>Levels</h3>
-      <div class="list" id="list"><div class="empty">Loading demons...</div></div>
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;" class="grid">
+      <div class="section" style="margin-bottom: 0;">
+        <h3>Levels</h3>
+        <div class="list" id="list"><div class="empty">Loading demons...</div></div>
+      </div>
+
+      <div class="section" style="margin-bottom: 0; align-self: start;">
+        <h3>Stats Viewer (Leaderboard)</h3>
+        <div class="list" style="background: #0f1320;">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th style="text-align: right;">Points</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+              </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <div class="section">
+    <div class="section" style="margin-top: 16px;">
       <h3>Submit a record or propose a new level</h3>
       <div class="grid">
         <div>
@@ -295,6 +358,7 @@ const submissionType = document.getElementById("submissionType");
 const existingLevelWrap = document.getElementById("existingLevelWrap");
 const newLevelFields = document.getElementById("newLevelFields");
 const submitBtn = document.getElementById("submitBtn");
+const leaderboardBody = document.getElementById("leaderboardBody");
 
 const listPage = document.getElementById("listPage");
 const detailPage = document.getElementById("detailPage");
@@ -344,6 +408,52 @@ function calculatePoints(rank) {
     return (pointsAt75 * (1 - (r - 75) / 76)).toFixed(2);
   }
   return "0.00";
+}
+
+// AUTOMATIC LEADERBOARD GENERATION ENGINE
+function generateLeaderboard() {
+  const scores = {};
+
+  demonData.forEach(level => {
+    const pts = parseFloat(calculatePoints(level.rank));
+    const victors = cleanVictorList(level.victorList, level.verifier);
+
+    victors.forEach(v => {
+      const standardName = v.name.trim();
+      const key = standardName.toLowerCase();
+
+      if (!scores[key]) {
+        scores[key] = { name: standardName, totalPoints: 0 };
+      }
+      scores[key].totalPoints += pts;
+    });
+  });
+
+  // Convert map to array, sort by points high-to-low
+  const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
+
+  leaderboardBody.innerHTML = "";
+  if (sortedPlayers.length === 0) {
+    leaderboardBody.innerHTML = `<tr><td colspan="3" class="muted" style="text-align:center; padding:16px;">No records listed.</td></tr>`;
+    return;
+  }
+
+  sortedPlayers.forEach((player, index) => {
+    const displayRank = index + 1;
+    let rankClass = "lb-rank";
+    if (displayRank <= 3) rankClass += ` lb-rank-${displayRank}`;
+
+    const tr = document.createElement("tr");
+    tr.className = "leaderboard-row";
+    tr.onclick = () => showProfile(player.name);
+
+    tr.innerHTML = `
+      <td class="${rankClass}">#${displayRank}</td>
+      <td class="lb-name">${player.name}</td>
+      <td class="lb-points">${player.totalPoints.toFixed(2)}</td>
+    `;
+    leaderboardBody.appendChild(tr);
+  });
 }
 
 function renderList(data) {
@@ -639,6 +749,7 @@ submitBtn.onclick = async () => {
 
 window.onload = () => {
   renderList(demonData);
+  generateLeaderboard();
   initSelectOptions();
 };
 </script>
