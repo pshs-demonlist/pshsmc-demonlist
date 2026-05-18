@@ -34,14 +34,37 @@
   .title{font-size:18px;font-weight:700}
   .sub{font-size:13px;color:var(--muted);margin-top:4px;word-break:break-word}
   .points{font-size:13px;color:#cfd6e6;margin-top:6px}
-  .detail{display:none}
+  .detail,.profile{display:none}
   .back{color:var(--muted);cursor:pointer;margin-bottom:12px;display:inline-block}
+  .back:hover{color:var(--text)}
   .video{width:100%;aspect-ratio:16/9;margin-top:12px;background:#0f1320;border:1px solid var(--line);border-radius:10px;overflow:hidden}
   iframe{width:100%;height:100%;border:none}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;font-size:13px;color:var(--muted)}
   .stat{background:#0f1320;border:1px solid var(--line);padding:10px;border-radius:8px}
   .empty{padding:16px;color:var(--muted);border:1px solid var(--line);border-radius:10px;background:#0f1320}
   .tiny{font-size:12px;color:var(--muted);margin-top:8px}
+  
+  /* Clickable Victor tag elements */
+  .victor-link {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .victor-link:hover {
+    text-decoration: underline;
+  }
+  .profile-level-item {
+    padding: 10px;
+    background: #111522;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   @media (max-width:700px){
     .row{flex-direction:column}
     .thumb{width:100%;height:auto;aspect-ratio:16/9}
@@ -116,6 +139,16 @@
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
   </div>
+
+  <div class="profile" id="profilePage">
+    <div class="back" id="profileBackBtn">← Back to level details</div>
+    <h2 id="pName" style="margin-bottom: 4px;"></h2>
+    <h3 id="pTotalPoints" style="color: var(--good); margin: 0 0 20px 0;"></h3>
+    <div class="section">
+      <h3>Approved List Completions</h3>
+      <div id="pCompletions"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -168,7 +201,7 @@ const demonData = [
     "diff": "Hard Demon",
     "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
     "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
-    "victorList": ["daBlooKat121, sSeanyboii"]
+    "victorList": ["daBlooKat121", "sSeanyboii"]
   },
   {
     "id": "114532158",
@@ -216,14 +249,29 @@ const listPage = document.getElementById("listPage");
 const detailPage = document.getElementById("detailPage");
 const backBtn = document.getElementById("backBtn");
 
+const profilePage = document.getElementById("profilePage");
+const profileBackBtn = document.getElementById("profileBackBtn");
+
+// Helper to reliably separate combined user strings inside victorList arrays
+function cleanVictorList(list) {
+  if (!list) return [];
+  let parsed = [];
+  list.forEach(entry => {
+    if (entry.includes(",")) {
+      entry.split(",").forEach(name => parsed.push(name.trim()));
+    } else {
+      parsed.push(entry.trim());
+    }
+  });
+  return parsed.filter(name => name.length > 0);
+}
+
 // DYNAMIC POINT CALCULATION ENGINE
 function calculatePoints(rank) {
   const r = Number(rank);
   if (r <= 75) {
-    // Ranks 1 to 75: Exponential Curve matching #1 = 350 and #8 = 221.47
     return (350 * Math.exp(-0.0654 * (r - 1))).toFixed(2);
   } else if (r <= 150) {
-    // Ranks 76 to 150: Linear Dropoff from Rank 75 down to 0 at Rank 151
     const pointsAt75 = 350 * Math.exp(-0.0654 * (75 - 1));
     return (pointsAt75 * (1 - (r - 75) / 76)).toFixed(2);
   }
@@ -241,10 +289,21 @@ function renderList(data) {
   data.forEach(item => {
     const row = document.createElement("div");
     row.className = "row";
-    row.onclick = () => showDetail(item);
+    row.onclick = (e) => {
+      if (!e.target.classList.contains('victor-link')) {
+        showDetail(item);
+      }
+    };
 
-    // Automatically assigns the correct point values based on your formula context
     const calculatedPoints = calculatePoints(item.rank);
+    const cleanedVictors = cleanVictorList(item.victorList);
+    
+    let victorHTML = "None";
+    if (cleanedVictors.length) {
+      victorHTML = cleanedVictors.map(name => 
+        `<span class="victor-link" onclick="showProfile('${name}')">${name}</span>`
+      ).join(", ");
+    }
 
     row.innerHTML = `
       <div class="rank">#${item.rank}</div>
@@ -254,7 +313,7 @@ function renderList(data) {
       <div class="info">
         <div class="title">${item.name}</div>
         <div class="sub">By ${item.creator} • ${item.diff}</div>
-        <div class="sub">Victor List: ${item.victorList && item.victorList.length ? item.victorList.join(", ") : "None"}</div>
+        <div class="sub">Victor List: ${victorHTML}</div>
         <div class="points">${calculatedPoints} points</div>
         <div class="badge">ID ${item.id}</div>
       </div>
@@ -295,11 +354,23 @@ searchInput.oninput = () => {
   renderList(filtered);
 };
 
+let lastViewedItem = null;
+
 function showDetail(item) {
+  lastViewedItem = item;
   listPage.style.display = "none";
+  profilePage.style.display = "none";
   detailPage.style.display = "block";
   
   const currentPoints = calculatePoints(item.rank);
+  const cleanedVictors = cleanVictorList(item.victorList);
+  
+  let victorHTML = "None registered";
+  if (cleanedVictors.length) {
+    victorHTML = cleanedVictors.map(name => 
+      `<span class="victor-link" onclick="showProfile('${name}')">${name}</span>`
+    ).join(", ");
+  }
   
   document.getElementById("dTitle").textContent = `${item.name} (By ${item.creator})`;
   document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — ${currentPoints} Points`;
@@ -314,13 +385,62 @@ function showDetail(item) {
   const statsWrap = document.getElementById("stats");
   statsWrap.innerHTML = `
     <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
-    <div class="stat"><h4>Verified Victors</h4><p>${item.victorList.join(", ") || "None registered"}</p></div>
+    <div class="stat"><h4>Verified Victors</h4><p>${victorHTML}</p></div>
   `;
+}
+
+// POINTERCRATE USER SHEET GENERATOR
+function showProfile(playerName) {
+  listPage.style.display = "none";
+  detailPage.style.display = "none";
+  profilePage.style.display = "block";
+
+  document.getElementById("pName").textContent = playerName;
+
+  let totalPoints = 0;
+  const completionsContainer = document.getElementById("pCompletions");
+  completionsContainer.innerHTML = "";
+
+  // Scan your manual database arrays to compute user profile data logs
+  demonData.forEach(level => {
+    const victors = cleanVictorList(level.victorList);
+    if (victors.includes(playerName)) {
+      const pts = parseFloat(calculatePoints(level.rank));
+      totalPoints += pts;
+
+      const div = document.createElement("div");
+      div.className = "profile-level-item";
+      div.innerHTML = `
+        <div>
+          <strong>#${level.rank} - ${level.name}</strong> 
+          <span class="muted">by ${level.creator}</span>
+        </div>
+        <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
+      `;
+      completionsContainer.appendChild(div);
+    }
+  });
+
+  document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
+  
+  if(completionsContainer.innerHTML === "") {
+    completionsContainer.innerHTML = '<div class="empty">No approved completions listed.</div>';
+  }
 }
 
 backBtn.onclick = () => {
   detailPage.style.display = "none";
+  profilePage.style.display = "none";
   listPage.style.display = "block";
+};
+
+profileBackBtn.onclick = () => {
+  if (lastViewedItem) {
+    showDetail(lastViewedItem);
+  } else {
+    profilePage.style.display = "none";
+    listPage.style.display = "block";
+  }
 };
 
 submitBtn.onclick = async () => {
