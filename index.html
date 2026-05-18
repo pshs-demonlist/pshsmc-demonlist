@@ -227,28 +227,72 @@ const detailPage = document.getElementById("detailPage");
 const backBtn = document.getElementById("backBtn");
 
 // RENDERING INTERFACE LOGIC
+<script>
 function renderList(data) {
   listContainer.innerHTML = "";
+
   if(data.length === 0) {
     listContainer.innerHTML = '<div class="empty">No matching records discovered</div>';
     return;
   }
+
   data.forEach(item => {
     const row = document.createElement("div");
     row.className = "row";
     row.onclick = () => showDetail(item);
+
+    // POINTS SYSTEM
+    const points =
+      item.points ||
+      Math.max(
+        18.7,
+        (
+          18.7 +
+          (350 - 18.7) *
+            Math.exp(-0.0185 * (Number(item.rank) - 1))
+        ).toFixed(2)
+      );
+
     row.innerHTML = `
       <div class="rank">#${item.rank}</div>
-      <div class="thumb"><img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
+
+      <div class="thumb">
+        <img 
+          src="${item.img}" 
+          alt="${item.name}" 
+          onerror="this.src='https://placehold.co/160x90?text=Processing...'"
+        >
+      </div>
+
       <div class="info">
         <div class="title">${item.name}</div>
-        <div class="sub">By ${item.creator} • ${item.diff}</div>
-        <div class="points">${item.points} Points</div>
+
+        <div class="sub">
+          By ${item.creator} • ${item.diff}
+        </div>
+
+        <div class="sub">
+          Victor List: ${
+            item.victorList && item.victorList.length
+              ? item.victorList.join(", ")
+              : "None"
+          }
+        </div>
+
+        <div class="points">
+          ${points} points
+        </div>
+
+        <div class="badge">
+          ID ${item.id}
+        </div>
       </div>
     `;
+
     listContainer.appendChild(row);
   });
 }
+</script>
 
 function initSelectOptions() {
   existingLevelSelect.innerHTML = "";
