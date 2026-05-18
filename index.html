@@ -1,105 +1,930 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PSHS-MC Demonlist</title>
-
 <style>
-:root{
-  --bg:#0b0d12; --panel:#111522; --line:#1e2438; --text:#e9eefc;
-  --muted:#9aa3b2; --accent:#ff4b4b;
-}
+  :root{
+    --bg:#0b0d12;
+    --panel:#111522;
+    --line:#1e2438;
+    --text:#e9eefc;
+    --muted:#9aa3b2;
+    --accent:#ff4b4b;
+    --good:#36d399;
+    --danger:#662f36;
+  }
 
-*{box-sizing:border-box}
+  *{ box-sizing:border-box; }
 
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
+  body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
 
-header{
-  background:var(--panel);
-  padding:16px;
-  font-size:20px;
-  font-weight:700;
-  border-bottom:1px solid var(--line);
-}
+  header{
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    padding:16px 18px;
+    font-size:20px;
+    font-weight:700;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
 
-.wrap{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
+  .wrap{
+    max-width:1100px;
+    margin:20px auto;
+    padding:0 16px 32px;
+  }
 
-.section{
-  background:#0f1320;
-  border:1px solid var(--line);
-  padding:14px;
-  border-radius:10px;
-  margin-bottom:16px;
-}
+  .section{
+    background:#0f1320;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px;
+    margin-bottom:16px;
+  }
 
-#search{
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid var(--line);
-  background:#0b0f1a;
-  color:white;
-}
+  .section h3{
+    margin:0 0 12px;
+    font-size:16px;
+  }
 
-.list{
-  border:1px solid var(--line);
-  border-radius:10px;
-  overflow:hidden;
-}
+  .topbar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:12px;
+  }
 
-.row{
-  display:flex;
-  gap:12px;
-  padding:12px;
-  border-bottom:1px solid var(--line);
-  cursor:pointer;
-}
+  .btn{
+    border:none;
+    border-radius:8px;
+    padding:10px 14px;
+    background:#1b2238;
+    color:var(--text);
+    cursor:pointer;
+    font-weight:700;
+  }
 
-.row:hover{background:#171c2d}
+  .btn:hover{ filter:brightness(1.08); }
+  .btn-primary{ background:#2d3a63; }
+  .btn-good{ background:#245b45; }
+  .btn-danger{ background:var(--danger); }
 
-.rank{width:50px;color:var(--accent);font-weight:700}
+  .badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 8px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    font-size:12px;
+    color:#dce4f5;
+    background:#0b0f1a;
+  }
 
-.thumb img{
-  width:140px;height:80px;object-fit:cover;border-radius:6px;
-}
+  .muted{
+    color:var(--muted);
+    font-size:13px;
+  }
 
-.info{flex:1}
+  #search,
+  .input,
+  .select{
+    width:100%;
+    padding:12px 14px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#0b0f1a;
+    color:var(--text);
+    outline:none;
+    font-size:14px;
+  }
 
-.title{font-weight:700;font-size:18px}
+  #search::placeholder,
+  .input::placeholder{
+    color:var(--muted);
+  }
 
-.sub{color:var(--muted);font-size:13px}
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
 
+  .list{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  .row{
+    display:flex;
+    gap:14px;
+    padding:14px;
+    border-bottom:1px solid var(--line);
+    background:#0f1320;
+    cursor:pointer;
+    transition:.15s;
+  }
+
+  .row:hover{ background:#171c2d; }
+
+  .rank{
+    width:60px;
+    color:var(--accent);
+    font-weight:700;
+    font-size:18px;
+    flex-shrink:0;
+  }
+
+  .thumb{
+    width:160px;
+    height:90px;
+    background:#222;
+    border-radius:6px;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+
+  .thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .info{
+    flex:1;
+    min-width:0;
+  }
+
+  .title{
+    font-size:18px;
+    font-weight:700;
+  }
+
+  .sub{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+    word-break:break-word;
+  }
+
+  .points{
+    font-size:13px;
+    color:#cfd6e6;
+    margin-top:6px;
+  }
+
+  .detail{ display:none; }
+
+  .back{
+    color:var(--muted);
+    cursor:pointer;
+    margin-bottom:12px;
+    display:inline-block;
+  }
+
+  .video{
+    width:100%;
+    aspect-ratio:16/9;
+    margin-top:12px;
+    background:#0f1320;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  iframe{
+    width:100%;
+    height:100%;
+    border:none;
+  }
+
+  .no-video{
+    padding:18px;
+    color:var(--muted);
+    font-size:14px;
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:14px;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  .stat{
+    background:#0f1320;
+    border:1px solid var(--line);
+    padding:10px;
+    border-radius:8px;
+  }
+
+  .queue-item{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px;
+    background:#0b0f1a;
+    margin-bottom:10px;
+  }
+
+  .queue-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+
+  .queue-title{
+    font-weight:700;
+  }
+
+  .queue-meta{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:4px;
+    word-break:break-word;
+  }
+
+  .queue-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+
+  .empty{
+    padding:16px;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#0f1320;
+  }
+
+  .tiny{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:8px;
+  }
+
+  @media (max-width:700px){
+    .row{ flex-direction:column; }
+    .thumb{
+      width:100%;
+      height:auto;
+      aspect-ratio:16/9;
+    }
+    .grid,
+    .stats{
+      grid-template-columns:1fr;
+    }
+  }
 </style>
 </head>
-
 <body>
 
 <header>PSHS-MC Demonlist</header>
 
 <div class="wrap">
+  <div id="listPage">
+    <div class="section">
+      <h3>Admin</h3>
+      <div class="topbar">
+        <button class="btn btn-primary" onclick="loginAdmin()">Admin Login</button>
+        <button class="btn" onclick="logoutAdmin()">Exit Admin</button>
+        <button class="btn" onclick="renderAll()">Refresh</button>
+      </div>
+      <div class="tiny" id="adminStatus"></div>
+    </div>
 
-  <div class="section">
-    <input id="search" placeholder="Search demons..." />
+    <div class="section">
+      <h3>Search</h3>
+      <input id="search" type="text" placeholder="Search demons, creators, victor lists, or difficulty..." />
+    </div>
+
+    <div class="section">
+      <h3>Levels</h3>
+      <div class="list" id="list"></div>
+    </div>
+
+    <div class="section">
+      <h3>Submit a record or propose a new level</h3>
+
+      <div class="grid">
+        <div>
+          <label class="muted">Submission type</label>
+          <select id="submissionType" class="select">
+            <option value="record">Record submission</option>
+            <option value="newLevel">New level proposal</option>
+          </select>
+        </div>
+        <div id="existingLevelWrap">
+          <label class="muted">Choose level</label>
+          <select id="existingLevel" class="select"></select>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div>
+          <label class="muted">Username</label>
+          <input id="username" class="input" type="text" placeholder="Your username" />
+        </div>
+        <div>
+          <label class="muted">Record link (YouTube)</label>
+          <input id="recordLink" class="input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:12px;">
+        <div>
+          <label class="muted">Raw footage link</label>
+          <input id="rawFootage" class="input" type="text" placeholder="Google Drive / YouTube / other link" />
+        </div>
+        <div>
+          <label class="muted">Notes (optional)</label>
+          <input id="notes" class="input" type="text" placeholder="Any extra notes" />
+        </div>
+      </div>
+
+      <div id="newLevelFields" style="display:none; margin-top:12px;">
+        <h3 style="margin:0 0 12px;">New level details</h3>
+
+        <div class="grid">
+          <div>
+            <label class="muted">Level name</label>
+            <input id="newName" class="input" type="text" placeholder="Level name" />
+          </div>
+          <div>
+            <label class="muted">Creator</label>
+            <input id="newCreator" class="input" type="text" placeholder="Level creator" />
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:12px;">
+          <div>
+            <label class="muted">Level ID</label>
+            <input id="newLevelId" class="input" type="text" placeholder="e.g. 10565740" />
+          </div>
+          <div>
+            <label class="muted">Difficulty</label>
+            <input id="newDiff" class="input" type="text" placeholder="Extreme Demon / Insane Demon / etc." />
+          </div>
+        </div>
+
+        <div class="grid" style="margin-top:12px;">
+          <div>
+            <label class="muted">Points</label>
+            <input id="newPoints" class="input" type="text" placeholder="23.99" />
+          </div>
+          <div>
+            <label class="muted">Thumbnail image URL</label>
+            <input id="newImg" class="input" type="text" placeholder="Image URL" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label class="muted">Video URL</label>
+          <input id="newVideo" class="input" type="text" placeholder="YouTube embed or Drive preview URL" />
+        </div>
+      </div>
+
+      <div class="topbar">
+        <button class="btn btn-primary" id="submitBtn">Send for review</button>
+      </div>
+
+      <div class="tiny">Record submissions only update the Victor List after an admin accepts them.</div>
+    </div>
+
+    <div class="section">
+      <h3>Review queue</h3>
+      <div class="muted" style="margin-bottom:12px;">Approve or reject submissions here. New level proposals only enter the list after approval.</div>
+      <div id="queue"></div>
+    </div>
   </div>
 
-  <div class="section">
-    <h3>Levels</h3>
-    <div class="list" id="list"></div>
+  <div class="detail" id="detailPage">
+    <div class="back" onclick="back()">← Back to list</div>
+    <h2 id="dTitle"></h2>
+    <div id="dInfo" class="sub"></div>
+    <div class="video" id="video"></div>
+    <div class="stats" id="stats"></div>
   </div>
-
 </div>
 
-<script src="main.js"></script>
+<script>
+function escapeHTML(str){
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeVideo(url){
+  const s = String(url || "").trim();
+  if(!s) return "";
+  if(s.includes("drive.google.com/file/d/")){
+    const match = s.match(/\/file\/d\/([^/]+)/);
+    if(match) return `https://drive.google.com/file/d/${match[1]}/preview`;
+  }
+  if(s.includes("/embed/")) return s;
+  const watchMatch = s.match(/[?&]v=([^&]+)/);
+  if(watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  return s;
+}
+
+function makeThumb(title, accent = "#ff4b4b", accent2 = "#111522") {
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="${accent2}"/>
+        <stop offset="100%" stop-color="${accent}"/>
+      </linearGradient>
+    </defs>
+    <rect width="640" height="360" fill="url(#g)"/>
+    <circle cx="520" cy="110" r="70" fill="rgba(255,255,255,0.10)"/>
+    <circle cx="120" cy="255" r="56" fill="rgba(0,0,0,0.25)"/>
+    <path d="M0 280 L120 210 L220 250 L330 180 L450 230 L640 150 L640 360 L0 360 Z" fill="rgba(0,0,0,0.18)"/>
+    <text x="50%" y="52%" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700" fill="#ffffff">${title}</text>
+    <text x="50%" y="65%" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#dce4f5">PSHS-MC Demonlist</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
+
+const STORAGE_LEVELS = "pshs_demonlist_levels_v5";
+const STORAGE_PENDING = "pshs_demonlist_pending_v5";
+const STORAGE_ADMIN = "pshs_admin_v5";
+
+let isAdmin = localStorage.getItem(STORAGE_ADMIN) === "1";
+
+const defaultLevels = [
+  {
+    rank: 1,
+    name: "Bloodbath",
+    creator: "Riot",
+    id: "10565740",
+    diff: "Extreme Demon",
+    points: "23.99",
+    img: "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    video: "https://www.youtube.com/embed/vBBZvXb0HrA",
+    victorList: ["sadboi202"]
+  },
+  {
+    rank: 2,
+    name: "Cataclysm",
+    creator: "GGboy",
+    id: "3979721",
+    diff: "Extreme Demon",
+    points: "20.92",
+    img: "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
+    video: "https://www.youtube.com/embed/8x0gpGutHUE",
+    victorList: ["sadboi202"]
+  },
+  {
+    rank: 3,
+    name: "Poltergeist",
+    creator: "AndromedaGMD",
+    id: "7054561",
+    diff: "Insane Demon",
+    points: "15.94",
+    img: "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/cmF0ZS1teS10aHVt/Ym5haWwtbm8taS1k/aWRudC1iZWF0LXBv/bHRlcmdlaXN0LXYw/LXJuN2w2eHFsdXVw/YzEucG5nP3dpZHRo/PTEyODAmZm9ybWF0/PXBuZyZhdXRvPXdl/YnAmcz1jNjEwYzZi/NjZmMWJiMGQzN2Q0/ZTE0NzQ0ODY5OGZl/OWI4OGQ4YTgw",
+    video: "https://www.youtube.com/embed/N05ijX3vz9U",
+    victorList: ["sadboi202"]
+  },
+  {
+    rank: 4,
+    name: "Nine Circles",
+    creator: "Zobros",
+    id: "4284013",
+    diff: "Hard Demon",
+    points: "11.16",
+    img: "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlv/L2NhY2hlL2RhdGEv/aW1hZ2UvZ2VvbWV0/cnktZGFzaC1uaW5l/LWNpcmNsZXMtbTE5/MngxMDgud2VicA",
+    video: "https://www.youtube.com/embed/DO36t7DV0ec",
+    victorList: ["sadboi202"]
+  },
+  {
+    rank: 5,
+    name: "Jawbreaker",
+    creator: "ZenthicAlpha",
+    id: "6939821",
+    diff: "Hard Demon",
+    points: "11.14",
+    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
+    video: "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
+    victorList: ["daBlooKat121"]
+  },
+  {
+    rank: 6,
+    name: "Thermal Madness",
+    creator: "ManiacDan",
+    id: "111205474",
+    diff: "Hard Demon",
+    points: "8.01",
+    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
+    video: "",
+    victorList: ["daBlooKat121"]
+  },
+  {
+    rank: 7,
+    name: "Solar Circles",
+    creator: "D4rkGryf",
+    id: "493898",
+    diff: "Medium Demon",
+    points: "5.91",
+    img: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2ItNGFmOC1hZmIzLTZjNjhjYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
+    video: "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
+    victorList: ["daBlooKat121"]
+  }
+];
+
+function loadJSON(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return fallback;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function normalizeLevels(arr){
+  return arr.map((d, i) => ({
+    rank: Number(d.rank ?? i + 1),
+    name: d.name ?? "Unnamed",
+    creator: d.creator ?? "Unknown",
+    id: String(d.id ?? String(Date.now() + i)),
+    diff: d.diff ?? "Unknown",
+    points: d.points ?? "0",
+    img: d.img ?? makeThumb(d.name ?? "Level"),
+    video: d.video ?? "",
+    victorList: Array.isArray(d.victorList) ? d.victorList : (d.victorList ? [d.victorList] : [])
+  }));
+}
+
+let levels = normalizeLevels(loadJSON(STORAGE_LEVELS, defaultLevels));
+let pending = loadJSON(STORAGE_PENDING, []);
+
+const listEl = document.getElementById("list");
+const listPage = document.getElementById("listPage");
+const detailPage = document.getElementById("detailPage");
+const searchEl = document.getElementById("search");
+const queueEl = document.getElementById("queue");
+const submissionTypeEl = document.getElementById("submissionType");
+const newLevelFields = document.getElementById("newLevelFields");
+const existingLevelWrap = document.getElementById("existingLevelWrap");
+const existingLevelEl = document.getElementById("existingLevel");
+const adminStatus = document.getElementById("adminStatus");
+
+function saveState(){
+  localStorage.setItem(STORAGE_LEVELS, JSON.stringify(levels));
+  localStorage.setItem(STORAGE_PENDING, JSON.stringify(pending));
+  localStorage.setItem(STORAGE_ADMIN, isAdmin ? "1" : "0");
+}
+
+function reindexLevels(){
+  levels.forEach((d, i) => { d.rank = i + 1; });
+}
+
+function victorText(list){
+  return list && list.length ? list.join(", ") : "N/A";
+}
+
+function loginAdmin(){
+  const pass = prompt("Admin password:");
+  if(pass === null) return;
+  if(pass === "pshs-admin123"){
+    isAdmin = true;
+    saveState();
+    renderAll();
+    alert("Admin mode enabled");
+  }else{
+    alert("Wrong password");
+  }
+}
+
+function logoutAdmin(){
+  isAdmin = false;
+  saveState();
+  renderAll();
+}
+
+function updateAdminStatus(){
+  adminStatus.textContent = isAdmin
+    ? "Admin mode is ON."
+    : "Admin mode is OFF.";
+}
+
+function populateLevelSelect(){
+  existingLevelEl.innerHTML = levels.map(d =>
+    `<option value="${d.rank}">#${d.rank} - ${escapeHTML(d.name)}</option>`
+  ).join("");
+}
+
+function renderList(filter = ""){
+  const q = filter.toLowerCase().trim();
+  const filtered = levels.filter(d => {
+    const victors = victorText(d.victorList).toLowerCase();
+    return d.name.toLowerCase().includes(q) ||
+      d.creator.toLowerCase().includes(q) ||
+      d.diff.toLowerCase().includes(q) ||
+      victors.includes(q);
+  });
+
+  if(filtered.length === 0){
+    listEl.innerHTML = `<div class="empty">No demons found.</div>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(d => `
+    <div class="row" onclick="openLevel(${d.rank})">
+      <div class="rank">#${d.rank}</div>
+      <div class="thumb"><img src="${escapeHTML(d.img)}" alt="${escapeHTML(d.name)}" /></div>
+      <div class="info">
+        <div class="title">${escapeHTML(d.name)}</div>
+        <div class="sub">published by ${escapeHTML(d.creator)}</div>
+        <div class="sub">Victor List: ${escapeHTML(victorText(d.victorList))}</div>
+        <div class="points">${escapeHTML(d.points)} points • ${escapeHTML(d.diff)}</div>
+        <div class="badge">ID ${escapeHTML(d.id)}</div>
+        ${isAdmin ? `
+          <div class="topbar" style="margin-top:10px;">
+            <button class="btn" onclick="event.stopPropagation(); moveLevel(${d.rank}, -1)">↑ Up</button>
+            <button class="btn" onclick="event.stopPropagation(); moveLevel(${d.rank}, 1)">↓ Down</button>
+            <button class="btn btn-danger" onclick="event.stopPropagation(); deleteLevel(${d.rank})">Delete</button>
+          </div>
+        ` : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+function openLevel(rank){
+  const d = levels.find(x => x.rank === rank);
+  if(!d) return;
+
+  listPage.style.display = "none";
+  detailPage.style.display = "block";
+
+  document.getElementById("dTitle").textContent = `#${d.rank} – ${d.name}`;
+  document.getElementById("dInfo").textContent = `published by ${d.creator} • ID ${d.id}`;
+
+  if(d.video && d.video.trim() !== ""){
+    document.getElementById("video").innerHTML = `<iframe src="${normalizeVideo(d.video)}" allowfullscreen></iframe>`;
+  }else{
+    document.getElementById("video").innerHTML = `<div class="no-video">No video linked yet.</div>`;
+  }
+
+  document.getElementById("stats").innerHTML = `
+    <div class="stat">Difficulty: ${escapeHTML(d.diff)}</div>
+    <div class="stat">Points: ${escapeHTML(d.points)}</div>
+    <div class="stat">Level ID: ${escapeHTML(d.id)}</div>
+    <div class="stat">Victor List: ${escapeHTML(victorText(d.victorList))}</div>
+  `;
+}
+
+function back(){
+  detailPage.style.display = "none";
+  listPage.style.display = "block";
+}
+
+function moveLevel(rank, direction){
+  const idx = levels.findIndex(x => x.rank === rank);
+  const next = idx + direction;
+  if(idx < 0 || next < 0 || next >= levels.length) return;
+
+  [levels[idx], levels[next]] = [levels[next], levels[idx]];
+  reindexLevels();
+  saveState();
+  populateLevelSelect();
+  renderList(searchEl.value);
+  renderQueue();
+}
+
+function deleteLevel(rank){
+  if(!isAdmin) return;
+  const d = levels.find(x => x.rank === rank);
+  if(!d) return;
+  if(!confirm(`Delete #${d.rank} – ${d.name}?`)) return;
+
+  levels = levels.filter(x => x.rank !== rank);
+  reindexLevels();
+  saveState();
+  populateLevelSelect();
+  renderList(searchEl.value);
+  renderQueue();
+}
+
+function renderQueue(){
+  if(pending.length === 0){
+    queueEl.innerHTML = `<div class="empty">No submissions waiting.</div>`;
+    return;
+  }
+
+  queueEl.innerHTML = pending.map(item => {
+    const title = item.type === "newLevel"
+      ? `New level proposal: ${escapeHTML(item.newLevel?.name || "Unnamed")}`
+      : `Record submission for: ${escapeHTML(item.levelName || "Unknown")}`;
+
+    return `
+      <div class="queue-item">
+        <div class="queue-top">
+          <div>
+            <div class="queue-title">${title}</div>
+            <div class="queue-meta">
+              type: ${escapeHTML(item.type)} • submitted by ${escapeHTML(item.username)} • status: <strong>${escapeHTML(item.status)}</strong>
+            </div>
+          </div>
+          <div class="badge">${escapeHTML(item.type)}</div>
+        </div>
+
+        <div class="queue-meta" style="margin-top:8px;">
+          record: ${escapeHTML(item.recordLink || "none")}<br/>
+          raw footage: ${escapeHTML(item.rawFootage || "none")}<br/>
+          notes: ${escapeHTML(item.notes || "none")}
+        </div>
+
+        ${item.type === "newLevel" ? `
+          <div class="queue-meta" style="margin-top:8px;">
+            creator: ${escapeHTML(item.newLevel.creator)} • ID: ${escapeHTML(item.newLevel.id)} • diff: ${escapeHTML(item.newLevel.diff)} • points: ${escapeHTML(item.newLevel.points)}
+          </div>
+        ` : `
+          <div class="queue-meta" style="margin-top:8px;">
+            will add to Victor List on approval: ${escapeHTML(item.username)}
+          </div>
+        `}
+
+        <div class="queue-actions">
+          ${isAdmin && item.status === "pending" ? `
+            <button class="btn btn-good" onclick="approveSubmission('${item.id}')">Approve</button>
+            <button class="btn btn-danger" onclick="rejectSubmission('${item.id}')">Reject</button>
+          ` : ""}
+          ${item.status !== "pending" ? `
+            <button class="btn" onclick="deleteSubmission('${item.id}')">Delete</button>
+          ` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function approveSubmission(id){
+  const item = pending.find(x => x.id === id);
+  if(!item) return;
+
+  if(item.type === "newLevel"){
+    const newLevel = {
+      rank: levels.length + 1,
+      name: item.newLevel.name,
+      creator: item.newLevel.creator,
+      id: item.newLevel.id,
+      diff: item.newLevel.diff,
+      points: item.newLevel.points || "0",
+      img: item.newLevel.img || makeThumb(item.newLevel.name || "New Level", "#64748b", "#111522"),
+      video: normalizeVideo(item.newLevel.video || ""),
+      victorList: []
+    };
+    levels.push(newLevel);
+    reindexLevels();
+    populateLevelSelect();
+  }
+
+  if(item.type === "record"){
+    const level = levels.find(x => x.rank === item.levelRank);
+    if(level){
+      if(!Array.isArray(level.victorList)) level.victorList = [];
+      if(!level.victorList.includes(item.username)){
+        level.victorList.push(item.username);
+      }
+    }
+  }
+
+  item.status = "approved";
+  saveState();
+  renderAll();
+}
+
+function rejectSubmission(id){
+  const item = pending.find(x => x.id === id);
+  if(!item) return;
+  item.status = "rejected";
+  saveState();
+  renderQueue();
+}
+
+function deleteSubmission(id){
+  pending = pending.filter(x => x.id !== id);
+  saveState();
+  renderQueue();
+}
+
+function submitForm() {
+  const type = submissionTypeEl.value;
+  const username = document.getElementById("username").value.trim();
+  const recordLink = document.getElementById("recordLink").value.trim();
+  const rawFootage = document.getElementById("rawFootage").value.trim();
+  const notes = document.getElementById("notes").value.trim();
+
+  if (!username || !recordLink || !rawFootage) {
+    alert("Fill in username, record link, and raw footage.");
+    return;
+  }
+
+  const item = {
+    id: String(Date.now()) + Math.random().toString(16).slice(2),
+    type,
+    username,
+    recordLink,
+    rawFootage,
+    notes,
+    status: "pending",
+    createdAt: new Date().toISOString()
+  };
+
+  if (type === "record") {
+    const level = levels.find(x => String(x.rank) === existingLevelEl.value);
+    if (!level) {
+      alert("Pick a level first.");
+      return;
+    }
+    item.levelRank = level.rank;
+    item.levelName = level.name;
+    item.levelId = level.id;
+  } else {
+    const newName = document.getElementById("newName").value.trim();
+    const newCreator = document.getElementById("newCreator").value.trim();
+    const newLevelId = document.getElementById("newLevelId").value.trim();
+    const newDiff = document.getElementById("newDiff").value.trim();
+    const newPoints = document.getElementById("newPoints").value.trim();
+    const newImg = document.getElementById("newImg").value.trim();
+    const newVideo = document.getElementById("newVideo").value.trim();
+
+    if (!newName || !newCreator || !newLevelId || !newDiff) {
+      alert("Fill in level name, creator, level ID, and difficulty for a new level.");
+      return;
+    }
+
+    item.newLevel = {
+      name: newName,
+      creator: newCreator,
+      id: newLevelId,
+      diff: newDiff,
+      points: newPoints || "0",
+      img: newImg || "",
+      video: normalizeVideo(newVideo || "")
+    };
+  }
+
+  pending.unshift(item);
+  saveState();
+  renderQueue();
+
+  document.getElementById("username").value = "";
+  document.getElementById("recordLink").value = "";
+  document.getElementById("rawFootage").value = "";
+  document.getElementById("notes").value = "";
+  document.getElementById("newName").value = "";
+  document.getElementById("newCreator").value = "";
+  document.getElementById("newLevelId").value = "";
+  document.getElementById("newDiff").value = "";
+  document.getElementById("newPoints").value = "";
+  document.getElementById("newImg").value = "";
+  document.getElementById("newVideo").value = "";
+
+  alert("Submission sent for review.");
+}
+
+submissionTypeEl.addEventListener("change", () => {
+  const isNew = submissionTypeEl.value === "newLevel";
+  newLevelFields.style.display = isNew ? "block" : "none";
+  existingLevelWrap.style.display = isNew ? "none" : "block";
+});
+
+document.getElementById("submitBtn").addEventListener("click", submitForm);
+searchEl.addEventListener("input", e => renderList(e.target.value));
+
+function renderAll(){
+  updateAdminStatus();
+  populateLevelSelect();
+  renderList(searchEl.value);
+  renderQueue();
+}
+
+window.addEventListener("load", () => {
+  renderAll();
+});
+</script>
 
 </body>
 </html>
