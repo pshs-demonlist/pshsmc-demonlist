@@ -19,8 +19,6 @@
   .btn{border:none;border-radius:8px;padding:10px 14px;background:#1b2238;color:var(--text);cursor:pointer;font-weight:700}
   .btn:hover{filter:brightness(1.08)}
   .btn-primary{background:#2d3a63}
-  .btn-good{background:#245b45}
-  .btn-danger{background:var(--danger)}
   .badge{display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#dce4f5;background:#0b0f1a}
   .muted{color:var(--muted);font-size:13px}
   #search,.input,.select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#0b0f1a;color:var(--text);outline:none;font-size:14px}
@@ -40,14 +38,8 @@
   .back{color:var(--muted);cursor:pointer;margin-bottom:12px;display:inline-block}
   .video{width:100%;aspect-ratio:16/9;margin-top:12px;background:#0f1320;border:1px solid var(--line);border-radius:10px;overflow:hidden}
   iframe{width:100%;height:100%;border:none}
-  .no-video{padding:18px;color:var(--muted);font-size:14px}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px;font-size:13px;color:var(--muted)}
   .stat{background:#0f1320;border:1px solid var(--line);padding:10px;border-radius:8px}
-  .queue-item{border:1px solid var(--line);border-radius:10px;padding:12px;background:#0b0f1a;margin-bottom:10px}
-  .queue-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
-  .queue-title{font-weight:700}
-  .queue-meta{font-size:13px;color:var(--muted);margin-top:4px;word-break:break-word}
-  .queue-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .empty{padding:16px;color:var(--muted);border:1px solid var(--line);border-radius:10px;background:#0f1320}
   .tiny{font-size:12px;color:var(--muted);margin-top:8px}
   @media (max-width:700px){
@@ -64,7 +56,7 @@
   <div id="listPage">
     <div class="section">
       <h3>Search</h3>
-      <input id="search" type="text" placeholder="Search demons, creators, victor lists, or difficulty..." />
+      <input id="search" type="text" placeholder="Search demons, creators, or difficulty..." />
     </div>
 
     <div class="section">
@@ -74,7 +66,6 @@
 
     <div class="section">
       <h3>Submit a record or propose a new level</h3>
-
       <div class="grid">
         <div>
           <label class="muted">Submission type</label>
@@ -100,57 +91,26 @@
         </div>
       </div>
 
-      <div class="grid" style="margin-top:12px;">
-        <div>
-          <label class="muted">Raw footage link</label>
-          <input id="rawFootage" class="input" type="text" placeholder="Google Drive / YouTube / other link" />
-        </div>
-        <div>
-          <label class="muted">Notes (optional)</label>
-          <input id="notes" class="input" type="text" placeholder="Any extra notes" />
-        </div>
-      </div>
-
       <div id="newLevelFields" style="display:none; margin-top:12px;">
         <h3 style="margin:0 0 12px;">New level details</h3>
-
         <div class="grid">
           <div><label class="muted">Level name</label><input id="newName" class="input" type="text" placeholder="Level name" /></div>
           <div><label class="muted">Creator</label><input id="newCreator" class="input" type="text" placeholder="Level creator" /></div>
         </div>
-
         <div class="grid" style="margin-top:12px;">
           <div><label class="muted">Level ID</label><input id="newLevelId" class="input" type="text" placeholder="e.g. 10565740" /></div>
-          <div><label class="muted">Difficulty</label><input id="newDiff" class="input" type="text" placeholder="Extreme Demon / Insane Demon / etc." /></div>
-        </div>
-
-        <div class="grid" style="margin-top:12px;">
-          <div><label class="muted">Points</label><input id="newPoints" class="input" type="text" placeholder="23.99" /></div>
-          <div><label class="muted">Thumbnail image URL</label><input id="newImg" class="input" type="text" placeholder="Image URL" /></div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <label class="muted">Video URL</label>
-          <input id="newVideo" class="input" type="text" placeholder="YouTube embed or Drive preview URL" />
         </div>
       </div>
 
       <div class="topbar">
         <button class="btn btn-primary" id="submitBtn">Send for review</button>
       </div>
-
-      <div class="tiny">This version sends submissions into GitHub Issues so the site stays GitHub-only and safe.</div>
-    </div>
-
-    <div class="section">
-      <h3>Review queue</h3>
-      <div class="muted" style="margin-bottom:12px;">This shows `pending.json` from the repo.</div>
-      <div id="queue"></div>
+      <div class="tiny">Submissions are automatically routed to your connected spreadsheet validation log pipeline.</div>
     </div>
   </div>
 
   <div class="detail" id="detailPage">
-    <div class="back" onclick="back()">← Back to list</div>
+    <div class="back" id="backBtn">← Back to list</div>
     <h2 id="dTitle"></h2>
     <div id="dInfo" class="sub"></div>
     <div class="video" id="video"></div>
@@ -158,6 +118,264 @@
   </div>
 </div>
 
-<script src="main.js"></script>
+<script>
+// UNTOUCHED RAW DATA STRUCTURE
+const demonData = [
+  {
+    "id": "10565740",
+    "rank": 1,
+    "name": "Bloodbath",
+    "creator": "Riot",
+    "diff": "Extreme Demon",
+    "points": "23.99",
+    "img": "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
+    "victorList": ["sadboi202"]
+  },
+  {
+    "id": "3979721",
+    "rank": 2,
+    "name": "Cataclysm",
+    "creator": "GGboy",
+    "diff": "Extreme Demon",
+    "points": "20.92",
+    "img": "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
+    "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+    "victorList": ["sadboi202"]
+  },
+  {
+    "id": "7054561",
+    "rank": 3,
+    "name": "Poltergeist",
+    "creator": "AndromedaGMD",
+    "diff": "Insane Demon",
+    "points": "15.94",
+    "img": "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/cmF0ZS1teS10aHVt/Ym5haWwtbm8taS1k/aWRudC1iZWF0LXBv/bHRlcmdlaXN0LXYw/LXJuN2w2eHFsdXVw/YzEucG5nP3dpZHRo/PTEyODAmZm9ybWF0/PXBuZyZhdXRvPXdl/YnAmcz1jNjEwYzZi/NjZmMWJiMGQzN2Q0/ZTE0NzQ0ODY5OGZl/OWI4OGQ4YTgw",
+    "video": "https://www.youtube.com/embed/N05ijX3vz9U",
+    "victorList": ["sadboi202"]
+  },
+  {
+    "id": "4284013",
+    "rank": 4,
+    "name": "Nine Circles",
+    "creator": "Zobros",
+    "diff": "Hard Demon",
+    "points": "11.16",
+    "img": "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlv/L2NhY2hlL2RhdGEv/aW1hZ2UvZ2VvbWV0/cnktZGFzaC1uaW5l/LWNpcmNsZXMtbTE5/MngxMDgud2VicA",
+    "video": "https://www.youtube.com/embed/DO36t7DV0ec",
+    "victorList": ["sadboi202"]
+  },
+  {
+    "id": "6939821",
+    "rank": 5,
+    "name": "Jawbreaker",
+    "creator": "ZenthicAlpha",
+    "diff": "Hard Demon",
+    "points": "11.14",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
+    "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
+    "victorList": ["daBlooKat121"]
+  },
+  {
+    "id": "111205474",
+    "rank": 6,
+    "name": "Thermal Madness",
+    "creator": "ManiacDan",
+    "diff": "Hard Demon",
+    "points": "8.01",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
+    "video": "",
+    "victorList": ["daBlooKat121"]
+  },
+  {
+    "id": "7",
+    "rank": 7,
+    "name": "Solar Circles",
+    "creator": "D4rkGryf",
+    "diff": "Medium Demon",
+    "points": "5.91",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2ItNGFmOC1hZmIzLTZjNjhjYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
+    "video": "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
+    "victorList": ["daBlooKat121"]
+  }
+];
+
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
+
+// DOM MANIPULATION ROOT
+const listContainer = document.getElementById("list");
+const searchInput = document.getElementById("search");
+const existingLevelSelect = document.getElementById("existingLevel");
+const submissionType = document.getElementById("submissionType");
+const existingLevelWrap = document.getElementById("existingLevelWrap");
+const newLevelFields = document.getElementById("newLevelFields");
+const submitBtn = document.getElementById("submitBtn");
+
+const listPage = document.getElementById("listPage");
+const detailPage = document.getElementById("detailPage");
+const backBtn = document.getElementById("backBtn");
+
+// RENDERING INTERFACE LOGIC
+function renderList(data) {
+  listContainer.innerHTML = "";
+  if(data.length === 0) {
+    listContainer.innerHTML = '<div class="empty">No matching records discovered</div>';
+    return;
+  }
+  data.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.onclick = () => showDetail(item);
+    row.innerHTML = `
+      <div class="rank">#${item.rank}</div>
+      <div class="thumb"><img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
+      <div class="info">
+        <div class="title">${item.name}</div>
+        <div class="sub">By ${item.creator} • ${item.diff}</div>
+        <div class="points">${item.points} Points</div>
+      </div>
+    `;
+    listContainer.appendChild(row);
+  });
+}
+
+function initSelectOptions() {
+  existingLevelSelect.innerHTML = "";
+  demonData.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.name;
+    opt.dataset.id = item.id;
+    opt.dataset.creator = item.creator;
+    opt.textContent = `${item.name} (${item.id})`;
+    existingLevelSelect.appendChild(opt);
+  });
+}
+
+// FORM VIEWS SPLIT TOGGLE
+submissionType.onchange = () => {
+  if (submissionType.value === "record") {
+    existingLevelWrap.style.style.display = "block";
+    newLevelFields.style.display = "none";
+  } else {
+    existingLevelWrap.style.display = "none";
+    newLevelFields.style.display = "block";
+  }
+};
+
+// SEARCH DATA FILTERING
+searchInput.oninput = () => {
+  const query = searchInput.value.toLowerCase().trim();
+  const filtered = demonData.filter(item => 
+    item.name.toLowerCase().includes(query) || 
+    item.creator.toLowerCase().includes(query) || 
+    item.diff.toLowerCase().includes(query)
+  );
+  renderList(filtered);
+};
+
+// DISPLAY DETAILS PAGE
+function showDetail(item) {
+  listPage.style.display = "none";
+  detailPage.style.display = "block";
+  
+  document.getElementById("dTitle").textContent = `${item.name} (By ${item.creator})`;
+  document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — ${item.points} Points`;
+  
+  const videoWrap = document.getElementById("video");
+  if(item.video) {
+    videoWrap.innerHTML = `<iframe src="${item.video}" allowfullscreen></iframe>`;
+  } else {
+    videoWrap.innerHTML = `<div class="no-video">No layout documentation video embedded.</div>`;
+  }
+  
+  const statsWrap = document.getElementById("stats");
+  statsWrap.innerHTML = `
+    <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
+    <div class="stat"><h4>Verified Victors</h4><p>${item.victorList.join(", ") || "None registered"}</p></div>
+  `;
+}
+
+backBtn.onclick = () => {
+  detailPage.style.display = "none";
+  listPage.style.display = "block";
+};
+
+// FORM POST ASYNC DISPATCH PIPELINE
+submitBtn.onclick = async () => {
+  const type = submissionType.value;
+  const username = document.getElementById("username").value.trim();
+  const recordLink = document.getElementById("recordLink").value.trim();
+
+  if(!username || !recordLink) {
+    alert("Please ensure both Username and valid Record Link fields are populated.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Processing payload...";
+
+  let payload = {};
+
+  if(type === "record") {
+    const selectedOpt = existingLevelSelect.options[existingLevelSelect.selectedIndex];
+    payload = {
+      type: "record",
+      levelName: selectedOpt.value,
+      id: selectedOpt.dataset.id,
+      username: username,
+      creator: selectedOpt.dataset.creator,
+      recordLink: recordLink
+    };
+  } else {
+    const newName = document.getElementById("newName").value.trim();
+    const newCreator = document.getElementById("newCreator").value.trim();
+    const newLevelId = document.getElementById("newLevelId").value.trim();
+
+    if(!newName || !newCreator || !newLevelId) {
+      alert("Please fully specify all fields for the Level Proposal execution parameters.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send for review";
+      return;
+    }
+
+    payload = {
+      type: "newLevel",
+      newName: newName,
+      newLevelId: newLevelId,
+      username: username,
+      newCreator: newCreator,
+      recordLink: recordLink
+    };
+  }
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+    
+    if(result.status === "ok") {
+      alert(`Success! Data written securely into Sheet tab target: ${result.targetSheet}`);
+      document.getElementById("username").value = "";
+      document.getElementById("recordLink").value = "";
+    } else {
+      alert("The spreadsheet engine rejected layout payload format configuration: " + result.message);
+    }
+  } catch (err) {
+    alert("System API communication failure context details: " + err.toString());
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send for review";
+  }
+};
+
+// INITIATE LIFECYCLE
+window.onload = () => {
+  renderList(demonData);
+  initSelectOptions();
+};
+</script>
 </body>
 </html>
