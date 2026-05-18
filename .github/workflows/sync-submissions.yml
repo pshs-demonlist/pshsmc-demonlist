@@ -1,0 +1,73 @@
+name: Sync Submissions
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  issues: read
+
+jobs:
+  sync:
+    if: contains(github.event.issue.labels.*.name, 'submission')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync issue into pending.json
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            const body = context.payload.issue.body || '';
+            const read = (key) => {
+              const re = new RegExp(`^${key}:\\s*(.*)$`, 'mi');
+              const m = body.match(re);
+              return m ? m[1].trim() : '';
+            };
+
+            const type = read('type') || 'record';
+            const item = {
+              id: String(context.payload.issue.number),
+              type,
+              username: read('username'),
+              recordLink: read('recordLink'),
+              rawFootage: read('rawFootage'),
+              notes: read('notes'),
+              status: 'pending',
+              levelId: read('levelId'),
+              levelName: read('levelName'),
+              createdAt: new Date().toISOString()
+            };
+
+            if (type === 'newLevel') {
+              item.newLevel = {
+                name: read('name'),
+                creator: read('creator'),
+                id: read('newLevelId'),
+                diff: read('diff'),
+                points: read('points'),
+                img: read('img'),
+                video: read('video')
+              };
+            }
+
+            const file = 'pending.json';
+            const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const idx = data.findIndex(x => String(x.id) === String(item.id));
+            if (idx >= 0) data[idx] = item;
+            else data.unshift(item);
+
+            fs.writeFileSync(file, JSON.stringify(data, null, 2));
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pending.json
+          git commit -m "Sync submission #${{ github.event.issue.number }}" || exit 0
+          git push
