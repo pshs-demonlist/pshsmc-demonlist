@@ -236,14 +236,10 @@
         </div>
       </div>
 
-      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr 1fr;">
+      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Username</label>
           <input id="username" class="input" type="text" placeholder="Your username" />
-        </div>
-        <div>
-          <label class="muted">Progress (%)</label>
-          <input id="submissionPercent" class="input" type="number" min="50" max="100" value="100" placeholder="Min 50%" />
         </div>
         <div>
           <label class="muted">Record link (YouTube)</label>
@@ -283,7 +279,7 @@
     <h3 id="pTotalPoints" style="color: var(--good); margin: 0 0 20px 0;"></h3>
     
     <div id="pSpecificVideoSection" style="margin-bottom: 20px; display: none;">
-      <h3 id="pSpecificVideoTitle">Completion Video</h3>
+      <h3 id="pSpecificVideoTitle">Proof Video</h3>
       <div class="video" id="pProfileVideo"></div>
     </div>
 
@@ -374,7 +370,7 @@ const demonData = [
     "creator": "pocke",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTt6ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
     "video": "https://www.youtube.com/embed/qnGctCfis_k",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k", "percent": 100 }
@@ -400,7 +396,7 @@ const demonData = [
     "creator": "ManiacDan",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTt6ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
     "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ", "percent": 100 }
@@ -426,7 +422,7 @@ const demonData = [
     "creator": "D4rkGryf",
     "verifier": "daBlooKat121",
     "diff": "Medium Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc6d-1ba72cc4-d39b-4c11-af36-d2082581e90c.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc6d-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzZkLTFiYTcyY2M0LWQzOWItNGMxMS1hZjM2LWQyMDgyNTgxZTkwYy5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.6D0L_9FEJg95NaUPdNG073goyN10zWnfveNLQpmacwY",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc6d-1ba72cc4-d39b-4c11-af36-d2082581e90c.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc6d-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTt6ZDQ2ZjU3Njk5My9kbTJjYzZkLTFiYTcyY2M0LWQzOWItNGMxMS1hZjM2LWQyMDgyNTgxZTkwYy5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.6D0L_9FEJg95NaUPdNG073goyN10zWnfveNLQpmacwY",
     "video": "https://www.youtube.com/embed/IaXB0hdL5RM",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM", "percent": 100 }
@@ -477,46 +473,30 @@ function toggleBlacklist() {
   }
 }
 
-function cleanVictorList(list, verifierName = "") {
-  let parsed = [];
-  
-  if (verifierName && verifierName.trim().length > 0) {
-    parsed.push({ name: verifierName.trim(), isVerifier: true, percent: 100 });
-  }
+function parseParticipants(level) {
+  let entries = [];
+  const verifierName = (level.verifier || "").trim();
+  let rawVictors = level.victorList || [];
 
-  if (list) {
-    list.forEach(entry => {
-      let entName = "";
-      let entVid = "";
-      let entPct = 100;
-      
-      if (typeof entry === 'object' && entry !== null) {
-        entName = entry.name ? entry.name.trim() : "";
-        entVid = entry.video ? entry.video.trim() : "";
-        entPct = entry.percent !== undefined ? Number(entry.percent) : 100;
-      } else if (typeof entry === 'string') {
-        entName = entry.trim();
-      }
+  rawVictors.forEach(v => {
+    const name = (v.name || "").trim();
+    if (!name) return;
 
-      if (entName && entPct >= LIST_MIN_PERCENT) {
-        parsed.push({ name: entName, video: entVid, isVerifier: false, percent: entPct });
-      }
-    });
-  }
+    const isVerifier = name.toLowerCase() === verifierName.toLowerCase();
+    const pct = v.percent !== undefined ? Number(v.percent) : 100;
 
-  let uniqueMap = {};
-  parsed.forEach(item => {
-    const lowName = item.name.toLowerCase();
-    if (!uniqueMap[lowName]) {
-      uniqueMap[lowName] = { name: item.name, video: item.video || "", isVerifier: item.isVerifier, percent: item.percent };
-    } else {
-      if (item.isVerifier) uniqueMap[lowName].isVerifier = true;
-      if (item.percent > uniqueMap[lowName].percent) uniqueMap[lowName].percent = item.percent;
-      if (item.video && !uniqueMap[lowName].video) uniqueMap[lowName].video = item.video;
+    if (pct >= LIST_MIN_PERCENT) {
+      entries.push({
+        name: name,
+        video: (v.video || "").trim(),
+        isVerifier: isVerifier,
+        isVictor: !isVerifier, 
+        percent: pct
+      });
     }
   });
 
-  return Object.values(uniqueMap).filter(item => item.name.length > 0);
+  return entries;
 }
 
 function calculatePoints(rank, percent = 100) {
@@ -543,15 +523,14 @@ function generateLeaderboard() {
   const scores = {};
 
   demonData.forEach(level => {
-    const eligiblePlayers = cleanVictorList(level.victorList, level.verifier);
+    const entries = parseParticipants(level);
 
-    eligiblePlayers.forEach(p => {
+    entries.forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
-      const standardName = p.name.trim();
-      const key = standardName.toLowerCase();
+      const key = p.name.toLowerCase();
 
       if (!scores[key]) {
-        scores[key] = { name: standardName, totalPoints: 0 };
+        scores[key] = { name: p.name, totalPoints: 0 };
       }
       scores[key].totalPoints += pts;
     });
@@ -601,12 +580,18 @@ function renderList(data) {
     };
 
     const maximumPointsPossible = calculatePoints(item.rank, 100);
-    const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
+    const participants = parseParticipants(item);
     
     let victorHTML = "None";
-    if (cleanedParticipants.length) {
-      victorHTML = cleanedParticipants.map(v => {
-        let tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+    if (participants.length) {
+      victorHTML = participants.map(v => {
+        let tagText = "";
+        if (v.isVerifier) {
+          tagText += ' <span class="tag-verifier">[Verifier]</span>';
+        } else if (v.isVictor && v.percent === 100) {
+          tagText += ' <span class="tag-percent">(Victor)</span>';
+        }
+        
         if (v.percent < 100) {
           tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
         }
@@ -673,13 +658,21 @@ function showDetail(item) {
   detailPage.style.display = "block";
   
   const pointsMax = calculatePoints(item.rank, 100);
-  const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
+  const participants = parseParticipants(item);
   
   let victorHTML = "None registered";
-  if (cleanedParticipants.length) {
-    victorHTML = cleanedParticipants.map(v => {
-      let tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
-      if(v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
+  if (participants.length) {
+    victorHTML = participants.map(v => {
+      let tagText = "";
+      if (v.isVerifier) {
+        tagText += ' <span class="tag-verifier">[Verifier]</span>';
+      } else if (v.isVictor && v.percent === 100) {
+        tagText += ' <span class="tag-percent">(Victor)</span>';
+      }
+
+      if(v.percent < 100) {
+        tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
+      }
       return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
     }).join(", ");
   }
@@ -698,7 +691,7 @@ function showDetail(item) {
   statsWrap.innerHTML = `
     <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
     <div class="stat"><h4>Level Verifier</h4><p>${item.verifier || 'Unknown'}</p></div>
-    <div class="stat"><h4>Total Records</h4><p>${cleanedParticipants.length}</p></div>
+    <div class="stat"><h4>Total Records</h4><p>${participants.length}</p></div>
   `;
 }
 
@@ -714,7 +707,7 @@ function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
   } else {
     specVideoSec.style.display = "block";
     specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
-    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No custom video link attached to this user entry.</div>`;
+    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No video link attached to this record configuration.</div>`;
   }
 }
 
@@ -733,18 +726,24 @@ function showProfile(playerName, initialLevelId = null) {
   completionsContainer.innerHTML = "";
 
   demonData.forEach(level => {
-    const participants = cleanVictorList(level.victorList, level.verifier);
+    const participants = parseParticipants(level);
     const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
     
     if (match) {
       const pts = parseFloat(calculatePoints(level.rank, match.percent));
       totalPoints += pts;
 
-      let badgeHTML = match.isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
-      if (!match.isVerifier) {
+      let badgeHTML = "";
+      if (match.isVerifier) {
+        badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
+      }
+      
+      if (match.isVictor) {
         badgeHTML += match.percent === 100 
-          ? ' <span class="badge" style="background:#10b981; color:white;">100% Victor</span>' 
+          ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' 
           : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
+      } else if (!match.isVictor && match.percent < 100) {
+        badgeHTML += ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
       }
 
       let runtimeVideoUrl = match.video;
@@ -815,15 +814,9 @@ submitBtn.onclick = async () => {
   const type = submissionType.value;
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
-  const percent = parseInt(document.getElementById("submissionPercent").value, 10);
 
-  if(!username || !recordLink || isNaN(percent)) {
-    alert("Please ensure Username, Run Progress %, and valid Record Link fields are populated.");
-    return;
-  }
-
-  if (percent < LIST_MIN_PERCENT || percent > 100) {
-    alert(`Submission rejected: Record data must meet or exceed the list requirement of ${LIST_MIN_PERCENT}%.`);
+  if(!username || !recordLink) {
+    alert("Please ensure both your Username and valid Record Link fields are populated.");
     return;
   }
 
@@ -844,7 +837,6 @@ submitBtn.onclick = async () => {
       levelName: selectedOpt.value,
       id: selectedOpt.dataset.id,
       username: username,
-      percent: percent,
       creator: selectedOpt.dataset.creator,
       recordLink: recordLink
     };
@@ -865,7 +857,6 @@ submitBtn.onclick = async () => {
       newName: newName,
       newLevelId: newLevelId,
       username: username,
-      percent: percent,
       newCreator: newCreator,
       recordLink: recordLink
     };
@@ -883,7 +874,6 @@ submitBtn.onclick = async () => {
       alert(`Success! Data written securely into Sheet tab target: ${result.targetSheet}`);
       document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
-      document.getElementById("submissionPercent").value = "100";
     } else {
       alert("The spreadsheet engine rejected layout payload format configuration: " + result.message);
     }
