@@ -21,6 +21,7 @@
   .btn-primary{background:#2d3a63}
   .badge{display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:#dce4f5;background:#0b0f1a}
   .badge-verifier{background:var(--danger);color:#fff;border-color:var(--accent)}
+  .badge-progress{background:#2a365c;color:#a4bbf5;border-color:#3d528a}
   .muted{color:var(--muted);font-size:13px}
   #search,.input,.select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#0b0f1a;color:var(--text);outline:none;font-size:14px}
   #search::placeholder,.input::placeholder{color:var(--muted)}
@@ -81,6 +82,11 @@
     margin-left: 4px;
     font-weight: bold;
   }
+  .tag-percent {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: normal;
+  }
 
   .leaderboard-table {
     width: 100%;
@@ -125,7 +131,6 @@
     color: var(--good);
   }
 
-  /* Blacklist additions */
   .section-header-flex {
     display: flex;
     justify-content: space-between;
@@ -182,7 +187,7 @@
 
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
-        <h3>Levels</h3>
+        <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
         <div class="list" id="list"><div class="empty">Loading demons...</div></div>
       </div>
 
@@ -231,10 +236,14 @@
         </div>
       </div>
 
-      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
+      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr 1fr;">
         <div>
           <label class="muted">Username</label>
           <input id="username" class="input" type="text" placeholder="Your username" />
+        </div>
+        <div>
+          <label class="muted">Progress (%)</label>
+          <input id="submissionPercent" class="input" type="number" min="50" max="100" value="100" placeholder="Min 50%" />
         </div>
         <div>
           <label class="muted">Record link (YouTube)</label>
@@ -279,13 +288,15 @@
     </div>
 
     <div class="section">
-      <h3>Approved List Completions <span class="muted" style="font-weight:normal; font-size:12px;">(Click a level to load completion video)</span></h3>
+      <h3>Approved List Records <span class="muted" style="font-weight:normal; font-size:12px;">(Click a level to load video proof)</span></h3>
       <div id="pCompletions"></div>
     </div>
   </div>
 </div>
 
 <script>
+const LIST_MIN_PERCENT = 50;
+
 const demonData = [
   {
     "id": "10565740",
@@ -294,11 +305,11 @@ const demonData = [
     "creator": "Riot",
     "verifier": "sadboi202",
     "diff": "Extreme Demon",
-    "img": "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    "img": "https://images.wallpapersden.com/image/download/bloodbath-geometry-dash_bWlpZ2mUmZqaraWkpJRmbmdlrWZlbWU.jpg",
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
     "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA" },
-      { "name": "(TAMAYO)", "video": "https://www.youtube.com/embed/28YwyFHeQAM" }
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA", "percent": 100 },
+      { "name": "(TAMAYO)", "video": "https://www.youtube.com/embed/28YwyFHeQAM", "percent": 100 }
     ]
   },
   {
@@ -308,10 +319,10 @@ const demonData = [
     "creator": "GGboy",
     "verifier": "sadboi202",
     "diff": "Extreme Demon",
-    "img": "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
+    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
     "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE" }
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE", "percent": 100 }
     ]
   },
   {
@@ -321,10 +332,10 @@ const demonData = [
     "creator": "AndromedaGMD",
     "verifier": "sadboi202",
     "diff": "Insane Demon",
-    "img": "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/cmF0ZS1teS10aHVt/Ym5haWwtbm8taS1k/aWRudC1iZWF0LXBv/bHRlcmdlaXN0LXYw/LXJuN2w2eHFsdXVw/YzEucG5nP3dpZHRo/PTEyODAmZm9ybWF0/PXBuZyZhdXRvPXdl/YnAmcz1jNjEwYzZi/NjZmMWJiMGQzN2Q0/ZTE0NzQ0ODY5OGZl/OWI4OGQ4YTgw",
+    "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
     "video": "https://www.youtube.com/embed/N05ijX3vz9U",
     "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/N05ijX3vz9U" }
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/N05ijX3vz9U", "percent": 100 }
     ]
   },
   {
@@ -334,12 +345,12 @@ const demonData = [
     "creator": "Zobros",
     "verifier": "sadboi202",
     "diff": "Hard Demon",
-    "img": "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlv/L2NhY2hlL2RhdGEv/aW1hZ2UvZ2VvbWV0/cnktZGFzaC1uaW5l/LWNpcmNsZXMtbTE5/MngxMDgud2VicA",
+    "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
     "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/DO36t7DV0ec" },
-      { "name": "LightBlu", "video": "https://www.youtube.com/embed/aiW_1Iqwej8" },
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/WPilEOcglfw" }
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/DO36t7DV0ec", "percent": 100 },
+      { "name": "LightBlu", "video": "https://www.youtube.com/embed/aiW_1Iqwej8", "percent": 100 },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/WPilEOcglfw", "percent": 100 }
     ]
   },
   {
@@ -349,11 +360,11 @@ const demonData = [
     "creator": "ZenthicAlpha",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLT76ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
     "video": "https://www.youtube.com/embed/1sOWrGaJcy0",
     "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/1sOWrGaJcy0" },
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Qtuk8akfzec" }
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/1sOWrGaJcy0", "percent": 100 },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Qtuk8akfzec", "percent": 100 }
     ]
   },
   { 
@@ -363,10 +374,10 @@ const demonData = [
     "creator": "pocke",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLT76ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
     "video": "https://www.youtube.com/embed/qnGctCfis_k",
     "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k" }
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k", "percent": 100 }
     ]
   },
   {
@@ -376,10 +387,10 @@ const demonData = [
     "creator": "zyphur",
     "verifier": "sSeanyboii",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
+    "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
     "victorList": [
-       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
+       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM", "percent": 100 }
     ]
   },
   {
@@ -392,22 +403,22 @@ const demonData = [
     "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
     "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
     "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ" }
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ", "percent": 100 }
     ]
   },
   {
-‎    "id": "16667379",
-‎    "rank": 9,
-‎    "name": "Liberation",
-‎    "creator": "SERPONGE",
-‎    "verifier": "LightBlu",
-‎    "diff": "Medium Demon",
-‎    "img": "",
-‎    "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
-‎    "victorList": [
-‎      { "name": "LightBlu", "video": "https://www.youtube.com/embed/H3OIQNZkIrE" }
-‎    ]
-‎  },
+    "id": "16667379",
+    "rank": 9,
+    "name": "Liberation",
+    "creator": "SERPONGE",
+    "verifier": "LightBlu",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/H3OIQNZkIrE/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
+    "victorList": [
+      { "name": "LightBlu", "video": "https://www.youtube.com/embed/H3OIQNZkIrE", "percent": 100 }
+    ]
+  },
   {
     "id": "10972106",
     "rank": 10,
@@ -418,7 +429,7 @@ const demonData = [
     "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc6d-1ba72cc4-d39b-4c11-af36-d2082581e90c.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc6d-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzZkLTFiYTcyY2M0LWQzOWItNGMxMS1hZjM2LWQyMDgyNTgxZTkwYy5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.6D0L_9FEJg95NaUPdNG073goyN10zWnfveNLQpmacwY",
     "video": "https://www.youtube.com/embed/IaXB0hdL5RM",
     "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM" }
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM", "percent": 100 }
     ]
   },
   {
@@ -431,7 +442,7 @@ const demonData = [
     "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
     "victorList": [
-      { "name": "aldawg123", "video": "https://www.youtube.com/embed/5bbC7WIM1Kw" }
+      { "name": "aldawg123", "video": "https://www.youtube.com/embed/5bbC7WIM1Kw", "percent": 100 }
     ]
   }
 ];
@@ -470,23 +481,25 @@ function cleanVictorList(list, verifierName = "") {
   let parsed = [];
   
   if (verifierName && verifierName.trim().length > 0) {
-    parsed.push({ name: verifierName.trim(), isVerifier: true });
+    parsed.push({ name: verifierName.trim(), isVerifier: true, percent: 100 });
   }
 
   if (list) {
     list.forEach(entry => {
       let entName = "";
       let entVid = "";
+      let entPct = 100;
       
       if (typeof entry === 'object' && entry !== null) {
         entName = entry.name ? entry.name.trim() : "";
         entVid = entry.video ? entry.video.trim() : "";
+        entPct = entry.percent !== undefined ? Number(entry.percent) : 100;
       } else if (typeof entry === 'string') {
         entName = entry.trim();
       }
 
-      if (entName) {
-        parsed.push({ name: entName, video: entVid, isVerifier: false });
+      if (entName && entPct >= LIST_MIN_PERCENT) {
+        parsed.push({ name: entName, video: entVid, isVerifier: false, percent: entPct });
       }
     });
   }
@@ -495,9 +508,10 @@ function cleanVictorList(list, verifierName = "") {
   parsed.forEach(item => {
     const lowName = item.name.toLowerCase();
     if (!uniqueMap[lowName]) {
-      uniqueMap[lowName] = { name: item.name, video: item.video || "", isVerifier: item.isVerifier };
+      uniqueMap[lowName] = { name: item.name, video: item.video || "", isVerifier: item.isVerifier, percent: item.percent };
     } else {
       if (item.isVerifier) uniqueMap[lowName].isVerifier = true;
+      if (item.percent > uniqueMap[lowName].percent) uniqueMap[lowName].percent = item.percent;
       if (item.video && !uniqueMap[lowName].video) uniqueMap[lowName].video = item.video;
     }
   });
@@ -505,25 +519,34 @@ function cleanVictorList(list, verifierName = "") {
   return Object.values(uniqueMap).filter(item => item.name.length > 0);
 }
 
-function calculatePoints(rank) {
+function calculatePoints(rank, percent = 100) {
   const r = Number(rank);
+  let basePoints = 0;
+  
   if (r <= 75) {
-    return (350 * Math.exp(-0.0654 * (r - 1))).toFixed(2);
+    basePoints = 350 * Math.exp(-0.0654 * (r - 1));
   } else if (r <= 150) {
     const pointsAt75 = 350 * Math.exp(-0.0654 * (75 - 1));
-    return (pointsAt75 * (1 - (r - 75) / 76)).toFixed(2);
+    basePoints = pointsAt75 * (1 - (r - 75) / 76);
+  } else {
+    return "0.00";
   }
-  return "0.00";
+
+  if (percent < 100) {
+    basePoints = basePoints * (Math.pow(5, (percent - LIST_MIN_PERCENT) / (100 - LIST_MIN_PERCENT)) / 10);
+  }
+
+  return basePoints.toFixed(2);
 }
 
 function generateLeaderboard() {
   const scores = {};
 
   demonData.forEach(level => {
-    const pts = parseFloat(calculatePoints(level.rank));
     const eligiblePlayers = cleanVictorList(level.victorList, level.verifier);
 
     eligiblePlayers.forEach(p => {
+      const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const standardName = p.name.trim();
       const key = standardName.toLowerCase();
 
@@ -577,13 +600,16 @@ function renderList(data) {
       }
     };
 
-    const calculatedPoints = calculatePoints(item.rank);
+    const maximumPointsPossible = calculatePoints(item.rank, 100);
     const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
     
     let victorHTML = "None";
     if (cleanedParticipants.length) {
       victorHTML = cleanedParticipants.map(v => {
-        const tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+        let tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+        if (v.percent < 100) {
+          tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
+        }
         return `<span class="victor-link" onclick="event.stopPropagation(); showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
@@ -597,7 +623,7 @@ function renderList(data) {
         <div class="title">${item.name}</div>
         <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
         <div class="sub">Records: ${victorHTML}</div>
-        <div class="points">${calculatedPoints} points</div>
+        <div class="points">Up to ${maximumPointsPossible} points</div>
         <div class="badge">ID ${item.id}</div>
       </div>
     `;
@@ -646,19 +672,20 @@ function showDetail(item) {
   profilePage.style.display = "none";
   detailPage.style.display = "block";
   
-  const currentPoints = calculatePoints(item.rank);
+  const pointsMax = calculatePoints(item.rank, 100);
   const cleanedParticipants = cleanVictorList(item.victorList, item.verifier);
   
   let victorHTML = "None registered";
   if (cleanedParticipants.length) {
     victorHTML = cleanedParticipants.map(v => {
-      const tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+      let tagText = v.isVerifier ? ' <span class="tag-verifier">[Verifier]</span>' : '';
+      if(v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
       return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
     }).join(", ");
   }
   
   document.getElementById("dTitle").textContent = `${item.name} (Created by ${item.creator})`;
-  document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — ${currentPoints} Points`;
+  document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — Max ${pointsMax} Points`;
   
   const videoWrap = document.getElementById("video");
   if(item.video) {
@@ -682,12 +709,12 @@ function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
 
   if (videoUrl) {
     specVideoSec.style.display = "block";
-    specVideoTitle.textContent = `${playerName}'s ${levelName} Completion Proof`;
+    specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
     specVideoBox.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
   } else {
     specVideoSec.style.display = "block";
-    specVideoTitle.textContent = `${playerName}'s ${levelName} Completion Proof`;
-    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No custom video run linked for this player's completion.</div>`;
+    specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
+    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No custom video link attached to this user entry.</div>`;
   }
 }
 
@@ -710,10 +737,15 @@ function showProfile(playerName, initialLevelId = null) {
     const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
     
     if (match) {
-      const pts = parseFloat(calculatePoints(level.rank));
+      const pts = parseFloat(calculatePoints(level.rank, match.percent));
       totalPoints += pts;
 
-      const badgeHTML = match.isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
+      let badgeHTML = match.isVerifier ? ' <span class="badge badge-verifier">Verifier</span>' : '';
+      if (!match.isVerifier) {
+        badgeHTML += match.percent === 100 
+          ? ' <span class="badge" style="background:#10b981; color:white;">100% Victor</span>' 
+          : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
+      }
 
       let runtimeVideoUrl = match.video;
       if (!runtimeVideoUrl && match.isVerifier && level.video) {
@@ -734,7 +766,6 @@ function showProfile(playerName, initialLevelId = null) {
       div.onclick = () => {
         document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
         div.classList.add('active-video');
-        
         updateProfileVideoPlayer(playerName, level.name, runtimeVideoUrl);
       };
 
@@ -760,7 +791,7 @@ function showProfile(playerName, initialLevelId = null) {
   }
 
   if(completionsContainer.innerHTML === "") {
-    completionsContainer.innerHTML = '<div class="empty">No approved completions listed.</div>';
+    completionsContainer.innerHTML = '<div class="empty">No approved run records found for this player.</div>';
     document.getElementById("pSpecificVideoSection").style.display = "none";
   }
 }
@@ -784,13 +815,18 @@ submitBtn.onclick = async () => {
   const type = submissionType.value;
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
+  const percent = parseInt(document.getElementById("submissionPercent").value, 10);
 
-  if(!username || !recordLink) {
-    alert("Please ensure both Username and valid Record Link fields are populated.");
+  if(!username || !recordLink || isNaN(percent)) {
+    alert("Please ensure Username, Run Progress %, and valid Record Link fields are populated.");
     return;
   }
 
-  // Blacklist enforcement logic block
+  if (percent < LIST_MIN_PERCENT || percent > 100) {
+    alert(`Submission rejected: Record data must meet or exceed the list requirement of ${LIST_MIN_PERCENT}%.`);
+    return;
+  }
+
   if (username.toLowerCase() === "c0ms") {
     alert("Error: This username has been permanently blacklisted from list submissions.");
     return;
@@ -808,6 +844,7 @@ submitBtn.onclick = async () => {
       levelName: selectedOpt.value,
       id: selectedOpt.dataset.id,
       username: username,
+      percent: percent,
       creator: selectedOpt.dataset.creator,
       recordLink: recordLink
     };
@@ -828,6 +865,7 @@ submitBtn.onclick = async () => {
       newName: newName,
       newLevelId: newLevelId,
       username: username,
+      percent: percent,
       newCreator: newCreator,
       recordLink: recordLink
     };
@@ -845,6 +883,7 @@ submitBtn.onclick = async () => {
       alert(`Success! Data written securely into Sheet tab target: ${result.targetSheet}`);
       document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
+      document.getElementById("submissionPercent").value = "100";
     } else {
       alert("The spreadsheet engine rejected layout payload format configuration: " + result.message);
     }
