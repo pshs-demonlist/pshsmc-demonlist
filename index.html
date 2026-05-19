@@ -24,7 +24,7 @@
   .muted{color:var(--muted);font-size:13px}
   #search,.input,.select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#0b0f1a;color:var(--text);outline:none;font-size:14px}
   #search::placeholder,.input::placeholder{color:var(--muted)}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:16px}
   .list{border:1px solid var(--line);border-radius:10px;overflow:hidden}
   .row{display:flex;gap:14px;padding:14px;border-bottom:1px solid var(--line);background:#0f1320;cursor:pointer;transition:.15s}
   .row:hover{background:#171c2d}
@@ -125,10 +125,48 @@
     color: var(--good);
   }
 
+  /* Blacklist additions */
+  .section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .section-header-flex h3 {
+    margin: 0;
+  }
+  .toggle-link {
+    font-size: 13px;
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: bold;
+    user-select: none;
+  }
+  .toggle-link:hover {
+    text-decoration: underline;
+  }
+  .blacklist-content {
+    display: none;
+    padding: 12px;
+    background: #0f1320;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .blacklist-item {
+    padding: 8px 4px;
+    color: #ff6b6b;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 75, 75, 0.1);
+  }
+  .blacklist-item:last-child {
+    border-bottom: none;
+  }
+
   @media (max-width:700px){
     .row{flex-direction:column}
     .thumb{width:100%;height:auto;aspect-ratio:16/9}
-    .grid,.stats{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .stats {grid-template-columns: 1fr;}
   }
 </style>
 </head>
@@ -142,33 +180,44 @@
       <input id="search" type="text" placeholder="Search demons, creators, or difficulty..." />
     </div>
 
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;" class="grid">
+    <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels</h3>
         <div class="list" id="list"><div class="empty">Loading demons...</div></div>
       </div>
 
-      <div class="section" style="margin-bottom: 0; align-self: start;">
-        <h3>Stats Viewer (Leaderboard)</h3>
-        <div class="list" style="background: #0f1320;">
-          <table class="leaderboard-table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Player</th>
-                <th style="text-align: right;">Points</th>
-              </tr>
-            </thead>
-            <tbody id="leaderboardBody">
-              </tbody>
-          </table>
+      <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
+        <div class="section" style="margin-bottom: 0;">
+          <h3>Stats Viewer (Leaderboard)</h3>
+          <div class="list" style="background: #0f1320;">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Player</th>
+                  <th style="text-align: right;">Points</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section" style="margin-bottom: 0;">
+          <div class="section-header-flex">
+            <h3>Blacklisted Players</h3>
+            <span id="blacklistToggle" class="toggle-link" onclick="toggleBlacklist()">*maximize*</span>
+          </div>
+          <div id="blacklistContent" class="blacklist-content">
+            <div class="blacklist-item">c0ms</div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="section" style="margin-top: 16px;">
       <h3>Submit a record or propose a new level</h3>
-      <div class="grid">
+      <div class="grid" style="grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Submission type</label>
           <select id="submissionType" class="select">
@@ -182,7 +231,7 @@
         </div>
       </div>
 
-      <div class="grid" style="margin-top:12px;">
+      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Username</label>
           <input id="username" class="input" type="text" placeholder="Your username" />
@@ -195,11 +244,11 @@
 
       <div id="newLevelFields" style="display:none; margin-top:12px;">
         <h3 style="margin:0 0 12px;">New level details</h3>
-        <div class="grid">
+        <div class="grid" style="grid-template-columns: 1fr 1fr;">
           <div><label class="muted">Level name</label><input id="newName" class="input" type="text" placeholder="Level name" /></div>
           <div><label class="muted">Creator</label><input id="newCreator" class="input" type="text" placeholder="Level creator" /></div>
         </div>
-        <div class="grid" style="margin-top:12px;">
+        <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
           <div><label class="muted">Level ID</label><input id="newLevelId" class="input" type="text" placeholder="e.g. 10565740" /></div>
         </div>
       </div>
@@ -237,7 +286,6 @@
 </div>
 
 <script>
-// MANUALLY ADJUSTABLE DATA LOG - SYNTAX BUG FIXED HERE
 const demonData = [
   {
     "id": "10565740",
@@ -315,7 +363,7 @@ const demonData = [
     "creator": "pocke",
     "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2pza1-db66b383-6d9d-43ab-8caa-dc785068169f.png/v1/fill/w_1192,h_670,q_70,strp/tower_descent_by_pshsdemonlist_dm2pza1-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLT76ZDQ2ZjU3Njk5My9kbTJwemExLWRiNjZiMzgzLTZkOWQtNDNhYi04Y2FhLWRjNzg1MDY4MTY5Zi5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.F7v-VajgofGI_SsbF0D0uLXPtaDCS-jvQ0orwPXj2vo",
     "video": "https://www.youtube.com/embed/qnGctCfis_k",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k" }
@@ -328,7 +376,7 @@ const demonData = [
     "creator": "zyphur",
     "verifier": "sSeanyboii",
     "diff": "Hard Demon",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
+    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
     "victorList": [
        { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM" }
@@ -392,6 +440,18 @@ const backBtn = document.getElementById("backBtn");
 
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
+
+function toggleBlacklist() {
+  const content = document.getElementById("blacklistContent");
+  const toggleLink = document.getElementById("blacklistToggle");
+  if (content.style.display === "block") {
+    content.style.display = "none";
+    toggleLink.textContent = "*maximize*";
+  } else {
+    content.style.display = "block";
+    toggleLink.textContent = "*minimize*";
+  }
+}
 
 function cleanVictorList(list, verifierName = "") {
   let parsed = [];
@@ -714,6 +774,12 @@ submitBtn.onclick = async () => {
 
   if(!username || !recordLink) {
     alert("Please ensure both Username and valid Record Link fields are populated.");
+    return;
+  }
+
+  // Blacklist enforcement logic block
+  if (username.toLowerCase() === "c0ms") {
+    alert("Error: This username has been permanently blacklisted from list submissions.");
     return;
   }
 
