@@ -11,7 +11,137 @@
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-  header{background:var(--panel);border-bottom:1px solid var(--line);padding:16px 18px;font-size:20px;font-weight:700;position:sticky;top:0;z-index:10}
+  
+  /* Header & Topbar Navigation */
+  header{
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    padding:16px 18px;
+    font-size:20px;
+    font-weight:700;
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .menu-trigger {
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    background:none;
+    border:none;
+    padding:5px;
+  }
+  .menu-trigger span {
+    display:block;
+    width:24px;
+    height:3px;
+    background:var(--text);
+    transition:0.3s;
+  }
+  
+  /* Slide down menu container */
+  .nav-menu {
+    position:fixed;
+    top:58px;
+    right:0;
+    width:100%;
+    max-width:300px;
+    background:var(--panel);
+    border-left:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    transform:translateY(-150%);
+    transition:transform 0.4s ease;
+    z-index:99;
+    padding:10px 0;
+    box-shadow:0 10px 20px rgba(0,0,0,0.5);
+  }
+  .nav-menu.open {
+    transform:translateY(0);
+  }
+  .nav-item {
+    display:block;
+    padding:14px 20px;
+    color:var(--text);
+    text-decoration:none;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    transition:background 0.2s;
+  }
+  .nav-item:hover {
+    background:#1b2238;
+    color:var(--accent);
+  }
+
+  /* Form Flash Highlight Glow Effect */
+  @keyframes formGlow {
+    0% { border-color: var(--line); box-shadow: none; }
+    50% { border-color: var(--accent); box-shadow: 0 0 15px rgba(255, 75, 75, 0.6); }
+    100% { border-color: var(--line); box-shadow: none; }
+  }
+  .glow-active {
+    animation: formGlow 1.2s ease-in-out;
+  }
+
+  /* Submission Guidelines Modal Window */
+  .modal-overlay {
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.75);
+    backdrop-filter:blur(3px);
+    z-index:200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+  .modal {
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    width:100%;
+    max-width:650px;
+    max-height:85vh;
+    overflow-y:auto;
+    padding:24px;
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  }
+  .modal-header {
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:16px;
+    color:var(--accent);
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+  .modal-close {
+    position:absolute;
+    top:18px;
+    right:20px;
+    background:none;
+    border:none;
+    color:var(--muted);
+    font-size:22px;
+    cursor:pointer;
+  }
+  .modal-close:hover { color:var(--text); }
+  .rules-list {
+    padding-left:20px;
+    margin:0;
+  }
+  .rules-list li {
+    margin-bottom:12px;
+    font-size:14px;
+    line-height:1.5;
+    color:#dce4f5;
+  }
+
+  /* Formatting layout styles */
   .wrap{max-width:1100px;margin:20px auto;padding:0 16px 32px}
   .section{background:#0f1320;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px}
   .section h3{margin:0 0 12px;font-size:16px}
@@ -52,9 +182,7 @@
     cursor: pointer;
     font-weight: bold;
   }
-  .victor-link:hover {
-    text-decoration: underline;
-  }
+  .victor-link:hover { text-decoration: underline; }
   
   .profile-level-item {
     padding: 12px;
@@ -68,115 +196,74 @@
     cursor: pointer;
     transition: .15s;
   }
-  .profile-level-item:hover {
-    background: #171d2f;
-    border-color: var(--muted);
-  }
-  .profile-level-item.active-video {
-    border-color: var(--accent);
-    background: #151a2b;
-  }
-  .tag-verifier {
-    font-size: 11px;
-    color: #ffb703;
-    margin-left: 4px;
-    font-weight: bold;
-  }
-  .tag-percent {
-    font-size: 11px;
-    color: var(--muted);
-    font-weight: normal;
-  }
+  .profile-level-item:hover { background: #171d2f; border-color: var(--muted); }
+  .profile-level-item.active-video { border-color: var(--accent); background: #151a2b; }
+  .tag-verifier { font-size: 11px; color: #ffb703; margin-left: 4px; font-weight: bold; }
+  .tag-percent { font-size: 11px; color: var(--muted); font-weight: normal; }
 
-  .leaderboard-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
-  }
-  .leaderboard-table th, .leaderboard-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--line);
-  }
-  .leaderboard-table th {
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  .leaderboard-table tr:last-child td {
-    border-bottom: none;
-  }
-  .leaderboard-row {
-    cursor: pointer;
-    transition: 0.15s;
-  }
-  .leaderboard-row:hover {
-    background: #171c2d;
-  }
-  .lb-rank {
-    font-weight: bold;
-    width: 60px;
-  }
+  .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .leaderboard-table th, .leaderboard-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--line); }
+  .leaderboard-table th { color: var(--muted); font-size: 13px; font-weight: bold; text-transform: uppercase; }
+  .leaderboard-table tr:last-child td { border-bottom: none; }
+  .leaderboard-row { cursor: pointer; transition: 0.15s; }
+  .leaderboard-row:hover { background: #171c2d; }
+  .lb-rank { font-weight: bold; width: 60px; }
   .lb-rank-1 { color: #ffd700; }
   .lb-rank-2 { color: #c0c0c0; }
   .lb-rank-3 { color: #cd7f32; }
-  .lb-name {
-    font-weight: bold;
-    color: var(--text);
-  }
-  .lb-points {
-    text-align: right !important;
-    font-weight: bold;
-    color: var(--good);
-  }
+  .lb-name { font-weight: bold; color: var(--text); }
+  .lb-points { text-align: right !important; font-weight: bold; color: var(--good); }
 
-  .section-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .section-header-flex h3 {
-    margin: 0;
-  }
-  .toggle-link {
-    font-size: 13px;
-    color: var(--accent);
-    cursor: pointer;
-    font-weight: bold;
-    user-select: none;
-  }
-  .toggle-link:hover {
-    text-decoration: underline;
-  }
-  .blacklist-content {
-    display: none;
-    padding: 12px;
-    background: #0f1320;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-  }
-  .blacklist-item {
-    padding: 8px 4px;
-    color: #ff6b6b;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(255, 75, 75, 0.1);
-  }
-  .blacklist-item:last-child {
-    border-bottom: none;
-  }
+  .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .section-header-flex h3 { margin: 0; }
+  .toggle-link { font-size: 13px; color: var(--accent); cursor: pointer; font-weight: bold; user-select: none; }
+  .toggle-link:hover { text-decoration: underline; }
+  .blacklist-content { display: none; padding: 12px; background: #0f1320; border: 1px solid var(--line); border-radius: 10px; }
+  .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
+  .blacklist-item:last-child { border-bottom: none; }
 
   @media (max-width:700px){
     .row{flex-direction:column}
     .thumb{width:100%;height:auto;aspect-ratio:16/9}
     .grid{grid-template-columns:1fr}
     .stats {grid-template-columns: 1fr;}
+    .nav-menu { max-width: 100%; }
   }
 </style>
 </head>
 <body>
-<header>PSHS-MC Demonlist</header>
+
+<header>
+  <div>PSHS-MC Demonlist</div>
+  <button class="menu-trigger" onclick="toggleNavMenu()" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<nav class="nav-menu" id="navMenu">
+  <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
+  <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
+</nav>
+
+<div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeGuidelinesModal(null)">&times;</button>
+    <div class="modal-header">Submission Guidelines (AREDL, 2026)</div>
+    <ol class="rules-list">
+      <li>Your completion video and raw footage must have all clicks fully audible throughout the entire completion. (This rule is excluded for mobile completions on unmodded GD. Note that this rule is tentative and may change if this rule is abused)</li>
+      <li>You must record and upload a video of your completion to YouTube or another video sharing platform.</li>
+      <li>Completion videos may not be deleted after they are accepted.</li>
+      <li>Your record must show the stats on the endscreen (attempts, orbs, etc.).</li>
+      <li>If your record is in the top 400 in the AREDL, you must have raw footage, with isolated clicks, uploaded in a downloadable format (e.g. Google Drive) and submitted along with your public video.</li>
+      <li>Your record must be done on the rated version of the level.</li>
+      <li>During your completion, you may not use any skips that make any section of the level significantly easier.</li>
+      <li>Globed 2P Completions are allowed, however, you need to include both POVs in the video or provide a link to watch the other POV, and the completion must be on an approved Globed 2P copy.</li>
+      <li>If a record is accepted on the GDDL, AREDL, or Pointercrate, it is accepted. Show your account to give evidence of the record’s acceptance.</li>
+    </ol>
+  </div>
+</div>
 
 <div class="wrap">
   <div id="listPage">
@@ -220,7 +307,7 @@
       </div>
     </div>
 
-    <div class="section" style="margin-top: 16px;">
+    <div class="section" id="submissionBox" style="margin-top: 16px;">
       <h3>Submit a record or propose a new level</h3>
       <div class="grid" style="grid-template-columns: 1fr 1fr;">
         <div>
@@ -293,6 +380,7 @@
 <script>
 const LIST_MIN_PERCENT = 50;
 
+// Up-to-date 14-item custom demon data array configuration
 const demonData = [
   {
     "id": "10565740",
@@ -500,6 +588,43 @@ const backBtn = document.getElementById("backBtn");
 const profilePage = document.getElementById("profilePage");
 const profileBackBtn = document.getElementById("profileBackBtn");
 
+const navMenu = document.getElementById("navMenu");
+const guidelinesModal = document.getElementById("guidelinesModal");
+
+/* Topbar Menu Handlers */
+function toggleNavMenu() {
+  navMenu.classList.toggle("open");
+}
+
+function scrollToSubmissionBox() {
+  navMenu.classList.remove("open");
+  
+  // Return to homepage list layout if looking at details/profile views
+  detailPage.style.display = "none";
+  profilePage.style.display = "none";
+  listPage.style.display = "block";
+
+  const targetBox = document.getElementById("submissionBox");
+  targetBox.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  // Brief glow pulse implementation
+  setTimeout(() => {
+    targetBox.classList.add("glow-active");
+    setTimeout(() => {
+      targetBox.classList.remove("glow-active");
+    }, 1200);
+  }, 400);
+}
+
+function openGuidelinesModal() {
+  navMenu.classList.remove("open");
+  guidelinesModal.style.display = "flex";
+}
+
+function closeGuidelinesModal(event) {
+  guidelinesModal.style.display = "none";
+}
+
 function toggleBlacklist() {
   const content = document.getElementById("blacklistContent");
   const toggleLink = document.getElementById("blacklistToggle");
@@ -699,23 +824,6 @@ function showDetail(item) {
   const pointsMax = calculatePoints(item.rank, 100);
   const participants = parseParticipants(item);
   
-  let victorHTML = "None registered";
-  if (participants.length) {
-    victorHTML = participants.map(v => {
-      let tagText = "";
-      if (v.isVerifier) {
-        tagText += ' <span class="tag-verifier">[Verifier]</span>';
-      } else if (v.isVictor && v.percent === 100) {
-        tagText += ' <span class="tag-percent">(Victor)</span>';
-      }
-
-      if(v.percent < 100) {
-        tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
-      }
-      return `<span class="victor-link" onclick="showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
-    }).join(", ");
-  }
-  
   document.getElementById("dTitle").textContent = `${item.name} (Created by ${item.creator})`;
   document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — Max ${pointsMax} Points`;
   
@@ -781,8 +889,6 @@ function showProfile(playerName, initialLevelId = null) {
         badgeHTML += match.percent === 100 
           ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' 
           : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
-      } else if (!match.isVictor && match.percent < 100) {
-        badgeHTML += ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
       }
 
       let runtimeVideoUrl = match.video;
