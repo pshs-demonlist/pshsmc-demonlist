@@ -401,6 +401,23 @@
 const LIST_MIN_PERCENT = 50;
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
 
+// Explicit DOM element references to prevent reference crashes
+const listContainer = document.getElementById("list");
+const searchInput = document.getElementById("search");
+const existingLevelSelect = document.getElementById("existingLevel");
+const existingLevelWrap = document.getElementById("existingLevelWrap");
+const submissionType = document.getElementById("submissionType");
+const newLevelFields = document.getElementById("newLevelFields");
+const submitBtn = document.getElementById("submitBtn");
+const backBtn = document.getElementById("backBtn");
+const profileBackBtn = document.getElementById("profileBackBtn");
+const leaderboardBody = document.getElementById("leaderboardBody");
+const navMenu = document.getElementById("navMenu");
+const guidelinesModal = document.getElementById("guidelinesModal");
+const listPage = document.getElementById("listPage");
+const detailPage = document.getElementById("detailPage");
+const profilePage = document.getElementById("profilePage");
+
 let globalListData = [];
 let currentFilterType = "all"; // Options: 'all', 'demon', 'challenge'
 
@@ -410,10 +427,10 @@ async function loadDemonData() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // Safety Fallback check: If listType isn't provided explicitly, assume it's 'demon'
+    // Fallback checking: Automatically parse both layout variants 'listType' and 'listTType' typo
     globalListData = data.map(item => ({
       ...item,
-      listType: item.listType || "demon"
+      listType: item.listType || item.listTType || "demon"
     }));
     
     executeCombinedFilter();
@@ -575,7 +592,6 @@ function renderList(data) {
       }).join(", ");
     }
 
-    // Badge indicator showing whether this entry belongs to a demon list or challenge list tracking pipeline
     const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
 
     row.innerHTML = `
@@ -593,7 +609,6 @@ function renderList(data) {
   });
 }
 
-// Dynamically changes selection menu to show only levels matching selected target category
 function filterSelectionDropdownOptions() {
   const selectedType = document.getElementById("listType").value;
   existingLevelSelect.innerHTML = "";
@@ -662,10 +677,8 @@ function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
 
   specVideoSec.style.display = "block";
   specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
-  if (videoUrl) videoWrapIframe = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
-  else videoWrapIframe = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No video link attached.</div>`;
-  
-  specVideoBox.innerHTML = videoWrapIframe;
+  if (videoUrl) specVideoBox.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+  else specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No video link attached.</div>`;
 }
 
 function showProfile(playerName, initialLevelId = null) {
