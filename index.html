@@ -345,8 +345,8 @@
 
       <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
         <div>
-           <label class="muted">Username</label>
-           <input id="username" class="input" type="text" placeholder="Your username" />
+          <label class="muted">Username</label>
+          <input id="username" class="input" type="text" placeholder="Your username" />
         </div>
         <div>
           <label class="muted">Record link (YouTube)</label>
@@ -399,7 +399,7 @@
 
 <script>
 const LIST_MIN_PERCENT = 50;
-// Pointing directly to your active Google Apps Script environment URL
+// FIXED: Updated target endpoint URL to your newest configuration deployment build mapping parameters
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzcVZb5W9gvGIA6VHvlcW7VEOSyyZo_y4D6NaMIwLtVSGhiPMieTetLCHVzPGH6pxZ9zA/exec";
 
 // Explicit DOM element references to prevent reference crashes
@@ -424,12 +424,10 @@ let currentFilterType = "all"; // Options: 'all', 'demon', 'challenge'
 
 async function loadDemonData() {
   try {
-    // Dynamically loading directly from your Google Drive layout output stream parameters
     const response = await fetch(APPS_SCRIPT_URL);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // Fallback checking: Automatically parse variant array attributes
     globalListData = data.map(item => ({
       ...item,
       listType: item.listType || item.listTType || "demon"
@@ -746,7 +744,7 @@ profileBackBtn.onclick = () => { if (lastViewedItem) showDetail(lastViewedItem);
 submitBtn.onclick = async () => {
   const type = submissionType.value;
   const listType = document.getElementById("listType").value;
-  const username = document.getElementById("username").value;
+  const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
 
   if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
@@ -788,6 +786,7 @@ submitBtn.onclick = async () => {
     const result = await res.json();
     if(result.status === "ok") {
       alert(`Success! Data written securely into Sheet tab target column block: ${result.targetSheet}`);
+      document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
     } else {
       alert("The spreadsheet engine rejected payload configuration: " + result.message);
@@ -801,7 +800,6 @@ submitBtn.onclick = async () => {
   }
 };
 
-// Start initialization lifecycle routine
 loadDemonData();
 </script>
 </body>
