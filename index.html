@@ -23,7 +23,7 @@
     top:0;
     z-index:100;
     display:flex;
-    justify-content:space-between;
+    justify-between:space-between;
     align-items:center;
   }
   .menu-trigger {
@@ -275,7 +275,7 @@
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        <div class="list" id="list"><div class="empty">Loading demons...</div></div>
+        <div class="list" id="list"><div class="empty">Loading demons from JSON data...</div></div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
@@ -379,225 +379,10 @@
 
 <script>
 const LIST_MIN_PERCENT = 50;
-
-// Up-to-date 14-item custom demon data array configuration
-const demonData = [
-  {
-    "id": "10565740",
-    "rank": 1,
-    "name": "Bloodbath",
-    "creator": "Riot",
-    "verifier": "sadboi202",
-    "diff": "Extreme Demon",
-    "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
-    "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA", "percent": 100 },
-      { "name": "(TAMAYO)", "video": "https://www.youtube.com/embed/28YwyFHeQAM", "percent": 100 }
-    ]
-  },
-  {
-    "id": "3979721",
-    "rank": 2,
-    "name": "Cataclysm",
-    "creator": "GGboy",
-    "verifier": "sadboi202",
-    "diff": "Extreme Demon",
-    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
-    "video": "https://www.youtube.com/embed/8x0gpGutHUE",
-    "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE", "percent": 100 }
-    ]
-  },
-  {
-    "id": "7054561",
-    "rank": 3,
-    "name": "Poltergeist",
-    "creator": "AndromedaGMD",
-    "verifier": "sadboi202",
-    "diff": "Insane Demon",
-    "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
-    "video": "https://www.youtube.com/embed/N05ijX3vz9U",
-    "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/N05ijX3vz9U", "percent": 100 }
-    ]
-  },
-  {
-    "id": "67300705",
-    "rank": 4,
-    "name": "Octagon Force",
-    "creator": "JamAttack",
-    "verifier": "daBlooKat121",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/LhsUg_yadx4",
-    "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/LhsUg_yadx4", "percent": 100 }
-    ]
-  },
-  {
-    "id": "4284013",
-    "rank": 5,
-    "name": "Nine Circles",
-    "creator": "Zobros",
-    "verifier": "sadboi202",
-    "diff": "Hard Demon",
-    "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
-    "video": "https://www.youtube.com/embed/DO36t7DV0ec",
-    "victorList": [
-      { "name": "sadboi202", "video": "https://www.youtube.com/embed/DO36t7DV0ec", "percent": 100 },
-      { "name": "LightBlu", "video": "https://www.youtube.com/embed/aiW_1Iqwej8", "percent": 100 },
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/WPilEOcglfw", "percent": 100 }
-    ]
-  },
-  {
-    "id": "6939821",
-    "rank": 6,
-    "name": "Jawbreaker",
-    "creator": "ZenthicAlpha",
-    "verifier": "daBlooKat121",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/o4-PvIWPAtI",
-    "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/o4-PvIWPAtI", "percent": 100 },
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Qtuk8akfzec", "percent": 100 }
-    ]
-  },
-  { 
-    "id": "92742742",
-    "rank": 7,
-    "name": "tower descent",
-    "creator": "pocke",
-    "verifier": "daBlooKat121",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/qnGctCfis_k",
-    "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k", "percent": 100 }
-    ]
-  },
-  {
-    "id": "114532158",
-    "rank": 8,
-    "name": "Troll Madness",
-    "creator": "zyphur",
-    "verifier": "sSeanyboii",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
-    "victorList": [
-       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM", "percent": 100 }
-    ]
-  },
-  {
-    "id": "111205474",
-    "rank": 9,
-    "name": "Thermal Madness",
-    "creator": "ManiacDan",
-    "verifier": "daBlooKat121",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
-    "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ", "percent": 100 }
-    ]
-  },
-  {
-    "id": "16667379",
-    "rank": 10,
-    "name": "Liberation",
-    "creator": "Serponge",
-    "verifier": "LightBlu",
-    "diff": "Medium Demon",
-    "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
-    "victorList": [
-      { "name": "LightBlu", "video": "https://www.youtube.com/embed/H3OIQNZkIrE", "percent": 100 },
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/-oT6ECpmFr4", "percent": 100 }
-    ]
-  },
-  {
-    "id": "118509879",
-    "rank": 11,
-    "name": "Skeletal Shenanigans",
-    "creator": "YoReid",
-    "verifier": "sSeanyboii",
-    "diff": "Medium Demon",
-    "img": "https://img.youtube.com/vi/tbQsoqY_z6k/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
-    "victorList": [
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/tbQsoqY_z6k", "percent": 100 }
-    ]
-  },
-  {
-    "id": "10972106",
-    "rank": 12,
-    "name": "Solar Circles",
-    "creator": "D4rkGryf",
-    "verifier": "daBlooKat121",
-    "diff": "Medium Demon",
-    "img": "https://img.youtube.com/vi/IaXB0hdL5RM/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
-    "victorList": [
-      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM", "percent": 100 }
-    ]
-  },
-  {
-    "id": "14",
-    "rank": 13,
-    "name": "Clubstep",
-    "creator": "Robtop",
-    "verifier": "Akoay",
-    "diff": "Easy Demon",
-    "img": "https://img.youtube.com/vi/p0xBAuqYpgg/maxresdefault.jpg"
-    "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
-    "victorList": [
-      { "name": "Akoay", "video": "https://www.youtube.com/embed/7RI0yNMjT2U", "percent": 100 }
-    ]
-  },
-  {
-    "id": "45622672",
-    "rank": 14,
-    "name": "Depressure",
-    "creator": "Serponge",
-    "verifier": "aldawg123",
-    "diff": "Hard Demon",
-    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
-    "victorList": [
-      { "name": "aldawg123", "video": "https://www.youtube.com/embed/5bbC7WIM1Kw", "percent": 100 }
-    ]
-  },
-  {
-    "id": "89886591",
-    "rank": 15,
-    "name": "ISpyWithMyLittleEye",
-    "creator": "Voxicat",
-    "verifier": "sSeanyboii",
-    "diff": "Easy Demon",
-    "img": "https://img.youtube.com/vi/Uj9kiAlhytY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
-    "victorList": [
-      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Uj9kiAlhytY", "percent": 100 }
-    ]
-  },
-  {
-    "id": "55520",
-    "rank": 16,
-    "name": "THE LIGHTNING ROAD",
-    "creator": "timeless real",
-    "verifier": "QUWERTYR",
-    "diff": "Easy Demon",
-    "img": "https://img.youtube.com/vi/7Os4TpL4w9Y/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/7Os4TpL4w9Y",
-    "victorList": [
-      { "name": "Akoay", "video": "https://www.youtube.com/embed/fLfIPFw39SA", "percent": 100 }
-    ]
-  }
-];
-
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
+
+// This array will hold the JSON data once fetched
+let demonData = [];
 
 const listContainer = document.getElementById("list");
 const searchInput = document.getElementById("search");
@@ -618,6 +403,25 @@ const profileBackBtn = document.getElementById("profileBackBtn");
 const navMenu = document.getElementById("navMenu");
 const guidelinesModal = document.getElementById("guidelinesModal");
 
+// New async function to fetch dynamic list data from levels.json
+async function loadDemonData() {
+  try {
+    const response = await fetch('levels.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    demonData = await response.json();
+    
+    // Once data is successfully obtained, load standard views
+    renderList(demonData);
+    generateLeaderboard();
+    initSelectOptions();
+  } catch (error) {
+    console.error("Failed to load levels.json database array:", error);
+    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file (levels.json). Ensure it is hosted on a local or live web server. Details: ${error.message}</div>`;
+  }
+}
+
 /* Topbar Menu Handlers */
 function toggleNavMenu() {
   navMenu.classList.toggle("open");
@@ -626,7 +430,6 @@ function toggleNavMenu() {
 function scrollToSubmissionBox() {
   navMenu.classList.remove("open");
   
-  // Return to homepage list layout if looking at details/profile views
   detailPage.style.display = "none";
   profilePage.style.display = "none";
   listPage.style.display = "block";
@@ -634,7 +437,6 @@ function scrollToSubmissionBox() {
   const targetBox = document.getElementById("submissionBox");
   targetBox.scrollIntoView({ behavior: "smooth", block: "center" });
 
-  // Brief glow pulse implementation
   setTimeout(() => {
     targetBox.classList.add("glow-active");
     setTimeout(() => {
@@ -1057,10 +859,9 @@ submitBtn.onclick = async () => {
   }
 };
 
+// Fire loader on load
 window.onload = () => {
-  renderList(demonData);
-  generateLeaderboard();
-  initSelectOptions();
+  loadDemonData();
 };
 </script>
 </body>
