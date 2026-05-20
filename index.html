@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PSHS-MC Demonlist</title>
+<title>PSHS-MC Demonlist & Challenge List</title>
 <style>
   :root{
     --bg:#0b0d12; --panel:#111522; --line:#1e2438; --text:#e9eefc;
@@ -23,7 +23,7 @@
     top:0;
     z-index:100;
     display:flex;
-    justify-between:space-between;
+    justify-content:space-between;
     align-items:center;
   }
   .menu-trigger {
@@ -222,6 +222,11 @@
   .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
   .blacklist-item:last-child { border-bottom: none; }
 
+  /* Navigation tab buttons layout */
+  .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tab-btn { background: #111522; border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
   @media (max-width:700px){
     .row{flex-direction:column}
     .thumb{width:100%;height:auto;aspect-ratio:16/9}
@@ -234,7 +239,7 @@
 <body>
 
 <header>
-  <div>PSHS-MC Demonlist</div>
+  <div>PSHS-MC List Database</div>
   <button class="menu-trigger" onclick="toggleNavMenu()" aria-label="Toggle Menu">
     <span></span>
     <span></span>
@@ -250,17 +255,15 @@
 <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal(event)">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeGuidelinesModal(null)">&times;</button>
-    <div class="modal-header">Submission Guidelines (AREDL, 2026)</div>
+    <div class="modal-header">Submission Guidelines</div>
     <ol class="rules-list">
-      <li>Your completion video and raw footage must have all clicks fully audible throughout the entire completion. (This rule is excluded for mobile completions on unmodded GD. Note that this rule is tentative and may change if this rule is abused)</li>
+      <li>Your completion video and raw footage must have all clicks fully audible throughout the entire completion.</li>
       <li>You must record and upload a video of your completion to YouTube or another video sharing platform.</li>
       <li>Completion videos may not be deleted after they are accepted.</li>
       <li>Your record must show the stats on the endscreen (attempts, orbs, etc.).</li>
-      <li>If your record is in the top 400 in the AREDL, you must have raw footage, with isolated clicks, uploaded in a downloadable format (e.g. Google Drive) and submitted along with your public video.</li>
       <li>Your record must be done on the rated version of the level.</li>
       <li>During your completion, you may not use any skips that make any section of the level significantly easier.</li>
-      <li>Globed 2P Completions are allowed, however, you need to include both POVs in the video or provide a link to watch the other POV, and the completion must be on an approved Globed 2P copy.</li>
-      <li>If a record is accepted on the GDDL, AREDL, or Pointercrate, it is accepted. Show your account to give evidence of the record’s acceptance.</li>
+      <li>If a record is accepted on the GDDL, AREDL, or Pointercrate, it is accepted.</li>
     </ol>
   </div>
 </div>
@@ -268,14 +271,19 @@
 <div class="wrap">
   <div id="listPage">
     <div class="section">
-      <h3>Search</h3>
-      <input id="search" type="text" placeholder="Search demons, creators, or difficulty..." />
+      <h3>Search & Filtering</h3>
+      <div class="filter-tabs">
+        <button class="tab-btn active" id="tabAll" onclick="switchMainListTab('all')">All Levels</button>
+        <button class="tab-btn" id="tabDemons" onclick="switchMainListTab('demon')">Demonlist</button>
+        <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
+      </div>
+      <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." />
     </div>
 
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        <div class="list" id="list"><div class="empty">Loading demons from JSON data...</div></div>
+        <div class="list" id="list"><div class="empty">Loading list records from single levels.json data array...</div></div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
@@ -309,6 +317,18 @@
 
     <div class="section" id="submissionBox" style="margin-top: 16px;">
       <h3>Submit a record or propose a new level</h3>
+      
+      <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
+        <div>
+          <label class="muted">Target List category</label>
+          <select id="listType" class="select" onchange="filterSelectionDropdownOptions()">
+            <option value="demon">Demonlist</option>
+            <option value="challenge">Challenge List</option>
+          </select>
+        </div>
+        <div></div>
+      </div>
+
       <div class="grid" style="grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Submission type</label>
@@ -381,55 +401,36 @@
 const LIST_MIN_PERCENT = 50;
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzu7UGOayjOqRV3_Wa0K6Vz2dRc9Ouj0IuxDKE6zkJVRr33mSICpZi5ADPA_xSDPXS9Dg/exec";
 
-// This array will hold the JSON data once fetched
-let demonData = [];
+let globalListData = [];
+let currentFilterType = "all"; // Options: 'all', 'demon', 'challenge'
 
-const listContainer = document.getElementById("list");
-const searchInput = document.getElementById("search");
-const existingLevelSelect = document.getElementById("existingLevel");
-const submissionType = document.getElementById("submissionType");
-const existingLevelWrap = document.getElementById("existingLevelWrap");
-const newLevelFields = document.getElementById("newLevelFields");
-const submitBtn = document.getElementById("submitBtn");
-const leaderboardBody = document.getElementById("leaderboardBody");
-
-const listPage = document.getElementById("listPage");
-const detailPage = document.getElementById("detailPage");
-const backBtn = document.getElementById("backBtn");
-
-const profilePage = document.getElementById("profilePage");
-const profileBackBtn = document.getElementById("profileBackBtn");
-
-const navMenu = document.getElementById("navMenu");
-const guidelinesModal = document.getElementById("guidelinesModal");
-
-// New async function to fetch dynamic list data from levels.json
 async function loadDemonData() {
   try {
     const response = await fetch('levels.json');
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    demonData = await response.json();
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
     
-    // Once data is successfully obtained, load standard views
-    renderList(demonData);
+    // Safety Fallback check: If listType isn't provided explicitly, assume it's 'demon'
+    globalListData = data.map(item => ({
+      ...item,
+      listType: item.listType || "demon"
+    }));
+    
+    executeCombinedFilter();
     generateLeaderboard();
-    initSelectOptions();
+    filterSelectionDropdownOptions();
   } catch (error) {
     console.error("Failed to load levels.json database array:", error);
-    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file (levels.json). Ensure it is hosted on a local or live web server. Details: ${error.message}</div>`;
+    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file (levels.json). Details: ${error.message}</div>`;
   }
 }
 
-/* Topbar Menu Handlers */
-function toggleNavMenu() {
-  navMenu.classList.toggle("open");
-}
+function toggleNavMenu() { navMenu.classList.toggle("open"); }
+function openGuidelinesModal() { navMenu.classList.remove("open"); guidelinesModal.style.display = "flex"; }
+function closeGuidelinesModal() { guidelinesModal.style.display = "none"; }
 
 function scrollToSubmissionBox() {
   navMenu.classList.remove("open");
-  
   detailPage.style.display = "none";
   profilePage.style.display = "none";
   listPage.style.display = "block";
@@ -439,19 +440,8 @@ function scrollToSubmissionBox() {
 
   setTimeout(() => {
     targetBox.classList.add("glow-active");
-    setTimeout(() => {
-      targetBox.classList.remove("glow-active");
-    }, 1200);
+    setTimeout(() => { targetBox.classList.remove("glow-active"); }, 1200);
   }, 400);
-}
-
-function openGuidelinesModal() {
-  navMenu.classList.remove("open");
-  guidelinesModal.style.display = "flex";
-}
-
-function closeGuidelinesModal(event) {
-  guidelinesModal.style.display = "none";
 }
 
 function toggleBlacklist() {
@@ -464,6 +454,27 @@ function toggleBlacklist() {
     content.style.display = "block";
     toggleLink.textContent = "*minimize*";
   }
+}
+
+function switchMainListTab(type) {
+  currentFilterType = type;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (type === 'all') document.getElementById('tabAll').classList.add('active');
+  if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
+  if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
+  executeCombinedFilter();
+}
+
+function executeCombinedFilter() {
+  const query = searchInput.value.toLowerCase().trim();
+  const filtered = globalListData.filter(item => {
+    const matchesTab = (currentFilterType === "all") || (item.listType === currentFilterType);
+    const matchesSearch = item.name.toLowerCase().includes(query) || 
+                          item.creator.toLowerCase().includes(query) || 
+                          (item.diff && item.diff.toLowerCase().includes(query));
+    return matchesTab && matchesSearch;
+  });
+  renderList(filtered);
 }
 
 function parseParticipants(level) {
@@ -488,49 +499,34 @@ function parseParticipants(level) {
       });
     }
   });
-
   return entries;
 }
 
 function calculatePoints(rank, percent = 100) {
   const r = Number(rank);
   let basePoints = 0;
-  
-  if (r <= 75) {
-    basePoints = 350 * Math.exp(-0.0654 * (r - 1));
-  } else if (r <= 150) {
-    const pointsAt75 = 350 * Math.exp(-0.0654 * (75 - 1));
-    basePoints = pointsAt75 * (1 - (r - 75) / 76);
-  } else {
-    return "0.00";
-  }
+  if (r <= 75) basePoints = 350 * Math.exp(-0.0654 * (r - 1));
+  else if (r <= 150) basePoints = (350 * Math.exp(-0.0654 * (74))) * (1 - (r - 75) / 76);
+  else return "0.00";
 
   if (percent < 100) {
     basePoints = basePoints * (Math.pow(5, (percent - LIST_MIN_PERCENT) / (100 - LIST_MIN_PERCENT)) / 10);
   }
-
   return basePoints.toFixed(2);
 }
 
 function generateLeaderboard() {
   const scores = {};
-
-  demonData.forEach(level => {
-    const entries = parseParticipants(level);
-
-    entries.forEach(p => {
+  globalListData.forEach(level => {
+    parseParticipants(level).forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const key = p.name.toLowerCase();
-
-      if (!scores[key]) {
-        scores[key] = { name: p.name, totalPoints: 0 };
-      }
+      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0 };
       scores[key].totalPoints += pts;
     });
   });
 
   const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
-
   leaderboardBody.innerHTML = "";
   if (sortedPlayers.length === 0) {
     leaderboardBody.innerHTML = `<tr><td colspan="3" class="muted" style="text-align:center; padding:16px;">No records listed.</td></tr>`;
@@ -541,11 +537,9 @@ function generateLeaderboard() {
     const displayRank = index + 1;
     let rankClass = "lb-rank";
     if (displayRank <= 3) rankClass += ` lb-rank-${displayRank}`;
-
     const tr = document.createElement("tr");
     tr.className = "leaderboard-row";
     tr.onclick = () => showProfile(player.name);
-
     tr.innerHTML = `
       <td class="${rankClass}">#${displayRank}</td>
       <td class="lb-name">${player.name}</td>
@@ -557,7 +551,6 @@ function generateLeaderboard() {
 
 function renderList(data) {
   listContainer.innerHTML = "";
-
   if(data.length === 0) {
     listContainer.innerHTML = '<div class="empty">No matching records discovered</div>';
     return;
@@ -566,11 +559,7 @@ function renderList(data) {
   data.forEach(item => {
     const row = document.createElement("div");
     row.className = "row";
-    row.onclick = (e) => {
-      if (!e.target.classList.contains('victor-link')) {
-        showDetail(item);
-      }
-    };
+    row.onclick = (e) => { if (!e.target.classList.contains('victor-link')) showDetail(item); };
 
     const maximumPointsPossible = calculatePoints(item.rank, 100);
     const participants = parseParticipants(item);
@@ -579,26 +568,21 @@ function renderList(data) {
     if (participants.length) {
       victorHTML = participants.map(v => {
         let tagText = "";
-        if (v.isVerifier) {
-          tagText += ' <span class="tag-verifier">[Verifier]</span>';
-        } else if (v.isVictor && v.percent === 100) {
-          tagText += ' <span class="tag-percent">(Victor)</span>';
-        }
-        
-        if (v.percent < 100) {
-          tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
-        }
+        if (v.isVerifier) tagText += ' <span class="tag-verifier">[Verifier]</span>';
+        else if (v.isVictor && v.percent === 100) tagText += ' <span class="tag-percent">(Victor)</span>';
+        if (v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
         return `<span class="victor-link" onclick="event.stopPropagation(); showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
 
+    // Badge indicator showing whether this entry belongs to a demon list or challenge list tracking pipeline
+    const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
+
     row.innerHTML = `
       <div class="rank">#${item.rank}</div>
-      <div class="thumb">
-        <img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'">
-      </div>
+      <div class="thumb"><img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
       <div class="info">
-        <div class="title">${item.name}</div>
+        <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
         <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
         <div class="sub">Records: ${victorHTML}</div>
         <div class="points">Up to ${maximumPointsPossible} points</div>
@@ -609,9 +593,14 @@ function renderList(data) {
   });
 }
 
-function initSelectOptions() {
+// Dynamically changes selection menu to show only levels matching selected target category
+function filterSelectionDropdownOptions() {
+  const selectedType = document.getElementById("listType").value;
   existingLevelSelect.innerHTML = "";
-  demonData.forEach(item => {
+  
+  const filteredLevels = globalListData.filter(item => item.listType === selectedType);
+  
+  filteredLevels.forEach(item => {
     const opt = document.createElement("option");
     opt.value = item.name;
     opt.dataset.id = item.id;
@@ -619,6 +608,12 @@ function initSelectOptions() {
     opt.textContent = `${item.name} (${item.id})`;
     existingLevelSelect.appendChild(opt);
   });
+
+  if (filteredLevels.length === 0) {
+    const opt = document.createElement("option");
+    opt.textContent = "-- No existing levels found --";
+    existingLevelSelect.appendChild(opt);
+  }
 }
 
 submissionType.onchange = () => {
@@ -632,14 +627,7 @@ submissionType.onchange = () => {
 };
 
 searchInput.oninput = () => {
-  const query = searchInput.value.toLowerCase().trim();
-  const filtered = demonData.filter(item => 
-    item.name.toLowerCase().includes(query) || 
-    item.creator.toLowerCase().includes(query) || 
-    item.verifier.toLowerCase().includes(query) || 
-    item.diff.toLowerCase().includes(query)
-  );
-  renderList(filtered);
+  executeCombinedFilter();
 };
 
 let lastViewedItem = null;
@@ -654,17 +642,13 @@ function showDetail(item) {
   const participants = parseParticipants(item);
   
   document.getElementById("dTitle").textContent = `${item.name} (Created by ${item.creator})`;
-  document.getElementById("dInfo").textContent = `${item.diff} — ID: ${item.id} — Max ${pointsMax} Points`;
+  document.getElementById("dInfo").textContent = `${item.diff || 'List Level'} — ID: ${item.id} — Max ${pointsMax} Points`;
   
   const videoWrap = document.getElementById("video");
-  if(item.video) {
-    videoWrap.innerHTML = `<iframe src="${item.video}" allowfullscreen></iframe>`;
-  } else {
-    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
-  }
+  if(item.video) videoWrap.innerHTML = `<iframe src="${item.video}" allowfullscreen></iframe>`;
+  else videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
   
-  const statsWrap = document.getElementById("stats");
-  statsWrap.innerHTML = `
+  document.getElementById("stats").innerHTML = `
     <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
     <div class="stat"><h4>Level Verifier</h4><p>${item.verifier || 'Unknown'}</p></div>
     <div class="stat"><h4>Total Records</h4><p>${participants.length}</p></div>
@@ -676,22 +660,18 @@ function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
   const specVideoBox = document.getElementById("pProfileVideo");
   const specVideoTitle = document.getElementById("pSpecificVideoTitle");
 
-  if (videoUrl) {
-    specVideoSec.style.display = "block";
-    specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
-    specVideoBox.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
-  } else {
-    specVideoSec.style.display = "block";
-    specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
-    specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No video link attached to this record configuration.</div>`;
-  }
+  specVideoSec.style.display = "block";
+  specVideoTitle.textContent = `${playerName}'s ${levelName} Video Run`;
+  if (videoUrl) videoWrapIframe = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+  else videoWrapIframe = `<div style="padding:40px; text-align:center; color:var(--muted); background:#0f1320; border-radius:10px;">No video link attached.</div>`;
+  
+  specVideoBox.innerHTML = videoWrapIframe;
 }
 
 function showProfile(playerName, initialLevelId = null) {
   listPage.style.display = "none";
   detailPage.style.display = "none";
   profilePage.style.display = "block";
-
   document.getElementById("pName").textContent = playerName;
 
   let totalPoints = 0;
@@ -701,7 +681,7 @@ function showProfile(playerName, initialLevelId = null) {
   const completionsContainer = document.getElementById("pCompletions");
   completionsContainer.innerHTML = "";
 
-  demonData.forEach(level => {
+  globalListData.forEach(level => {
     const participants = parseParticipants(level);
     const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
     
@@ -710,29 +690,15 @@ function showProfile(playerName, initialLevelId = null) {
       totalPoints += pts;
 
       let badgeHTML = "";
-      if (match.isVerifier) {
-        badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
-      }
-      
-      if (match.isVictor) {
-        badgeHTML += match.percent === 100 
-          ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' 
-          : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
-      }
+      if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
+      if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
 
-      let runtimeVideoUrl = match.video;
-      if (!runtimeVideoUrl && match.isVerifier && level.video) {
-        runtimeVideoUrl = level.video;
-      }
+      let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
 
       const div = document.createElement("div");
       div.className = "profile-level-item";
-      
       div.innerHTML = `
-        <div>
-          <strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}
-          <div class="muted">Created by ${level.creator}</div>
-        </div>
+        <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted">Created by ${level.creator}</div></div>
         <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
       `;
 
@@ -743,25 +709,15 @@ function showProfile(playerName, initialLevelId = null) {
       };
 
       completionsContainer.appendChild(div);
-
-      if (initialLevelId && level.id === initialLevelId) {
-        autoSelectElement = div;
-      }
-      if (!fallbackElement) {
-        fallbackElement = div;
-      }
+      if (initialLevelId && level.id === initialLevelId) autoSelectElement = div;
+      if (!fallbackElement) fallbackElement = div;
     }
   });
 
   document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
-  
-  if (autoSelectElement) {
-    autoSelectElement.click();
-  } else if (fallbackElement) {
-    fallbackElement.click();
-  } else {
-    document.getElementById("pSpecificVideoSection").style.display = "none";
-  }
+  if (autoSelectElement) autoSelectElement.click();
+  else if (fallbackElement) fallbackElement.click();
+  else document.getElementById("pSpecificVideoSection").style.display = "none";
 
   if(completionsContainer.innerHTML === "") {
     completionsContainer.innerHTML = '<div class="empty">No approved run records found for this player.</div>';
@@ -769,50 +725,30 @@ function showProfile(playerName, initialLevelId = null) {
   }
 }
 
-backBtn.onclick = () => {
-  detailPage.style.display = "none";
-  profilePage.style.display = "none";
-  listPage.style.display = "block";
-};
-
-profileBackBtn.onclick = () => {
-  if (lastViewedItem) {
-    showDetail(lastViewedItem);
-  } else {
-    profilePage.style.display = "none";
-    listPage.style.display = "block";
-  }
-};
+backBtn.onclick = () => { detailPage.style.display = "none"; listPage.style.display = "block"; };
+profileBackBtn.onclick = () => { if (lastViewedItem) showDetail(lastViewedItem); else { profilePage.style.display = "none"; listPage.style.display = "block"; } };
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
+  const listType = document.getElementById("listType").value;
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
 
-  if(!username || !recordLink) {
-    alert("Please ensure both your Username and valid Record Link fields are populated.");
-    return;
-  }
-
-  if (username.toLowerCase() === "c0ms") {
-    alert("Error: This username has been permanently blacklisted from list submissions.");
-    return;
-  }
+  if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
+  if (username.toLowerCase() === "c0ms") { alert("Error: This username has been permanently blacklisted."); return; }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Processing payload...";
-
-  let payload = {};
+  let payload = { listType: listType };
 
   if(type === "record") {
     const selectedOpt = existingLevelSelect.options[existingLevelSelect.selectedIndex];
+    if (!selectedOpt || !selectedOpt.dataset.id) {
+       alert("Error: Please select a valid level target configuration option.");
+       submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return;
+    }
     payload = {
-      type: "record",
-      levelName: selectedOpt.value,
-      id: selectedOpt.dataset.id,
-      username: username,
-      creator: selectedOpt.dataset.creator,
-      recordLink: recordLink
+      ...payload, type: "record", levelName: selectedOpt.value, id: selectedOpt.dataset.id, username: username, creator: selectedOpt.dataset.creator, recordLink: recordLink
     };
   } else {
     const newName = document.getElementById("newName").value.trim();
@@ -820,19 +756,11 @@ submitBtn.onclick = async () => {
     const newLevelId = document.getElementById("newLevelId").value.trim();
 
     if(!newName || !newCreator || !newLevelId) {
-      alert("Please fully specify all fields for the Level Proposal execution parameters.");
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send for review";
-      return;
+      alert("Please fully specify all fields for the Level Proposal.");
+      submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return;
     }
-
     payload = {
-      type: "newLevel",
-      newName: newName,
-      newLevelId: newLevelId,
-      username: username,
-      newCreator: newCreator,
-      recordLink: recordLink
+      ...payload, type: "newLevel", newName: newName, newLevelId: newLevelId, username: username, newCreator: newCreator, recordLink: recordLink
     };
   }
 
@@ -843,26 +771,22 @@ submitBtn.onclick = async () => {
       body: JSON.stringify(payload)
     });
     const result = await res.json();
-    
     if(result.status === "ok") {
-      alert(`Success! Data written securely into Sheet tab target: ${result.targetSheet}`);
+      alert(`Success! Data written securely into Sheet tab target column block: ${result.targetSheet}`);
       document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
     } else {
-      alert("The spreadsheet engine rejected layout payload format configuration: " + result.message);
+      alert("The spreadsheet engine rejected payload configuration: " + result.message);
     }
   } catch (err) {
-    alert("System API communication failure context details: " + err.toString());
+    alert("System API communication failure: " + err.toString());
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = "Send for review";
   }
 };
 
-// Fire loader on load
-window.onload = () => {
-  loadDemonData();
-};
+window.onload = () => { loadDemonData(); };
 </script>
 </body>
 </html>
