@@ -8,6 +8,7 @@
     "diff": "Extreme Demon",
     "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
+    "listTType": "demon",
     "victorList": [
       { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA", "percent": 100 },
       { "name": "(TAMAYO)", "video": "https://www.youtube.com/embed/28YwyFHeQAM", "percent": 100 }
@@ -22,6 +23,7 @@
     "diff": "Extreme Demon",
     "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+    "listTType": "demon",
     "victorList": [
       { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE", "percent": 100 }
     ]
@@ -35,6 +37,7 @@
     "diff": "Insane Demon",
     "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
     "video": "https://www.youtube.com/embed/N05ijX3vz9U",
+    "listTType": "demon",
     "victorList": [
       { "name": "sadboi202", "video": "https://www.youtube.com/embed/N05ijX3vz9U", "percent": 100 }
     ]
@@ -48,6 +51,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/Dl3X3v5qTcQ/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ",
+    "listTType": "demon",
     "victorList": [
       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ", "percent": 100 }
     ]
@@ -61,6 +65,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/LhsUg_yadx4",
+    "listTType": "demon",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/LhsUg_yadx4", "percent": 100 }
     ]
@@ -74,6 +79,7 @@
     "diff": "Hard Demon",
     "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
+    "listTType": "demon",
     "victorList": [
       { "name": "sadboi202", "video": "https://www.youtube.com/embed/DO36t7DV0ec", "percent": 100 },
       { "name": "LightBlu", "video": "https://www.youtube.com/embed/aiW_1Iqwej8", "percent": 100 },
@@ -89,6 +95,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/o4-PvIWPAtI",
+    "listTType": "demon",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/o4-PvIWPAtI", "percent": 100 },
       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Qtuk8akfzec", "percent": 100 }
@@ -103,6 +110,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/qnGctCfis_k",
+    "listTType": "demon",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k", "percent": 100 }
     ]
@@ -116,6 +124,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
+    "listTType": "demon",
     "victorList": [
        { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM", "percent": 100 }
     ]
@@ -129,6 +138,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
+    "listTType": "demon",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ", "percent": 100 }
     ]
@@ -142,6 +152,7 @@
     "diff": "Medium Demon",
     "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
+    "listTType": "demon",
     "victorList": [
       { "name": "LightBlu", "video": "https://www.youtube.com/embed/H3OIQNZkIrE", "percent": 100 },
       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/-oT6ECpmFr4", "percent": 100 }
@@ -156,6 +167,7 @@
     "diff": "Medium Demon",
     "img": "https://img.youtube.com/vi/tbQsoqY_z6k/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
+    "listTType": "demon",
     "victorList": [
       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/tbQsoqY_z6k", "percent": 100 }
     ]
@@ -169,6 +181,7 @@
     "diff": "Medium Demon",
     "img": "https://img.youtube.com/vi/IaXB0hdL5RM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
+    "listTType": "demon",
     "victorList": [
       { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM", "percent": 100 }
     ]
@@ -182,6 +195,7 @@
     "diff": "Easy Demon",
     "img": "https://img.youtube.com/vi/p0xBAuqYpgg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
+    "listTType": "demon",
     "victorList": [
       { "name": "Akoay", "video": "https://www.youtube.com/embed/7RI0yNMjT2U", "percent": 100 }
     ]
@@ -195,6 +209,7 @@
     "diff": "Hard Demon",
     "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+    "listTType": "demon",
     "victorList": [
       { "name": "aldawg123", "video": "https://www.youtube.com/embed/5bbC7WIM1Kw", "percent": 100 }
     ]
@@ -208,6 +223,7 @@
     "diff": "Easy Demon",
     "img": "https://img.youtube.com/vi/Uj9kiAlhytY/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
+    "listTType": "demon",
     "victorList": [
       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Uj9kiAlhytY", "percent": 100 }
     ]
@@ -221,6 +237,7 @@
     "diff": "Easy Demon",
     "img": "https://img.youtube.com/vi/7Os4TpL4w9Y/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7Os4TpL4w9Y",
+    "listTType": "demon",
     "victorList": [
       { "name": "Akoay", "video": "https://www.youtube.com/embed/fLfIPFw39SA", "percent": 100 }
     ]
