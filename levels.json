@@ -4,87 +4,212 @@
     "rank": 1,
     "name": "Bloodbath",
     "creator": "Riot",
+    "verifier": "sadboi202",
     "diff": "Extreme Demon",
-    "points": "23.99",
-    "img": "https://imgs.search.brave.com/gJcG9ytvcds1WzdN8s9TDTbHLl_ekyNXQi0Js1cLeOU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5MjYy/MzguanBn",
+    "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/vBBZvXb0HrA", "percent": 100 },
+      { "name": "(TAMAYO)", "video": "https://www.youtube.com/embed/28YwyFHeQAM", "percent": 100 }
+    ]
   },
   {
     "id": "3979721",
     "rank": 2,
     "name": "Cataclysm",
     "creator": "GGboy",
+    "verifier": "sadboi202",
     "diff": "Extreme Demon",
-    "points": "20.92",
-    "img": "https://imgs.search.brave.com/-vFfJIGvVNXC5rExLrSOXTPZocbLokvI_mZ61Upsvwg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/dGh1bWJuYWlsLWNh/dGFjbHlzbS1ieS1p/dHNhbmd0aGVvei1t/ZS12MC1rNGNveHZ6/NDNvNjkxLmpwZz93/aWR0aD02NDAmY3Jv/cD1zbWFydCZhdXRv/PXdlYnAmcz00MzRl/ZjE4YmE1MDgzMGYz/Y2VhOTc2MzkwMzZh/MzU0NDA1MzMxZmZl",
+    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/8x0gpGutHUE", "percent": 100 }
+    ]
   },
   {
     "id": "7054561",
     "rank": 3,
     "name": "Poltergeist",
     "creator": "AndromedaGMD",
+    "verifier": "sadboi202",
     "diff": "Insane Demon",
-    "points": "15.94",
-    "img": "https://imgs.search.brave.com/wo2x-tFACCKqQaCVVDEZxP1jQ0GAbe-9vBDrpU4SClE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9wcmV2/aWV3LnJlZGQuaXQv/cmF0ZS1teS10aHVt/Ym5haWwtbm8taS1k/aWRudC1iZWF0LXBv/bHRlcmdlaXN0LXYw/LXJuN2w2eHFsdXVw/YzEucG5nP3dpZHRo/PTEyODAmZm9ybWF0/PXBuZyZhdXRvPXdl/YnAmcz1jNjEwYzZi/NjZmMWJiMGQzN2Q0/ZTE0NzQ0ODY5OGZl/OWI4OGQ4YTgw",
+    "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
     "video": "https://www.youtube.com/embed/N05ijX3vz9U",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/N05ijX3vz9U", "percent": 100 }
+    ]
+  },
+  {
+    "id": "67300705",
+    "rank": 4,
+    "name": "Octagon Force",
+    "creator": "JamAttack",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/LhsUg_yadx4",
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/LhsUg_yadx4", "percent": 100 }
+    ]
   },
   {
     "id": "4284013",
-    "rank": 4,
+    "rank": 5,
     "name": "Nine Circles",
     "creator": "Zobros",
+    "verifier": "sadboi202",
     "diff": "Hard Demon",
-    "points": "11.16",
-    "img": "https://imgs.search.brave.com/MPJ9w0-ZTvqphSCuEYGqWFUlxPma3WAO-8g-2kzsz4A/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9nZW9t/ZXRyeWdhbWVzLmlv/L2NhY2hlL2RhdGEv/aW1hZ2UvZ2VvbWV0/cnktZGFzaC1uaW5l/LWNpcmNsZXMtbTE5/MngxMDgud2VicA",
+    "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
-    "victorList": ["sadboi202"]
+    "victorList": [
+      { "name": "sadboi202", "video": "https://www.youtube.com/embed/DO36t7DV0ec", "percent": 100 },
+      { "name": "LightBlu", "video": "https://www.youtube.com/embed/aiW_1Iqwej8", "percent": 100 },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/WPilEOcglfw", "percent": 100 }
+    ]
   },
   {
     "id": "6939821",
-    "rank": 5,
+    "rank": 6,
     "name": "Jawbreaker",
     "creator": "ZenthicAlpha",
+    "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "points": "11.14",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2ccbv-2d707292-274d-4479-82b2-11343a1e9418.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_205859_993_by_pshsdemonlist_dm2ccbv-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjY2J2LTJkNzA3MjkyLTI3NGQtNDQ3OS04MmIyLTExMzQzYTFlOTQxOC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.-RKHD4zpxeLljEsGQurGlfCXO5Z6Q5tqGbUUgxZL76s",
-    "video": "https://drive.google.com/file/d/1HYy3aCN4TvQTkoid7fDHAD12guzGlRBe/preview",
-    "victorList": ["daBlooKat121"]
+    "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/o4-PvIWPAtI",
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/o4-PvIWPAtI", "percent": 100 },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Qtuk8akfzec", "percent": 100 }
+    ]
+  },
+  { 
+    "id": "92742742",
+    "rank": 7,
+    "name": "tower descent",
+    "creator": "pocke",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/qnGctCfis_k",
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/qnGctCfis_k", "percent": 100 }
+    ]
   },
   {
     "id": "114532158",
-    "rank": 6,
+    "rank": 8,
     "name": "Troll Madness",
     "creator": "zyphur",
+    "verifier": "sSeanyboii",
     "diff": "Hard Demon",
-    "points": "11.14",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2il2r-d8c914e3-410f-46c9-a4ad-813f4b0ba586.png/v1/fill/w_1207,h_662,q_70,strp/troll_madness_by_pshsdemonlist_dm2il2r-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzAyIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJpbDJyLWQ4YzkxNGUzLTQxMGYtNDZjOS1hNGFkLTgxM2Y0YjBiYTU4Ni5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.TSyFy8zFj1yRzrrOXXTPT3ADrL4Dsm0n1D211xSK1ns",
+    "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
-    "victorList": ["sSeanyboii"]
+    "victorList": [
+       { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/jUv_1Ic9TCM", "percent": 100 }
+    ]
   },
   {
     "id": "111205474",
-    "rank": 7,
+    "rank": 9,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
+    "verifier": "daBlooKat121",
     "diff": "Hard Demon",
-    "points": "8.01",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc3f-f7e96abd-b14b-4511-909a-9d455fb66b0d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_212140_983_by_pshsdemonlist_dm2cc3f-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzNmLWY3ZTk2YWJkLWIxNGItNDUxMS05MDlhLTlkNDU1ZmI2NmIwZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.y6FKibT2J4HwSyMiKV30LYXig6UaLIl4ZldMLBrGM6c",
-    "video": "",
-    "victorList": ["daBlooKat121"]
+    "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/AvNHIIMGHyQ", "percent": 100 }
+    ]
+  },
+  {
+    "id": "16667379",
+    "rank": 10,
+    "name": "Liberation",
+    "creator": "Serponge",
+    "verifier": "LightBlu",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
+    "victorList": [
+      { "name": "LightBlu", "video": "https://www.youtube.com/embed/H3OIQNZkIrE", "percent": 100 },
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/-oT6ECpmFr4", "percent": 100 }
+    ]
+  },
+  {
+    "id": "118509879",
+    "rank": 11,
+    "name": "Skeletal Shenanigans",
+    "creator": "YoReid",
+    "verifier": "sSeanyboii",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/tbQsoqY_z6k/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
+    "victorList": [
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/tbQsoqY_z6k", "percent": 100 }
+    ]
   },
   {
     "id": "10972106",
-    "rank": 8,
+    "rank": 12,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
+    "verifier": "daBlooKat121",
     "diff": "Medium Demon",
-    "points": "5.91",
-    "img": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67e586e5-84fe-470b-8370-76d46f576993/dm2cc81-27a16257-16cb-4af8-afb3-6c68cb88155d.png/v1/fill/w_1192,h_670,q_70,strp/image_20260517_211025_584_by_pshsdemonlist_dm2cc81-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzIwIiwicGF0aCI6Ii9mLzY3ZTU4NmU1LTg0ZmUtNDcwYi04MzcwLTc2ZDQ2ZjU3Njk5My9kbTJjYzgxLTI3YTE2MjU3LTE2Y2ItNGFmOC1hZmIzLTZjNjhjYjg4MTU1ZC5wbmciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.1C6q5yD2QMG6WBSfRmtVXIohWpL4B6GcSNQLY11qGy8",
-    "video": "https://drive.google.com/file/d/1IBfQPdzNedlEc2r_9eF2PjP-yuToTvYZ/preview",
-    "victorList": ["daBlooKat121"]
+    "img": "https://img.youtube.com/vi/IaXB0hdL5RM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
+    "victorList": [
+      { "name": "daBlooKat121", "video": "https://www.youtube.com/embed/IaXB0hdL5RM", "percent": 100 }
+    ]
+  },
+  {
+    "id": "14",
+    "rank": 13,
+    "name": "Clubstep",
+    "creator": "Robtop",
+    "verifier": "Akoay",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/p0xBAuqYpgg/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
+    "victorList": [
+      { "name": "Akoay", "video": "https://www.youtube.com/embed/7RI0yNMjT2U", "percent": 100 }
+    ]
+  },
+  {
+    "id": "45622672",
+    "rank": 14,
+    "name": "Depressure",
+    "creator": "Serponge",
+    "verifier": "aldawg123",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+    "victorList": [
+      { "name": "aldawg123", "video": "https://www.youtube.com/embed/5bbC7WIM1Kw", "percent": 100 }
+    ]
+  },
+  {
+    "id": "89886591",
+    "rank": 15,
+    "name": "ISpyWithMyLittleEye",
+    "creator": "Voxicat",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/Uj9kiAlhytY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
+    "victorList": [
+      { "name": "sSeanyboii", "video": "https://www.youtube.com/embed/Uj9kiAlhytY", "percent": 100 }
+    ]
+  },
+  {
+    "id": "55520",
+    "rank": 16,
+    "name": "THE LIGHTNING ROAD",
+    "creator": "timeless real",
+    "verifier": "QUWERTYR",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/7Os4TpL4w9Y/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/7Os4TpL4w9Y",
+    "victorList": [
+      { "name": "Akoay", "video": "https://www.youtube.com/embed/fLfIPFw39SA", "percent": 100 }
+    ]
   }
 ]
