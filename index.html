@@ -252,9 +252,9 @@
   <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
 </nav>
 
-<div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal(event)">
+<div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
   <div class="modal" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="closeGuidelinesModal(null)">&times;</button>
+    <button class="modal-close" onclick="closeGuidelinesModal()">&times;</button>
     <div class="modal-header">Submission Guidelines</div>
     <ol class="rules-list">
       <li>Your completion video and raw footage must have all clicks fully audible throughout the entire completion.</li>
@@ -283,7 +283,7 @@
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        <div class="list" id="list"><div class="empty">Loading list records from single levels.json data array...</div></div>
+        <div class="list" id="list"><div class="empty">Loading list records from live database pipeline...</div></div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
@@ -346,7 +346,9 @@
       <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Username</label>
-          <input id="username" class="input" type="text" placeholder="Your username" />
+          <select id="username" class="select">
+            <option value="daBlooKat121">daBlooKat121</option>
+          </select>
         </div>
         <div>
           <label class="muted">Record link (YouTube)</label>
@@ -399,7 +401,8 @@
 
 <script>
 const LIST_MIN_PERCENT = 50;
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzmmBMJcmZAgheSMLKMRalowpnmnT1C49Mj8rjw7j1FiGUOZzSMRUP4shk0YVyDgasUw/exec";
+// Pointing directly to your active Google Apps Script environment URL
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVFBPskUXITDmhJeoALfNd_Ky2OQTs4g107I0Bkqp0dSKb9Mf-rODL5Yn10RTz-XS_jA/exec";
 
 // Explicit DOM element references to prevent reference crashes
 const listContainer = document.getElementById("list");
@@ -423,11 +426,12 @@ let currentFilterType = "all"; // Options: 'all', 'demon', 'challenge'
 
 async function loadDemonData() {
   try {
-    const response = await fetch('levels.json');
+    // Dynamically loading directly from your Google Drive layout output stream parameters
+    const response = await fetch(APPS_SCRIPT_URL);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // Fallback checking: Automatically parse both layout variants 'listType' and 'listTType' typo
+    // Fallback checking: Automatically parse variant array attributes
     globalListData = data.map(item => ({
       ...item,
       listType: item.listType || item.listTType || "demon"
@@ -437,8 +441,8 @@ async function loadDemonData() {
     generateLeaderboard();
     filterSelectionDropdownOptions();
   } catch (error) {
-    console.error("Failed to load levels.json database array:", error);
-    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file (levels.json). Details: ${error.message}</div>`;
+    console.error("Failed to load live database array:", error);
+    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file. Details: ${error.message}</div>`;
   }
 }
 
@@ -744,7 +748,7 @@ profileBackBtn.onclick = () => { if (lastViewedItem) showDetail(lastViewedItem);
 submitBtn.onclick = async () => {
   const type = submissionType.value;
   const listType = document.getElementById("listType").value;
-  const username = document.getElementById("username").value.trim();
+  const username = document.getElementById("username").value;
   const recordLink = document.getElementById("recordLink").value.trim();
 
   if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
@@ -786,20 +790,21 @@ submitBtn.onclick = async () => {
     const result = await res.json();
     if(result.status === "ok") {
       alert(`Success! Data written securely into Sheet tab target column block: ${result.targetSheet}`);
-      document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
     } else {
       alert("The spreadsheet engine rejected payload configuration: " + result.message);
     }
-  } catch (err) {
-    alert("System API communication failure: " + err.toString());
+  } catch(err) {
+    console.error("Transmission Pipeline error:", err);
+    alert("Pipeline communication failure: " + err.toString());
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = "Send for review";
   }
 };
 
-window.onload = () => { loadDemonData(); };
+// Start initialization lifecycle routine
+loadDemonData();
 </script>
 </body>
 </html>
