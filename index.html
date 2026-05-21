@@ -403,7 +403,7 @@ const LIST_MIN_PERCENT = 50;
 // URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
 
-// URL 2: For loading the live database from GitHub (CHANGE THE USERNAME AND REPO NAME!)
+// URL 2: For loading the live database from GitHub (Cache-bypassing timestamp added)
 const GITHUB_JSON_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?v=" + new Date().getTime();
 
 // Explicit DOM element references
@@ -574,7 +574,7 @@ function generateLeaderboard() {
   });
 }
 
-// FIXED: Keeps wide thumbnail on the left, maps custom "face" graphics to the absolute right side of the card layout
+// RENDER FUNCTION: Includes layout stabilizers for the right-aligned faces
 function renderList(data) {
   listContainer.innerHTML = "";
   if(data.length === 0) {
@@ -586,7 +586,7 @@ function renderList(data) {
     const row = document.createElement("div");
     row.className = "row";
     
-    // Explicitly forces elements inside the level card to spread out, allowing alignment to the far right edge
+    // Explicitly forces elements inside the level card to spread out completely
     row.style.display = "flex";
     row.style.alignItems = "center";
     row.style.justifyContent = "space-between";
@@ -609,27 +609,24 @@ function renderList(data) {
     }
 
     const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
-    
-    // Keep YouTube banner thumbnail separate for the left section layout block
     const thumbUrl = item.img || 'https://placehold.co/160x90?text=Processing...';
 
-    // Generate far-right icon block HTML string dynamically if a custom face image target exists
+    // Face section with flex-shrink protection to prevent browser hiding behaviors
     let faceHTML = "";
     if (item.face) {
       faceHTML = `
-        <div class="face-right-container" style="margin-left: auto; padding-left: 15px; display: flex; align-items: center; justify-content: center;">
-          <img src="${item.face}" alt="Difficulty Face" style="width: 55px; height: 55px; object-fit: contain;" onerror="this.style.display='none'">
+        <div class="face-right-container" style="margin-left: auto; padding-left: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <img src="${item.face}" alt="Difficulty Face" style="width: 45px; height: 45px; object-fit: contain;" onerror="this.style.display='none'">
         </div>
       `;
     }
 
-    // Render HTML layout mapping: Rank + Thumbnail -> Text Data Info block -> Far Right Face asset
     row.innerHTML = `
-      <div style="display: flex; align-items: center; gap: 15px; flex-grow: 1;">
+      <div style="display: flex; align-items: center; gap: 15px; flex-grow: 1; min-width: 0;">
         <div class="rank">#${item.rank}</div>
-        <div class="thumb"><img src="${thumbUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
-        <div class="info" style="flex-grow: 1;">
-          <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
+        <div class="thumb" style="flex-shrink: 0;"><img src="${thumbUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
+        <div class="info" style="flex-grow: 1; min-width: 0;">
+          <div class="title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
           <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
           <div class="sub">Records: ${victorHTML}</div>
           <div class="points">Up to ${maximumPointsPossible} points</div>
@@ -835,3 +832,6 @@ submitBtn.onclick = async () => {
 
 loadDemonData();
 </script>
+
+</body>
+</html>
