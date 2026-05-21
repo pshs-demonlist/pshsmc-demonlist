@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PSHS-MC Demonlist & Challenge List</title>
+<title>PSHS-MC Demonlist</title>
 <style>
   :root{
     --bg:#0b0d12; --panel:#111522; --line:#1e2438; --text:#e9eefc;
@@ -239,7 +239,7 @@
 <body>
 
 <header>
-  <div>PSHS-MC List Database</div>
+  <div>PSHS-MC Demonlist</div>
   <button class="menu-trigger" onclick="toggleNavMenu()" aria-label="Toggle Menu">
     <span></span>
     <span></span>
@@ -426,15 +426,18 @@ const profilePage = document.getElementById("profilePage");
 let globalListData = [];
 let currentFilterType = "all"; 
 
-// FIXED: Pulling from GitHub instead of Apps Script
 async function loadDemonData() {
   try {
     const response = await fetch(GITHUB_JSON_URL);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    globalListData = data.map(item => ({
+    // Sort array descending by rawTier immediately to prevent hidden records
+    const sortedData = data.sort((a, b) => parseFloat(b.rawTier || 0) - parseFloat(a.rawTier || 0));
+    
+    globalListData = sortedData.map((item, index) => ({
       ...item,
+      rank: item.rank || (index + 1),
       listType: item.listType || item.listTType || "demon"
     }));
     
@@ -571,6 +574,7 @@ function generateLeaderboard() {
   });
 }
 
+// FIXED: Keeps wide thumbnail on the left, maps custom "face" graphics to the absolute right side of the card layout
 function renderList(data) {
   listContainer.innerHTML = "";
   if(data.length === 0) {
@@ -581,6 +585,13 @@ function renderList(data) {
   data.forEach(item => {
     const row = document.createElement("div");
     row.className = "row";
+    
+    // Explicitly forces elements inside the level card to spread out, allowing alignment to the far right edge
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.justifyContent = "space-between";
+    row.style.width = "100%";
+
     row.onclick = (e) => { if (!e.target.classList.contains('victor-link')) showDetail(item); };
 
     const maximumPointsPossible = calculatePoints(item.rank, 100);
@@ -598,17 +609,34 @@ function renderList(data) {
     }
 
     const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
+    
+    // Keep YouTube banner thumbnail separate for the left section layout block
+    const thumbUrl = item.img || 'https://placehold.co/160x90?text=Processing...';
 
+    // Generate far-right icon block HTML string dynamically if a custom face image target exists
+    let faceHTML = "";
+    if (item.face) {
+      faceHTML = `
+        <div class="face-right-container" style="margin-left: auto; padding-left: 15px; display: flex; align-items: center; justify-content: center;">
+          <img src="${item.face}" alt="Difficulty Face" style="width: 55px; height: 55px; object-fit: contain;" onerror="this.style.display='none'">
+        </div>
+      `;
+    }
+
+    // Render HTML layout mapping: Rank + Thumbnail -> Text Data Info block -> Far Right Face asset
     row.innerHTML = `
-      <div class="rank">#${item.rank}</div>
-      <div class="thumb"><img src="${item.img}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
-      <div class="info">
-        <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
-        <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
-        <div class="sub">Records: ${victorHTML}</div>
-        <div class="points">Up to ${maximumPointsPossible} points</div>
-        <div class="badge">ID ${item.id}</div>
+      <div style="display: flex; align-items: center; gap: 15px; flex-grow: 1;">
+        <div class="rank">#${item.rank}</div>
+        <div class="thumb"><img src="${thumbUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
+        <div class="info" style="flex-grow: 1;">
+          <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
+          <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
+          <div class="sub">Records: ${victorHTML}</div>
+          <div class="points">Up to ${maximumPointsPossible} points</div>
+          <div class="badge">ID ${item.id}</div>
+        </div>
       </div>
+      ${faceHTML}
     `;
     listContainer.appendChild(row);
   });
@@ -782,7 +810,6 @@ submitBtn.onclick = async () => {
     };
   }
 
-  // FIXED: Using APPS_SCRIPT_URL safely here for sending the POST request
   try {
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
@@ -806,8 +833,5 @@ submitBtn.onclick = async () => {
   }
 };
 
-// Start the engine
 loadDemonData();
 </script>
-</body>
-</html>
