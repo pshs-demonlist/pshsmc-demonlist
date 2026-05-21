@@ -1,27 +1,7 @@
 [
   {
-    "creator": "SYNACTIVE GD",
-    "diff": "Insane Demon",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "id": "60619762",
-    "img": "https://i.ytimg.com/vi/ziHvsAriE3s/hqdefault.jpg",
-    "listType": "demon",
-    "name": "denoument",
-    "rank": 1,
-    "rawTier": 18,
-    "verifier": "aldawg123",
-    "victorList": [
-      {
-        "name": "aldawg123",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/jESMjFcXTv8"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/jESMjFcXTv8"
-  },
-  {
     "id": "10565740",
-    "rank": 2,
+    "rank": 1,
     "name": "Bloodbath",
     "creator": "Riot",
     "verifier": "sadboi202",
@@ -44,7 +24,7 @@
   },
   {
     "id": "3979721",
-    "rank": 3,
+    "rank": 2,
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
@@ -62,7 +42,7 @@
   },
   {
     "id": "7054561",
-    "rank": 4,
+    "rank": 3,
     "name": "Poltergeist",
     "creator": "AndromedaGMD",
     "verifier": "sadboi202",
@@ -80,7 +60,7 @@
   },
   {
     "id": "44062068",
-    "rank": 5,
+    "rank": 4,
     "name": "Future Funk",
     "creator": "JonathanGD",
     "verifier": "sSeanyboii",
@@ -98,7 +78,7 @@
   },
   {
     "id": "67300705",
-    "rank": 6,
+    "rank": 5,
     "name": "Octagon Force",
     "creator": "JamAttack",
     "verifier": "daBlooKat121",
@@ -116,7 +96,7 @@
   },
   {
     "id": "4284013",
-    "rank": 7,
+    "rank": 6,
     "name": "Nine Circles",
     "creator": "Zobros",
     "verifier": "sadboi202",
@@ -144,7 +124,7 @@
   },
   {
     "id": "6939821",
-    "rank": 8,
+    "rank": 7,
     "name": "Jawbreaker",
     "creator": "ZenthicAlpha",
     "verifier": "daBlooKat121",
@@ -172,7 +152,7 @@
   },
   {
     "id": "92742742",
-    "rank": 9,
+    "rank": 8,
     "name": "tower descent",
     "creator": "pocke",
     "verifier": "daBlooKat121",
@@ -190,7 +170,7 @@
   },
   {
     "id": "114532158",
-    "rank": 10,
+    "rank": 9,
     "name": "Troll Madness",
     "creator": "zyphur",
     "verifier": "sSeanyboii",
@@ -208,7 +188,7 @@
   },
   {
     "id": "111205474",
-    "rank": 11,
+    "rank": 10,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
     "verifier": "daBlooKat121",
@@ -226,7 +206,7 @@
   },
   {
     "id": "16667379",
-    "rank": 12,
+    "rank": 11,
     "name": "Liberation",
     "creator": "Serponge",
     "verifier": "LightBlu",
@@ -249,7 +229,7 @@
   },
   {
     "id": "118509879",
-    "rank": 13,
+    "rank": 12,
     "name": "Skeletal Shenanigans",
     "creator": "YoReid",
     "verifier": "sSeanyboii",
@@ -267,7 +247,7 @@
   },
   {
     "id": "10972106",
-    "rank": 14,
+    "rank": 13,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
     "verifier": "daBlooKat121",
@@ -285,7 +265,7 @@
   },
   {
     "id": "14",
-    "rank": 15,
+    "rank": 14,
     "name": "Clubstep",
     "creator": "Robtop",
     "verifier": "Akoay",
@@ -303,7 +283,7 @@
   },
   {
     "id": "45622672",
-    "rank": 16,
+    "rank": 15,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -321,7 +301,7 @@
   },
   {
     "id": "89886591",
-    "rank": 17,
+    "rank": 16,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -339,7 +319,7 @@
   },
   {
     "id": "55520",
-    "rank": 18,
+    "rank": 17,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
