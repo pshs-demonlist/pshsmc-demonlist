@@ -1,73 +1,74 @@
-name: Sync Submissions
+name: Update Level List from Google Sheets
 
 on:
-  issues:
-    types: [opened, edited]
+  repository_dispatch:
+    types: [level_approved]
 
 permissions:
   contents: write
-  issues: read
 
 jobs:
-  sync:
-    if: contains(github.event.issue.labels.*.name, 'submission')
+  update-json:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Sync issue into pending.json
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Process and Sort Level Entry
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-
-            const body = context.payload.issue.body || '';
-            const read = (key) => {
-              const re = new RegExp(`^${key}:\\s*(.*)$`, 'mi');
-              const m = body.match(re);
-              return m ? m[1].trim() : '';
-            };
-
-            const type = read('type') || 'record';
-            const item = {
-              id: String(context.payload.issue.number),
-              type,
-              username: read('username'),
-              recordLink: read('recordLink'),
-              rawFootage: read('rawFootage'),
-              notes: read('notes'),
-              status: 'pending',
-              levelId: read('levelId'),
-              levelName: read('levelName'),
-              createdAt: new Date().toISOString()
-            };
-
-            if (type === 'newLevel') {
-              item.newLevel = {
-                name: read('name'),
-                creator: read('creator'),
-                id: read('newLevelId'),
-                diff: read('diff'),
-                points: read('points'),
-                img: read('img'),
-                video: read('video')
-              };
+            const path = './levels.json';
+            
+            // Extract the payload sent from Google Sheets
+            const newEntry = context.payload.client_payload;
+            
+            // Read current levels list safely
+            let currentList = [];
+            if (fs.existsSync(path)) {
+              try {
+                currentList = JSON.parse(fs.readFileSync(path, 'utf8'));
+              } catch (e) {
+                currentList = [];
+              }
             }
+            
+            // Filter out existing copy of this specific ID to prevent duplicates
+            currentList = currentList.filter(item => String(item.id) !== String(newEntry.id));
+            
+            // Separate lists by type for distinct ranking systems
+            let demons = currentList.filter(item => item.listType !== 'challenge');
+            let challenges = currentList.filter(item => item.listType === 'challenge');
+            
+            if (newEntry.listType === 'challenge') {
+              challenges.push(newEntry);
+              challenges.sort((a, b) => b.preciseTier - a.preciseTier);
+              challenges.forEach((item, idx) => item.rank = idx + 1);
+            } else {
+              demons.push(newEntry);
+              demons.sort((a, b) => b.preciseTier - a.preciseTier);
+              demons.forEach((item, idx) => item.rank = idx + 1);
+            }
+            
+            // Merge everything back together
+            const combined = [...demons, ...challenges];
+            
+            // Clean up temporary precise metrics before saving
+            combined.forEach(item => delete item.preciseTier);
+            
+            // Write pretty-printed output back to file system
+            fs.writeFileSync(path, JSON.stringify(combined, null, 2));
 
-            const file = 'pending.json';
-            const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-            const idx = data.findIndex(x => String(x.id) === String(item.id));
-            if (idx >= 0) data[idx] = item;
-            else data.unshift(item);
-
-            fs.writeFileSync(file, JSON.stringify(data, null, 2));
-
-      - name: Commit
+      - name: Commit and Push Database Changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pending.json
-          git commit -m "Sync submission #${{ github.event.issue.number }}" || exit 0
+          git config --global user.name "GitHub List Automation"
+          git config --global user.email "actions@github.com"
+          git add levels.json
+          git commit -m "Automated database update: Added level ID ${{ github.event.client_payload.id }}" || exit 0
           git push
