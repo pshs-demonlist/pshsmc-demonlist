@@ -29,7 +29,7 @@
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
-    "diff": "Extreme Demon", 
+    "diff": "Extreme Demon",
     "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
     "listType": "demon",
@@ -329,13 +329,6 @@
     "img": "https://img.youtube.com/vi/IaXB0hdL5RM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
     "listType": "demon",
-    "victorList": [
-      {
-        "name": "daBlooKat121",
-        "video": "https://www.youtube.com/embed/IaXB0hdL5RM",
-        "percent": 100
-      }
-    ],
     "rawTier": 5.914163090128755
   },
   {
