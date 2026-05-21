@@ -20,7 +20,8 @@
         "video": "https://www.youtube.com/embed/28YwyFHeQAM",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 23.99043977055449
   },
   {
     "id": "3979721",
@@ -38,7 +39,8 @@
         "video": "https://www.youtube.com/embed/8x0gpGutHUE",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 20.917157084653688
   },
   {
     "id": "7054561",
@@ -56,7 +58,8 @@
         "video": "https://www.youtube.com/embed/N05ijX3vz9U",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 15.941991017964073
   },
   {
     "id": "44062068",
@@ -74,7 +77,8 @@
         "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 12.940637875782093
   },
   {
     "id": "67300705",
@@ -92,7 +96,8 @@
         "video": "https://www.youtube.com/embed/LhsUg_yadx4",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 11.222929936305732
   },
   {
     "id": "4284013",
@@ -120,7 +125,8 @@
         "video": "https://www.youtube.com/embed/WPilEOcglfw",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 11.16233078281342
   },
   {
     "id": "6939821",
@@ -148,7 +154,8 @@
         "video": "https://drive.google.com/file/d/1B77jFoQbV0DxQ91G8VEoU2woEywMOfg_/view?usp=drivesdk",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 11.139132165605096
   },
   {
     "id": "92742742",
@@ -166,7 +173,8 @@
         "video": "https://www.youtube.com/embed/qnGctCfis_k",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 10.145052833813635
   },
   {
     "id": "114532158",
@@ -184,7 +192,8 @@
         "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 9.237630070078572
   },
   {
     "id": "111205474",
@@ -202,7 +211,8 @@
         "video": "https://www.youtube.com/embed/AvNHIIMGHyQ",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 8.059021922428329
   },
   {
     "id": "16667379",
@@ -225,7 +235,8 @@
         "video": "https://www.youtube.com/embed/-oT6ECpmFr4",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 7.0754716981132075
   },
   {
     "id": "118509879",
@@ -243,7 +254,8 @@
         "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 6.68018839672214
   },
   {
     "id": "10972106",
@@ -261,11 +273,32 @@
         "video": "https://www.youtube.com/embed/IaXB0hdL5RM",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 5.914163090128755
+  },
+  {
+    "creator": "J4cKy",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "1347537",
+    "img": "https://i.ytimg.com/vi/8fUzlNVqGrU/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Invisible Clubstep",
+    "rank": 14,
+    "rawTier": 2.61,
+    "verifier": "Akoay",
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/KRNorjZLr9U"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/KRNorjZLr9U"
   },
   {
     "id": "14",
-    "rank": 14,
+    "rank": 15,
     "name": "Clubstep",
     "creator": "Robtop",
     "verifier": "Akoay",
@@ -279,11 +312,12 @@
         "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 0
   },
   {
     "id": "45622672",
-    "rank": 15,
+    "rank": 16,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -297,11 +331,12 @@
         "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 2.1729809437386565
   },
   {
     "id": "89886591",
-    "rank": 16,
+    "rank": 17,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -315,11 +350,12 @@
         "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 1.8707052441229657
   },
   {
     "id": "55520",
-    "rank": 17,
+    "rank": 18,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
@@ -333,6 +369,7 @@
         "video": "https://www.youtube.com/embed/fLfIPFw39SA",
         "percent": 100
       }
-    ]
+    ],
+    "rawTier": 1.0494676945668135
   }
 ]
