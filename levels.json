@@ -354,5 +354,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/jESMjFcXTv8"
+  },
+  {
+    "creator": "ZioGDVN",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "134645078",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "amethyst",
+    "rank": 19,
+    "rawTier": 0,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
   }
 ]
