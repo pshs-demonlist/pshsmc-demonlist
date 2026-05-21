@@ -399,10 +399,14 @@
 
 <script>
 const LIST_MIN_PERCENT = 50;
-// FIXED: Updated target endpoint URL to your newest configuration deployment build mapping parameters
+
+// URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxaVGZeueuDrojkmcHxw4ZdEI55C1sGVe3LM7DH9uxlo79MfYJfoZSaQvJfP5U5T3cfpA/exec";
 
-// Explicit DOM element references to prevent reference crashes
+// URL 2: For loading the live database from GitHub (CHANGE THE USERNAME AND REPO NAME!)
+const GITHUB_JSON_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
+
+// Explicit DOM element references
 const listContainer = document.getElementById("list");
 const searchInput = document.getElementById("search");
 const existingLevelSelect = document.getElementById("existingLevel");
@@ -420,11 +424,12 @@ const detailPage = document.getElementById("detailPage");
 const profilePage = document.getElementById("profilePage");
 
 let globalListData = [];
-let currentFilterType = "all"; // Options: 'all', 'demon', 'challenge'
+let currentFilterType = "all"; 
 
+// FIXED: Pulling from GitHub instead of Apps Script
 async function loadDemonData() {
   try {
-    const response = await fetch(APPS_SCRIPT_URL);
+    const response = await fetch(GITHUB_JSON_URL);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
@@ -777,6 +782,7 @@ submitBtn.onclick = async () => {
     };
   }
 
+  // FIXED: Using APPS_SCRIPT_URL safely here for sending the POST request
   try {
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
@@ -785,7 +791,7 @@ submitBtn.onclick = async () => {
     });
     const result = await res.json();
     if(result.status === "ok") {
-      alert(`Success! Data written securely into Sheet tab target column block: ${result.targetSheet}`);
+      alert(`Success! Data written securely into Sheet tab target column block.`);
       document.getElementById("username").value = "";
       document.getElementById("recordLink").value = "";
     } else {
@@ -800,6 +806,7 @@ submitBtn.onclick = async () => {
   }
 };
 
+// Start the engine
 loadDemonData();
 </script>
 </body>
