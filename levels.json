@@ -239,24 +239,24 @@
     "rawTier": 7.0754716981132075
   },
   {
+    "id": "134645078",
+    "rank": 12,
+    "name": "amethyst",
     "creator": "ZioGDVN",
+    "verifier": "daBlooKat121",
     "diff": "Medium Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "134645078",
     "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
     "listType": "demon",
-    "name": "amethyst",
-    "rank": 12,
     "rawTier": 6.95,
-    "verifier": "daBlooKat121",
     "victorList": [
       {
         "name": "daBlooKat121",
         "percent": 100,
         "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
       }
-    ],
-    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+    ]
   },
   {
     "id": "118509879",
@@ -296,10 +296,9 @@
     ],
     "rawTier": 5.914163090128755
   },
-  
   {
     "id": "14",
-    "rank": 16,
+    "rank": 15,
     "name": "Clubstep",
     "creator": "Robtop",
     "verifier": "Akoay",
@@ -317,24 +316,24 @@
     "rawTier": 0
   },
   {
+    "id": "1347537",
+    "rank": 16,
+    "name": "Invisible Clubstep",
     "creator": "J4cKy",
+    "verifier": "Akoay",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "1347537",
-    "img": "https://i.ytimg.com/vi/8fUzlNVqGrU/hqdefault.jpg",
+    "img": "https://img.youtube.com/vi/C4n25hmvr9s/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/KRNorjZLr9U",
     "listType": "demon",
-    "name": "Invisible Clubstep",
-    "rank": 15,
     "rawTier": 2.61,
-    "verifier": "Akoay",
     "victorList": [
       {
         "name": "Akoay",
         "percent": 100,
         "video": "https://www.youtube.com/embed/KRNorjZLr9U"
       }
-    ],
-    "video": "https://www.youtube.com/embed/KRNorjZLr9U"
+    ]
   },
   {
     "id": "45622672",
