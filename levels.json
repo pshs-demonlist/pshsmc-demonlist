@@ -342,8 +342,28 @@
     "rawTier": 5.914163090128755
   },
   {
-    "id": "14",
+    "creator": "MaFFaKa",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "96716452",
+    "img": "https://i.ytimg.com/vi/NKIg8lm48jk/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Living Open",
     "rank": 17,
+    "rawTier": 5.16,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/XvxEkXLayHU"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/XvxEkXLayHU"
+  },
+  {
+    "id": "14",
+    "rank": 18,
     "name": "Clubstep",
     "creator": "Robtop",
     "verifier": "Akoay",
@@ -368,7 +388,7 @@
   },
   {
     "id": "1347537",
-    "rank": 18,
+    "rank": 19,
     "name": "Invisible Clubstep",
     "creator": "J4cKy",
     "verifier": "Akoay",
@@ -388,7 +408,7 @@
   },
   {
     "id": "45622672",
-    "rank": 19,
+    "rank": 20,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -407,7 +427,7 @@
   },
   {
     "id": "89886591",
-    "rank": 20,
+    "rank": 21,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -426,7 +446,7 @@
   },
   {
     "id": "55520",
-    "rank": 21,
+    "rank": 22,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
