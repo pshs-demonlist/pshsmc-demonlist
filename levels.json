@@ -90,16 +90,21 @@
     "listType": "demon",
     "name": "Clubstep",
     "rank": 5,
-    "rawTier": 13,
-    "verifier": "sSeanyboii",
+    "rawTier": 2.82,
+    "verifier": "Akoay",
     "victorList": [
       {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/7RI0yNMjT2U"
+      },
+      { 
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/QLbGTXh8RIk"
       }
     ],
-    "video": "https://www.youtube.com/embed/QLbGTXh8RIk"
+    "video": "https://youtu.be/7RI0yNMjT2U"
   },
   {
     "id": "44062068",
