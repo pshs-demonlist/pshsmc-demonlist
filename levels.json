@@ -334,5 +334,25 @@
         "percent": 100
       }
     ]
+  },
+  {
+    "creator": "SYNACTIVE GD",
+    "diff": "Insane Demon",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "id": "60619762",
+    "img": "https://i.ytimg.com/vi/ziHvsAriE3s/hqdefault.jpg",
+    "listType": "demon",
+    "name": "denoument",
+    "rank": 18,
+    "rawTier": 18,
+    "verifier": "aldawg123",
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/jESMjFcXTv8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/jESMjFcXTv8"
   }
 ]
