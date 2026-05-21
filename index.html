@@ -426,7 +426,15 @@ const profilePage = document.getElementById("profilePage");
 let globalListData = [];
 let currentFilterType = "all"; 
 
-// FIXED: Sorts strictly by manual JSON rank to ensure everything displays correctly
+// Dynamic lookup mapping that connects text fields to official asset files
+const difficultyFaceMapping = {
+  "easy demon": "https://gdladder.com/images/demon_logos/easy_128.webp",
+  "medium demon": "https://gdladder.com/images/demon_logos/medium_128.webp",
+  "hard demon": "https://gdladder.com/images/demon_logos/hard_128.webp",
+  "insane demon": "https://gdladder.com/images/demon_logos/insane_128.webp",
+  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp"
+};
+
 async function loadDemonData() {
   try {
     const response = await fetch(GITHUB_JSON_URL);
@@ -528,6 +536,7 @@ function parseParticipants(level) {
   return entries;
 }
 
+// Formula calculates baseline points depending on list rank index metrics
 function calculatePoints(rank, percent = 100) {
   const r = Number(rank);
   let basePoints = 0;
@@ -575,7 +584,7 @@ function generateLeaderboard() {
   });
 }
 
-// REVERTED: Standard left-to-right mobile-friendly layout mapping structure
+// Main list renderer: Fast, simple, and light for mobile views
 function renderList(data) {
   listContainer.innerHTML = "";
   if(data.length === 0) {
@@ -605,17 +614,11 @@ function renderList(data) {
     const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
     const thumbUrl = item.img || 'https://placehold.co/160x90?text=Processing...';
 
-    // Optional style rendering if your native CSS handles the face positioning elsewhere
-    let faceHTML = "";
-    if (item.face) {
-      faceHTML = `<img src="${item.face}" alt="Difficulty Face" class="diff-face-icon" style="width:24px; height:24px; vertical-align:middle; margin-left:5px;" onerror="this.style.display='none'">`;
-    }
-
     row.innerHTML = `
       <div class="rank">#${item.rank}</div>
       <div class="thumb"><img src="${thumbUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
       <div class="info">
-        <div class="title">${item.name} ${faceHTML} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
+        <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
         <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
         <div class="sub">Records: ${victorHTML}</div>
         <div class="points">Up to ${maximumPointsPossible} points</div>
@@ -664,6 +667,7 @@ searchInput.oninput = () => {
 
 let lastViewedItem = null;
 
+// DETAILS PAGE RENDERER: Dynamically handles the difficulty face injection here safely
 function showDetail(item) {
   lastViewedItem = item;
   listPage.style.display = "none";
@@ -673,7 +677,25 @@ function showDetail(item) {
   const pointsMax = calculatePoints(item.rank, 100);
   const participants = parseParticipants(item);
   
-  document.getElementById("dTitle").textContent = `${item.name} (Created by ${item.creator})`;
+  // Dynamic Face Lookup checking based on the text string value
+  let dynamicFaceMarkup = "";
+  const normalizedDiff = (item.diff || "").toLowerCase().trim();
+  if (difficultyFaceMapping[normalizedDiff]) {
+    dynamicFaceMarkup = `
+      <img src="${difficultyFaceMapping[normalizedDiff]}" 
+           alt="${item.diff}" 
+           style="width: 40px; height: 40px; vertical-align: middle; margin-left: 10px; object-fit: contain;">
+    `;
+  }
+  
+  // Merging title text layout content with the responsive inline image badge setup
+  document.getElementById("dTitle").innerHTML = `
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <span>${item.name} (Created by ${item.creator})</span>
+      ${dynamicFaceMarkup}
+    </div>
+  `;
+  
   document.getElementById("dInfo").textContent = `${item.diff || 'List Level'} — ID: ${item.id} — Max ${pointsMax} Points`;
   
   const videoWrap = document.getElementById("video");
