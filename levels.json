@@ -268,15 +268,20 @@
     "name": "Sakupen Egg",
     "rank": 13,
     "rawTier": 6.97,
-    "verifier": "sSeanyboii",
+    "verifier": "daBlooKat121",
     "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/19Ct5w32jMk"
+      },
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/uGuo5RFF45g"
       }
     ],
-    "video": "https://www.youtube.com/embed/uGuo5RFF45g"
+    "video": "https://www.youtube.com/embed/19Ct5w32jMk"
   },
   {
     "id": "134645078",
