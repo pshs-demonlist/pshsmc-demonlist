@@ -311,39 +311,5 @@
         "percent": 100
       }
     ]
-  },
-  {
-    "id": "55520",
-    "rank": 17,
-    "name": "THE LIGHTNING ROAD",
-    "creator": "timeless real",
-    "verifier": "QUWERTYR",
-    "diff": "Easy Demon",
-    "img": "https://img.youtube.com/vi/7Os4TpL4w9Y/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/7Os4TpL4w9Y",
-    "listType": "demon",
-    "victorList": [
-      {
-        "name": "Akoay",
-        "video": "https://www.youtube.com/embed/fLfIPFw39SA",
-        "percent": 100
-      }
-    ]
-  },
-  {
-    "data": {
-      "creator": "ZenthicAlpha",
-      "diff": "3.00 Demon",
-      "id": "6939821",
-      "img": "https://i.ytimg.com/vi/7lsLVVujIvg/hqdefault.jpg",
-      "listType": "demon",
-      "name": "Jawbreaker",
-      "preciseTier": 3,
-      "rank": 0,
-      "verifier": "sadboi202",
-      "victorList": [],
-      "video": "https://drive.google.com/file/d/1B77jFoQbV0DxQ91G8VEoU2woEywMOfg_/view?usp=drivesdk"
-    },
-    "rank": 18
-  }
-]
+  
+  
