@@ -296,6 +296,26 @@
     ],
     "rawTier": 5.914163090128755
   },
+  
+  {
+    "id": "14",
+    "rank": 16,
+    "name": "Clubstep",
+    "creator": "Robtop",
+    "verifier": "Akoay",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/p0xBAuqYpgg/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
+    "listType": "demon",
+    "victorList": [
+      {
+        "name": "Akoay",
+        "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
+        "percent": 100
+      }
+    ],
+    "rawTier": 0
+  },
   {
     "creator": "J4cKy",
     "diff": "Easy Demon",
@@ -315,25 +335,6 @@
       }
     ],
     "video": "https://www.youtube.com/embed/KRNorjZLr9U"
-  },
-  {
-    "id": "14",
-    "rank": 16,
-    "name": "Clubstep",
-    "creator": "Robtop",
-    "verifier": "Akoay",
-    "diff": "Easy Demon",
-    "img": "https://img.youtube.com/vi/p0xBAuqYpgg/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
-    "listType": "demon",
-    "victorList": [
-      {
-        "name": "Akoay",
-        "video": "https://www.youtube.com/embed/7RI0yNMjT2U",
-        "percent": 100
-      }
-    ],
-    "rawTier": 0
   },
   {
     "id": "45622672",
