@@ -402,10 +402,9 @@ const LIST_MIN_PERCENT = 50;
 // URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
 
-// URL 2: High-velocity Cache-Busting Request Handler (Bypasses GitHub proxy cache seamlessly)
-const getCacheBustedUrl = () => {
-  const uniqueId = Array.from({length: 8}, () => Math.floor(Math.random()*36).toString(36)).join('');
-  return `https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?nocache=${Date.now()}-${uniqueId}`;
+// URL 2: Streamlined cache-buster query string that doesn't trigger security blocks
+const getCleanCacheBusterUrl = () => {
+  return `https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?t=${Date.now()}`;
 };
 
 // Explicit DOM element references
@@ -439,15 +438,8 @@ const difficultyFaceMapping = {
 
 async function loadDemonData() {
   try {
-    // Explicitly enforce 'no-cache' inside request headers to prevent internal browser memory caching
-    const response = await fetch(getCacheBustedUrl(), {
-      cache: "no-store",
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    });
+    // Normalizing fetch down to standard cross-origin requests to prevent browser CORS triggers
+    const response = await fetch(getCleanCacheBusterUrl());
     
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
@@ -475,7 +467,12 @@ async function loadDemonData() {
     filterSelectionDropdownOptions();
   } catch (error) {
     console.error("Failed to load live database array:", error);
-    listContainer.innerHTML = `<div class="empty" style="color:var(--accent);">Error loading database file. Details: ${error.message}</div>`;
+    listContainer.innerHTML = `
+      <div class="empty" style="color:var(--accent); text-align:center;">
+        <strong>Error connecting to database network path.</strong><br>
+        <span class="muted" style="font-size:12px;">Details: ${error.message}</span><br><br>
+        <button class="btn" onclick="loadDemonData()" style="padding: 6px 12px; font-size:12px;">Retry Connection</button>
+      </div>`;
   }
 }
 
