@@ -402,8 +402,11 @@ const LIST_MIN_PERCENT = 50;
 // URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
 
-// URL 2: For loading the live database from GitHub (Bypasses cache instantly)
-const GITHUB_JSON_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?v=" + new Date().getTime();
+// URL 2: High-velocity Cache-Busting Request Handler (Bypasses GitHub proxy cache seamlessly)
+const getCacheBustedUrl = () => {
+  const uniqueId = Array.from({length: 8}, () => Math.floor(Math.random()*36).toString(36)).join('');
+  return `https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?nocache=${Date.now()}-${uniqueId}`;
+};
 
 // Explicit DOM element references
 const listContainer = document.getElementById("list");
@@ -436,7 +439,16 @@ const difficultyFaceMapping = {
 
 async function loadDemonData() {
   try {
-    const response = await fetch(GITHUB_JSON_URL);
+    // Explicitly enforce 'no-cache' inside request headers to prevent internal browser memory caching
+    const response = await fetch(getCacheBustedUrl(), {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    });
+    
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
