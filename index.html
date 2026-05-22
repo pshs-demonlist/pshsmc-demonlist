@@ -282,15 +282,12 @@
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        
-        <div id="listStatsViewer"></div>
-        
         <div class="list" id="list"><div class="empty">Loading list records from live database pipeline...</div></div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
         <div class="section" style="margin-bottom: 0;">
-          <h3>Stats Viewer (Leaderboard)</h3>
+          <h3 id="leaderboardTitle">Stats Viewer (Leaderboard)</h3>
           <div class="list" style="background: #0f1320;">
             <table class="leaderboard-table">
               <thead>
@@ -426,7 +423,7 @@ const detailPage = document.getElementById("detailPage");
 const profilePage = document.getElementById("profilePage");
 
 let globalListData = [];
-let currentFilterType = "demon"; // Defaulted strictly to Demon List instead of 'all'
+let currentFilterType = "demon"; // Defaulted strictly to Demon List
 
 // Dynamic lookup mapping that connects text fields to official asset files
 const difficultyFaceMapping = {
@@ -463,7 +460,6 @@ async function loadDemonData() {
     globalListData = [...mappedDemons, ...mappedChallenges];
     
     executeCombinedFilter();
-    generateLeaderboard();
     filterSelectionDropdownOptions();
   } catch (error) {
     console.error("Failed to load live database array:", error);
@@ -520,40 +516,7 @@ function executeCombinedFilter() {
     return matchesTab && matchesSearch;
   });
   renderList(filtered);
-  updateStatsViewer(filtered);
-}
-
-function updateStatsViewer(filteredData) {
-  const statsContainer = document.getElementById("listStatsViewer");
-  if (!statsContainer) return; 
-
-  let totalLevels = filteredData.length;
-  let totalRecordsCount = 0;
-  let totalPointsPool = 0;
-
-  filteredData.forEach(item => {
-    totalRecordsCount += parseParticipants(item).length;
-    totalPointsPool += parseFloat(calculatePoints(item.rank, 100));
-  });
-
-  const listLabel = currentFilterType === "challenge" ? "Challenges" : "Demons";
-
-  statsContainer.innerHTML = `
-    <div class="list-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0f1320; padding: 15px; border-radius: 8px; border: 1px solid #1e293b; text-align: center;">
-      <div>
-        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Total ${listLabel}</div>
-        <div style="font-size: 20px; font-weight: bold; color: var(--accent); margin-top: 5px;">${totalLevels}</div>
-      </div>
-      <div>
-        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Approved Records</div>
-        <div style="font-size: 20px; font-weight: bold; color: #10b981; margin-top: 5px;">${totalRecordsCount}</div>
-      </div>
-      <div>
-        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Max Potential Score</div>
-        <div style="font-size: 20px; font-weight: bold; color: #e2e8f0; margin-top: 5px;">${totalPointsPool.toFixed(0)} pts</div>
-      </div>
-    </div>
-  `;
+  generateLeaderboard(); // Automatically filters scores based on the active tab type
 }
 
 function parseParticipants(level) {
@@ -597,7 +560,15 @@ function calculatePoints(rank, percent = 100) {
 
 function generateLeaderboard() {
   const scores = {};
+  
+  // Dynamically change leaderboard section header text to match selected tab context
+  const titleLabel = currentFilterType === "challenge" ? "Challenge List" : "Demon List";
+  document.getElementById("leaderboardTitle").textContent = `${titleLabel} Leaderboard`;
+
+  // Process and filter level score logic strictly by the currently filtered tab type
   globalListData.forEach(level => {
+    if (level.listType !== currentFilterType) return;
+
     parseParticipants(level).forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const key = p.name.toLowerCase();
@@ -609,7 +580,7 @@ function generateLeaderboard() {
   const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
   leaderboardBody.innerHTML = "";
   if (sortedPlayers.length === 0) {
-    leaderboardBody.innerHTML = `<tr><td colspan="3" class="muted" style="text-align:center; padding:16px;">No records listed.</td></tr>`;
+    leaderboardBody.innerHTML = `<tr><td colspan="3" class="muted" style="text-align:center; padding:16px;">No records discovered.</td></tr>`;
     return;
   }
 
@@ -716,7 +687,7 @@ searchInput.oninput = () => {
 
 let lastViewedItem = null;
 
-// DETAILS PAGE RENDERER: Dynamically handles the difficulty face injection here safely
+// DETAILS PAGE RENDERER: Dynamically handles the difficulty face injection safely
 function showDetail(item) {
   lastViewedItem = item;
   listPage.style.display = "none";
@@ -726,7 +697,6 @@ function showDetail(item) {
   const pointsMax = calculatePoints(item.rank, 100);
   const participants = parseParticipants(item);
   
-  // Dynamic Face Lookup checking based on the text string value
   let dynamicFaceMarkup = "";
   const normalizedDiff = (item.diff || "").toLowerCase().trim();
   if (difficultyFaceMapping[normalizedDiff]) {
@@ -737,7 +707,6 @@ function showDetail(item) {
     `;
   }
   
-  // Merging title text layout content with the responsive inline image badge setup
   document.getElementById("dTitle").innerHTML = `
     <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
       <span>${item.name} (Created by ${item.creator})</span>
