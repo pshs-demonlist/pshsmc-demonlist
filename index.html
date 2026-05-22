@@ -519,6 +519,43 @@ function executeCombinedFilter() {
     return matchesTab && matchesSearch;
   });
   renderList(filtered);
+  updateStatsViewer(filtered);
+}
+
+// NEW: Dynamically displays high-level stats for whichever list/filter is active
+function updateStatsViewer(filteredData) {
+  const statsContainer = document.getElementById("listStatsViewer");
+  if (!statsContainer) return; // Safeguard if the element doesn't exist in your HTML yet
+
+  let totalLevels = filteredData.length;
+  let totalRecordsCount = 0;
+  let totalPointsPool = 0;
+
+  filteredData.forEach(item => {
+    totalRecordsCount += parseParticipants(item).length;
+    totalPointsPool += parseFloat(calculatePoints(item.rank, 100));
+  });
+
+  let listLabel = "Levels";
+  if (currentFilterType === "demon") listLabel = "Demons";
+  if (currentFilterType === "challenge") listLabel = "Challenges";
+
+  statsContainer.innerHTML = `
+    <div class="list-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0f1320; padding: 15px; border-radius: 8px; border: 1px solid #1e293b; text-align: center;">
+      <div>
+        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Total ${listLabel}</div>
+        <div style="font-size: 20px; font-weight: bold; color: var(--accent); margin-top: 5px;">${totalLevels}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Approved Records</div>
+        <div style="font-size: 20px; font-weight: bold; color: #10b981; margin-top: 5px;">${totalRecordsCount}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Max Potential Score</div>
+        <div style="font-size: 20px; font-weight: bold; color: #e2e8f0; margin-top: 5px;">${totalPointsPool.toFixed(0)} pts</div>
+      </div>
+    </div>
+  `;
 }
 
 function parseParticipants(level) {
@@ -661,7 +698,6 @@ function filterSelectionDropdownOptions() {
   }
 }
 
-// Added dynamic dropdown filtering link trigger
 document.getElementById("listType").onchange = () => {
   filterSelectionDropdownOptions();
 };
