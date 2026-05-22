@@ -273,8 +273,7 @@
     <div class="section">
       <h3>Search & Filtering</h3>
       <div class="filter-tabs">
-        <button class="tab-btn active" id="tabAll" onclick="switchMainListTab('all')">All Levels</button>
-        <button class="tab-btn" id="tabDemons" onclick="switchMainListTab('demon')">Demonlist</button>
+        <button class="tab-btn active" id="tabDemons" onclick="switchMainListTab('demon')">Demon List</button>
         <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
       </div>
       <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." />
@@ -283,6 +282,9 @@
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
+        
+        <div id="listStatsViewer"></div>
+        
         <div class="list" id="list"><div class="empty">Loading list records from live database pipeline...</div></div>
       </div>
 
@@ -888,6 +890,5 @@ submitBtn.onclick = async () => {
 
 loadDemonData();
 </script>
-
 </body>
 </html>
