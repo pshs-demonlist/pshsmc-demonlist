@@ -424,7 +424,7 @@ const detailPage = document.getElementById("detailPage");
 const profilePage = document.getElementById("profilePage");
 
 let globalListData = [];
-let currentFilterType = "all"; 
+let currentFilterType = "demon"; // Defaulted strictly to Demon List instead of 'all'
 
 // Dynamic lookup mapping that connects text fields to official asset files
 const difficultyFaceMapping = {
@@ -441,7 +441,7 @@ async function loadDemonData() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // First, pass-through standard listType fallbacks
+    // Pass-through standard listType fallbacks
     const normalizedData = data.map((item) => ({
       ...item,
       listType: item.listType || item.listTType || "demon"
@@ -503,7 +503,6 @@ function toggleBlacklist() {
 function switchMainListTab(type) {
   currentFilterType = type;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  if (type === 'all') document.getElementById('tabAll').classList.add('active');
   if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
   if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
   executeCombinedFilter();
@@ -512,7 +511,7 @@ function switchMainListTab(type) {
 function executeCombinedFilter() {
   const query = searchInput.value.toLowerCase().trim();
   const filtered = globalListData.filter(item => {
-    const matchesTab = (currentFilterType === "all") || (item.listType === currentFilterType);
+    const matchesTab = item.listType === currentFilterType;
     const matchesSearch = item.name.toLowerCase().includes(query) || 
                           item.creator.toLowerCase().includes(query) || 
                           (item.diff && item.diff.toLowerCase().includes(query));
@@ -522,10 +521,9 @@ function executeCombinedFilter() {
   updateStatsViewer(filtered);
 }
 
-// NEW: Dynamically displays high-level stats for whichever list/filter is active
 function updateStatsViewer(filteredData) {
   const statsContainer = document.getElementById("listStatsViewer");
-  if (!statsContainer) return; // Safeguard if the element doesn't exist in your HTML yet
+  if (!statsContainer) return; 
 
   let totalLevels = filteredData.length;
   let totalRecordsCount = 0;
@@ -536,9 +534,7 @@ function updateStatsViewer(filteredData) {
     totalPointsPool += parseFloat(calculatePoints(item.rank, 100));
   });
 
-  let listLabel = "Levels";
-  if (currentFilterType === "demon") listLabel = "Demons";
-  if (currentFilterType === "challenge") listLabel = "Challenges";
+  const listLabel = currentFilterType === "challenge" ? "Challenges" : "Demons";
 
   statsContainer.innerHTML = `
     <div class="list-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px; background: #0f1320; padding: 15px; border-radius: 8px; border: 1px solid #1e293b; text-align: center;">
