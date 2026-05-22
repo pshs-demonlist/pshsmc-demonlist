@@ -454,5 +454,25 @@
         "percent": 100
       }
     ]
+  },
+  {
+    "creator": "sSeanyboii",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "139977966",
+    "img": "https://i.ytimg.com/vi/GNcH-Vq8ggc/hqdefault.jpg",
+    "listType": "challenge",
+    "name": "Nasr City",
+    "rank": 1,
+    "rawTier": 13,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/shorts/kAPorJm0Kbw"
+      }
+    ],
+    "video": "https://www.youtube.com/shorts/kAPorJm0Kbw"
   }
 ]
