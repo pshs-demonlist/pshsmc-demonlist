@@ -441,14 +441,24 @@ async function loadDemonData() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
     
-    // Sort array ascending strictly by your manual rank property (1, 2, 3...)
-    const sortedData = data.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
-    
-    globalListData = sortedData.map((item, index) => ({
+    // First, pass-through standard listType fallbacks
+    const normalizedData = data.map((item) => ({
       ...item,
-      rank: item.rank || (index + 1),
       listType: item.listType || item.listTType || "demon"
     }));
+
+    // Split items into categories so they don't break global ranking order sorting rules
+    const demons = normalizedData.filter(item => item.listType === "demon")
+                                 .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+    const challenges = normalizedData.filter(item => item.listType === "challenge")
+                                     .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+
+    // Map calculated sequential fallback placements to prevent grid sorting logic breaks
+    const mappedDemons = demons.map((item, index) => ({ ...item, rank: item.rank || (index + 1) }));
+    const mappedChallenges = challenges.map((item, index) => ({ ...item, rank: item.rank || (index + 1) }));
+
+    // Recombine cleanly into the global dataset
+    globalListData = [...mappedDemons, ...mappedChallenges];
     
     executeCombinedFilter();
     generateLeaderboard();
@@ -650,6 +660,11 @@ function filterSelectionDropdownOptions() {
     existingLevelSelect.appendChild(opt);
   }
 }
+
+// Added dynamic dropdown filtering link trigger
+document.getElementById("listType").onchange = () => {
+  filterSelectionDropdownOptions();
+};
 
 submissionType.onchange = () => {
   if (submissionType.value === "record") {
