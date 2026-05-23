@@ -472,27 +472,27 @@
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
-      },
+      }
     ]
-  }
+  },
   {
+    "id": "140948744",
+    "rank": 2,
+    "name": "Maadi",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "140948744",
     "img": "https://i.ytimg.com/vi/alafxkFTprU/hqdefault.jpg",
+    "video": "https://www.youtube.com/embed/zDJNwDmzHRY",
     "listType": "challenge",
-    "name": "Maadi",
-    "rank": 2,
-    "rawTier": 7
-    "verifier": "sSeanyboii",
+    "rawTier": 7,
     "victorList": [
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
       }
-    ],
-    "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+    ]
   }
 ]
