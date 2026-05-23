@@ -457,8 +457,28 @@
     ]
   },
   {
-    "id": "139977966",
+    "creator": "sSeanyboii",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "140948744",
+    "img": "https://i.ytimg.com/vi/alafxkFTprU/hqdefault.jpg",
+    "listType": "challenge",
+    "name": "Maadi",
     "rank": 1,
+    "rawTier": 13,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "id": "139977966",
+    "rank": 2,
     "name": "Nasr City",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -466,7 +486,7 @@
     "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
     "listType": "challenge",
-    "rawTier": 9.0,
+    "rawTier": 9,
     "victorList": [
       {
         "name": "sSeanyboii",
