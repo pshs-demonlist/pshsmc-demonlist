@@ -458,14 +458,14 @@
   },
   {
     "creator": "sSeanyboii",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "140948744",
     "img": "https://i.ytimg.com/vi/alafxkFTprU/hqdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
-    "rank": 1,
-    "rawTier": 13,
+    "rank": 2,
+    "rawTier": 7
     "verifier": "sSeanyboii",
     "victorList": [
       {
