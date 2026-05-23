@@ -457,6 +457,25 @@
     ]
   },
   {
+    "id": "139977966",
+    "rank": 1,
+    "name": "Nasr City",
+    "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
+    "listType": "challenge",
+    "rawTier": 9,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
+      },
+    ]
+  }
+  {
     "creator": "sSeanyboii",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
@@ -475,24 +494,5 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
-  },
-  {
-    "id": "139977966",
-    "rank": 2,
-    "name": "Nasr City",
-    "creator": "sSeanyboii",
-    "verifier": "sSeanyboii",
-    "diff": "Medium Demon",
-    "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
-    "listType": "challenge",
-    "rawTier": 9,
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
-      }
-    ]
   }
 ]
