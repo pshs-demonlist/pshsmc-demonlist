@@ -440,26 +440,6 @@
     ]
   },
   {
-    "creator": "Jerry4",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "5904109",
-    "img": "https://i.ytimg.com/vi/DWGGjNnU5CA/hqdefault.jpg",
-    "listType": "demon",
-    "name": "Platinum Adventure",
-    "rank": 22,
-    "rawTier": 2.5,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/WceyniFxqh4"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/WceyniFxqh4"
-  },
-  {
     "id": "45622672",
     "rank": 23,
     "name": "Depressure",
@@ -496,6 +476,26 @@
         "percent": 100
       }
     ]
+  },
+  {
+    "creator": "Jerry4",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "5904109",
+    "img": "https://i.ytimg.com/vi/DWGGjNnU5CA/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Platinum Adventure",
+    "rank": 24,
+    "rawTier": 1.13,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/WceyniFxqh4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/WceyniFxqh4"
   },
   {
     "id": "55520",
