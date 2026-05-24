@@ -234,8 +234,28 @@
     ]
   },
   {
-    "id": "16667379",
+    "creator": "motleyorc",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "34085027",
+    "img": "https://i.ytimg.com/vi/ohKPqGxotao/hqdefault.jpg",
+    "listType": "demon",
+    "name": "B",
     "rank": 12,
+    "rawTier": 8,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/msYWaxlIazs"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/msYWaxlIazs"
+  },
+  {
+    "id": "16667379",
+    "rank": 13,
     "name": "Liberation",
     "creator": "Serponge",
     "verifier": "LightBlu",
@@ -259,7 +279,7 @@
   },
   {
     "id": "58002670",
-    "rank": 13,
+    "rank": 14,
     "name": "Sakupen Egg",
     "creator": "Sivlol",
     "verifier": "daBlooKat121",
@@ -283,7 +303,7 @@
   },
   {
     "id": "134645078",
-    "rank": 14,
+    "rank": 15,
     "name": "amethyst",
     "creator": "ZioGDVN",
     "verifier": "daBlooKat121",
@@ -302,7 +322,7 @@
   },
   {
     "id": "118509879",
-    "rank": 15,
+    "rank": 16,
     "name": "Skeletal Shenanigans",
     "creator": "YoReid",
     "verifier": "sSeanyboii",
@@ -321,7 +341,7 @@
   },
   {
     "id": "10972106",
-    "rank": 16,
+    "rank": 17,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
     "verifier": "daBlooKat121",
@@ -334,7 +354,7 @@
   },
   {
     "id": "96716452",
-    "rank": 17,
+    "rank": 18,
     "name": "Living Open",
     "creator": "MaFFaKa",
     "verifier": "sSeanyboii",
@@ -353,7 +373,7 @@
   },
   {
     "id": "18",
-    "rank": 18,
+    "rank": 19,
     "name": "Theory of Everything 2",
     "creator": "RobTop",
     "verifier": "sSeanyboii",
@@ -373,7 +393,7 @@
   },
   {
     "id": "14",
-    "rank": 19,
+    "rank": 20,
     "name": "Clubstep",
     "creator": "Robtop",
     "verifier": "Akoay",
@@ -402,7 +422,7 @@
   },
   {
     "id": "1347537",
-    "rank": 20,
+    "rank": 21,
     "name": "Invisible Clubstep",
     "creator": "J4cKy",
     "verifier": "Akoay",
@@ -421,7 +441,7 @@
   },
   {
     "id": "45622672",
-    "rank": 21,
+    "rank": 22,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -440,7 +460,7 @@
   },
   {
     "id": "89886591",
-    "rank": 22,
+    "rank": 23,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -459,7 +479,7 @@
   },
   {
     "id": "55520",
-    "rank": 23,
+    "rank": 24,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
