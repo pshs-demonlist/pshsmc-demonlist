@@ -568,23 +568,23 @@
     ]
   },
   {
-    "id": "140948744",
-    "rank": 2,
-    "name": "Maadi",
     "creator": "sSeanyboii",
-    "verifier": "sSeanyboii",
-    "diff": "Easy Demon",
+    "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/zDJNwDmzHRY",
+    "id": "140948744",
+    "img": "https://placehold.co/160x90?text=Processing...",
     "listType": "challenge",
-    "rawTier": 4,
+    "name": "Maadi",
+    "rank": 2,
+    "rawTier": 1,
+    "verifier": "sadboi202",
     "victorList": [
       {
-        "name": "sSeanyboii",
+        "name": "sadboi202",
         "percent": 100,
-        "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+        "video": "https://drive.google.com/file/d/1SK5CDNQ8zh0dcsY90nuC8jIoa-dqygWM/view?usp=drivesdk"
       }
-    ]
+    ],
+    "video": "https://drive.google.com/file/d/1SK5CDNQ8zh0dcsY90nuC8jIoa-dqygWM/view?usp=drivesdk"
   }
 ]
