@@ -421,8 +421,28 @@
     ]
   },
   {
-    "id": "1347537",
+    "creator": "IIINePtunEIII",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "358750",
+    "img": "https://i.ytimg.com/vi/D7rn2a-yleM/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Clutterfunk v2",
     "rank": 21,
+    "rawTier": 2.66487158243579,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+  },
+  {
+    "id": "1347537",
+    "rank": 22,
     "name": "Invisible Clubstep",
     "creator": "J4cKy",
     "verifier": "Akoay",
@@ -441,7 +461,7 @@
   },
   {
     "id": "45622672",
-    "rank": 22,
+    "rank": 23,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -460,7 +480,7 @@
   },
   {
     "id": "89886591",
-    "rank": 23,
+    "rank": 24,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -485,7 +505,7 @@
     "img": "https://i.ytimg.com/vi/DWGGjNnU5CA/hqdefault.jpg",
     "listType": "demon",
     "name": "Platinum Adventure",
-    "rank": 24,
+    "rank": 25,
     "rawTier": 1.13,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -499,7 +519,7 @@
   },
   {
     "id": "55520",
-    "rank": 25,
+    "rank": 26,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
