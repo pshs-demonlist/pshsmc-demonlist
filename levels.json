@@ -320,17 +320,24 @@
     ]
   },
   {
-    "id": "10972106",
-    "rank": 16,
-    "name": "Solar Circles",
     "creator": "D4rkGryf",
-    "verifier": "daBlooKat121",
     "diff": "Medium Demon",
-    "img": "https://img.youtube.com/vi/IaXB0hdL5RM/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "10972106",
+    "img": "https://i.ytimg.com/vi/DXdbTRjRylE/hqdefault.jpg",
     "listType": "demon",
-    "rawTier": 5.914163090128755,
-    "victorList": []
+    "name": "Solar Circles",
+    "rank": 16,
+    "rawTier": 5.91555285540705,
+    "verifier": "sadboi202",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1H6yfFFfRuTm1DjbuzcxIiNqeBhZFv8w3/view?usp=drivesdk"
+      }
+    ],
+    "video": "https://drive.google.com/file/d/1H6yfFFfRuTm1DjbuzcxIiNqeBhZFv8w3/view?usp=drivesdk"
   },
   {
     "creator": "motleyorc",
