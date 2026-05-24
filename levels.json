@@ -441,7 +441,7 @@
   },
   {
     "id": "45622672",
-    "rank": 23,
+    "rank": 22,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -460,7 +460,7 @@
   },
   {
     "id": "89886591",
-    "rank": 24,
+    "rank": 23,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -515,6 +515,26 @@
         "percent": 100
       }
     ]
+  },
+  {
+    "creator": "IIINePtunEIII",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "358750",
+    "img": "https://i.ytimg.com/vi/D7rn2a-yleM/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Clutterfunk v2",
+    "rank": 26,
+    "rawTier": 1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
   },
   {
     "id": "139977966",
