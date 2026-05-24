@@ -373,7 +373,7 @@
   },
   {
     "id": "19",
-    "rank": 18,
+    "rank": 19,
     "name": "Theory of Everything 2",
     "creator": "RobTop",
     "verifier": "sSeanyboii",
@@ -440,8 +440,28 @@
     ]
   },
   {
-    "id": "45622672",
+    "creator": "Jerry4",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "5904109",
+    "img": "https://i.ytimg.com/vi/DWGGjNnU5CA/hqdefault.jpg",
+    "listType": "demon",
+    "name": "Platinum Adventure",
     "rank": 22,
+    "rawTier": 2.5,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/WceyniFxqh4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/WceyniFxqh4"
+  },
+  {
+    "id": "45622672",
+    "rank": 23,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -460,7 +480,7 @@
   },
   {
     "id": "89886591",
-    "rank": 23,
+    "rank": 24,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -479,7 +499,7 @@
   },
   {
     "id": "55520",
-    "rank": 24,
+    "rank": 25,
     "name": "THE LIGHTNING ROAD",
     "creator": "timeless real",
     "verifier": "QUWERTYR",
