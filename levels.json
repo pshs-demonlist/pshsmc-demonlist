@@ -324,20 +324,25 @@
     "diff": "Medium Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "10972106",
-    "img": "https://i.ytimg.com/vi/DXdbTRjRylE/hqdefault.jpg",
+    "img": "https://img.youtube.com/vi/gknJ-1zqIQc/maxresdefault.jpg",
     "listType": "demon",
     "name": "Solar Circles",
     "rank": 16,
     "rawTier": 5.91555285540705,
-    "verifier": "sadboi202",
+    "verifier": "daBlooKat121",
     "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gknJ-1zqIQc"
+      },
       {
         "name": "sadboi202",
         "percent": 100,
-        "video": "https://drive.google.com/file/d/1H6yfFFfRuTm1DjbuzcxIiNqeBhZFv8w3/view?usp=drivesdk"
+        "video": "https://www.youtube.com/embed/9QoNzyGzTK8"
       }
     ],
-    "video": "https://drive.google.com/file/d/1H6yfFFfRuTm1DjbuzcxIiNqeBhZFv8w3/view?usp=drivesdk"
+    "video": "https://www.youtube.com/embed/gknJ-1zqIQc"
   },
   {
     "creator": "motleyorc",
