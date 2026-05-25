@@ -561,6 +561,7 @@
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
+    "creator": "sSeanyboii",
     "rank": 2,
     "rawTier": 7,
     "verifier": "sSeanyboii",
@@ -573,7 +574,7 @@
       {
         "name": "sadboi202",
         "percent": 100,
-        "video": "https://www.youtube.com/AqtY7fJ9FRw"
+        "video": "https://www.youtube.com/embed/AqtY7fJ9FRw"
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
