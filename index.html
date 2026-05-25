@@ -436,13 +436,49 @@ const difficultyFaceMapping = {
   "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp"
 };
 
-async function loadDemonData() {
+// CACHING UTILITY ENGINE
+async function fetchCachedOrFreshData() {
+  const CACHE_KEY = 'gd_list_levels';
+  const TIMESTAMP_KEY = 'gd_list_cache_time';
+  const CACHE_DURATION = 60 * 60 * 1000; // 1 Hour Cache
+
+  const cachedData = localStorage.getItem(CACHE_KEY);
+  const cacheTimestamp = localStorage.getItem(TIMESTAMP_KEY);
+  const now = Date.now();
+
+  // Return local storage data instantly if it is within duration window
+  if (cachedData && cacheTimestamp && (now - cacheTimestamp < CACHE_DURATION)) {
+    console.log("🚀 Loading engine parameters instantly from browser cache...");
+    return JSON.parse(cachedData);
+  }
+
+  // Otherwise, request fresh compilation over network path
   try {
-    // Normalizing fetch down to standard cross-origin requests to prevent browser CORS triggers
+    console.log("🔄 Cache expired or missing. Syncing raw level array payload...");
     const response = await fetch(getCleanCacheBusterUrl());
     
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
+    const freshData = await response.json();
+
+    // Commit to cache storage maps
+    localStorage.setItem(CACHE_KEY, JSON.stringify(freshData));
+    localStorage.setItem(TIMESTAMP_KEY, now.toString());
+
+    return freshData;
+  } catch (error) {
+    console.error("❌ Transmission Pipeline failed to refresh raw schema:", error);
+    if (cachedData) {
+      console.warn("⚠️ Fallback: Serving expired cache matrix configurations.");
+      return JSON.parse(cachedData);
+    }
+    throw error;
+  }
+}
+
+async function loadDemonData() {
+  try {
+    // Replaced standard live fetch string with the local caching driver logic
+    const data = await fetchCachedOrFreshData();
     
     // Pass-through standard listType fallbacks
     const normalizedData = data.map((item) => ({
