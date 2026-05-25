@@ -519,15 +519,20 @@
     "name": "Platinum Adventure",
     "rank": 25,
     "rawTier": 1.12860759493671,
-    "verifier": "eelektrance",
+    "verifier": "sSeanyboii",
     "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/WceyniFxqh4"
+      },  
       {
         "name": "eelektrance",
         "percent": 100,
         "video": "https://www.youtube.com/embed/IvMe0-xNzuo"
       }
     ],
-    "video": "https://www.youtube.com/embed/IvMe0-xNzuo"
+    "video": "https://www.youtube.com/embed/WceyniFxqh4"
   },
   {
     "id": "55520",
@@ -572,19 +577,24 @@
     "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "140948744",
-    "img": "https://placehold.co/160x90?text=Processing...",
+    "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
     "rank": 2,
     "rawTier": 1,
-    "verifier": "sadboi202",
+    "verifier": "sSeanyboii",
     "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+      }
       {
         "name": "sadboi202",
         "percent": 100,
         "video": "https://drive.google.com/file/d/1SK5CDNQ8zh0dcsY90nuC8jIoa-dqygWM/view?usp=drivesdk"
       }
     ],
-    "video": "https://drive.google.com/file/d/1SK5CDNQ8zh0dcsY90nuC8jIoa-dqygWM/view?usp=drivesdk"
+    "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
   }
 ]
