@@ -1,22 +1,581 @@
 [
   {
-    "creator": "eelektrance",
-    "diff": "Easy Challenge",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "141063347",
-    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Margarinepotato",
+    "id": "10565740",
     "rank": 1,
-    "rawTier": 1,
-    "verifier": "eelektrance",
+    "name": "Bloodbath",
+    "creator": "Riot",
+    "verifier": "sadboi202",
+    "diff": "Extreme Demon",
+    "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
+    "listType": "demon",
+    "rawTier": 23.99043977055449,
     "victorList": [
+      {
+        "name": "sadboi202",
+        "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
+        "percent": 100
+      },
+      {
+        "name": "(TAMAYO)",
+        "video": "https://www.youtube.com/embed/28YwyFHeQAM",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "3979721",
+    "rank": 2,
+    "name": "Cataclysm",
+    "creator": "GGboy",
+    "verifier": "sadboi202",
+    "diff": "Extreme Demon",
+    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
+    "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+    "listType": "demon",
+    "rawTier": 20.917157084653688,
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "60619762",
+    "rank": 3,
+    "name": "Denouement",
+    "creator": "SYNACTIVE GD",
+    "verifier": "aldawg123",
+    "diff": "Insane Demon",
+    "img": "https://i.ytimg.com/vi/ziHvsAriE3s/hqdefault.jpg",
+    "video": "https://www.youtube.com/embed/jESMjFcXTv8",
+    "listType": "demon",
+    "rawTier": 16.87,
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/jESMjFcXTv8"
+      }
+    ]
+  },
+  {
+    "id": "7054561",
+    "rank": 4,
+    "name": "Poltergeist",
+    "creator": "AndromedaGMD",
+    "verifier": "sadboi202",
+    "diff": "Insane Demon",
+    "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
+    "video": "https://www.youtube.com/embed/N05ijX3vz9U",
+    "listType": "demon",
+    "rawTier": 15.941991017964073,
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "video": "https://www.youtube.com/embed/N05ijX3vz9U",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "44062068",
+    "rank": 5,
+    "name": "Future Funk",
+    "creator": "JonathanGD",
+    "verifier": "sSeanyboii",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/Dl3X3v5qTcQ/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ",
+    "listType": "demon",
+    "rawTier": 12.940637875782093,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "67300705",
+    "rank": 6,
+    "name": "Octagon Force",
+    "creator": "JamAttack",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/LhsUg_yadx4",
+    "listType": "demon",
+    "rawTier": 11.222929936305732,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "video": "https://www.youtube.com/embed/LhsUg_yadx4",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "4284013",
+    "rank": 7,
+    "name": "Nine Circles",
+    "creator": "Zobros",
+    "verifier": "sadboi202",
+    "diff": "Hard Demon",
+    "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
+    "video": "https://www.youtube.com/embed/DO36t7DV0ec",
+    "listType": "demon",
+    "rawTier": 11.16233078281342,
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "video": "https://www.youtube.com/embed/DO36t7DV0ec",
+        "percent": 100
+      },
+      {
+        "name": "LightBlu",
+        "video": "https://www.youtube.com/embed/aiW_1Iqwej8",
+        "percent": 100
+      },
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/WPilEOcglfw",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "6939821",
+    "rank": 8,
+    "name": "Jawbreaker",
+    "creator": "ZenthicAlpha",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/o4-PvIWPAtI",
+    "listType": "demon",
+    "rawTier": 11.139132165605096,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "video": "https://www.youtube.com/embed/o4-PvIWPAtI",
+        "percent": 100
+      },
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/jFpmFFDaWAA",
+        "percent": 100
+      },
+      {
+        "name": "sadboi202",
+        "video": "https://drive.google.com/file/d/1B77jFoQbV0DxQ91G8VEoU2woEywMOfg_/view?usp=drivesdk",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "92742742",
+    "rank": 9,
+    "name": "tower descent",
+    "creator": "pocke",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/bQ06DXrynYU",
+    "listType": "demon",
+    "rawTier": 10.145052833813635,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "video": "https://www.youtube.com/embed/bQ06DXrynYU",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "114532158",
+    "rank": 10,
+    "name": "Troll Madness",
+    "creator": "zyphur",
+    "verifier": "sSeanyboii",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
+    "listType": "demon",
+    "rawTier": 9.237630070078572,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/jUv_1Ic9TCM",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "111205474",
+    "rank": 11,
+    "name": "Thermal Madness",
+    "creator": "ManiacDan",
+    "verifier": "daBlooKat121",
+    "diff": "Hard Demon",
+    "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/eSzjgWEREGQ",
+    "listType": "demon",
+    "rawTier": 8.059021922428329,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "video": "https://www.youtube.com/embed/eSzjgWEREGQ",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "16667379",
+    "rank": 12,
+    "name": "Liberation",
+    "creator": "Serponge",
+    "verifier": "LightBlu",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
+    "listType": "demon",
+    "rawTier": 7.0754716981132075,
+    "victorList": [
+      {
+        "name": "LightBlu",
+        "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
+        "percent": 100
+      },
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/-oT6ECpmFr4",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "58002670",
+    "rank": 13,
+    "name": "Sakupen Egg",
+    "creator": "Sivlol",
+    "verifier": "daBlooKat121",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/uGuo5RFF45g/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/19Ct5w32jMk",
+    "listType": "demon",
+    "rawTier": 6.97,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/19Ct5w32jMk"
+      },
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/uGuo5RFF45g"
+      }
+    ]
+  },
+  {
+    "id": "134645078",
+    "rank": 14,
+    "name": "amethyst",
+    "creator": "ZioGDVN",
+    "verifier": "daBlooKat121",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
+    "listType": "demon",
+    "rawTier": 6.95,
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+      }
+    ]
+  },
+  {
+    "id": "118509879",
+    "rank": 15,
+    "name": "Skeletal Shenanigans",
+    "creator": "YoReid",
+    "verifier": "sSeanyboii",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/tbQsoqY_z6k/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
+    "listType": "demon",
+    "rawTier": 6.68018839672214,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/tbQsoqY_z6k",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "creator": "D4rkGryf",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "10972106",
+    "img": "https://img.youtube.com/vi/gknJ-1zqIQc/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Solar Circles",
+    "rank": 16,
+    "rawTier": 5.91555285540705,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gknJ-1zqIQc"
+      },
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/9QoNzyGzTK8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gknJ-1zqIQc"
+  },
+  {
+    "creator": "motleyorc",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "34085027",
+    "img": "https://img.youtube.com/vi/msYWaxlIazs/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "B",
+    "rank": 17,
+    "rawTier": 5.81,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/msYWaxlIazs"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/msYWaxlIazs"
+  },
+  {
+    "id": "96716452",
+    "rank": 18,
+    "name": "Living Open",
+    "creator": "MaFFaKa",
+    "verifier": "sSeanyboii",
+    "diff": "Medium Demon",
+    "img": "https://img.youtube.com/vi/XvxEkXLayHU/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/XvxEkXLayHU",
+    "listType": "demon",
+    "rawTier": 5.16,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/XvxEkXLayHU"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "rank": 19,
+    "name": "Theory of Everything 2",
+    "creator": "RobTop",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/Xq3a-rxeaaM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/REl1vktm9gg",
+    "listType": "demon",
+    "rawTier": 3.04,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/REl1vktm9gg"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "rank": 20,
+    "name": "Clubstep",
+    "creator": "Robtop",
+    "verifier": "Akoay",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/QLbGTXh8RIk/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/7RI0yNMjT2U?rel=0&enablejsapi=1",
+    "listType": "demon",
+    "rawTier": 2.82,
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/7RI0yNMjT2U"
+      },
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/QLbGTXh8RIk"
+      },
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/h8j9tyG1_Hk"
+      }
+    ]
+  },
+  {
+    "creator": "IIINePtunEIII",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "358750",
+    "img": "https://img.youtube.com/vi/Kkrp9G-vYeE/mqdefault.jpg",
+    "listType": "demon",
+    "name": "Clutterfunk v2",
+    "rank": 21,
+    "rawTier": 2.66487158243579,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+  },
+  {
+    "id": "1347537",
+    "rank": 22,
+    "name": "Invisible Clubstep",
+    "creator": "J4cKy",
+    "verifier": "Akoay",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/C4n25hmvr9s/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/KRNorjZLr9U",
+    "listType": "demon",
+    "rawTier": 2.61,
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/KRNorjZLr9U"
+      }
+    ]
+  },
+  {
+    "id": "45622672",
+    "rank": 23,
+    "name": "Depressure",
+    "creator": "Serponge",
+    "verifier": "aldawg123",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+    "listType": "demon",
+    "rawTier": 2.1729809437386565,
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "id": "89886591",
+    "rank": 24,
+    "name": "ISpyWithMyLittleEye",
+    "creator": "Voxicat",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "img": "https://img.youtube.com/vi/Uj9kiAlhytY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
+    "listType": "demon",
+    "rawTier": 1.8707052441229657,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "video": "https://www.youtube.com/embed/Uj9kiAlhytY",
+        "percent": 100
+      }
+    ]
+  },
+  {
+    "creator": "Jerry4",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "5904109",
+    "img": "https://img.youtube.com/vi/WceyniFxqh4/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Platinum Adventure",
+    "rank": 25,
+    "rawTier": 1.12860759493671,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/WceyniFxqh4"
+      },  
       {
         "name": "eelektrance",
         "percent": 100,
-        "video": "https://www.youtube.com/embed/w5uRX0poI50"
+        "video": "https://www.youtube.com/embed/IvMe0-xNzuo"
       }
     ],
-    "video": "https://www.youtube.com/embed/w5uRX0poI50"
+    "video": "https://www.youtube.com/embed/WceyniFxqh4"
+  },
+  {
+    "id": "55520",
+    "rank": 1,
+    "name": "Nasr City",
+    "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
+    "listType": "challenge",
+    "rawTier": 9,
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
+      }
+    ]
+  },
+  {
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "140948744",
+    "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Maadi",
+    "rank": 2,
+    "rawTier": 7,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+      },
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1SK5CDNQ8zh0dcsY90nuC8jIoa-dqygWM/view?usp=drivesdk"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
   }
 ]
