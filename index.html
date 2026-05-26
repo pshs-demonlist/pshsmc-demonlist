@@ -441,29 +441,27 @@ const difficultyFaceMapping = {
 
 // DATA FETCH ENGINE
 async function fetchCachedOrFreshData() {
-  const CACHE_KEY = 'gd_list_levels';
-  const TIMESTAMP_KEY = 'gd_list_cache_time';
+  // 🟢 FIXED: Changed keys to v2 to instantly bust the broken browser cache loop
+  const CACHE_KEY = 'gd_list_levels_v2';
+  const TIMESTAMP_KEY = 'gd_list_cache_time_v2';
   const CACHE_DURATION = 60 * 60 * 1000; // 1 Hour Cache
 
   const cachedData = localStorage.getItem(CACHE_KEY);
   const cacheTimestamp = localStorage.getItem(TIMESTAMP_KEY);
   const now = Date.now();
 
-  // Return local storage data instantly if it is within duration window
   if (cachedData && cacheTimestamp && (now - cacheTimestamp < CACHE_DURATION)) {
-    console.log("🚀 Loading engine parameters instantly from browser cache...");
+    console.log("🚀 Loading engine parameters cleanly from fresh v2 cache...");
     return JSON.parse(cachedData);
   }
 
-  // Otherwise, request fresh compilation over network path
   try {
-    console.log("🔄 Cache expired or missing. Syncing raw level array payload...");
+    console.log("🔄 Syncing raw level array payload from GitHub...");
     const response = await fetch(RAW_DATA_URL);
     
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const freshData = await response.json();
 
-    // Commit to cache storage maps
     localStorage.setItem(CACHE_KEY, JSON.stringify(freshData));
     localStorage.setItem(TIMESTAMP_KEY, now.toString());
 
@@ -478,15 +476,12 @@ async function fetchCachedOrFreshData() {
   }
 }
 
-// 🟢 FIXED FUNCTION INTEGRATED HERE
 async function loadDemonData() {
   try {
     const data = await fetchCachedOrFreshData();
     
-    // Strict normalized enforcement of list placement properties
     globalListData = data.map((item) => {
       let detectedType = item.listType || item.listTType || "demon";
-      
       detectedType = detectedType.toLowerCase().trim();
       if (!detectedType.includes("challenge")) {
         detectedType = "demon";
@@ -499,7 +494,7 @@ async function loadDemonData() {
         listType: detectedType,
         rank: item.rank ? parseInt(item.rank) : 999
       };
-    }).sort((a, b) => a.rank - b.rank); // Sort globally by original ranking parameters
+    });
 
     executeCombinedFilter();
     filterSelectionDropdownOptions();
@@ -555,13 +550,17 @@ function switchMainListTab(type) {
 
 function executeCombinedFilter() {
   const query = searchInput.value.toLowerCase().trim();
-  const filtered = globalListData.filter(item => {
-    const matchesTab = item.listType === currentFilterType;
-    const matchesSearch = item.name.toLowerCase().includes(query) || 
-                          item.creator.toLowerCase().includes(query) || 
-                          (item.diff && item.diff.toLowerCase().includes(query));
-    return matchesTab && matchesSearch;
-  });
+  
+  const filtered = globalListData
+    .filter(item => {
+      const matchesTab = item.listType === currentFilterType;
+      const matchesSearch = item.name.toLowerCase().includes(query) || 
+                            item.creator.toLowerCase().includes(query) || 
+                            (item.diff && item.diff.toLowerCase().includes(query));
+      return matchesTab && matchesSearch;
+    })
+    .sort((a, b) => a.rank - b.rank);
+    
   renderList(filtered);
   generateLeaderboard(); 
 }
@@ -692,7 +691,7 @@ function filterSelectionDropdownOptions() {
   const selectedType = document.getElementById("listType").value;
   existingLevelSelect.innerHTML = "";
   
-  const filteredLevels = globalListData.filter(item => item.listType === selectedType);
+  const filteredLevels = globalListData.filter(item => item.listType === selectedType).sort((a,b) => a.rank - b.rank);
   
   filteredLevels.forEach(item => {
     const opt = document.createElement("option");
@@ -793,37 +792,44 @@ function showProfile(playerName, initialLevelId = null) {
   const completionsContainer = document.getElementById("pCompletions");
   completionsContainer.innerHTML = "";
 
+  let matchedLevels = [];
+
   globalListData.forEach(level => {
     const participants = parseParticipants(level);
     const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
-    
     if (match) {
-      const pts = parseFloat(calculatePoints(level.rank, match.percent));
-      totalPoints += pts;
-
-      let badgeHTML = "";
-      if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
-      if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
-
-      let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
-
-      const div = document.createElement("div");
-      div.className = "profile-level-item";
-      div.innerHTML = `
-        <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted">Created by ${level.creator}</div></div>
-        <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
-      `;
-
-      div.onclick = () => {
-        document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
-        div.classList.add('active-video');
-        updateProfileVideoPlayer(playerName, level.name, runtimeVideoUrl);
-      };
-
-      completionsContainer.appendChild(div);
-      if (initialLevelId && level.id === initialLevelId) autoSelectElement = div;
-      if (!fallbackElement) fallbackElement = div;
+      matchedLevels.push({ level, match });
     }
+  });
+
+  matchedLevels.sort((a,b) => a.level.rank - b.level.rank);
+
+  matchedLevels.forEach(({ level, match }) => {
+    const pts = parseFloat(calculatePoints(level.rank, match.percent));
+    totalPoints += pts;
+
+    let badgeHTML = "";
+    if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
+    if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
+
+    let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
+
+    const div = document.createElement("div");
+    div.className = "profile-level-item";
+    div.innerHTML = `
+      <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted">Created by ${level.creator}</div></div>
+      <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
+    `;
+
+    div.onclick = () => {
+      document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
+      div.classList.add('active-video');
+      updateProfileVideoPlayer(playerName, level.name, runtimeVideoUrl);
+    };
+
+    completionsContainer.appendChild(div);
+    if (initialLevelId && level.id === initialLevelId) autoSelectElement = div;
+    if (!fallbackElement) fallbackElement = div;
   });
 
   document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
@@ -878,8 +884,8 @@ submitBtn.onclick = async () => {
   }
 
   try {
-    localStorage.removeItem('gd_list_levels');
-    localStorage.removeItem('gd_list_cache_time');
+    localStorage.removeItem('gd_list_levels_v2');
+    localStorage.removeItem('gd_list_cache_time_v2');
 
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
