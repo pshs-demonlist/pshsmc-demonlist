@@ -560,7 +560,7 @@
     "name": "Nasr City",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
-    "diff": "Easy Challenge",
+    "diff": "Medium Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
@@ -575,7 +575,7 @@
     ]
   },
   {
-    "diff": "Easy Challenge",
+    "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "140948744",
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
@@ -601,14 +601,14 @@
   },
   {
     "creator": "eelektrance",
-    "diff": "Easy Challenge",
+    "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "141063347",
     "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Margarinepotato",
     "rank": 3,
-    "rawTier": 1,
+    "rawTier": 6,
     "verifier": "eelektrance",
     "victorList": [
       {
