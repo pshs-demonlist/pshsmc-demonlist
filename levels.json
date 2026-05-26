@@ -598,5 +598,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "eelektrance",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "141063347",
+    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Margarinepotato",
+    "rank": 3,
+    "rawTier": 1,
+    "verifier": "eelektrance",
+    "victorList": [
+      {
+        "name": "eelektrance",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/w5uRX0poI50"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/w5uRX0poI50"
   }
 ]
