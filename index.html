@@ -478,16 +478,28 @@ async function fetchCachedOrFreshData() {
   }
 }
 
+// 🟢 FIXED FUNCTION INTEGRATED HERE
 async function loadDemonData() {
   try {
     const data = await fetchCachedOrFreshData();
     
-    // Pass-through standard listType fallbacks and preserve original ranks cleanly
-    globalListData = data.map((item) => ({
-      ...item,
-      listType: item.listType || item.listTType || "demon",
-      rank: item.rank ? parseInt(item.rank) : 999
-    })).sort((a, b) => a.rank - b.rank); // Sort globally by original ranking parameters
+    // Strict normalized enforcement of list placement properties
+    globalListData = data.map((item) => {
+      let detectedType = item.listType || item.listTType || "demon";
+      
+      detectedType = detectedType.toLowerCase().trim();
+      if (!detectedType.includes("challenge")) {
+        detectedType = "demon";
+      } else {
+        detectedType = "challenge";
+      }
+
+      return {
+        ...item,
+        listType: detectedType,
+        rank: item.rank ? parseInt(item.rank) : 999
+      };
+    }).sort((a, b) => a.rank - b.rank); // Sort globally by original ranking parameters
 
     executeCombinedFilter();
     filterSelectionDropdownOptions();
@@ -866,8 +878,6 @@ submitBtn.onclick = async () => {
   }
 
   try {
-    // Clear out local browser storage cache maps to ensure the page 
-    // checks the real network file immediately on subsequent site reloads
     localStorage.removeItem('gd_list_levels');
     localStorage.removeItem('gd_list_cache_time');
 
