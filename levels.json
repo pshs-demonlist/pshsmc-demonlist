@@ -575,6 +575,26 @@
     ]
   },
   {
+    "creator": "eelektrance",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "141063347",
+    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Margarinepotato",
+    "rank": 2,
+    "rawTier": 7,
+    "verifier": "eelektrance",
+    "victorList": [
+      {
+        "name": "eelektrance",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/w5uRX0poI50"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/w5uRX0poI50"
+  }
+  {
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "140948744",
@@ -582,8 +602,8 @@
     "listType": "challenge",
     "name": "Maadi",
     "creator": "sSeanyboii",
-    "rank": 2,
-    "rawTier": 7,
+    "rank": 3,
+    "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -599,24 +619,4 @@
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
   },
-  {
-    "creator": "eelektrance",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "141063347",
-    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Margarinepotato",
-    "rank": 3,
-    "rawTier": 6,
-    "verifier": "eelektrance",
-    "victorList": [
-      {
-        "name": "eelektrance",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/w5uRX0poI50"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/w5uRX0poI50"
-  }
 ]
