@@ -85,24 +85,24 @@
     ]
   },
   {
+    "id": "11402965",
+    "rank": 5,
+    "name": "Forest temple",
     "creator": "Michigun",
+    "verifier": "Michigun",
     "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "11402965",
     "img": "https://img.youtube.com/vi/VzyvIOn7PBc/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/VzyvIOn7PBc",
     "listType": "demon",
-    "name": "Forest temple",
-    "rank": 5,
     "rawTier": 13.9659143251958,
-    "verifier": "Michigun",
     "victorList": [
       {
         "name": "aldawg123",
         "percent": 100,
         "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
       }
-    ],
-    "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
+    ]
   },
   {
     "id": "44062068",
@@ -615,16 +615,17 @@
     ]
   },
   {
+    "id": "141063347",
+    "rank": 2,
+    "name": "Margarinepotato",
     "creator": "eelektrance",
+    "verifier": "eelektrance",
     "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "141063347",
     "img": "https://img.youtube.com/vi/RmhwZdJd9mM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/RmhwZdJd9mM",
     "listType": "challenge",
-    "name": "Margarinepotato",
-    "rank": 2,
     "rawTier": 7,
-    "verifier": "eelektrance",
     "victorList": [
       {
         "name": "eelektrance",
@@ -636,8 +637,7 @@
         "percent": 100,
         "video": "https://www.youtube.com/embed/RmhwZdJd9mM"
       }
-    ],
-    "video": "https://www.youtube.com/embed/RmhwZdJd9mM"
+    ]
   },
   {
     "id": "140948744",
