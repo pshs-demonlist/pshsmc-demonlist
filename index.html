@@ -477,28 +477,15 @@ async function fetchCachedOrFreshData() {
 
 async function loadDemonData() {
   try {
-    // Replaced standard live fetch string with the local caching driver logic
     const data = await fetchCachedOrFreshData();
     
-    // Pass-through standard listType fallbacks
-    const normalizedData = data.map((item) => ({
+    // Pass-through standard listType fallbacks and preserve original ranks cleanly
+    globalListData = data.map((item) => ({
       ...item,
-      listType: item.listType || item.listTType || "demon"
-    }));
+      listType: item.listType || item.listTType || "demon",
+      rank: item.rank ? parseInt(item.rank) : 999
+    })).sort((a, b) => a.rank - b.rank); // Sort globally by original ranking parameters
 
-    // Split items into categories so they don't break global ranking order sorting rules
-    const demons = normalizedData.filter(item => item.listType === "demon")
-                                 .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
-    const challenges = normalizedData.filter(item => item.listType === "challenge")
-                                     .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
-
-    // Map calculated sequential fallback placements to prevent grid sorting logic breaks
-    const mappedDemons = demons.map((item, index) => ({ ...item, rank: item.rank || (index + 1) }));
-    const mappedChallenges = challenges.map((item, index) => ({ ...item, rank: item.rank || (index + 1) }));
-
-    // Recombine cleanly into the global dataset
-    globalListData = [...mappedDemons, ...mappedChallenges];
-    
     executeCombinedFilter();
     filterSelectionDropdownOptions();
   } catch (error) {
@@ -561,7 +548,7 @@ function executeCombinedFilter() {
     return matchesTab && matchesSearch;
   });
   renderList(filtered);
-  generateLeaderboard(); // Automatically filters scores based on the active tab type
+  generateLeaderboard(); 
 }
 
 function parseParticipants(level) {
@@ -589,7 +576,6 @@ function parseParticipants(level) {
   return entries;
 }
 
-// Formula calculates baseline points depending on list rank index metrics
 function calculatePoints(rank, percent = 100) {
   const r = Number(rank);
   let basePoints = 0;
@@ -605,12 +591,10 @@ function calculatePoints(rank, percent = 100) {
 
 function generateLeaderboard() {
   const scores = {};
-  
-  // Dynamically change leaderboard section header text to match selected tab context
   const titleLabel = currentFilterType === "challenge" ? "Challenge List" : "Demon List";
-  document.getElementById("leaderboardTitle").textContent = `${titleLabel} Leaderboard`;
+  const lbTitleEl = document.getElementById("leaderboardTitle");
+  if (lbTitleEl) lbTitleEl.textContent = `${titleLabel} Leaderboard`;
 
-  // Process and filter level score logic strictly by the currently filtered tab type
   globalListData.forEach(level => {
     if (level.listType !== currentFilterType) return;
 
@@ -645,7 +629,6 @@ function generateLeaderboard() {
   });
 }
 
-// Main list renderer: Fast, simple, and light for mobile views
 function renderList(data) {
   listContainer.innerHTML = "";
   if(data.length === 0) {
@@ -732,7 +715,6 @@ searchInput.oninput = () => {
 
 let lastViewedItem = null;
 
-// DETAILS PAGE RENDERER: Dynamically handles the difficulty face injection safely
 function showDetail(item) {
   lastViewedItem = item;
   listPage.style.display = "none";
