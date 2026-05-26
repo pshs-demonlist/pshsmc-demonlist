@@ -484,8 +484,8 @@
     "victorList": [
       {
         "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
+        "video": "https://www.youtube.com/embed/S3TRN7ZYWOg",
+        "percent": 100
       }
     ]
   },
@@ -596,7 +596,7 @@
   },
   {
     "id": "140202797",
-    "rank": 1,
+    "rank": 28,
     "name": "Nasr City",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -616,7 +616,7 @@
   },
   {
     "id": "141063347",
-    "rank": 2,
+    "rank": 29,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -641,7 +641,7 @@
   },
   {
     "id": "140948744",
-    "rank": 3,
+    "rank": 30,
     "name": "Maadi",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
