@@ -85,8 +85,28 @@
     ]
   },
   {
-    "id": "44062068",
+    "creator": "Michigun",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "11402965",
+    "img": "https://img.youtube.com/vi/VzyvIOn7PBc/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Forest temple",
     "rank": 5,
+    "rawTier": 13.9659143251958,
+    "verifier": "Michigun",
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
+  },
+  {
+    "id": "44062068",
+    "rank": 6,
     "name": "Future Funk",
     "creator": "JonathanGD",
     "verifier": "sSeanyboii",
@@ -106,7 +126,7 @@
   },
   {
     "id": "67300705",
-    "rank": 6,
+    "rank": 7,
     "name": "Octagon Force",
     "creator": "JamAttack",
     "verifier": "daBlooKat121",
@@ -126,7 +146,7 @@
   },
   {
     "id": "4284013",
-    "rank": 7,
+    "rank": 8,
     "name": "Nine Circles",
     "creator": "Zobros",
     "verifier": "sadboi202",
@@ -156,7 +176,7 @@
   },
   {
     "id": "6939821",
-    "rank": 8,
+    "rank": 9,
     "name": "Jawbreaker",
     "creator": "ZenthicAlpha",
     "verifier": "daBlooKat121",
@@ -186,7 +206,7 @@
   },
   {
     "id": "92742742",
-    "rank": 9,
+    "rank": 10,
     "name": "tower descent",
     "creator": "pocke",
     "verifier": "daBlooKat121",
@@ -206,7 +226,7 @@
   },
   {
     "id": "114532158",
-    "rank": 10,
+    "rank": 11,
     "name": "Troll Madness",
     "creator": "zyphur",
     "verifier": "sSeanyboii",
@@ -226,7 +246,7 @@
   },
   {
     "id": "111205474",
-    "rank": 11,
+    "rank": 12,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
     "verifier": "daBlooKat121",
@@ -246,7 +266,7 @@
   },
   {
     "id": "16667379",
-    "rank": 12,
+    "rank": 13,
     "name": "Liberation",
     "creator": "Serponge",
     "verifier": "LightBlu",
@@ -271,7 +291,7 @@
   },
   {
     "id": "58002670",
-    "rank": 13,
+    "rank": 14,
     "name": "Sakupen Egg",
     "creator": "Sivlol",
     "verifier": "daBlooKat121",
@@ -296,7 +316,7 @@
   },
   {
     "id": "134645078",
-    "rank": 14,
+    "rank": 15,
     "name": "amethyst",
     "creator": "ZioGDVN",
     "verifier": "daBlooKat121",
@@ -316,7 +336,7 @@
   },
   {
     "id": "118509879",
-    "rank": 15,
+    "rank": 16,
     "name": "Skeletal Shenanigans",
     "creator": "YoReid",
     "verifier": "sSeanyboii",
@@ -336,7 +356,7 @@
   },
   {
     "id": "10972106",
-    "rank": 16,
+    "rank": 17,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
     "verifier": "daBlooKat121",
@@ -361,7 +381,7 @@
   },
   {
     "id": "34085027",
-    "rank": 17,
+    "rank": 18,
     "name": "B",
     "creator": "motleyorc",
     "verifier": "sSeanyboii",
@@ -381,7 +401,7 @@
   },
   {
     "id": "96716452",
-    "rank": 18,
+    "rank": 19,
     "name": "Living Open",
     "creator": "MaFFaKa",
     "verifier": "sSeanyboii",
@@ -401,7 +421,7 @@
   },
   {
     "id": "19",
-    "rank": 19,
+    "rank": 20,
     "name": "Theory of Everything 2",
     "creator": "RobTop",
     "verifier": "sSeanyboii",
@@ -421,7 +441,7 @@
   },
   {
     "id": "14",
-    "rank": 20,
+    "rank": 21,
     "name": "Clubstep",
     "creator": "RobTop",
     "verifier": "Akoay",
@@ -451,7 +471,7 @@
   },
   {
     "id": "358750",
-    "rank": 21,
+    "rank": 22,
     "name": "Clutterfunk v2",
     "creator": "IIINePtunEIII",
     "verifier": "sSeanyboii",
@@ -471,7 +491,7 @@
   },
   {
     "id": "1347537",
-    "rank": 22,
+    "rank": 23,
     "name": "Invisible Clubstep",
     "creator": "J4cKy",
     "verifier": "Akoay",
@@ -491,7 +511,7 @@
   },
   {
     "id": "45622672",
-    "rank": 23,
+    "rank": 24,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -511,7 +531,7 @@
   },
   {
     "id": "89886591",
-    "rank": 24,
+    "rank": 25,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -531,7 +551,7 @@
   },
   {
     "id": "56210242",
-    "rank": 25,
+    "rank": 26,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "SpKale",
@@ -551,7 +571,7 @@
   },
   {
     "id": "5904109",
-    "rank": 26,
+    "rank": 27,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
