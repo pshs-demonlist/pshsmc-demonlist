@@ -402,10 +402,8 @@ const LIST_MIN_PERCENT = 50;
 // URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
 
-// URL 2: Streamlined cache-buster query string that doesn't trigger security blocks
-const getCleanCacheBusterUrl = () => {
-  return `https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json?t=${Date.now()}`;
-};
+// URL 2: Clean, direct link to your raw repository data without cache busting
+const RAW_DATA_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
 
 // Explicit DOM element references
 const listContainer = document.getElementById("list");
@@ -433,10 +431,15 @@ const difficultyFaceMapping = {
   "medium demon": "https://gdladder.com/images/demon_logos/medium_128.webp",
   "hard demon": "https://gdladder.com/images/demon_logos/hard_128.webp",
   "insane demon": "https://gdladder.com/images/demon_logos/insane_128.webp",
-  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp"
+  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+  "easy challenge": "https://gdladder.com/images/demon_logos/easy_128.webp",
+  "medium challenge": "https://gdladder.com/images/demon_logos/medium_128.webp",
+  "hard challenge": "https://gdladder.com/images/demon_logos/hard_128.webp",
+  "insane challenge": "https://gdladder.com/images/demon_logos/insane_128.webp",
+  "extreme challenge": "https://gdladder.com/images/demon_logos/extreme_128.webp"
 };
 
-// CACHING UTILITY ENGINE
+// DATA FETCH ENGINE
 async function fetchCachedOrFreshData() {
   const CACHE_KEY = 'gd_list_levels';
   const TIMESTAMP_KEY = 'gd_list_cache_time';
@@ -455,7 +458,7 @@ async function fetchCachedOrFreshData() {
   // Otherwise, request fresh compilation over network path
   try {
     console.log("🔄 Cache expired or missing. Syncing raw level array payload...");
-    const response = await fetch(getCleanCacheBusterUrl());
+    const response = await fetch(RAW_DATA_URL);
     
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const freshData = await response.json();
@@ -836,6 +839,7 @@ submitBtn.onclick = async () => {
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Processing payload...";
+  
   let payload = { listType: listType };
 
   if(type === "record") {
@@ -862,6 +866,11 @@ submitBtn.onclick = async () => {
   }
 
   try {
+    // Clear out local browser storage cache maps to ensure the page 
+    // checks the real network file immediately on subsequent site reloads
+    localStorage.removeItem('gd_list_levels');
+    localStorage.removeItem('gd_list_cache_time');
+
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
