@@ -18,113 +18,30 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Process, Fetch Missing Tiers, and Insert
+      - name: Overwrite with Master Database Array
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const path = './levels.json';
             
-            // 🟢 FIXES THE CRASH: Targets the array format sent by the Apps Script
-            const newEntry = context.payload.client_payload.levels[0];
-            if (!newEntry) {
-              console.log("Error: No level data found in the payload.");
+            // Extract the fully structured array directly from the client payload
+            const updatedLevelsList = context.payload.client_payload.levels;
+            
+            if (!updatedLevelsList || !Array.isArray(updatedLevelsList)) {
+              console.log("Error: Data payload is missing or isn't a structured array.");
               return;
             }
             
-            const newTier = parseFloat(newEntry.rawTier) || 0;
-            newEntry.rawTier = newTier;
+            console.log(`Payload valid. Syncing database with ${updatedLevelsList.length} total entries.`);
             
-            // Helper function to look up tiers for older levels that don't have them yet
-            async function fetchTierFromAPI(levelId) {
-              try {
-                const res = await fetch(`https://gdladder.com/api/level/${levelId}`);
-                if (res.ok) {
-                  const json = await res.json();
-                  let exactTier = null;
-                  if (Array.isArray(json) && json.length > 0) exactTier = json[0].Rating || json[0].rating || json[0].tier;
-                  else if (json) exactTier = json.Rating || json.rating || json.tier;
-                  if (exactTier) return parseFloat(exactTier);
-                }
-              } catch (e) {
-                console.log(`Failed fetching tier for ID ${levelId}, using fallback.`);
-              }
-              // Hardcoded failsafes for major levels if GDDL acts up
-              if (String(levelId) === "10565740") return 23.99; // Bloodbath
-              if (String(levelId) === "60619762") return 16.87; // Denouement
-              return 0;
-            }
-            
-            // 1. Load your existing levels list
-            let currentList = [];
-            if (fs.existsSync(path)) {
-              try {
-                currentList = JSON.parse(fs.readFileSync(path, 'utf8'));
-              } catch (e) {
-                currentList = [];
-              }
-            }
-            
-            // 🟢 CRITICAL FIX: Find if the level exists to keep old victors instead of wiping them out
-            const existingLevel = currentList.find(item => String(item.id) === String(newEntry.id));
-            if (existingLevel) {
-              console.log(`Level ${newEntry.name} already exists. Merging victor records...`);
-              
-              // Filter out duplicate names from the incoming victor submission
-              const uniqueNewVictors = newEntry.victorList.filter(
-                newVictor => !existingLevel.victorList.some(oldVictor => oldVictor.name.toLowerCase() === newVictor.name.toLowerCase())
-              );
-              
-              // Append the new unique victors to the existing master collection
-              newEntry.victorList = existingLevel.victorList.concat(uniqueNewVictors);
-            }
-
-            // 2. Clear out the old placeholder version of the level from the array
-            currentList = currentList.filter(item => String(item.id) !== String(newEntry.id));
-            
-            // 3. Separate them into lists
-            let demons = currentList.filter(item => item.listType !== 'challenge');
-            let challenges = currentList.filter(item => item.listType === 'challenge');
-            
-            // 4. SEARCH AND FILL MISSING TIERS FOR DEMONS
-            for (let item of demons) {
-              if (item.rawTier === undefined || item.rawTier === null || item.rawTier === 0) {
-                console.log(`Searching missing tier for Demon: ${item.name} (${item.id})`);
-                item.rawTier = await fetchTierFromAPI(item.id);
-              }
-            }
-            
-            // 5. SEARCH AND FILL MISSING TIERS FOR CHALLENGES
-            for (let item of challenges) {
-              if (item.rawTier === undefined || item.rawTier === null || item.rawTier === 0) {
-                console.log(`Searching missing tier for Challenge: ${item.name} (${item.id})`);
-                item.rawTier = await fetchTierFromAPI(item.id);
-              }
-            }
-            
-            // 6. NOW WE COMPARE AND INSERT AT THE RIGHT PLACE (Sorted highest tier to lowest tier)
-            if (newEntry.listType === 'challenge') {
-              let insertIndex = challenges.findIndex(item => parseFloat(item.rawTier || 0) < newTier);
-              if (insertIndex === -1) challenges.push(newEntry);
-              else challenges.splice(insertIndex, 0, newEntry);
-            } else {
-              let insertIndex = demons.findIndex(item => parseFloat(item.rawTier || 0) < newTier);
-              if (insertIndex === -1) demons.push(newEntry);
-              else demons.splice(insertIndex, 0, newEntry);
-            }
-            
-            // 7. Re-calculate clean integer ranks sequentially
-            demons.forEach((item, index) => { item.rank = index + 1; });
-            challenges.forEach((item, index) => { item.rank = index + 1; });
-            
-            // 8. Combine and save back to levels.json
-            let combined = demons.concat(challenges);
-            fs.writeFileSync(path, JSON.stringify(combined, null, 2));
+            // Save the complete array back directly to levels.json
+            fs.writeFileSync(path, JSON.stringify(updatedLevelsList, null, 2));
 
       - name: Commit and Push Database Changes
         run: |
           git config --global user.name "GitHub List Automation"
           git config --global user.email "actions@github.com"
           git add levels.json
-          git commit -m "Automated comparison placement: Synced level ID ${{ github.event.client_payload.levels[0].id }}" || exit 0
+          git commit -m "Automated comparison placement: Synced live list database matrix" || exit 0
           git push
