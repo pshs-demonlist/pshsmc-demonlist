@@ -668,5 +668,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "iIiRulasiIi",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "11588490",
+    "img": "https://placehold.co/160x90?text=Processing...",
+    "listType": "demon",
+    "name": "Ultra Paracosm",
+    "rank": 31,
+    "rawTier": 2,
+    "verifier": "iIiRulasiIi",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
+      }
+    ],
+    "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
   }
 ]
