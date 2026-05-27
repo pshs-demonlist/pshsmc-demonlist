@@ -530,8 +530,28 @@
     ]
   },
   {
-    "id": "89886591",
+    "creator": "iIiRulasiIi",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "11588490",
+    "img": "https://placehold.co/160x90?text=Processing...",
+    "listType": "demon",
+    "name": "Ultra Paracosm",
     "rank": 25,
+    "rawTier": 2.03658264554986,
+    "verifier": "iIiRulasiIi",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
+      }
+    ],
+    "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
+  },
+  {
+    "id": "89886591",
+    "rank": 26,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -551,7 +571,7 @@
   },
   {
     "id": "56210242",
-    "rank": 26,
+    "rank": 27,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "SpKale",
@@ -577,7 +597,7 @@
     "img": "https://placehold.co/160x90?text=Processing...",
     "listType": "demon",
     "name": "Platinum Adventure",
-    "rank": 27,
+    "rank": 28,
     "rawTier": 1.12864493996569,
     "verifier": "Jerry4",
     "victorList": [
