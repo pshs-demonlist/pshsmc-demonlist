@@ -570,17 +570,16 @@
     ]
   },
   {
-    "id": "5904109",
-    "rank": 27,
-    "name": "Platinum Adventure",
     "creator": "Jerry4",
-    "verifier": "sSeanyboii",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/WceyniFxqh4/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/WceyniFxqh4",
+    "id": "5904109",
+    "img": "https://placehold.co/160x90?text=Processing...",
     "listType": "demon",
-    "rawTier": 1.12860759493671,
+    "name": "Platinum Adventure",
+    "rank": 27,
+    "rawTier": 1.12864493996569,
+    "verifier": "Jerry4",
     "victorList": [
       {
         "name": "sSeanyboii",
@@ -591,8 +590,14 @@
         "name": "eelektrance",
         "percent": 100,
         "video": "https://www.youtube.com/embed/IvMe0-xNzuo"
+      },
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/11L6GxhPbS4_5e9PeenswKw7c7YBpa7rY/view?usp=drivesdk"
       }
-    ]
+    ],
+    "video": "https://drive.google.com/file/d/11L6GxhPbS4_5e9PeenswKw7c7YBpa7rY/view?usp=drivesdk"
   },
   {
     "id": "140202797",
