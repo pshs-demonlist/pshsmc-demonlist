@@ -530,6 +530,31 @@
     "video": "https://www.youtube.com/embed/5bbC7WIM1Kw"
   },
   {
+    "creator": "iIiRulasiIi",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "11588490",
+    "img": "https://placehold.co/160x90?text=Processing...",
+    "listType": "demon",
+    "name": "Ultra Paracosm",
+    "rank": 25,
+    "rawTier": 2,
+    "verifier": "iIiRulasiIi",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
+      },
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/X1OU6f6mJgQ"
+      }
+    ],
+    "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
+  }
+  {
     "creator": "Voxicat",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
@@ -537,7 +562,7 @@
     "img": "https://img.youtube.com/vi/Uj9kiAlhytY/maxresdefault.jpg",
     "listType": "demon",
     "name": "ISpyWithMyLittleEye",
-    "rank": 25,
+    "rank": 26,
     "rawTier": 1.87070524412297,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -554,10 +579,10 @@
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "56210242",
-    "img": "https://img.youtube.com/vi/0zzEc-ryz9s/maxresdefault.jpg",
+    "img": "https://img.youtube.com/vi/UCBy-iEOk6U/maxresdefault.jpg",
     "listType": "demon",
     "name": "Shiver",
-    "rank": 26,
+    "rank": 27,
     "rawTier": 1.15132898696088,
     "verifier": "SpKale",
     "victorList": [
@@ -582,7 +607,7 @@
     "img": "https://img.youtube.com/vi/WceyniFxqh4/maxresdefault.jpg",
     "listType": "demon",
     "name": "Platinum Adventure",
-    "rank": 27,
+    "rank": 28,
     "rawTier": 1.12860759493671,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -668,30 +693,5 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
-  },
-  {
-    "creator": "iIiRulasiIi",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "11588490",
-    "img": "https://placehold.co/160x90?text=Processing...",
-    "listType": "demon",
-    "name": "Ultra Paracosm",
-    "rank": 31,
-    "rawTier": 2,
-    "verifier": "iIiRulasiIi",
-    "victorList": [
-      {
-        "name": "sadboi202",
-        "percent": 100,
-        "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
-      },
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/X1OU6f6mJgQ"
-      }
-    ],
-    "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
   }
 ]
