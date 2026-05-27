@@ -698,5 +698,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "Cyclic/Nayloren/Nranger55226",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "112973149",
+    "img": "https://img.youtube.com/vi/Yje0t87RhfE/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Sonic Wave 65p",
+    "rank": 32,
+    "rawTier": 1,
+    "verifier": "Cyclic/Nayloren/Nranger55226",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Yje0t87RhfE"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Yje0t87RhfE"
   }
 ]
