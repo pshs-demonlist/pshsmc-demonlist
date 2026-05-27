@@ -1,16 +1,15 @@
 [
   {
-    "id": "10565740",
-    "rank": 1,
-    "name": "Bloodbath",
     "creator": "Riot",
-    "verifier": "sadboi202",
     "diff": "Extreme Demon",
     "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "10565740",
     "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/vBBZvXb0HrA",
     "listType": "demon",
-    "rawTier": 23.99043977055449,
+    "name": "Bloodbath",
+    "rank": 1,
+    "rawTier": 23.9904397705545,
+    "verifier": "sadboi202",
     "victorList": [
       {
         "name": "sadboi202",
@@ -22,7 +21,8 @@
         "video": "https://www.youtube.com/embed/28YwyFHeQAM",
         "percent": 100
       }
-    ]
+    ],
+    "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
     "id": "3979721",
