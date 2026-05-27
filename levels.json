@@ -570,6 +570,29 @@
     ]
   },
   {
+    "id": "56210242",
+    "listType": "demon",
+    "name": "Shiver",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "56210242",
+    "rank": 27,
+    "rawTier": 1.15,
+    "verifier": "eelektrance",
+    "img": "https://img.youtube.com/vi/UCBy-iEOk6U/maxresdefault.jpg",
+    "victorList": [
+      {
+        "name": "eelektrance",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/0zzEc-ryz9s"
+      },
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/UCBy-iEOk6U"
+      }
+    ],
+  {
     "creator": "Jerry4",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
@@ -577,7 +600,7 @@
     "img": "https://placehold.co/160x90?text=Processing...",
     "listType": "demon",
     "name": "Platinum Adventure",
-    "rank": 27,
+    "rank": 28,
     "rawTier": 1.12864493996569,
     "verifier": "Jerry4",
     "victorList": [
@@ -599,31 +622,6 @@
     ],
     "video": "https://www.youtube.com/embed/WceyniFxqh4"
   },
-  {
-    "name": "Shiver",
-    "percent": 100,
-    "video": "https://www.youtube.com/embed/UCBy-iEOk6U",
-    "rawTier": 0,
-    "rank": 28
-  },
-  {
-    "id": "56210242",
-    "listType": "demon",
-    "name": "Shiver",
-    "victorList": [
-      {
-        "name": "eelektrance",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/0zzEc-ryz9s"
-      },
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/UCBy-iEOk6U"
-      }
-    ],
-    "rawTier": 0,
-    "rank": 29
   },
   {
     "id": "140202797",
