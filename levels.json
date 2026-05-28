@@ -723,5 +723,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "sSeanyboii",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "141277411",
+    "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Abbasiya",
+    "rank": 5,
+    "rawTier": 1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
   }
 ]
