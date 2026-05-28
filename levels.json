@@ -637,13 +637,13 @@
   {
     "creator": "Cyclic/Nayloren/Nranger55226",
     "diff": "Insane Challenge",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "112973149",
     "img": "https://img.youtube.com/vi/Yje0t87RhfE/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Sonic Wave 65p",
     "rank": 1,
-    "rawTier": 18,
+    "rawTier": 14,
     "verifier": "sadboi202",
     "victorList": [
       {
@@ -703,12 +703,32 @@
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141277411",
+    "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Abbasiya",
+    "rank": 4,
+    "rawTier": 6,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+  },
+  {
+    "creator": "sSeanyboii",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "140948744",
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
-    "rank": 4,
-    "rawTier": 6,
+    "rank": 5,
+    "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -723,25 +743,5 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
-  },
-  {
-    "creator": "sSeanyboii",
-    "diff": "Easy Challenge",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "141277411",
-    "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Abbasiya",
-    "rank": 5,
-    "rawTier": 1,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
   }
 ]
