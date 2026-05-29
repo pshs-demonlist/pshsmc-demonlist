@@ -743,5 +743,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "sSeanyboii",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "141442369",
+    "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Ramses",
+    "rank": 6,
+    "rawTier": 1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
   }
 ]
