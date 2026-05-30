@@ -728,7 +728,7 @@
     "listType": "challenge",
     "name": "Ramses",
     "rank": 5,
-    "rawTier": 5.5,
+    "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -763,5 +763,25 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "creator": "Byokki",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "124000994",
+    "img": "https://img.youtube.com/vi/f-OP3ioNdpk/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Eon 96 100",
+    "rank": 7,
+    "rawTier": 1,
+    "verifier": "Byokki",
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
   }
 ]
