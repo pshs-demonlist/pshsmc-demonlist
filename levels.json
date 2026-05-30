@@ -635,6 +635,26 @@
     "video": "https://www.youtube.com/embed/WceyniFxqh4"
   },
   {
+    "creator": "Timeless Real",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "55520",
+    "img": "https://img.youtube.com/vi/fLfIPFw39SA/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "THE LIGHTNING ROAD",
+    "rank": 29,
+    "rawTier": 1,
+    "verifier": "Timeless Real",
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/fLfIPFw39SA"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/fLfIPFw39SA"
+  },
+  {
     "creator": "Cyclic/Nayloren/Nranger55226",
     "diff": "Insane Challenge",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
