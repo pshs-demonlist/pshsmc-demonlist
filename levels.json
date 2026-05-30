@@ -655,6 +655,26 @@
     "video": "https://www.youtube.com/embed/Yje0t87RhfE"
   },
   {
+    "creator": "Byokki",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "124000994",
+    "img": "https://img.youtube.com/vi/f-OP3ioNdpk/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Eon 96 100",
+    "rank": 2,
+    "rawTier": 11,
+    "verifier": "Byokki",
+    "victorList": [
+      {
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
+  },
+  {
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
@@ -662,7 +682,7 @@
     "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Nasr City",
-    "rank": 2,
+    "rank": 3,
     "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -682,7 +702,7 @@
     "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Margarinepotato",
-    "rank": 3,
+    "rank": 4,
     "rawTier": 7,
     "verifier": "eelektrance",
     "victorList": [
@@ -707,7 +727,7 @@
     "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Abbasiya",
-    "rank": 4,
+    "rank": 5,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -727,7 +747,7 @@
     "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Ramses",
-    "rank": 5,
+    "rank": 6,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -747,7 +767,7 @@
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
-    "rank": 6,
+    "rank": 7,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -763,25 +783,5 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
-  },
-  {
-    "creator": "Byokki",
-    "diff": "Easy Challenge",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "124000994",
-    "img": "https://img.youtube.com/vi/f-OP3ioNdpk/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Eon 96 100",
-    "rank": 7,
-    "rawTier": 1,
-    "verifier": "Byokki",
-    "victorList": [
-      {
-        "name": "Akoay",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
   }
 ]
