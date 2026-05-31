@@ -655,76 +655,77 @@
     "video": "https://www.youtube.com/embed/fLfIPFw39SA"
   },
   {
+    "id": "112973149",
+    "rank": 1,
+    "name": "Sonic Wave 65p",
     "creator": "Cyclic/Nayloren/Nranger55226",
+    "verifier": "sadboi202",
     "diff": "Insane Challenge",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "id": "112973149",
     "img": "https://img.youtube.com/vi/Yje0t87RhfE/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Yje0t87RhfE",
     "listType": "challenge",
-    "name": "Sonic Wave 65p",
-    "rank": 1,
     "rawTier": 14,
-    "verifier": "sadboi202",
     "victorList": [
       {
         "name": "sadboi202",
         "percent": 100,
         "video": "https://www.youtube.com/embed/Yje0t87RhfE"
       }
-    ],
-    "video": "https://www.youtube.com/embed/Yje0t87RhfE"
+    ]
   },
   {
+    "id": "124000994",
+    "rank": 2,
+    "name": "Eon 96 100",
     "creator": "Byokki",
+    "verifier": "Akoay",
     "diff": "Hard Challenge",
     "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "124000994",
     "img": "https://img.youtube.com/vi/f-OP3ioNdpk/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/f-OP3ioNdpk",
     "listType": "challenge",
-    "name": "Eon 96 100",
-    "rank": 2,
     "rawTier": 11,
-    "verifier": "Akoay",
     "victorList": [
       {
         "name": "Akoay",
         "percent": 100,
         "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
       }
-    ],
-    "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
+    ]
   },
   {
+    "id": "140202797",
+    "rank": 3,
+    "name": "Nasr City",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "140202797",
     "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/oS_yfgys6Bg",
     "listType": "challenge",
-    "name": "Nasr City",
-    "rank": 3,
     "rawTier": 8,
-    "verifier": "sSeanyboii",
     "victorList": [
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
       }
-    ],
-    "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
+    ]
   },
   {
+    "id": "141063347",
+    "rank": 4,
+    "name": "Margarinepotato",
     "creator": "eelektrance",
+    "verifier": "eelektrance",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141063347",
     "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/w5uRX0poI50",
     "listType": "challenge",
-    "name": "Margarinepotato",
-    "rank": 4,
     "rawTier": 7,
-    "verifier": "eelektrance",
     "victorList": [
       {
         "name": "eelektrance",
@@ -736,80 +737,80 @@
         "percent": 100,
         "video": "https://www.youtube.com/embed/RmhwZdJd9mM"
       }
-    ],
-    "video": "https://www.youtube.com/embed/w5uRX0poI50"
+    ]
   },
-  { 
+  {
+    "id": "141601536",
+    "rank": 5,
+    "name": "Shubra",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141601536",
     "img": "https://img.youtube.com/vi/RClLJRtHjGY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/RClLJRtHjGY",
     "listType": "challenge",
-    "name": "Shubra",
-    "rank": 5,
-    "rawTier": 6.1,
-    "verifier": "sSeanyboii",
+    "rawTier": 6,
     "victorList": [
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/RClLJRtHjGY"
       }
-    ],
-    "video": "https://www.youtube.com/embed/RClLJRtHjGY"
+    ]
   },
   {
+    "id": "141277411",
+    "rank": 6,
+    "name": "Abbasiya",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141277411",
     "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/ZjCCCRgCo74",
     "listType": "challenge",
-    "name": "Abbasiya",
-    "rank": 6,
     "rawTier": 6,
-    "verifier": "sSeanyboii",
     "victorList": [
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
       }
-    ],
-    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+    ]
   },
   {
+    "id": "141442369",
+    "rank": 7,
+    "name": "Ramses",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141442369",
     "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/aBOtNq4iEO4",
     "listType": "challenge",
-    "name": "Ramses",
-    "rank": 7,
     "rawTier": 6,
-    "verifier": "sSeanyboii",
     "victorList": [
       {
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
       }
-    ],
-    "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
+    ]
   },
   {
+    "id": "140948744",
+    "rank": 8,
+    "name": "Maadi",
     "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
     "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "140948744",
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/zDJNwDmzHRY",
     "listType": "challenge",
-    "name": "Maadi",
-    "rank": 8,
     "rawTier": 5,
-    "verifier": "sSeanyboii",
     "victorList": [
       {
         "name": "sSeanyboii",
@@ -821,7 +822,6 @@
         "percent": 100,
         "video": "https://www.youtube.com/embed/AqtY7fJ9FRw"
       }
-    ],
-    "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+    ]
   }
 ]
