@@ -739,6 +739,26 @@
     ],
     "video": "https://www.youtube.com/embed/w5uRX0poI50"
   },
+  { 
+    "creator": "sSeanyboii",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141601536",
+    "img": "https://img.youtube.com/vi/RClLJRtHjGY/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Shubra",
+    "rank": 5,
+    "rawTier": 6.1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/RClLJRtHjGY",
+      }
+    ],
+    "video": "https://www.youtube.com/embed/RClLJRtHjGY"
+  },
   {
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
@@ -747,7 +767,7 @@
     "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Abbasiya",
-    "rank": 5,
+    "rank": 6,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -767,7 +787,7 @@
     "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Ramses",
-    "rank": 6,
+    "rank": 7,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -787,7 +807,7 @@
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
-    "rank": 7,
+    "rank": 8,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
