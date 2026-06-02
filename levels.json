@@ -735,6 +735,26 @@
     "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
   },
   {
+    "creator": "Nick240",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141753444",
+    "img": "https://img.youtube.com/vi/gKbRmuWfpRM/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Sakupen End 49-53",
+    "rank": 4,
+    "rawTier": 8,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
+  },
+  {
     "creator": "eelektrance",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
@@ -742,7 +762,7 @@
     "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Margarinepotato",
-    "rank": 4,
+    "rank": 5,
     "rawTier": 7,
     "verifier": "eelektrance",
     "victorList": [
@@ -767,7 +787,7 @@
     "img": "https://img.youtube.com/vi/RClLJRtHjGY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Shubra",
-    "rank": 5,
+    "rank": 6,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -787,7 +807,7 @@
     "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Abbasiya",
-    "rank": 6,
+    "rank": 7,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -807,7 +827,7 @@
     "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Ramses",
-    "rank": 7,
+    "rank": 8,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -827,7 +847,7 @@
     "img": "https://img.youtube.com/vi/zDJNwDmzHRY/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Maadi",
-    "rank": 8,
+    "rank": 9,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
