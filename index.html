@@ -20,14 +20,20 @@
     --bg: #f3f4f6; --panel: #ffffff; --line: #e5e7eb; --text: #1f2937;
     --muted: #6b7280; --accent: #dc2626; --good: #16a34a; --danger: #fee2e2;
     
-    /* Stats Viewer Color Tiers - Exact Light Mode Spec */
+    /* Stats Viewer Color Tiers - Exact Light Mode Spec from Photos */
     --sv-main: #000000;
     --sv-extended: #71717a;
     --sv-legacy: #cbd5e1;
   }
   
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
+  body { 
+    margin: 0; 
+    font-family: Arial, Helvetica, sans-serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    transition: background 0.3s, color 0.3s; 
+  }
   
   /* Header & Topbar Navigation */
   header {
@@ -161,21 +167,43 @@
 
   /* Formatting layout styles */
   .wrap { max-width: 1100px; margin: 20px auto; padding: 0 16px 32px; }
-  .section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 16px; transition: background 0.3s, border-color 0.3s; }
+  .section { 
+    background: var(--panel); 
+    border: 1px solid var(--line); 
+    border-radius: 12px; 
+    padding: 14px; 
+    margin-bottom: 16px; 
+    transition: background 0.3s, border-color 0.3s; 
+  }
   .section h3 { margin: 0 0 12px; font-size: 16px; }
+  
   .topbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  .btn { border: none; border-radius: 8px; padding: 10px 14px; background: var(--line); color: var(--text); cursor: pointer; font-weight: 700; transition: background 0.2s, filter 0.2s; }
+  .btn { 
+    border: none; border-radius: 8px; padding: 10px 14px; 
+    background: var(--line); color: var(--text); 
+    cursor: pointer; font-weight: 700; transition: background 0.2s, filter 0.2s; 
+  }
   .btn:hover { filter: brightness(1.08); background: var(--muted); color: var(--bg); }
   .btn-primary { background: var(--accent); color: white; }
+  
   .badge { display: inline-block; margin-top: 8px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; color: var(--text); background: var(--bg); }
   .badge-verifier { background: var(--danger); color: var(--text); border-color: var(--accent); }
   .badge-progress { background: rgba(42, 54, 92, 0.4); color: var(--text); border-color: var(--line); }
+  
   .muted { color: var(--muted); font-size: 13px; }
-  #search, .input, .select { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); outline: none; font-size: 14px; transition: background 0.3s, border-color 0.3s; }
+  #search, .input, .select { 
+    width: 100%; padding: 12px 14px; border-radius: 8px; 
+    border: 1px solid var(--line); background: var(--bg); 
+    color: var(--text); outline: none; font-size: 14px; 
+    transition: background 0.3s, border-color 0.3s; 
+  }
   #search::placeholder, .input::placeholder { color: var(--muted); }
+  
+  /* Main Dashboard Layout */
   .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
+  /* Level Rows */
   .row { display: flex; gap: 14px; padding: 14px; border-bottom: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: background 0.15s; }
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
@@ -187,14 +215,16 @@
   .title { font-size: 18px; font-weight: 700; }
   .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
   .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
+  
+  /* Detail View layout styles */
   .detail, .profile { display: none; }
-  .back { color: var(--muted); cursor: pointer; margin-bottom: 12px; display: inline-block; }
+  .back { color: var(--muted); cursor: pointer; margin-bottom: 12px; display: inline-block; font-weight: bold; }
   .back:hover { color: var(--text); }
   .video { width: 100%; aspect-ratio: 16/9; margin-top: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   iframe { width: 100%; height: 100%; border: none; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; font-size: 13px; color: var(--muted); }
   .stat { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; }
-  .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+  .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-align: center; }
   .tiny { font-size: 12px; color: var(--muted); margin-top: 8px; }
   
   .victor-link {
@@ -205,9 +235,37 @@
   }
   .victor-link:hover { text-decoration: underline; }
   
-  /* Profile Stats Viewer Tier Styles Mapping */
+  /* --- EXACT PHOTO MATCH STATS VIEWER (LEADERBOARD) STYLES --- */
+  .sv-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2px; 
+    background: var(--line); 
+    border: 1px solid var(--line); 
+    border-radius: 8px; 
+    overflow: hidden; 
+  }
+  .sv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--panel);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .sv-row:hover { background: rgba(120, 120, 120, 0.08); }
+  .sv-left { display: flex; align-items: center; gap: 12px; }
+  .sv-rank { font-weight: 800; font-size: 14px; width: 35px; color: var(--muted); text-align: left; }
+  .sv-rank-1 { color: #ffd700; }
+  .sv-rank-2 { color: #c0c0c0; }
+  .sv-rank-3 { color: #cd7f32; }
+  .sv-name { font-weight: 700; font-size: 15px; color: var(--text); }
+  .sv-points { font-weight: 800; font-size: 14px; color: var(--good); }
+
+  /* Profile Details Completions Text Tiers (Directly mapping your photo rules) */
   .profile-level-item {
-    padding: 12px;
+    padding: 12px 16px;
     background: var(--bg);
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -229,23 +287,11 @@
   .tag-verifier { font-size: 11px; color: #ffb703; margin-left: 4px; font-weight: bold; }
   .tag-percent { font-size: 11px; color: var(--muted); font-weight: normal; }
 
-  .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
-  .leaderboard-table th, .leaderboard-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--line); }
-  .leaderboard-table th { color: var(--muted); font-size: 13px; font-weight: bold; text-transform: uppercase; }
-  .leaderboard-table tr:last-child td { border-bottom: none; }
-  .leaderboard-row { cursor: pointer; transition: 0.15s; }
-  .leaderboard-row:hover { background: rgba(120, 120, 120, 0.1); }
-  .lb-rank { font-weight: bold; width: 60px; }
-  .lb-rank-1 { color: #ffd700; }
-  .lb-rank-2 { color: #c0c0c0; }
-  .lb-rank-3 { color: #cd7f32; }
-  .lb-name { font-weight: bold; color: var(--text); }
-  .lb-points { text-align: right !important; font-weight: bold; color: var(--good); }
-
   .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .section-header-flex h3 { margin: 0; }
   .toggle-link { font-size: 13px; color: var(--accent); cursor: pointer; font-weight: bold; user-select: none; }
   .toggle-link:hover { text-decoration: underline; }
+  
   .blacklist-content { display: none; padding: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; }
   .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
   .blacklist-item:last-child { border-bottom: none; }
@@ -317,18 +363,7 @@
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
         <div class="section" style="margin-bottom: 0;">
           <h3 id="leaderboardTitle">Stats Viewer (Leaderboard)</h3>
-          <div class="list">
-            <table class="leaderboard-table">
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Player</th>
-                  <th style="text-align: right;">Points</th>
-                </tr>
-              </thead>
-              <tbody id="leaderboardBody"></tbody>
-            </table>
-          </div>
+          <div class="sv-container" id="leaderboardBody"></div>
         </div>
 
         <div class="section" style="margin-bottom: 0;">
@@ -409,12 +444,12 @@
   </div>
 
   <div class="profile" id="profilePage">
-    <div class="back" id="profileBackBtn">← Back to level details</div>
+    <div class="back" id="profileBackBtn">← Back to list / details</div>
     <h2 id="pName" style="margin-bottom: 4px;"></h2>
     <h3 id="pTotalPoints" style="color: var(--good); margin: 0 0 20px 0;"></h3>
     
     <div id="pSpecificVideoSection" style="margin-bottom: 20px; display: none;">
-      <h3>Proof Video</h3>
+      <h3>Proof Video Documentation</h3>
       <div class="video" id="pProfileVideo"></div>
     </div>
 
@@ -628,24 +663,31 @@ function generateLeaderboard() {
 
   const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
   leaderboardBody.innerHTML = "";
+  
   if (sortedPlayers.length === 0) {
-    leaderboardBody.innerHTML = `<tr><td colspan="3" class="muted" style="text-align:center; padding:16px;">No records discovered.</td></tr>`;
+    leaderboardBody.innerHTML = `<div class="empty" style="border:none; background:transparent;">No entries found.</div>`;
     return;
   }
 
+  // Generate Stats Viewer precise Pointercrate style panel rows
   sortedPlayers.forEach((player, index) => {
     const displayRank = index + 1;
-    let rankClass = "lb-rank";
-    if (displayRank <= 3) rankClass += ` lb-rank-${displayRank}`;
-    const tr = document.createElement("tr");
-    tr.className = "leaderboard-row";
-    tr.onclick = () => showProfile(player.name);
-    tr.innerHTML = `
-      <td class="${rankClass}">#${displayRank}</td>
-      <td class="lb-name">${player.name}</td>
-      <td class="lb-points">${player.totalPoints.toFixed(2)}</td>
+    let rankModifierClass = "";
+    if (displayRank <= 3) rankModifierClass = ` sv-rank-${displayRank}`;
+    
+    const rowDiv = document.createElement("div");
+    rowDiv.className = "sv-row";
+    rowDiv.onclick = () => showProfile(player.name);
+    
+    rowDiv.innerHTML = `
+      <div class="sv-left">
+        <span class="sv-rank${rankModifierClass}">#${displayRank}</span>
+        <span class="sv-name">${player.name}</span>
+      </div>
+      <div class="sv-points">${player.totalPoints.toFixed(2)}</div>
     `;
-    leaderboardBody.appendChild(tr);
+    
+    leaderboardBody.appendChild(rowDiv);
   });
 }
 
@@ -856,7 +898,14 @@ function showProfile(playerName, initialLevelId = null) {
 }
 
 backBtn.onclick = () => { detailPage.style.display = "none"; listPage.style.display = "block"; };
-profileBackBtn.onclick = () => { if (lastViewedItem) showDetail(lastViewedItem); else { profilePage.style.display = "none"; listPage.style.display = "block"; } };
+profileBackBtn.onclick = () => { 
+  if (lastViewedItem) {
+    showDetail(lastViewedItem); 
+  } else { 
+    profilePage.style.display = "none"; 
+    listPage.style.display = "block"; 
+  } 
+};
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
@@ -864,8 +913,14 @@ submitBtn.onclick = async () => {
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
 
-  if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
-  if (username.toLowerCase() === "c0ms") { alert("Error: This username has been permanently blacklisted."); return; }
+  if(!username || !recordLink) { 
+    alert("Please ensure both Username and Record Link fields are populated."); 
+    return; 
+  }
+  if (username.toLowerCase() === "c0ms") { 
+    alert("Error: This username has been permanently blacklisted."); 
+    return; 
+  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Processing payload...";
