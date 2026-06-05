@@ -6,20 +6,22 @@
 <title>PSHS-MC Demonlist</title>
 <style>
   :root {
+    /* Night Mode Styles (Default Initial State) */
     --bg: #0b0d12;
     --panel: #111522;
     --line: #1e2438;
     --text: #e9eefc;
     --muted: #9aa3b2;
-    --accent: #0b84cb; /* Changed to Pointercrate Blue */
+    --accent: #0b84cb; 
     --good: #36d399;
     --danger: #662f36;
     
-    /* Stats Viewer Color Tiers - Night Mode */
-    --tier-main: #ffffff; /* Fully White in dark mode for 1-75 */
-    --tier-extended: #aaaaaa; /* Gray for 76-150 */
-    --tier-legacy: #555555; /* Darker Gray for 151+ */
+    /* Stats Viewer Color Tiers - Night Mode readability */
+    --tier-main: #ffffff;      /* Fully White for contrast */
+    --tier-extended: #aaaaaa;  /* Faded Gray */
+    --tier-legacy: #555555;    /* Deep muted legacy gray */
     --sv-row-hover: rgba(255, 255, 255, 0.05);
+    --tab-inactive: #1a1f33;
   }
   
   /* Light Mode Structural Overrides */
@@ -33,11 +35,12 @@
     --good: #16a34a;
     --danger: #fee2e2;
     
-    /* Stats Viewer Color Tiers - Exact Light Mode Spec from Photos */
-    --tier-main: #000000; /* Fully Black (1-75) */
-    --tier-extended: #777777; /* Kinda Gray (76-150) */
-    --tier-legacy: #cccccc; /* Kinda White (151+) */
+    /* Stats Viewer Color Tiers - Your exact specifications */
+    --tier-main: #000000;      /* Fully Black (1-75) */
+    --tier-extended: #777777;  /* Kinda Gray (76-150) */
+    --tier-legacy: #cccccc;    /* Kinda White (151+) */
     --sv-row-hover: rgba(0, 0, 0, 0.04);
+    --tab-inactive: #e5e7eb;
   }
   
   * { box-sizing: border-box; }
@@ -49,7 +52,7 @@
     transition: background 0.3s, color 0.3s; 
   }
   
-  /* Header & Topbar Navigation */
+  /* Header Navigation */
   header {
     background: var(--panel);
     border-bottom: 1px solid var(--line);
@@ -81,7 +84,7 @@
     transition: 0.3s;
   }
   
-  /* Slide down menu container */
+  /* Navigation dropdown drawer layout menu */
   .nav-menu {
     position: fixed;
     top: 58px;
@@ -115,17 +118,33 @@
     color: var(--accent);
   }
 
-  /* Form Flash Highlight Glow Effect */
-  @keyframes formGlow {
-    0% { border-color: var(--line); box-shadow: none; }
-    50% { border-color: var(--accent); box-shadow: 0 0 15px rgba(11, 132, 203, 0.6); }
-    100% { border-color: var(--line); box-shadow: none; }
+  /* Page Tab Navigation Bar System */
+  .page-nav-tabs {
+    display: flex;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
   }
-  .glow-active {
-    animation: formGlow 1.2s ease-in-out;
+  .page-tab {
+    flex: 1;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    background: var(--tab-inactive);
+    color: var(--muted);
+    border: none;
+    outline: none;
+    transition: 0.2s;
+  }
+  .page-tab.active {
+    background: var(--bg);
+    color: var(--text);
+    border-bottom: 3px solid var(--accent);
   }
 
-  /* Submission Guidelines Modal Window */
+  /* Submission Modal Window Properties */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -168,30 +187,22 @@
     cursor: pointer;
   }
   .modal-close:hover { color: var(--text); }
-  .rules-list {
-    padding-left: 20px;
-    margin: 0;
-  }
-  .rules-list li {
-    margin-bottom: 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text);
-  }
+  .rules-list { padding-left: 20px; margin: 0; }
+  .rules-list li { margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
 
-  /* Formatting layout styles */
-  .wrap { max-width: 1200px; margin: 20px auto; padding: 0 16px 32px; }
+  /* Universal Workspace Structural Elements */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px 40px; }
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
     border-radius: 12px; 
-    padding: 14px; 
-    margin-bottom: 16px; 
+    padding: 16px; 
+    margin-bottom: 20px; 
     transition: background 0.3s, border-color 0.3s; 
   }
   .section h3 { margin: 0 0 12px; font-size: 16px; }
   
-  .topbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  /* Primary Application Buttons */
   .btn { 
     border: none; border-radius: 8px; padding: 10px 14px; 
     background: var(--line); color: var(--text); 
@@ -201,10 +212,8 @@
   .btn-primary { background: var(--accent); color: white; }
   
   .badge { display: inline-block; margin-top: 8px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; color: var(--text); background: var(--bg); }
-  .badge-verifier { background: var(--danger); color: var(--text); border-color: var(--accent); }
-  .badge-progress { background: rgba(42, 54, 92, 0.4); color: var(--text); border-color: var(--line); }
-  
   .muted { color: var(--muted); font-size: 13px; }
+  
   #search, .input, .select { 
     width: 100%; padding: 12px 14px; border-radius: 8px; 
     border: 1px solid var(--line); background: var(--bg); 
@@ -213,11 +222,11 @@
   }
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
-  /* Main Dashboard Layout */
+  /* Grid Layout Configurations */
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
-  /* Level Rows */
+  /* Document Row Renderings */
   .row { display: flex; gap: 14px; padding: 14px; border-bottom: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: background 0.15s; }
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
@@ -230,59 +239,57 @@
   .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
   .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
   
-  /* Detail View layout styles */
-  .detail, .profile { display: none; }
+  /* Application Screen Containers */
+  .app-page { display: none; }
+  .app-page.active-page { display: block; }
+  
   .back { color: var(--muted); cursor: pointer; margin-bottom: 12px; display: inline-block; font-weight: bold; }
   .back:hover { color: var(--text); }
   .video { width: 100%; aspect-ratio: 16/9; margin-top: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   iframe { width: 100%; height: 100%; border: none; }
+  
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; font-size: 13px; color: var(--muted); }
   .stat { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; text-align: center; }
   .stat h4 { margin: 0 0 4px 0; font-size: 11px; text-transform: uppercase; color: var(--muted); }
   .stat p { margin: 0; font-size: 16px; font-weight: bold; color: var(--text); }
   .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-align: center; }
-  .tiny { font-size: 12px; color: var(--muted); margin-top: 8px; }
   
-  .victor-link {
-    color: var(--accent);
-    text-decoration: none;
-    cursor: pointer;
-    font-weight: bold;
-  }
+  .victor-link { color: var(--accent); text-decoration: none; cursor: pointer; font-weight: bold; }
   .victor-link:hover { text-decoration: underline; }
   
-  /* --- POINTERCRATE STATS VIEWER UI --- */
-  
-  /* Intro Card */
+  /* --- POINTERCRATE STATS VIEWER UI PANELS --- */
   #introCard {
     text-align: center;
-    padding: 30px 20px;
+    padding: 40px 30px;
     background: var(--panel);
     border: 1px dashed var(--muted);
     border-radius: 10px;
+    max-width: 600px;
+    margin: 40px auto;
   }
-  #introCard h2 { font-size: 28px; margin: 0 0 15px; color: var(--text); }
-  #introCard hr { border: none; border-top: 1px solid var(--line); margin-bottom: 15px; }
-  #introCard p { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 25px; }
+  #introCard h2 { font-size: 32px; margin: 0 0 15px; color: var(--text); }
+  #introCard hr { border: none; border-top: 1px solid var(--line); margin-bottom: 20px; }
+  #introCard p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 30px; }
+  
   .btn-blue {
-    background: var(--accent); color: white; border: none; padding: 12px 24px;
-    font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer;
-    transition: background 0.2s; width: 100%; max-width: 300px;
+    background: var(--accent); color: white; border: none; padding: 14px 28px;
+    font-size: 18px; font-weight: bold; border-radius: 6px; cursor: pointer;
+    transition: background 0.2s; width: 100%; max-width: 320px;
   }
   .btn-blue:hover { filter: brightness(1.1); }
 
-  /* Split Layout */
   .sv-wrapper {
-    display: none; /* Hidden until button click */
-    grid-template-columns: 1fr 1.2fr;
+    display: none; 
+    grid-template-columns: 300px 1fr;
     border: 1px solid var(--line);
     border-radius: 10px;
     background: var(--panel);
     overflow: hidden;
+    min-height: 540px;
   }
   
   .sv-list-panel {
-    max-height: 580px;
+    max-height: 620px;
     overflow-y: auto;
     background: var(--panel);
     border-right: 1px solid var(--line);
@@ -292,7 +299,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 14px;
+    padding: 12px 16px;
     border-bottom: 1px solid var(--line);
     cursor: pointer;
     transition: background 0.15s;
@@ -300,70 +307,54 @@
   }
   .sv-row:last-child { border-bottom: none; }
   .sv-row:hover { background: var(--sv-row-hover); }
-  .sv-row.active-player { background: rgba(11, 132, 203, 0.1); }
+  .sv-row.active-player { background: rgba(11, 132, 203, 0.15); border-left: 4px solid var(--accent); padding-left: 12px; }
   
   .sv-left { display: flex; align-items: center; gap: 8px; }
   .sv-rank { font-weight: bold; color: var(--text); }
-  .sv-name { font-weight: bold; color: var(--text); flex-grow: 1; }
+  .sv-name { font-weight: bold; color: var(--text); }
   .sv-points { font-style: italic; font-size: 12px; color: var(--muted); }
 
-  /* Right side detailed profile card */
   .sv-detail-panel {
     display: flex;
     flex-direction: column;
     background: var(--bg);
-    padding: 20px;
-    max-height: 580px;
+    padding: 30px;
+    max-height: 620px;
     overflow-y: auto;
-    text-align: center;
   }
   
   .start-prompt {
-    margin-top: 50px;
+    margin: 100px auto 0;
     color: var(--muted);
-    font-size: 16px;
+    font-size: 18px;
     font-style: italic;
+    text-align: center;
   }
 
-  .profile-title-row {
-    margin-bottom: 20px;
-  }
-  .profile-title-row h3 {
-    font-size: 24px;
-    margin: 0;
-    font-weight: 700;
-  }
+  .profile-title-row { text-align: center; margin-bottom: 24px; }
+  .profile-title-row h3 { font-size: 28px; margin: 0; font-weight: 700; }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 25px;
-  }
-  .stat-block {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    padding: 10px;
-    border-radius: 8px;
-  }
-  .stat-block h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--text); font-weight: bold; }
-  .stat-block p { margin: 0; font-size: 13px; color: var(--muted); }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 25px; }
+  .stat-block { background: var(--panel); border: 1px solid var(--line); padding: 14px; border-radius: 8px; text-align: center; }
+  .stat-block h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--text); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-block p { margin: 0; font-size: 15px; color: var(--muted); }
 
-  .demons-section { margin-top: 15px; }
-  .demons-section h4 { font-size: 16px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
-  .demons-cloud { font-size: 14px; line-height: 1.8; text-align: center; margin: 0 auto; }
+  .demons-section { margin-top: 20px; }
+  .demons-section h4 { font-size: 16px; font-weight: bold; margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; text-align: center; }
+  .demons-cloud { font-size: 14px; line-height: 1.9; text-align: center; max-width: 650px; margin: 0 auto; }
   
-  /* Pointercrate Text Colors for Demons */
+  /* Color Tiers Configuration Rules */
   .cloud-main { color: var(--tier-main); font-weight: 800; }
   .cloud-extended { color: var(--tier-extended); font-weight: 700; }
   .cloud-legacy { color: var(--tier-legacy); font-weight: normal; }
 
   .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .section-header-flex h3 { margin: 0; }
+  
   .toggle-link { font-size: 13px; color: var(--accent); cursor: pointer; font-weight: bold; user-select: none; }
   .toggle-link:hover { text-decoration: underline; }
   
-  .blacklist-content { display: none; padding: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; }
+  .blacklist-content { display: none; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-top: 10px; }
   .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
   .blacklist-item:last-child { border-bottom: none; }
 
@@ -371,16 +362,15 @@
   .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-  @media (max-width:920px){
-    .grid { grid-template-columns: 1fr; }
+  @media (max-width:860px){
     .sv-wrapper { grid-template-columns: 1fr; }
-    .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 300px; }
+    .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 260px; }
   }
-  @media (max-width:640px){
+  @media (max-width:640px) {
     .row { flex-direction: column; }
     .thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
     .stats { grid-template-columns: 1fr; }
-    .nav-menu { max-width: 100%; }
+    .stats-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -398,8 +388,13 @@
 <nav class="nav-menu" id="navMenu">
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
   <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
-  <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Night Mode</span>
+  <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
 </nav>
+
+<div class="page-nav-tabs">
+  <button class="page-tab active" id="tabMenuLevels" onclick="switchPage('levels')">Levels List Workspace</button>
+  <button class="page-tab" id="tabMenuStats" onclick="switchPage('stats')">Pointercrate Stats Viewer</button>
+</div>
 
 <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
   <div class="modal" onclick="event.stopPropagation()">
@@ -418,7 +413,8 @@
 </div>
 
 <div class="wrap">
-  <div id="listPage">
+  
+  <div class="app-page active-page" id="levelsPage">
     <div class="section">
       <h3>Search & Filtering</h3>
       <div class="filter-tabs">
@@ -428,56 +424,12 @@
       <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." />
     </div>
 
-    <div class="grid">
-      <div class="section" style="margin-bottom: 0;">
-        <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        <div class="list" id="list"><div class="empty">Loading list records from database...</div></div>
-      </div>
-
-      <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
-        
-        <div id="introCardWrapper" class="section" style="margin-bottom: 0;">
-          <div id="introCard">
-            <h2>Stats Viewer</h2>
-            <hr>
-            <p>Get a detailed overview of who completed the most, created the most demons or beat the hardest demons! There is even a leaderboard to compare yourself to the very best!</p>
-            <button class="btn-blue" onclick="activateStatsViewer()">Open the stats viewer!</button>
-          </div>
-        </div>
-
-        <div id="leaderboardSection" class="section" style="margin-bottom: 0; padding: 12px; display: none;">
-          <div class="section-header-flex">
-            <h3 id="leaderboardTitle" style="margin-left: 4px; font-size: 20px;">Stats Viewer - International</h3>
-          </div>
-          
-          <div class="sv-wrapper" id="svWrapper">
-            <div class="sv-list-panel" id="leaderboardBody">
-              <div class="empty" style="border:none;">Populating rows...</div>
-            </div>
-            
-            <div class="sv-detail-panel" id="svDetailPanel">
-              <div class="start-prompt" id="startPrompt">
-                Click on a player's name on the left to get started!
-              </div>
-              <div id="profileContent" style="display: none; text-align: left;">
-                </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="section" style="margin-bottom: 0;">
-          <div class="section-header-flex">
-            <h3>Blacklisted Players</h3>
-            <span id="blacklistToggle" class="toggle-link" onclick="toggleBlacklist()">*maximize*</span>
-          </div>
-          <div id="blacklistContent" class="blacklist-content">
-            <div class="blacklist-item">c0ms</div>
-          </div>
-        </div>
-      </div>
+    <div class="section">
+      <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
+      <div class="list" id="list"><div class="empty">Loading list records from database...</div></div>
     </div>
 
-    <div class="section" id="submissionBox" style="margin-top: 16px;">
+    <div class="section" id="submissionBox">
       <h3>Submit a record or propose a new level</h3>
       
       <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
@@ -533,13 +485,53 @@
     </div>
   </div>
 
-  <div class="detail" id="detailPage">
+  <div class="app-page" id="statsPage">
+    <div id="introCardWrapper">
+      <div id="introCard">
+        <h2>Stats Viewer</h2>
+        <hr>
+        <p>Get a detailed overview of who completed the most, created the most demons or beat the hardest demons! There is even a leaderboard to compare yourself to the very best!</p>
+        <button class="btn-blue" onclick="activateStatsViewer()">Open the stats viewer!</button>
+      </div>
+    </div>
+
+    <div id="leaderboardSection" style="display: none;">
+      <h2 style="margin: 0 0 15px 4px; font-size: 24px; font-weight: bold;">Stats Viewer - International</h2>
+      
+      <div class="sv-wrapper" id="svWrapper">
+        <div class="sv-list-panel" id="leaderboardBody">
+          <div class="empty" style="border:none;">Populating rows...</div>
+        </div>
+        
+        <div class="sv-detail-panel" id="svDetailPanel">
+          <div class="start-prompt" id="startPrompt">
+            Click on a player's name on the left to get started!
+          </div>
+          <div id="profileContent" style="display: none;">
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top: 25px;">
+      <div class="section-header-flex">
+        <h3>Blacklisted Players</h3>
+        <span id="blacklistToggle" class="toggle-link" onclick="toggleBlacklist()">*maximize*</span>
+      </div>
+      <div id="blacklistContent" class="blacklist-content">
+        <div class="blacklist-item">c0ms</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-page" id="detailPage">
     <div class="back" id="backBtn">← Back to main dashboard layout list</div>
     <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
   </div>
+
 </div>
 
 <script>
@@ -559,25 +551,35 @@ const backBtn = document.getElementById("backBtn");
 const leaderboardBody = document.getElementById("leaderboardBody");
 const navMenu = document.getElementById("navMenu");
 const guidelinesModal = document.getElementById("guidelinesModal");
-const listPage = document.getElementById("listPage");
+
+// Navigation View Frames
+const levelsPage = document.getElementById("levelsPage");
+const statsPage = document.getElementById("statsPage");
 const detailPage = document.getElementById("detailPage");
 
 const introCardWrapper = document.getElementById("introCardWrapper");
 const leaderboardSection = document.getElementById("leaderboardSection");
 const svWrapper = document.getElementById("svWrapper");
-const svDetailPanel = document.getElementById("svDetailPanel");
 
 let globalListData = [];
 let currentFilterType = "demon";
-let activeLeaderboardUser = null;
 
-const difficultyFaceMapping = {
-  "easy demon": "https://gdladder.com/images/demon_logos/easy_128.webp",
-  "medium demon": "https://gdladder.com/images/demon_logos/medium_128.webp",
-  "hard demon": "https://gdladder.com/images/demon_logos/hard_128.webp",
-  "insane demon": "https://gdladder.com/images/demon_logos/insane_128.webp",
-  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp"
-};
+// Multi-Page Router Switcher Engine
+function switchPage(targetPageId) {
+  // Reset visibility classes across containers
+  document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
+  document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active'));
+
+  if (targetPageId === 'levels') {
+    levelsPage.classList.add('active-page');
+    document.getElementById('tabMenuLevels').classList.add('active');
+  } else if (targetPageId === 'stats') {
+    statsPage.classList.add('active-page');
+    document.getElementById('tabMenuStats').classList.add('active');
+  } else if (targetPageId === 'detail') {
+    detailPage.classList.add('active-page');
+  }
+}
 
 function toggleThemeMode() {
   const isLight = document.body.classList.toggle("light-theme");
@@ -586,11 +588,12 @@ function toggleThemeMode() {
 }
 
 function initThemeMode() {
-  document.getElementById("themeToggleItem").textContent = "Toggle Light Mode";
-  document.body.classList.add("light-theme"); // Default to light mode for the proper Pointercrate look
+  const toggleItem = document.getElementById("themeToggleItem");
+  // Default to Night Mode safely
+  toggleItem.textContent = "Toggle Light Mode";
+  document.body.classList.remove("light-theme");
 }
 
-// Transition from Intro Card to Leaderboard Viewer
 function activateStatsViewer() {
   introCardWrapper.style.display = "none";
   leaderboardSection.style.display = "block";
@@ -632,8 +635,7 @@ function closeGuidelinesModal() { guidelinesModal.style.display = "none"; }
 
 function scrollToSubmissionBox() {
   navMenu.classList.remove("open");
-  detailPage.style.display = "none";
-  listPage.style.display = "block";
+  switchPage('levels');
   document.getElementById("submissionBox").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
@@ -662,8 +664,7 @@ function executeCombinedFilter() {
     .filter(item => {
       const matchesTab = item.listType === currentFilterType;
       const matchesSearch = item.name.toLowerCase().includes(query) || 
-                            item.creator.toLowerCase().includes(query) || 
-                            (item.diff && item.diff.toLowerCase().includes(query));
+                            item.creator.toLowerCase().includes(query);
       return matchesTab && matchesSearch;
     })
     .sort((a, b) => a.rank - b.rank);
@@ -736,9 +737,7 @@ function generateLeaderboard() {
     rowDiv.className = "sv-row";
     rowDiv.id = `sv-user-${player.name.toLowerCase().replace(/\s+/g, '-')}`;
     
-    // Pass the player object into the profile viewer function
     rowDiv.onclick = () => {
-      activateStatsViewer(); // In case they clicked from the level list victor link
       showLeaderboardProfile(player, displayRank);
     };
     
@@ -773,7 +772,6 @@ function renderList(data) {
         if (v.isVerifier) tagText += ' <span class="tag-verifier">[Verifier]</span>';
         else if (v.isVictor && v.percent === 100) tagText += ' <span class="tag-percent">(Victor)</span>';
         if (v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
-        // Trigger profile opening via name search hack
         return `<span class="victor-link" onclick="event.stopPropagation(); triggerPlayerProfile('${v.name}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
@@ -796,37 +794,35 @@ function renderList(data) {
   });
 }
 
+// Redirects across page components and opens stats smoothly
 function triggerPlayerProfile(name) {
-  // Simulate clicking the player row in the leaderboard
-  const rowId = `sv-user-${name.toLowerCase().replace(/\s+/g, '-')}`;
-  const el = document.getElementById(rowId);
-  if (el) el.click();
+  switchPage('stats'); 
+  activateStatsViewer(); 
+  setTimeout(() => {
+    const rowId = `sv-user-${name.toLowerCase().replace(/\s+/g, '-')}`;
+    const el = document.getElementById(rowId);
+    if (el) el.click();
+  }, 50);
 }
 
-/* POINTERCRATE SPLIT DESIGN PROFILE FUNCTION */
 function showLeaderboardProfile(playerObj, rankIndex) {
-  // Manage list visual highlight states
   document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
   const targetRow = document.getElementById(`sv-user-${playerObj.name.toLowerCase().replace(/\s+/g, '-')}`);
   if (targetRow) targetRow.classList.add('active-player');
 
-  // Hide placeholder prompt, show profile cards container
   document.getElementById("startPrompt").style.display = "none";
   const profileContent = document.getElementById("profileContent");
   profileContent.style.display = "block";
 
-  // Sort user completions according to list rank
   const sortedCompletions = playerObj.completions.sort((a, b) => a.rank - b.rank);
-
   let mainCount = 0; let extCount = 0; let legCount = 0;
   
-  // Build the color-coded string of completions
   let demonsHTML = "";
   if (sortedCompletions.length === 0) {
     demonsHTML = "<span style='color:var(--muted);'>None</span>";
   } else {
     demonsHTML = sortedCompletions.map((d, index) => {
-      let tierClass = "cloud-legacy"; // Default 151+
+      let tierClass = "cloud-legacy"; 
       if (d.rank <= 75) { tierClass = "cloud-main"; mainCount++; } 
       else if (d.rank <= 150) { tierClass = "cloud-extended"; extCount++; }
       else { legCount++; }
@@ -839,7 +835,6 @@ function showLeaderboardProfile(playerObj, rankIndex) {
 
   const hardestName = playerObj.hardest ? playerObj.hardest.name : "None";
 
-  // Insert structural metrics card view profile properties
   profileContent.innerHTML = `
     <div style="text-align: center;">
       <div class="profile-title-row">
@@ -896,7 +891,7 @@ submissionType.onchange = () => {
 searchInput.oninput = () => { executeCombinedFilter(); };
 
 function showDetail(item) {
-  listPage.style.display = "none"; detailPage.style.display = "block";
+  switchPage('detail');
   const pointsMax = calculatePoints(item.rank, 100);
   const participants = parseParticipants(item);
   
@@ -914,7 +909,7 @@ function showDetail(item) {
   `;
 }
 
-backBtn.onclick = () => { detailPage.style.display = "none"; listPage.style.display = "block"; };
+backBtn.onclick = () => { switchPage('levels'); };
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
