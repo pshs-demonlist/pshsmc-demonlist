@@ -456,7 +456,12 @@
     </div>
 
     <div id="leaderboardSection" style="display: none;">
-      <h2 style="margin: 0 0 15px 4px; font-size: 24px; font-weight: bold;">Stats Viewer - International</h2>
+      <h2 style="margin: 0 0 10px 4px; font-size: 24px; font-weight: bold;">Stats Viewer Leaderboard</h2>
+      
+      <div class="filter-tabs" style="margin-bottom: 20px;">
+        <button class="tab-btn active" id="statTabDemons" onclick="switchStatsPageListTab('demon')">Demon List Stats</button>
+        <button class="tab-btn" id="statTabChallenges" onclick="switchStatsPageListTab('challenge')">Challenge List Stats</button>
+      </div>
       
       <div class="sv-wrapper" id="svWrapper">
         <div class="sv-list-panel" id="leaderboardBody">
@@ -527,6 +532,7 @@ const svWrapper = document.getElementById("svWrapper");
 
 let globalListData = [];
 let currentFilterType = "demon";
+let currentStatsFilterType = "demon"; // Independent tracker state for stats viewer tab
 
 function switchPage(targetPageId) {
   document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
@@ -552,6 +558,7 @@ function activateStatsViewer() {
   introCardWrapper.style.display = "none";
   leaderboardSection.style.display = "block";
   svWrapper.style.display = "grid";
+  generateLeaderboard();
 }
 
 async function fetchCachedOrFreshData() {
@@ -604,10 +611,23 @@ function toggleBlacklist() {
 
 function switchMainListTab(type) {
   currentFilterType = type;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#levelsPage .tab-btn').forEach(b => b.classList.remove('active'));
   if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
   if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
   executeCombinedFilter();
+}
+
+function switchStatsPageListTab(type) {
+  currentStatsFilterType = type;
+  document.querySelectorAll('#statsPage .tab-btn').forEach(b => b.classList.remove('active'));
+  if (type === 'demon') document.getElementById('statTabDemons').classList.add('active');
+  if (type === 'challenge') document.getElementById('statTabChallenges').classList.add('active');
+  
+  // Clear any existing opened side panel profiles to avoid state issues
+  document.getElementById("profileContent").style.display = "none";
+  document.getElementById("startPrompt").style.display = "block";
+  
+  generateLeaderboard();
 }
 
 function executeCombinedFilter() {
@@ -622,25 +642,50 @@ function executeCombinedFilter() {
     .sort((a, b) => a.rank - b.rank);
     
   renderList(filtered);
-  generateLeaderboard(); 
 }
 
 function parseParticipants(level) {
   let entries = [];
   const verifierName = (level.verifier || "").trim();
   let rawVictors = level.victorList || [];
+  let verifierIncludedInVictors = false;
+  let seenNames = new Set();
 
   rawVictors.forEach(v => {
     const name = (v.name || "").trim();
     if (!name) return;
-    const isVerifier = name.toLowerCase() === verifierName.toLowerCase();
+    const nameLower = name.toLowerCase();
+    
+    if (seenNames.has(nameLower)) return;
+    seenNames.add(nameLower);
+
+    const isVerifier = nameLower === verifierName.toLowerCase();
+    if (isVerifier) verifierIncludedInVictors = true;
+    
     const pct = v.percent !== undefined ? Number(v.percent) : 100;
     const vid = v.link || v.video || null;
 
     if (pct >= LIST_MIN_PERCENT) {
-      entries.push({ name: name, isVerifier: isVerifier, isVictor: !isVerifier, percent: pct, video: vid });
+      entries.push({ 
+        name: name, 
+        isVerifier: isVerifier, 
+        isVictor: true, // Verifiers are inherently victors if they completed it
+        percent: pct, 
+        video: vid 
+      });
     }
   });
+
+  // If the level verifier is designated but not added in victorList arrays, automatically inject them as 100% completion
+  if (verifierName && !verifierIncludedInVictors) {
+    entries.push({
+      name: verifierName,
+      isVerifier: true,
+      isVictor: true,
+      percent: 100,
+      video: level.video || null
+    });
+  }
   return entries;
 }
 
@@ -661,22 +706,39 @@ function generateLeaderboard() {
   const scores = {};
   
   globalListData.forEach(level => {
-    if (level.listType !== currentFilterType) return;
+    if (level.listType !== currentStatsFilterType) return;
 
     parseParticipants(level).forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const key = p.name.toLowerCase();
-      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0, completions: [], verifications: [], hardest: null };
+      
+      if (!scores[key]) {
+        scores[key] = { 
+          name: p.name, 
+          totalPoints: 0, 
+          completions: [], 
+          verifications: [], 
+          hardest: null 
+        };
+      }
       
       const finalVideo = p.video || (p.isVerifier ? level.video : null);
-      const completionItem = { name: level.name, rank: level.rank, percent: p.percent, video: finalVideo };
+      const completionItem = { 
+        name: level.name, 
+        rank: level.rank, 
+        percent: p.percent, 
+        video: finalVideo,
+        isVerifier: p.isVerifier
+      };
 
+      // Push tracking variables for data clouds
       if (p.isVerifier) {
         scores[key].verifications.push(completionItem);
-      } else {
-        scores[key].totalPoints += pts;
-        scores[key].completions.push(completionItem);
       }
+      
+      // All verification completions are also tracked under general completions rules
+      scores[key].completions.push(completionItem);
+      scores[key].totalPoints += pts;
       
       if (!scores[key].hardest || level.rank < scores[key].hardest.rank) {
         scores[key].hardest = level;
@@ -733,9 +795,9 @@ function renderList(data) {
     if (participants.length) {
       victorHTML = participants.map(v => {
         let tagText = "";
-        if (v.isVerifier) tagText += ' <span class="tag-verifier">[Verifier]</span>';
-        else if (v.isVictor && v.percent === 100) tagText += ' <span class="tag-percent">(Victor)</span>';
-        if (v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
+        if (v.isVerifier) tagText += ' <span class="tag-verifier" style="color:var(--accent); font-weight:bold;">[Verifier]</span>';
+        else if (v.percent === 100) tagText += ' <span class="tag-percent" style="color:var(--muted); font-size:12px;">(Victor)</span>';
+        if (v.percent < 100) tagText += ` <span class="tag-percent" style="color:var(--muted); font-size:12px;">(${v.percent}%)</span>`;
         return `<span class="victor-link" onclick="event.stopPropagation(); triggerPlayerProfile('${v.name}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
@@ -821,6 +883,7 @@ function showLeaderboardProfile(playerObj, rankIndex) {
   }
 
   const hardestName = playerObj.hardest ? playerObj.hardest.name : "None";
+  const activeLabelPrefix = currentStatsFilterType === 'challenge' ? 'Challenge' : 'Demon';
 
   profileContent.innerHTML = `
     <div style="text-align: center;">
@@ -830,30 +893,30 @@ function showLeaderboardProfile(playerObj, rankIndex) {
 
       <div class="stats-grid">
         <div class="stat-block">
-          <h4>Demonlist rank</h4>
+          <h4>${activeLabelPrefix}list rank</h4>
           <p>${rankIndex}</p>
         </div>
         <div class="stat-block">
-          <h4>Demonlist score</h4>
+          <h4>${activeLabelPrefix}list score</h4>
           <p>${playerObj.totalPoints.toFixed(2)}</p>
         </div>
         <div class="stat-block">
-          <h4>Demonlist stats</h4>
+          <h4>${activeLabelPrefix}list stats</h4>
           <p>${mainCount} Main, ${extCount} Extended, ${legCount} Legacy</p>
         </div>
         <div class="stat-block">
-          <h4>Hardest demon</h4>
+          <h4>Hardest ${activeLabelPrefix.toLowerCase()}</h4>
           <p style="color: var(--text); font-weight: bold;">${hardestName}</p>
         </div>
       </div>
 
       <div class="demons-section">
-        <h4>Demons completed</h4>
+        <h4>${activeLabelPrefix}s completed</h4>
         <div class="demons-cloud">${completionsHTML}</div>
       </div>
 
       <div class="demons-section" style="margin-top: 25px;">
-        <h4>Demons verified</h4>
+        <h4>${activeLabelPrefix}s verified</h4>
         <div class="demons-cloud">${verificationsHTML}</div>
       </div>
     </div>
