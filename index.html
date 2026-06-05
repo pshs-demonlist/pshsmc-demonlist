@@ -6,24 +6,38 @@
 <title>PSHS-MC Demonlist</title>
 <style>
   :root {
-    --bg: #0b0d12; --panel: #111522; --line: #1e2438; --text: #e9eefc;
-    --muted: #9aa3b2; --accent: #ff4b4b; --good: #36d399; --danger: #662f36;
+    --bg: #0b0d12;
+    --panel: #111522;
+    --line: #1e2438;
+    --text: #e9eefc;
+    --muted: #9aa3b2;
+    --accent: #ff4b4b;
+    --good: #36d399;
+    --danger: #662f36;
     
     /* Stats Viewer Color Tiers - Default Night Mode */
     --sv-main: #ffffff;
     --sv-extended: #9aa3b2;
     --sv-legacy: #596475;
+    --sv-row-hover: rgba(255, 255, 255, 0.05);
   }
   
   /* Light Mode Structural Overrides */
   body.light-theme {
-    --bg: #f3f4f6; --panel: #ffffff; --line: #e5e7eb; --text: #1f2937;
-    --muted: #6b7280; --accent: #dc2626; --good: #16a34a; --danger: #fee2e2;
+    --bg: #f3f4f6;
+    --panel: #ffffff;
+    --line: #e5e7eb;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --accent: #dc2626;
+    --good: #16a34a;
+    --danger: #fee2e2;
     
     /* Stats Viewer Color Tiers - Exact Light Mode Spec from Photos */
     --sv-main: #000000;
-    --sv-extended: #71717a;
-    --sv-legacy: #cbd5e1;
+    --sv-extended: #4b5563;
+    --sv-legacy: #9ca3af;
+    --sv-row-hover: rgba(0, 0, 0, 0.04);
   }
   
   * { box-sizing: border-box; }
@@ -166,7 +180,7 @@
   }
 
   /* Formatting layout styles */
-  .wrap { max-width: 1100px; margin: 20px auto; padding: 0 16px 32px; }
+  .wrap { max-width: 1200px; margin: 20px auto; padding: 0 16px 32px; }
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
@@ -200,7 +214,7 @@
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
   /* Main Dashboard Layout */
-  .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; align-items: start; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
   /* Level Rows */
@@ -208,11 +222,11 @@
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
   
-  .rank { width: 60px; color: var(--accent); font-weight: 700; font-size: 18px; flex-shrink: 0; }
-  .thumb { width: 160px; height: 90px; background: #222; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+  .rank { width: 50px; color: var(--accent); font-weight: 700; font-size: 18px; flex-shrink: 0; }
+  .thumb { width: 140px; height: 80px; background: #222; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
   .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .info { flex: 1; min-width: 0; }
-  .title { font-size: 18px; font-weight: 700; }
+  .title { font-size: 17px; font-weight: 700; }
   .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
   .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
   
@@ -222,8 +236,10 @@
   .back:hover { color: var(--text); }
   .video { width: 100%; aspect-ratio: 16/9; margin-top: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   iframe { width: 100%; height: 100%; border: none; }
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; font-size: 13px; color: var(--muted); }
-  .stat { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .stat { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; text-align: center; }
+  .stat h4 { margin: 0 0 4px 0; font-size: 11px; text-transform: uppercase; color: var(--muted); }
+  .stat p { margin: 0; font-size: 16px; font-weight: bold; color: var(--text); }
   .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-align: center; }
   .tiny { font-size: 12px; color: var(--muted); margin-top: 8px; }
   
@@ -235,26 +251,44 @@
   }
   .victor-link:hover { text-decoration: underline; }
   
-  /* --- EXACT PHOTO MATCH STATS VIEWER (LEADERBOARD) STYLES --- */
-  .sv-container { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 2px; 
-    background: var(--line); 
-    border: 1px solid var(--line); 
-    border-radius: 8px; 
-    overflow: hidden; 
+  /* --- EXACT POINTERCRATE STATS VIEWER SPLIT PANEL DESIGN --- */
+  .sv-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--panel);
+    overflow: hidden;
   }
+  /* When a player is active, toggle this via JS to create the side-by-side split screen */
+  .sv-wrapper.split-active {
+    grid-template-columns: 1fr 1.1fr;
+  }
+  
+  .sv-list-panel {
+    max-height: 580px;
+    overflow-y: auto;
+    background: var(--panel);
+    border-right: none;
+  }
+  .sv-wrapper.split-active .sv-list-panel {
+    border-right: 1px solid var(--line);
+  }
+  
   .sv-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
     background: var(--panel);
+    border-bottom: 1px solid rgba(120,120,120,0.1);
     cursor: pointer;
     transition: background 0.15s;
   }
-  .sv-row:hover { background: rgba(120, 120, 120, 0.08); }
+  .sv-row:last-child { border-bottom: none; }
+  .sv-row:hover { background: var(--sv-row-hover); }
+  .sv-row.active-player { background: rgba(255, 75, 75, 0.08); }
+  
   .sv-left { display: flex; align-items: center; gap: 12px; }
   .sv-rank { font-weight: 800; font-size: 14px; width: 35px; color: var(--muted); text-align: left; }
   .sv-rank-1 { color: #ffd700; }
@@ -263,23 +297,54 @@
   .sv-name { font-weight: 700; font-size: 15px; color: var(--text); }
   .sv-points { font-weight: 800; font-size: 14px; color: var(--good); }
 
-  /* Profile Details Completions Text Tiers (Directly mapping your photo rules) */
-  .profile-level-item {
-    padding: 12px 16px;
+  /* Right side detailed profile card panel layout inside stats viewer */
+  .sv-detail-panel {
+    display: none;
+    flex-direction: column;
     background: var(--bg);
+    padding: 16px;
+    max-height: 580px;
+    overflow-y: auto;
+  }
+  .sv-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .sv-detail-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+  }
+  .sv-detail-close:hover { color: var(--text); }
+  
+  .profile-level-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .profile-level-item {
+    padding: 10px 12px;
+    background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    margin-bottom: 8px;
+    border-radius: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    transition: .15s;
+    transition: 0.15s;
   }
-  .profile-level-item:hover { background: var(--panel); border-color: var(--muted); }
-  .profile-level-item.active-video { border-color: var(--accent); background: var(--panel); }
+  .profile-level-item:hover { border-color: var(--muted); background: var(--sv-row-hover); }
+  .profile-level-item.active-video { border-color: var(--accent); background: rgba(255,75,75,0.03); }
   
-  /* Explicit Rank Tier Colors Inside Player Profile Level Lists */
+  /* Colorized placement text ranges inside profiles */
   .sv-tier-main strong { color: var(--sv-main); font-weight: 800; }
   .sv-tier-extended strong { color: var(--sv-extended); font-weight: 700; }
   .sv-tier-legacy strong { color: var(--sv-legacy); font-weight: 600; }
@@ -296,15 +361,18 @@
   .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
   .blacklist-item:last-child { border-bottom: none; }
 
-  /* Navigation tab buttons layout */
   .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
   .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-  @media (max-width:700px){
-    .row { flex-direction:column; }
-    .thumb { width:100%; height:auto; aspect-ratio:16/9; }
-    .grid { grid-template-columns:1fr; }
+  @media (max-width:920px){
+    .grid { grid-template-columns: 1fr; }
+    .sv-wrapper.split-active { grid-template-columns: 1fr; }
+    .sv-wrapper.split-active .sv-list-panel { display: none; }
+  }
+  @media (max-width:640px){
+    .row { flex-direction: column; }
+    .thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
     .stats { grid-template-columns: 1fr; }
     .nav-menu { max-width: 100%; }
   }
@@ -361,9 +429,31 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
-        <div class="section" style="margin-bottom: 0;">
-          <h3 id="leaderboardTitle">Stats Viewer (Leaderboard)</h3>
-          <div class="sv-container" id="leaderboardBody"></div>
+        <div class="section" style="margin-bottom: 0; padding: 12px;">
+          <h3 id="leaderboardTitle" style="margin-left: 4px;">Demon List Leaderboard</h3>
+          
+          <div class="sv-wrapper" id="svWrapper">
+            <div class="sv-list-panel" id="leaderboardBody">
+              <div class="empty" style="border:none;">Populating rows...</div>
+            </div>
+            
+            <div class="sv-detail-panel" id="svDetailPanel">
+              <div class="sv-detail-header">
+                <div>
+                  <h2 id="pName" style="margin: 0 0 4px 0; font-size: 20px;">Player</h2>
+                  <div id="pTotalPoints" style="color: var(--good); font-weight: 800; font-size: 15px;">0.00 Points</div>
+                </div>
+                <button class="sv-detail-close" onclick="closeLeaderboardProfile()">&times;</button>
+              </div>
+              
+              <div id="pSpecificVideoSection" style="margin-bottom: 14px; display: none;">
+                <div class="video" id="pProfileVideo" style="margin-top: 0; border-radius: 6px;"></div>
+              </div>
+              
+              <h4 class="muted" style="margin: 0 0 6px 0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Approved Records</h4>
+              <div class="profile-level-list" id="pCompletions"></div>
+            </div>
+          </div>
         </div>
 
         <div class="section" style="margin-bottom: 0;">
@@ -436,27 +526,11 @@
   </div>
 
   <div class="detail" id="detailPage">
-    <div class="back" id="backBtn">← Back to list</div>
-    <h2 id="dTitle"></h2>
-    <div id="dInfo" class="sub"></div>
+    <div class="back" id="backBtn">← Back to main dashboard layout list</div>
+    <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
+    <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
-  </div>
-
-  <div class="profile" id="profilePage">
-    <div class="back" id="profileBackBtn">← Back to list / details</div>
-    <h2 id="pName" style="margin-bottom: 4px;"></h2>
-    <h3 id="pTotalPoints" style="color: var(--good); margin: 0 0 20px 0;"></h3>
-    
-    <div id="pSpecificVideoSection" style="margin-bottom: 20px; display: none;">
-      <h3>Proof Video Documentation</h3>
-      <div class="video" id="pProfileVideo"></div>
-    </div>
-
-    <div class="section">
-      <h3>Approved List Records <span class="muted" style="font-weight:normal; font-size:12px;">(Click a level to load video proof)</span></h3>
-      <div id="pCompletions"></div>
-    </div>
   </div>
 </div>
 
@@ -474,16 +548,18 @@ const submissionType = document.getElementById("submissionType");
 const newLevelFields = document.getElementById("newLevelFields");
 const submitBtn = document.getElementById("submitBtn");
 const backBtn = document.getElementById("backBtn");
-const profileBackBtn = document.getElementById("profileBackBtn");
 const leaderboardBody = document.getElementById("leaderboardBody");
 const navMenu = document.getElementById("navMenu");
 const guidelinesModal = document.getElementById("guidelinesModal");
 const listPage = document.getElementById("listPage");
 const detailPage = document.getElementById("detailPage");
-const profilePage = document.getElementById("profilePage");
+
+const svWrapper = document.getElementById("svWrapper");
+const svDetailPanel = document.getElementById("svDetailPanel");
 
 let globalListData = [];
 let currentFilterType = "demon";
+let activeLeaderboardUser = null;
 
 const difficultyFaceMapping = {
   "easy demon": "https://gdladder.com/images/demon_logos/easy_128.webp",
@@ -501,11 +577,7 @@ const difficultyFaceMapping = {
 function toggleThemeMode() {
   const isLight = document.body.classList.toggle("light-theme");
   const toggleItem = document.getElementById("themeToggleItem");
-  if (isLight) {
-    toggleItem.textContent = "Toggle Night Mode";
-  } else {
-    toggleItem.textContent = "Toggle Light Mode";
-  }
+  toggleItem.textContent = isLight ? "Toggle Night Mode" : "Toggle Light Mode";
 }
 
 function initThemeMode() {
@@ -558,7 +630,6 @@ function closeGuidelinesModal() { guidelinesModal.style.display = "none"; }
 function scrollToSubmissionBox() {
   navMenu.classList.remove("open");
   detailPage.style.display = "none";
-  profilePage.style.display = "none";
   listPage.style.display = "block";
 
   const targetBox = document.getElementById("submissionBox");
@@ -587,6 +658,8 @@ function switchMainListTab(type) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
   if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
+  
+  closeLeaderboardProfile();
   executeCombinedFilter();
 }
 
@@ -669,7 +742,6 @@ function generateLeaderboard() {
     return;
   }
 
-  // Generate Stats Viewer precise Pointercrate style panel rows
   sortedPlayers.forEach((player, index) => {
     const displayRank = index + 1;
     let rankModifierClass = "";
@@ -677,7 +749,8 @@ function generateLeaderboard() {
     
     const rowDiv = document.createElement("div");
     rowDiv.className = "sv-row";
-    rowDiv.onclick = () => showProfile(player.name);
+    rowDiv.id = `sv-user-${player.name.toLowerCase().replace(/\s+/g, '-')}`;
+    rowDiv.onclick = () => showLeaderboardProfile(player.name);
     
     rowDiv.innerHTML = `
       <div class="sv-left">
@@ -689,6 +762,11 @@ function generateLeaderboard() {
     
     leaderboardBody.appendChild(rowDiv);
   });
+
+  if (activeLeaderboardUser) {
+    const activeRow = document.getElementById(`sv-user-${activeLeaderboardUser.toLowerCase().replace(/\s+/g, '-')}`);
+    if (activeRow) activeRow.classList.add("active-player");
+  }
 }
 
 function renderList(data) {
@@ -713,7 +791,7 @@ function renderList(data) {
         if (v.isVerifier) tagText += ' <span class="tag-verifier">[Verifier]</span>';
         else if (v.isVictor && v.percent === 100) tagText += ' <span class="tag-percent">(Victor)</span>';
         if (v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
-        return `<span class="victor-link" onclick="event.stopPropagation(); showProfile('${v.name}', '${item.id}')">${v.name}</span>${tagText}`;
+        return `<span class="victor-link" onclick="event.stopPropagation(); showLeaderboardProfile('${v.name}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
 
@@ -775,12 +853,8 @@ searchInput.oninput = () => {
   executeCombinedFilter();
 };
 
-let lastViewedItem = null;
-
 function showDetail(item) {
-  lastViewedItem = item;
   listPage.style.display = "none";
-  profilePage.style.display = "none";
   detailPage.style.display = "block";
   
   const pointsMax = calculatePoints(item.rank, 100);
@@ -816,30 +890,28 @@ function showDetail(item) {
   `;
 }
 
-function updateProfileVideoPlayer(playerName, levelName, videoUrl) {
-  const specVideoSec = document.getElementById("pSpecificVideoSection");
-  const specVideoBox = document.getElementById("pProfileVideo");
+/* INTERACTIVE SPLIT DESIGN FUNCTIONS FOR STATS VIEWER */
+function showLeaderboardProfile(playerName) {
+  activeLeaderboardUser = playerName;
+  
+  // Manage list visual highlight states
+  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
+  const targetRow = document.getElementById(`sv-user-${playerName.toLowerCase().replace(/\s+/g, '-')}`);
+  if (targetRow) targetRow.classList.add('active-player');
 
-  specVideoSec.style.display = "block";
-  if (videoUrl) specVideoBox.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
-  else specVideoBox.innerHTML = `<div style="padding:40px; text-align:center; color:var(--muted); background:var(--bg); border-radius:10px;">No video link attached.</div>`;
-}
+  // Activate grid splitting panels classes
+  svWrapper.classList.add("split-active");
+  svDetailPanel.style.display = "flex";
 
-function showProfile(playerName, initialLevelId = null) {
-  listPage.style.display = "none";
-  detailPage.style.display = "none";
-  profilePage.style.display = "block";
   document.getElementById("pName").textContent = playerName;
 
   let totalPoints = 0;
-  let autoSelectElement = null;
   let fallbackElement = null;
   
   const completionsContainer = document.getElementById("pCompletions");
   completionsContainer.innerHTML = "";
 
   let matchedLevels = [];
-
   globalListData.forEach(level => {
     const participants = parseParticipants(level);
     const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
@@ -848,6 +920,7 @@ function showProfile(playerName, initialLevelId = null) {
     }
   });
 
+  // Keep records chronologically tracked from Rank #1 down
   matchedLevels.sort((a,b) => a.level.rank - b.level.rank);
 
   matchedLevels.forEach(({ level, match }) => {
@@ -855,12 +928,12 @@ function showProfile(playerName, initialLevelId = null) {
     totalPoints += pts;
 
     let badgeHTML = "";
-    if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier">Verifier</span>';
-    if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white;">Victor</span>' : ` <span class="badge badge-progress">${match.percent}% Progress</span>`;
+    if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier" style="margin-top:0;">Verifier</span>';
+    if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white; margin-top:0;">Victor</span>' : ` <span class="badge badge-progress" style="margin-top:0;">${match.percent}%</span>`;
 
     let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
 
-    // Identify color tier by rank inside the stats viewer
+    // Direct text styling ranges configuration from photos mapping rules
     let tierClass = "sv-tier-main";
     if (level.rank > 75 && level.rank <= 150) {
       tierClass = "sv-tier-extended";
@@ -871,41 +944,49 @@ function showProfile(playerName, initialLevelId = null) {
     const div = document.createElement("div");
     div.className = `profile-level-item ${tierClass}`;
     div.innerHTML = `
-      <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted">Created by ${level.creator}</div></div>
-      <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
+      <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted" style="font-size:11px; margin-top:2px;">By ${level.creator}</div></div>
+      <div style="color: var(--accent); font-weight: bold; font-size:13px; flex-shrink:0;">+${pts.toFixed(1)}</div>
     `;
 
     div.onclick = () => {
       document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
       div.classList.add('active-video');
-      updateProfileVideoPlayer(playerName, level.name, runtimeVideoUrl);
+      
+      const specVideoSec = document.getElementById("pSpecificVideoSection");
+      const specVideoBox = document.getElementById("pProfileVideo");
+
+      specVideoSec.style.display = "block";
+      if (runtimeVideoUrl) {
+        specVideoBox.innerHTML = `<iframe src="${runtimeVideoUrl}" allowfullscreen></iframe>`;
+      } else {
+        specVideoBox.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted); font-size:12px;">No video attached.</div>`;
+      }
     };
 
     completionsContainer.appendChild(div);
-    if (initialLevelId && level.id === initialLevelId) autoSelectElement = div;
     if (!fallbackElement) fallbackElement = div;
   });
 
-  document.getElementById("pTotalPoints").textContent = `Total Score: ${totalPoints.toFixed(2)} Points`;
-  if (autoSelectElement) autoSelectElement.click();
-  else if (fallbackElement) fallbackElement.click();
-  else document.getElementById("pSpecificVideoSection").style.display = "none";
-
-  if(completionsContainer.innerHTML === "") {
-    completionsContainer.innerHTML = '<div class="empty">No approved run records found for this player.</div>';
+  document.getElementById("pTotalPoints").textContent = `${totalPoints.toFixed(2)} Points`;
+  
+  // Automatically trigger loading the topmost record proof video directly inside card interface frame
+  if (fallbackElement) {
+    fallbackElement.click();
+  } else {
     document.getElementById("pSpecificVideoSection").style.display = "none";
+    completionsContainer.innerHTML = '<div class="empty" style="border:none;">No records found.</div>';
   }
 }
 
+function closeLeaderboardProfile() {
+  activeLeaderboardUser = null;
+  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
+  svWrapper.classList.remove("split-active");
+  svDetailPanel.style.display = "none";
+  document.getElementById("pProfileVideo").innerHTML = "";
+}
+
 backBtn.onclick = () => { detailPage.style.display = "none"; listPage.style.display = "block"; };
-profileBackBtn.onclick = () => { 
-  if (lastViewedItem) {
-    showDetail(lastViewedItem); 
-  } else { 
-    profilePage.style.display = "none"; 
-    listPage.style.display = "block"; 
-  } 
-};
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
