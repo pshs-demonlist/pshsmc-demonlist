@@ -11,14 +11,14 @@
     --line: #1e2438;
     --text: #e9eefc;
     --muted: #9aa3b2;
-    --accent: #ff4b4b;
+    --accent: #0b84cb; /* Changed to Pointercrate Blue */
     --good: #36d399;
     --danger: #662f36;
     
-    /* Stats Viewer Color Tiers - Default Night Mode */
-    --sv-main: #ffffff;
-    --sv-extended: #9aa3b2;
-    --sv-legacy: #596475;
+    /* Stats Viewer Color Tiers - Night Mode */
+    --tier-main: #ffffff; /* Fully White in dark mode for 1-75 */
+    --tier-extended: #aaaaaa; /* Gray for 76-150 */
+    --tier-legacy: #555555; /* Darker Gray for 151+ */
     --sv-row-hover: rgba(255, 255, 255, 0.05);
   }
   
@@ -29,14 +29,14 @@
     --line: #e5e7eb;
     --text: #1f2937;
     --muted: #6b7280;
-    --accent: #dc2626;
+    --accent: #0b84cb;
     --good: #16a34a;
     --danger: #fee2e2;
     
     /* Stats Viewer Color Tiers - Exact Light Mode Spec from Photos */
-    --sv-main: #000000;
-    --sv-extended: #4b5563;
-    --sv-legacy: #9ca3af;
+    --tier-main: #000000; /* Fully Black (1-75) */
+    --tier-extended: #777777; /* Kinda Gray (76-150) */
+    --tier-legacy: #cccccc; /* Kinda White (151+) */
     --sv-row-hover: rgba(0, 0, 0, 0.04);
   }
   
@@ -118,7 +118,7 @@
   /* Form Flash Highlight Glow Effect */
   @keyframes formGlow {
     0% { border-color: var(--line); box-shadow: none; }
-    50% { border-color: var(--accent); box-shadow: 0 0 15px rgba(255, 75, 75, 0.6); }
+    50% { border-color: var(--accent); box-shadow: 0 0 15px rgba(11, 132, 203, 0.6); }
     100% { border-color: var(--line); box-shadow: none; }
   }
   .glow-active {
@@ -214,7 +214,7 @@
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
   /* Main Dashboard Layout */
-  .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 16px; align-items: start; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
   /* Level Rows */
@@ -251,27 +251,40 @@
   }
   .victor-link:hover { text-decoration: underline; }
   
-  /* --- EXACT POINTERCRATE STATS VIEWER SPLIT PANEL DESIGN --- */
+  /* --- POINTERCRATE STATS VIEWER UI --- */
+  
+  /* Intro Card */
+  #introCard {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--panel);
+    border: 1px dashed var(--muted);
+    border-radius: 10px;
+  }
+  #introCard h2 { font-size: 28px; margin: 0 0 15px; color: var(--text); }
+  #introCard hr { border: none; border-top: 1px solid var(--line); margin-bottom: 15px; }
+  #introCard p { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 25px; }
+  .btn-blue {
+    background: var(--accent); color: white; border: none; padding: 12px 24px;
+    font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer;
+    transition: background 0.2s; width: 100%; max-width: 300px;
+  }
+  .btn-blue:hover { filter: brightness(1.1); }
+
+  /* Split Layout */
   .sv-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: none; /* Hidden until button click */
+    grid-template-columns: 1fr 1.2fr;
     border: 1px solid var(--line);
     border-radius: 10px;
     background: var(--panel);
     overflow: hidden;
-  }
-  /* When a player is active, toggle this via JS to create the side-by-side split screen */
-  .sv-wrapper.split-active {
-    grid-template-columns: 1fr 1.1fr;
   }
   
   .sv-list-panel {
     max-height: 580px;
     overflow-y: auto;
     background: var(--panel);
-    border-right: none;
-  }
-  .sv-wrapper.split-active .sv-list-panel {
     border-right: 1px solid var(--line);
   }
   
@@ -279,78 +292,71 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    background: var(--panel);
-    border-bottom: 1px solid rgba(120,120,120,0.1);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
     cursor: pointer;
     transition: background 0.15s;
+    font-size: 14px;
   }
   .sv-row:last-child { border-bottom: none; }
   .sv-row:hover { background: var(--sv-row-hover); }
-  .sv-row.active-player { background: rgba(255, 75, 75, 0.08); }
+  .sv-row.active-player { background: rgba(11, 132, 203, 0.1); }
   
-  .sv-left { display: flex; align-items: center; gap: 12px; }
-  .sv-rank { font-weight: 800; font-size: 14px; width: 35px; color: var(--muted); text-align: left; }
-  .sv-rank-1 { color: #ffd700; }
-  .sv-rank-2 { color: #c0c0c0; }
-  .sv-rank-3 { color: #cd7f32; }
-  .sv-name { font-weight: 700; font-size: 15px; color: var(--text); }
-  .sv-points { font-weight: 800; font-size: 14px; color: var(--good); }
+  .sv-left { display: flex; align-items: center; gap: 8px; }
+  .sv-rank { font-weight: bold; color: var(--text); }
+  .sv-name { font-weight: bold; color: var(--text); flex-grow: 1; }
+  .sv-points { font-style: italic; font-size: 12px; color: var(--muted); }
 
-  /* Right side detailed profile card panel layout inside stats viewer */
+  /* Right side detailed profile card */
   .sv-detail-panel {
-    display: none;
+    display: flex;
     flex-direction: column;
     background: var(--bg);
-    padding: 16px;
+    padding: 20px;
     max-height: 580px;
     overflow-y: auto;
+    text-align: center;
   }
-  .sv-detail-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 12px;
-    margin-bottom: 14px;
-  }
-  .sv-detail-close {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0 4px;
-  }
-  .sv-detail-close:hover { color: var(--text); }
   
-  .profile-level-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 10px;
+  .start-prompt {
+    margin-top: 50px;
+    color: var(--muted);
+    font-size: 16px;
+    font-style: italic;
   }
-  .profile-level-item {
-    padding: 10px 12px;
+
+  .profile-title-row {
+    margin-bottom: 20px;
+  }
+  .profile-title-row h3 {
+    font-size: 24px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  .stat-block {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.15s;
+    padding: 10px;
+    border-radius: 8px;
   }
-  .profile-level-item:hover { border-color: var(--muted); background: var(--sv-row-hover); }
-  .profile-level-item.active-video { border-color: var(--accent); background: rgba(255,75,75,0.03); }
-  
-  /* Colorized placement text ranges inside profiles */
-  .sv-tier-main strong { color: var(--sv-main); font-weight: 800; }
-  .sv-tier-extended strong { color: var(--sv-extended); font-weight: 700; }
-  .sv-tier-legacy strong { color: var(--sv-legacy); font-weight: 600; }
+  .stat-block h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--text); font-weight: bold; }
+  .stat-block p { margin: 0; font-size: 13px; color: var(--muted); }
 
-  .tag-verifier { font-size: 11px; color: #ffb703; margin-left: 4px; font-weight: bold; }
-  .tag-percent { font-size: 11px; color: var(--muted); font-weight: normal; }
+  .demons-section { margin-top: 15px; }
+  .demons-section h4 { font-size: 16px; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+  .demons-cloud { font-size: 14px; line-height: 1.8; text-align: center; margin: 0 auto; }
+  
+  /* Pointercrate Text Colors for Demons */
+  .cloud-main { color: var(--tier-main); font-weight: 800; }
+  .cloud-extended { color: var(--tier-extended); font-weight: 700; }
+  .cloud-legacy { color: var(--tier-legacy); font-weight: normal; }
 
   .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .section-header-flex h3 { margin: 0; }
@@ -367,8 +373,8 @@
 
   @media (max-width:920px){
     .grid { grid-template-columns: 1fr; }
-    .sv-wrapper.split-active { grid-template-columns: 1fr; }
-    .sv-wrapper.split-active .sv-list-panel { display: none; }
+    .sv-wrapper { grid-template-columns: 1fr; }
+    .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 300px; }
   }
   @media (max-width:640px){
     .row { flex-direction: column; }
@@ -401,11 +407,11 @@
     <div class="modal-header">Submission Guidelines</div>
     <ol class="rules-list">
       <li>Your completion video and raw footage must have all clicks fully audible throughout the entire completion.</li>
-      <li>You must record and upload a video of your completion to YouTube or another video sharing platform.</li>
+      <li>You must record and upload a video of your completion to YouTube or another platform.</li>
       <li>Completion videos may not be deleted after they are accepted.</li>
       <li>Your record must show the stats on the endscreen (attempts, orbs, etc.).</li>
       <li>Your record must be done on the rated version of the level.</li>
-      <li>During your completion, you may not use any skips that make any section of the level significantly easier.</li>
+      <li>During your completion, you may not use any skips that make any section significantly easier.</li>
       <li>If a record is accepted on the GDDL, AREDL, or Pointercrate, it is accepted.</li>
     </ol>
   </div>
@@ -425,12 +431,24 @@
     <div class="grid">
       <div class="section" style="margin-bottom: 0;">
         <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-        <div class="list" id="list"><div class="empty">Loading list records from live database pipeline...</div></div>
+        <div class="list" id="list"><div class="empty">Loading list records from database...</div></div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 16px; align-self: start;">
-        <div class="section" style="margin-bottom: 0; padding: 12px;">
-          <h3 id="leaderboardTitle" style="margin-left: 4px;">Demon List Leaderboard</h3>
+        
+        <div id="introCardWrapper" class="section" style="margin-bottom: 0;">
+          <div id="introCard">
+            <h2>Stats Viewer</h2>
+            <hr>
+            <p>Get a detailed overview of who completed the most, created the most demons or beat the hardest demons! There is even a leaderboard to compare yourself to the very best!</p>
+            <button class="btn-blue" onclick="activateStatsViewer()">Open the stats viewer!</button>
+          </div>
+        </div>
+
+        <div id="leaderboardSection" class="section" style="margin-bottom: 0; padding: 12px; display: none;">
+          <div class="section-header-flex">
+            <h3 id="leaderboardTitle" style="margin-left: 4px; font-size: 20px;">Stats Viewer - International</h3>
+          </div>
           
           <div class="sv-wrapper" id="svWrapper">
             <div class="sv-list-panel" id="leaderboardBody">
@@ -438,20 +456,11 @@
             </div>
             
             <div class="sv-detail-panel" id="svDetailPanel">
-              <div class="sv-detail-header">
-                <div>
-                  <h2 id="pName" style="margin: 0 0 4px 0; font-size: 20px;">Player</h2>
-                  <div id="pTotalPoints" style="color: var(--good); font-weight: 800; font-size: 15px;">0.00 Points</div>
+              <div class="start-prompt" id="startPrompt">
+                Click on a player's name on the left to get started!
+              </div>
+              <div id="profileContent" style="display: none; text-align: left;">
                 </div>
-                <button class="sv-detail-close" onclick="closeLeaderboardProfile()">&times;</button>
-              </div>
-              
-              <div id="pSpecificVideoSection" style="margin-bottom: 14px; display: none;">
-                <div class="video" id="pProfileVideo" style="margin-top: 0; border-radius: 6px;"></div>
-              </div>
-              
-              <h4 class="muted" style="margin: 0 0 6px 0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Approved Records</h4>
-              <div class="profile-level-list" id="pCompletions"></div>
             </div>
           </div>
         </div>
@@ -521,7 +530,6 @@
       <div class="topbar">
         <button class="btn btn-primary" id="submitBtn">Send for review</button>
       </div>
-      <div class="tiny">Submissions are automatically routed to your connected spreadsheet validation log pipeline.</div>
     </div>
   </div>
 
@@ -554,6 +562,8 @@ const guidelinesModal = document.getElementById("guidelinesModal");
 const listPage = document.getElementById("listPage");
 const detailPage = document.getElementById("detailPage");
 
+const introCardWrapper = document.getElementById("introCardWrapper");
+const leaderboardSection = document.getElementById("leaderboardSection");
 const svWrapper = document.getElementById("svWrapper");
 const svDetailPanel = document.getElementById("svDetailPanel");
 
@@ -566,12 +576,7 @@ const difficultyFaceMapping = {
   "medium demon": "https://gdladder.com/images/demon_logos/medium_128.webp",
   "hard demon": "https://gdladder.com/images/demon_logos/hard_128.webp",
   "insane demon": "https://gdladder.com/images/demon_logos/insane_128.webp",
-  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "easy challenge": "https://gdladder.com/images/demon_logos/easy_128.webp",
-  "medium challenge": "https://gdladder.com/images/demon_logos/medium_128.webp",
-  "hard challenge": "https://gdladder.com/images/demon_logos/hard_128.webp",
-  "insane challenge": "https://gdladder.com/images/demon_logos/insane_128.webp",
-  "extreme challenge": "https://gdladder.com/images/demon_logos/extreme_128.webp"
+  "extreme demon": "https://gdladder.com/images/demon_logos/extreme_128.webp"
 };
 
 function toggleThemeMode() {
@@ -582,6 +587,14 @@ function toggleThemeMode() {
 
 function initThemeMode() {
   document.getElementById("themeToggleItem").textContent = "Toggle Light Mode";
+  document.body.classList.add("light-theme"); // Default to light mode for the proper Pointercrate look
+}
+
+// Transition from Intro Card to Leaderboard Viewer
+function activateStatsViewer() {
+  introCardWrapper.style.display = "none";
+  leaderboardSection.style.display = "block";
+  svWrapper.style.display = "grid";
 }
 
 async function fetchCachedOrFreshData() {
@@ -590,7 +603,7 @@ async function fetchCachedOrFreshData() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error("❌ Transmission Pipeline failed to refresh raw schema:", error);
+    console.error("Failed to fetch raw schema:", error);
     throw error;
   }
 }
@@ -603,23 +616,13 @@ async function loadDemonData() {
       detectedType = detectedType.toLowerCase().trim();
       detectedType = !detectedType.includes("challenge") ? "demon" : "challenge";
 
-      return {
-        ...item,
-        listType: detectedType,
-        rank: item.rank ? parseInt(item.rank) : 999
-      };
+      return { ...item, listType: detectedType, rank: item.rank ? parseInt(item.rank) : 999 };
     });
 
     executeCombinedFilter();
     filterSelectionDropdownOptions();
   } catch (error) {
-    console.error("Failed to load live database array:", error);
-    listContainer.innerHTML = `
-      <div class="empty" style="color:var(--accent); text-align:center;">
-        <strong>Error connecting to database network path.</strong><br>
-        <span class="muted" style="font-size:12px;">Details: ${error.message}</span><br><br>
-        <button class="btn" onclick="loadDemonData()" style="padding: 6px 12px; font-size:12px;">Retry Connection</button>
-      </div>`;
+    listContainer.innerHTML = `<div class="empty">Error connecting to database.</div>`;
   }
 }
 
@@ -631,25 +634,16 @@ function scrollToSubmissionBox() {
   navMenu.classList.remove("open");
   detailPage.style.display = "none";
   listPage.style.display = "block";
-
-  const targetBox = document.getElementById("submissionBox");
-  targetBox.scrollIntoView({ behavior: "smooth", block: "center" });
-
-  setTimeout(() => {
-    targetBox.classList.add("glow-active");
-    setTimeout(() => { targetBox.classList.remove("glow-active"); }, 1200);
-  }, 400);
+  document.getElementById("submissionBox").scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 function toggleBlacklist() {
   const content = document.getElementById("blacklistContent");
   const toggleLink = document.getElementById("blacklistToggle");
   if (content.style.display === "block") {
-    content.style.display = "none";
-    toggleLink.textContent = "*maximize*";
+    content.style.display = "none"; toggleLink.textContent = "*maximize*";
   } else {
-    content.style.display = "block";
-    toggleLink.textContent = "*minimize*";
+    content.style.display = "block"; toggleLink.textContent = "*minimize*";
   }
 }
 
@@ -659,7 +653,6 @@ function switchMainListTab(type) {
   if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
   if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
   
-  closeLeaderboardProfile();
   executeCombinedFilter();
 }
 
@@ -687,18 +680,10 @@ function parseParticipants(level) {
   rawVictors.forEach(v => {
     const name = (v.name || "").trim();
     if (!name) return;
-
     const isVerifier = name.toLowerCase() === verifierName.toLowerCase();
     const pct = v.percent !== undefined ? Number(v.percent) : 100;
-
     if (pct >= LIST_MIN_PERCENT) {
-      entries.push({
-        name: name,
-        video: (v.video || "").trim(),
-        isVerifier: isVerifier,
-        isVictor: !isVerifier, 
-        percent: pct
-      });
+      entries.push({ name: name, isVerifier: isVerifier, isVictor: !isVerifier, percent: pct });
     }
   });
   return entries;
@@ -719,18 +704,21 @@ function calculatePoints(rank, percent = 100) {
 
 function generateLeaderboard() {
   const scores = {};
-  const titleLabel = currentFilterType === "challenge" ? "Challenge List" : "Demon List";
-  const lbTitleEl = document.getElementById("leaderboardTitle");
-  if (lbTitleEl) lbTitleEl.textContent = `${titleLabel} Leaderboard`;
-
+  
   globalListData.forEach(level => {
     if (level.listType !== currentFilterType) return;
 
     parseParticipants(level).forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const key = p.name.toLowerCase();
-      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0 };
+      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0, completions: [], hardest: null };
+      
       scores[key].totalPoints += pts;
+      scores[key].completions.push({ name: level.name, rank: level.rank, percent: p.percent });
+      
+      if (!scores[key].hardest || level.rank < scores[key].hardest.rank) {
+        scores[key].hardest = level;
+      }
     });
   });
 
@@ -744,17 +732,19 @@ function generateLeaderboard() {
 
   sortedPlayers.forEach((player, index) => {
     const displayRank = index + 1;
-    let rankModifierClass = "";
-    if (displayRank <= 3) rankModifierClass = ` sv-rank-${displayRank}`;
-    
     const rowDiv = document.createElement("div");
     rowDiv.className = "sv-row";
     rowDiv.id = `sv-user-${player.name.toLowerCase().replace(/\s+/g, '-')}`;
-    rowDiv.onclick = () => showLeaderboardProfile(player.name);
+    
+    // Pass the player object into the profile viewer function
+    rowDiv.onclick = () => {
+      activateStatsViewer(); // In case they clicked from the level list victor link
+      showLeaderboardProfile(player, displayRank);
+    };
     
     rowDiv.innerHTML = `
       <div class="sv-left">
-        <span class="sv-rank${rankModifierClass}">#${displayRank}</span>
+        <span class="sv-rank">#${displayRank}</span>
         <span class="sv-name">${player.name}</span>
       </div>
       <div class="sv-points">${player.totalPoints.toFixed(2)}</div>
@@ -762,19 +752,11 @@ function generateLeaderboard() {
     
     leaderboardBody.appendChild(rowDiv);
   });
-
-  if (activeLeaderboardUser) {
-    const activeRow = document.getElementById(`sv-user-${activeLeaderboardUser.toLowerCase().replace(/\s+/g, '-')}`);
-    if (activeRow) activeRow.classList.add("active-player");
-  }
 }
 
 function renderList(data) {
   listContainer.innerHTML = "";
-  if(data.length === 0) {
-    listContainer.innerHTML = '<div class="empty">No matching records discovered</div>';
-    return;
-  }
+  if(data.length === 0) { listContainer.innerHTML = '<div class="empty">No matching records discovered</div>'; return; }
 
   data.forEach(item => {
     const row = document.createElement("div");
@@ -791,7 +773,8 @@ function renderList(data) {
         if (v.isVerifier) tagText += ' <span class="tag-verifier">[Verifier]</span>';
         else if (v.isVictor && v.percent === 100) tagText += ' <span class="tag-percent">(Victor)</span>';
         if (v.percent < 100) tagText += ` <span class="tag-percent">(${v.percent}%)</span>`;
-        return `<span class="victor-link" onclick="event.stopPropagation(); showLeaderboardProfile('${v.name}')">${v.name}</span>${tagText}`;
+        // Trigger profile opening via name search hack
+        return `<span class="victor-link" onclick="event.stopPropagation(); triggerPlayerProfile('${v.name}')">${v.name}</span>${tagText}`;
       }).join(", ");
     }
 
@@ -813,70 +796,111 @@ function renderList(data) {
   });
 }
 
-function filterSelectionDropdownOptions() {
+function triggerPlayerProfile(name) {
+  // Simulate clicking the player row in the leaderboard
+  const rowId = `sv-user-${name.toLowerCase().replace(/\s+/g, '-')}`;
+  const el = document.getElementById(rowId);
+  if (el) el.click();
+}
+
+/* POINTERCRATE SPLIT DESIGN PROFILE FUNCTION */
+function showLeaderboardProfile(playerObj, rankIndex) {
+  // Manage list visual highlight states
+  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
+  const targetRow = document.getElementById(`sv-user-${playerObj.name.toLowerCase().replace(/\s+/g, '-')}`);
+  if (targetRow) targetRow.classList.add('active-player');
+
+  // Hide placeholder prompt, show profile cards container
+  document.getElementById("startPrompt").style.display = "none";
+  const profileContent = document.getElementById("profileContent");
+  profileContent.style.display = "block";
+
+  // Sort user completions according to list rank
+  const sortedCompletions = playerObj.completions.sort((a, b) => a.rank - b.rank);
+
+  let mainCount = 0; let extCount = 0; let legCount = 0;
+  
+  // Build the color-coded string of completions
+  let demonsHTML = "";
+  if (sortedCompletions.length === 0) {
+    demonsHTML = "<span style='color:var(--muted);'>None</span>";
+  } else {
+    demonsHTML = sortedCompletions.map((d, index) => {
+      let tierClass = "cloud-legacy"; // Default 151+
+      if (d.rank <= 75) { tierClass = "cloud-main"; mainCount++; } 
+      else if (d.rank <= 150) { tierClass = "cloud-extended"; extCount++; }
+      else { legCount++; }
+      
+      const separator = (index < sortedCompletions.length - 1) ? " - " : "";
+      const label = d.percent < 100 ? `${d.name} (${d.percent}%)` : d.name;
+      return `<span class="${tierClass}">${label}</span>${separator}`;
+    }).join("");
+  }
+
+  const hardestName = playerObj.hardest ? playerObj.hardest.name : "None";
+
+  // Insert structural metrics card view profile properties
+  profileContent.innerHTML = `
+    <div style="text-align: center;">
+      <div class="profile-title-row">
+        <h3>${playerObj.name}</h3>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-block">
+          <h4>Demonlist rank</h4>
+          <p>${rankIndex}</p>
+        </div>
+        <div class="stat-block">
+          <h4>Demonlist score</h4>
+          <p>${playerObj.totalPoints.toFixed(2)}</p>
+        </div>
+        <div class="stat-block">
+          <h4>Demonlist stats</h4>
+          <p>${mainCount} Main, ${extCount} Extended, ${legCount} Legacy</p>
+        </div>
+        <div class="stat-block">
+          <h4>Hardest demon</h4>
+          <p style="color: var(--text); font-weight: bold;">${hardestName}</p>
+        </div>
+      </div>
+
+      <div class="demons-section">
+        <h4>Demons completed</h4>
+        <div class="demons-cloud">${demonsHTML}</div>
+      </div>
+    </div>
+  `;
+}
+
+filterSelectionDropdownOptions = () => {
   const selectedType = document.getElementById("listType").value;
   existingLevelSelect.innerHTML = "";
-  
   const filteredLevels = globalListData.filter(item => item.listType === selectedType).sort((a,b) => a.rank - b.rank);
-  
   filteredLevels.forEach(item => {
     const opt = document.createElement("option");
-    opt.value = item.name;
-    opt.dataset.id = item.id;
-    opt.dataset.creator = item.creator;
+    opt.value = item.name; opt.dataset.id = item.id; opt.dataset.creator = item.creator;
     opt.textContent = `${item.name} (${item.id})`;
     existingLevelSelect.appendChild(opt);
   });
-
-  if (filteredLevels.length === 0) {
-    const opt = document.createElement("option");
-    opt.textContent = "-- No existing levels found --";
-    existingLevelSelect.appendChild(opt);
-  }
-}
-
-document.getElementById("listType").onchange = () => {
-  filterSelectionDropdownOptions();
 };
 
+document.getElementById("listType").onchange = filterSelectionDropdownOptions;
 submissionType.onchange = () => {
   if (submissionType.value === "record") {
-    existingLevelWrap.style.display = "block";
-    newLevelFields.style.display = "none";
+    existingLevelWrap.style.display = "block"; newLevelFields.style.display = "none";
   } else {
-    existingLevelWrap.style.display = "none";
-    newLevelFields.style.display = "block";
+    existingLevelWrap.style.display = "none"; newLevelFields.style.display = "block";
   }
 };
-
-searchInput.oninput = () => {
-  executeCombinedFilter();
-};
+searchInput.oninput = () => { executeCombinedFilter(); };
 
 function showDetail(item) {
-  listPage.style.display = "none";
-  detailPage.style.display = "block";
-  
+  listPage.style.display = "none"; detailPage.style.display = "block";
   const pointsMax = calculatePoints(item.rank, 100);
   const participants = parseParticipants(item);
   
-  let dynamicFaceMarkup = "";
-  const normalizedDiff = (item.diff || "").toLowerCase().trim();
-  if (difficultyFaceMapping[normalizedDiff]) {
-    dynamicFaceMarkup = `
-      <img src="${difficultyFaceMapping[normalizedDiff]}" 
-           alt="${item.diff}" 
-           style="width: 40px; height: 40px; vertical-align: middle; margin-left: 10px; object-fit: contain;">
-    `;
-  }
-  
-  document.getElementById("dTitle").innerHTML = `
-    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-      <span>${item.name} (Created by ${item.creator})</span>
-      ${dynamicFaceMarkup}
-    </div>
-  `;
-  
+  document.getElementById("dTitle").innerHTML = `${item.name} (Created by ${item.creator})`;
   document.getElementById("dInfo").textContent = `${item.diff || 'List Level'} — ID: ${item.id} — Max ${pointsMax} Points`;
   
   const videoWrap = document.getElementById("video");
@@ -890,168 +914,29 @@ function showDetail(item) {
   `;
 }
 
-/* INTERACTIVE SPLIT DESIGN FUNCTIONS FOR STATS VIEWER */
-function showLeaderboardProfile(playerName) {
-  activeLeaderboardUser = playerName;
-  
-  // Manage list visual highlight states
-  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-  const targetRow = document.getElementById(`sv-user-${playerName.toLowerCase().replace(/\s+/g, '-')}`);
-  if (targetRow) targetRow.classList.add('active-player');
-
-  // Activate grid splitting panels classes
-  svWrapper.classList.add("split-active");
-  svDetailPanel.style.display = "flex";
-
-  document.getElementById("pName").textContent = playerName;
-
-  let totalPoints = 0;
-  let fallbackElement = null;
-  
-  const completionsContainer = document.getElementById("pCompletions");
-  completionsContainer.innerHTML = "";
-
-  let matchedLevels = [];
-  globalListData.forEach(level => {
-    const participants = parseParticipants(level);
-    const match = participants.find(p => p.name.toLowerCase() === playerName.toLowerCase());
-    if (match) {
-      matchedLevels.push({ level, match });
-    }
-  });
-
-  // Keep records chronologically tracked from Rank #1 down
-  matchedLevels.sort((a,b) => a.level.rank - b.level.rank);
-
-  matchedLevels.forEach(({ level, match }) => {
-    const pts = parseFloat(calculatePoints(level.rank, match.percent));
-    totalPoints += pts;
-
-    let badgeHTML = "";
-    if (match.isVerifier) badgeHTML += ' <span class="badge badge-verifier" style="margin-top:0;">Verifier</span>';
-    if (match.isVictor) badgeHTML += match.percent === 100 ? ' <span class="badge" style="background:#10b981; color:white; margin-top:0;">Victor</span>' : ` <span class="badge badge-progress" style="margin-top:0;">${match.percent}%</span>`;
-
-    let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
-
-    // Direct text styling ranges configuration from photos mapping rules
-    let tierClass = "sv-tier-main";
-    if (level.rank > 75 && level.rank <= 150) {
-      tierClass = "sv-tier-extended";
-    } else if (level.rank > 150) {
-      tierClass = "sv-tier-legacy";
-    }
-
-    const div = document.createElement("div");
-    div.className = `profile-level-item ${tierClass}`;
-    div.innerHTML = `
-      <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted" style="font-size:11px; margin-top:2px;">By ${level.creator}</div></div>
-      <div style="color: var(--accent); font-weight: bold; font-size:13px; flex-shrink:0;">+${pts.toFixed(1)}</div>
-    `;
-
-    div.onclick = () => {
-      document.querySelectorAll('.profile-level-item').forEach(el => el.classList.remove('active-video'));
-      div.classList.add('active-video');
-      
-      const specVideoSec = document.getElementById("pSpecificVideoSection");
-      const specVideoBox = document.getElementById("pProfileVideo");
-
-      specVideoSec.style.display = "block";
-      if (runtimeVideoUrl) {
-        specVideoBox.innerHTML = `<iframe src="${runtimeVideoUrl}" allowfullscreen></iframe>`;
-      } else {
-        specVideoBox.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted); font-size:12px;">No video attached.</div>`;
-      }
-    };
-
-    completionsContainer.appendChild(div);
-    if (!fallbackElement) fallbackElement = div;
-  });
-
-  document.getElementById("pTotalPoints").textContent = `${totalPoints.toFixed(2)} Points`;
-  
-  // Automatically trigger loading the topmost record proof video directly inside card interface frame
-  if (fallbackElement) {
-    fallbackElement.click();
-  } else {
-    document.getElementById("pSpecificVideoSection").style.display = "none";
-    completionsContainer.innerHTML = '<div class="empty" style="border:none;">No records found.</div>';
-  }
-}
-
-function closeLeaderboardProfile() {
-  activeLeaderboardUser = null;
-  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-  svWrapper.classList.remove("split-active");
-  svDetailPanel.style.display = "none";
-  document.getElementById("pProfileVideo").innerHTML = "";
-}
-
 backBtn.onclick = () => { detailPage.style.display = "none"; listPage.style.display = "block"; };
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
-  const listType = document.getElementById("listType").value;
   const username = document.getElementById("username").value.trim();
   const recordLink = document.getElementById("recordLink").value.trim();
 
-  if(!username || !recordLink) { 
-    alert("Please ensure both Username and Record Link fields are populated."); 
-    return; 
-  }
-  if (username.toLowerCase() === "c0ms") { 
-    alert("Error: This username has been permanently blacklisted."); 
-    return; 
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Processing payload...";
+  if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
+  submitBtn.disabled = true; submitBtn.textContent = "Processing payload...";
   
-  let payload = { listType: listType };
-
+  let payload = { listType: document.getElementById("listType").value };
   if(type === "record") {
     const selectedOpt = existingLevelSelect.options[existingLevelSelect.selectedIndex];
-    if (!selectedOpt || !selectedOpt.dataset.id) {
-       alert("Error: Please select a valid level target configuration option.");
-       submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return;
-    }
-    payload = {
-      ...payload, type: "record", levelName: selectedOpt.value, id: selectedOpt.dataset.id, username: username, creator: selectedOpt.dataset.creator, recordLink: recordLink
-    };
+    payload = { ...payload, type: "record", levelName: selectedOpt.value, id: selectedOpt.dataset.id, username: username, creator: selectedOpt.dataset.creator, recordLink: recordLink };
   } else {
     const newName = document.getElementById("newName").value.trim();
-    const newCreator = document.getElementById("newCreator").value.trim();
-    const newLevelId = document.getElementById("newLevelId").value.trim();
-
-    if(!newName || !newCreator || !newLevelId) {
-      alert("Please fully specify all fields for the Level Proposal.");
-      submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return;
-    }
-    payload = {
-      ...payload, type: "newLevel", newName: newName, newLevelId: newLevelId, username: username, newCreator: newCreator, recordLink: recordLink
-    };
+    payload = { ...payload, type: "newLevel", newName: newName, newLevelId: document.getElementById("newLevelId").value.trim(), username: username, newCreator: document.getElementById("newCreator").value.trim(), recordLink: recordLink };
   }
 
   try {
-    const res = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    });
-    const result = await res.json();
-    if(result.status === "ok") {
-      alert(`Success! Data written securely into Sheet tab target column block.`);
-      document.getElementById("username").value = "";
-      document.getElementById("recordLink").value = "";
-    } else {
-      alert("The spreadsheet engine rejected payload configuration: " + result.message);
-    }
-  } catch(err) {
-    console.error("Transmission Pipeline error:", err);
-    alert("Pipeline communication failure: " + err.toString());
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Send for review";
-  }
+    const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    if((await res.json()).status === "ok") { alert(`Success! Data written securely.`); document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; }
+  } catch(err) { alert("Pipeline failure."); } finally { submitBtn.disabled = false; submitBtn.textContent = "Send for review"; }
 };
 
 initThemeMode();
