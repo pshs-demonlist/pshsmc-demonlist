@@ -17,11 +17,10 @@
     --danger: #662f36;
     
     /* Stats Viewer Color Tiers - Night Mode readability */
-    --tier-main: #ffffff;      /* Fully White for contrast */
-    --tier-extended: #aaaaaa;  /* Faded Gray */
-    --tier-legacy: #555555;    /* Deep muted legacy gray */
+    --tier-main: #ffffff;      
+    --tier-extended: #aaaaaa;  
+    --tier-legacy: #555555;    
     --sv-row-hover: rgba(255, 255, 255, 0.05);
-    --tab-inactive: #1a1f33;
   }
   
   /* Light Mode Structural Overrides */
@@ -35,12 +34,11 @@
     --good: #16a34a;
     --danger: #fee2e2;
     
-    /* Stats Viewer Color Tiers - Your exact specifications */
-    --tier-main: #000000;      /* Fully Black (1-75) */
-    --tier-extended: #777777;  /* Kinda Gray (76-150) */
-    --tier-legacy: #cccccc;    /* Kinda White (151+) */
+    /* Stats Viewer Color Tiers - Exact specifications */
+    --tier-main: #000000;      
+    --tier-extended: #777777;  
+    --tier-legacy: #cccccc;    
     --sv-row-hover: rgba(0, 0, 0, 0.04);
-    --tab-inactive: #e5e7eb;
   }
   
   * { box-sizing: border-box; }
@@ -118,32 +116,6 @@
     color: var(--accent);
   }
 
-  /* Page Tab Navigation Bar System */
-  .page-nav-tabs {
-    display: flex;
-    background: var(--panel);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 20px;
-  }
-  .page-tab {
-    flex: 1;
-    text-align: center;
-    padding: 15px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    background: var(--tab-inactive);
-    color: var(--muted);
-    border: none;
-    outline: none;
-    transition: 0.2s;
-  }
-  .page-tab.active {
-    background: var(--bg);
-    color: var(--text);
-    border-bottom: 3px solid var(--accent);
-  }
-
   /* Submission Modal Window Properties */
   .modal-overlay {
     position: fixed;
@@ -191,7 +163,7 @@
   .rules-list li { margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
 
   /* Universal Workspace Structural Elements */
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px 40px; }
+  .wrap { max-width: 1100px; margin: 24px auto; padding: 0 16px 40px; }
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
@@ -241,7 +213,8 @@
   
   /* Application Screen Containers */
   .app-page { display: none; }
-  .app-page.active-page { display: block; }
+  .app-page.active-page { display: block; animation: fadeIn 0.3s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   
   .back { color: var(--muted); cursor: pointer; margin-bottom: 12px; display: inline-block; font-weight: bold; }
   .back:hover { color: var(--text); }
@@ -347,6 +320,10 @@
   .cloud-main { color: var(--tier-main); font-weight: 800; }
   .cloud-extended { color: var(--tier-extended); font-weight: 700; }
   .cloud-legacy { color: var(--tier-legacy); font-weight: normal; }
+  
+  /* Record click state */
+  .demon-click { cursor: pointer; transition: 0.2s; display: inline-block; }
+  .demon-click:hover { text-decoration: underline; filter: brightness(1.2); }
 
   .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .section-header-flex h3 { margin: 0; }
@@ -371,6 +348,7 @@
     .thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
     .stats { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
+    .nav-menu { max-width: 100%; }
   }
 </style>
 </head>
@@ -386,15 +364,12 @@
 </header>
 
 <nav class="nav-menu" id="navMenu">
+  <span class="nav-item" onclick="switchPage('levels'); toggleNavMenu();">Levels Dashboard</span>
+  <span class="nav-item" onclick="switchPage('stats'); toggleNavMenu();">Stats Viewer</span>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
   <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
   <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
 </nav>
-
-<div class="page-nav-tabs">
-  <button class="page-tab active" id="tabMenuLevels" onclick="switchPage('levels')">Levels List Workspace</button>
-  <button class="page-tab" id="tabMenuStats" onclick="switchPage('stats')">Pointercrate Stats Viewer</button>
-</div>
 
 <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
   <div class="modal" onclick="event.stopPropagation()">
@@ -525,11 +500,17 @@
   </div>
 
   <div class="app-page" id="detailPage">
-    <div class="back" id="backBtn">← Back to main dashboard layout list</div>
+    <div class="back" id="backBtn" onclick="switchPage('levels')">← Back to main dashboard layout list</div>
     <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="app-page" id="playerVideoPage">
+    <div class="back" onclick="switchPage('stats')">← Back to Stats Viewer</div>
+    <h2 id="pvTitle" style="margin: 10px 0 16px 0;"></h2>
+    <div class="video" id="pvVideo"></div>
   </div>
 
 </div>
@@ -547,15 +528,9 @@ const existingLevelWrap = document.getElementById("existingLevelWrap");
 const submissionType = document.getElementById("submissionType");
 const newLevelFields = document.getElementById("newLevelFields");
 const submitBtn = document.getElementById("submitBtn");
-const backBtn = document.getElementById("backBtn");
 const leaderboardBody = document.getElementById("leaderboardBody");
 const navMenu = document.getElementById("navMenu");
 const guidelinesModal = document.getElementById("guidelinesModal");
-
-// Navigation View Frames
-const levelsPage = document.getElementById("levelsPage");
-const statsPage = document.getElementById("statsPage");
-const detailPage = document.getElementById("detailPage");
 
 const introCardWrapper = document.getElementById("introCardWrapper");
 const leaderboardSection = document.getElementById("leaderboardSection");
@@ -564,33 +539,25 @@ const svWrapper = document.getElementById("svWrapper");
 let globalListData = [];
 let currentFilterType = "demon";
 
-// Multi-Page Router Switcher Engine
+// Multi-Page Router
 function switchPage(targetPageId) {
-  // Reset visibility classes across containers
   document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
-  document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active'));
-
-  if (targetPageId === 'levels') {
-    levelsPage.classList.add('active-page');
-    document.getElementById('tabMenuLevels').classList.add('active');
-  } else if (targetPageId === 'stats') {
-    statsPage.classList.add('active-page');
-    document.getElementById('tabMenuStats').classList.add('active');
-  } else if (targetPageId === 'detail') {
-    detailPage.classList.add('active-page');
-  }
+  
+  if (targetPageId === 'levels') document.getElementById('levelsPage').classList.add('active-page');
+  else if (targetPageId === 'stats') document.getElementById('statsPage').classList.add('active-page');
+  else if (targetPageId === 'detail') document.getElementById('detailPage').classList.add('active-page');
+  else if (targetPageId === 'playerVideo') document.getElementById('playerVideoPage').classList.add('active-page');
 }
 
 function toggleThemeMode() {
   const isLight = document.body.classList.toggle("light-theme");
   const toggleItem = document.getElementById("themeToggleItem");
   toggleItem.textContent = isLight ? "Toggle Night Mode" : "Toggle Light Mode";
+  toggleNavMenu();
 }
 
 function initThemeMode() {
-  const toggleItem = document.getElementById("themeToggleItem");
-  // Default to Night Mode safely
-  toggleItem.textContent = "Toggle Light Mode";
+  document.getElementById("themeToggleItem").textContent = "Toggle Light Mode";
   document.body.classList.remove("light-theme");
 }
 
@@ -618,7 +585,6 @@ async function loadDemonData() {
       let detectedType = item.listType || item.listTType || "demon";
       detectedType = detectedType.toLowerCase().trim();
       detectedType = !detectedType.includes("challenge") ? "demon" : "challenge";
-
       return { ...item, listType: detectedType, rank: item.rank ? parseInt(item.rank) : 999 };
     });
 
@@ -654,7 +620,6 @@ function switchMainListTab(type) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
   if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
-  
   executeCombinedFilter();
 }
 
@@ -683,8 +648,12 @@ function parseParticipants(level) {
     if (!name) return;
     const isVerifier = name.toLowerCase() === verifierName.toLowerCase();
     const pct = v.percent !== undefined ? Number(v.percent) : 100;
+    
+    // Extract video link for the specific record
+    const vid = v.link || v.video || null;
+
     if (pct >= LIST_MIN_PERCENT) {
-      entries.push({ name: name, isVerifier: isVerifier, isVictor: !isVerifier, percent: pct });
+      entries.push({ name: name, isVerifier: isVerifier, isVictor: !isVerifier, percent: pct, video: vid });
     }
   });
   return entries;
@@ -715,7 +684,10 @@ function generateLeaderboard() {
       if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0, completions: [], hardest: null };
       
       scores[key].totalPoints += pts;
-      scores[key].completions.push({ name: level.name, rank: level.rank, percent: p.percent });
+      // Fallback to the main level verification video if player video is missing, standard for verifiers
+      const finalVideo = p.video || (p.isVerifier ? level.video : null);
+      
+      scores[key].completions.push({ name: level.name, rank: level.rank, percent: p.percent, video: finalVideo });
       
       if (!scores[key].hardest || level.rank < scores[key].hardest.rank) {
         scores[key].hardest = level;
@@ -739,6 +711,9 @@ function generateLeaderboard() {
     
     rowDiv.onclick = () => {
       showLeaderboardProfile(player, displayRank);
+      if (window.innerWidth <= 860) {
+        document.getElementById("svDetailPanel").scrollIntoView({ behavior: "smooth" });
+      }
     };
     
     rowDiv.innerHTML = `
@@ -794,7 +769,6 @@ function renderList(data) {
   });
 }
 
-// Redirects across page components and opens stats smoothly
 function triggerPlayerProfile(name) {
   switchPage('stats'); 
   activateStatsViewer(); 
@@ -829,7 +803,13 @@ function showLeaderboardProfile(playerObj, rankIndex) {
       
       const separator = (index < sortedCompletions.length - 1) ? " - " : "";
       const label = d.percent < 100 ? `${d.name} (${d.percent}%)` : d.name;
-      return `<span class="${tierClass}">${label}</span>${separator}`;
+      
+      // Escape names safely for inline JS insertion
+      const safeVid = d.video ? `'${d.video}'` : `null`;
+      const safeDemon = d.name.replace(/'/g, "\\'");
+      const safePlayer = playerObj.name.replace(/'/g, "\\'");
+
+      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}')">${label}</span>${separator}`;
     }).join("");
   }
 
@@ -868,6 +848,24 @@ function showLeaderboardProfile(playerObj, rankIndex) {
   `;
 }
 
+function playPlayerVideo(videoUrl, demonName, playerName) {
+  switchPage('playerVideo');
+  document.getElementById("pvTitle").textContent = `${playerName}'s record on ${demonName}`;
+  const videoWrap = document.getElementById("pvVideo");
+  
+  if (videoUrl && videoUrl !== 'null' && videoUrl !== 'undefined') {
+    let embedUrl = videoUrl;
+    if (videoUrl.includes('watch?v=')) {
+      embedUrl = videoUrl.replace('watch?v=', 'embed/');
+    } else if (videoUrl.includes('youtu.be/')) {
+      embedUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
+    }
+    videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+  } else {
+    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No specific video link recorded for this completion.</div>`;
+  }
+}
+
 filterSelectionDropdownOptions = () => {
   const selectedType = document.getElementById("listType").value;
   existingLevelSelect.innerHTML = "";
@@ -899,8 +897,15 @@ function showDetail(item) {
   document.getElementById("dInfo").textContent = `${item.diff || 'List Level'} — ID: ${item.id} — Max ${pointsMax} Points`;
   
   const videoWrap = document.getElementById("video");
-  if(item.video) videoWrap.innerHTML = `<iframe src="${item.video}" allowfullscreen></iframe>`;
-  else videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
+  if(item.video) {
+    let embedUrl = item.video;
+    if (item.video.includes('watch?v=')) embedUrl = item.video.replace('watch?v=', 'embed/');
+    else if (item.video.includes('youtu.be/')) embedUrl = item.video.replace('youtu.be/', 'youtube.com/embed/');
+    videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+  }
+  else {
+    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
+  }
   
   document.getElementById("stats").innerHTML = `
     <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
@@ -908,8 +913,6 @@ function showDetail(item) {
     <div class="stat"><h4>Total Records</h4><p>${participants.length}</p></div>
   `;
 }
-
-backBtn.onclick = () => { switchPage('levels'); };
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
