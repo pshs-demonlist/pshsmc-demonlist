@@ -8,14 +8,22 @@
   :root {
     --bg: #0b0d12; --panel: #111522; --line: #1e2438; --text: #e9eefc;
     --muted: #9aa3b2; --accent: #ff4b4b; --good: #36d399; --danger: #662f36;
-    --row-main-text: #e9eefc; --row-ext-text: #8a96a8; --row-legacy-text: #596475;
+    
+    /* Stats Viewer Color Tiers - Default Night Mode */
+    --sv-main: #ffffff;
+    --sv-extended: #9aa3b2;
+    --sv-legacy: #596475;
   }
   
-  /* Light Mode Color Schema Variable Overrides */
+  /* Light Mode Structural Overrides */
   body.light-theme {
     --bg: #f3f4f6; --panel: #ffffff; --line: #e5e7eb; --text: #1f2937;
     --muted: #6b7280; --accent: #dc2626; --good: #16a34a; --danger: #fee2e2;
-    --row-main-text: #111827; --row-ext-text: #6b7280; --row-legacy-text: #9ca3af;
+    
+    /* Stats Viewer Color Tiers - Exact Light Mode Spec */
+    --sv-main: #000000;
+    --sv-extended: #71717a;
+    --sv-legacy: #cbd5e1;
   }
   
   * { box-sizing: border-box; }
@@ -168,21 +176,15 @@
   .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
-  /* Row Style Structures and Class Variants for List Splitting */
   .row { display: flex; gap: 14px; padding: 14px; border-bottom: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: background 0.15s; }
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
-  
-  /* Text tier color routing classes */
-  .row-main-list .title { color: var(--row-main-text); font-weight: 800; }
-  .row-extended-list .title { color: var(--row-ext-text); font-weight: 700; }
-  .row-legacy-list .title { color: var(--row-legacy-text); font-weight: 600; }
   
   .rank { width: 60px; color: var(--accent); font-weight: 700; font-size: 18px; flex-shrink: 0; }
   .thumb { width: 160px; height: 90px; background: #222; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
   .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .info { flex: 1; min-width: 0; }
-  .title { font-size: 18px; }
+  .title { font-size: 18px; font-weight: 700; }
   .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
   .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
   .detail, .profile { display: none; }
@@ -203,6 +205,7 @@
   }
   .victor-link:hover { text-decoration: underline; }
   
+  /* Profile Stats Viewer Tier Styles Mapping */
   .profile-level-item {
     padding: 12px;
     background: var(--bg);
@@ -217,6 +220,12 @@
   }
   .profile-level-item:hover { background: var(--panel); border-color: var(--muted); }
   .profile-level-item.active-video { border-color: var(--accent); background: var(--panel); }
+  
+  /* Explicit Rank Tier Colors Inside Player Profile Level Lists */
+  .sv-tier-main strong { color: var(--sv-main); font-weight: 800; }
+  .sv-tier-extended strong { color: var(--sv-extended); font-weight: 700; }
+  .sv-tier-legacy strong { color: var(--sv-legacy); font-weight: 600; }
+
   .tag-verifier { font-size: 11px; color: #ffb703; margin-left: 4px; font-weight: bold; }
   .tag-percent { font-size: 11px; color: var(--muted); font-weight: normal; }
 
@@ -419,13 +428,9 @@
 <script>
 const LIST_MIN_PERCENT = 50;
 
-// URL 1: For writing submissions to Google Sheets (DO NOT CHANGE)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
-
-// URL 2: Clean, direct link to your raw repository data without cache busting
 const RAW_DATA_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
 
-// Explicit DOM element references
 const listContainer = document.getElementById("list");
 const searchInput = document.getElementById("search");
 const existingLevelSelect = document.getElementById("existingLevel");
@@ -443,9 +448,8 @@ const detailPage = document.getElementById("detailPage");
 const profilePage = document.getElementById("profilePage");
 
 let globalListData = [];
-let currentFilterType = "demon"; // Defaulted strictly to Demon List
+let currentFilterType = "demon";
 
-// Dynamic lookup mapping that connects text fields to official asset files
 const difficultyFaceMapping = {
   "easy demon": "https://gdladder.com/images/demon_logos/easy_128.webp",
   "medium demon": "https://gdladder.com/images/demon_logos/medium_128.webp",
@@ -459,7 +463,6 @@ const difficultyFaceMapping = {
   "extreme challenge": "https://gdladder.com/images/demon_logos/extreme_128.webp"
 };
 
-// Toggle Functionality between Night/Dark Mode and Default Light Mode setup
 function toggleThemeMode() {
   const isLight = document.body.classList.toggle("light-theme");
   const toggleItem = document.getElementById("themeToggleItem");
@@ -470,22 +473,15 @@ function toggleThemeMode() {
   }
 }
 
-// System initialization sets standard default state
 function initThemeMode() {
-  // Page renders default dark mode structure natively as baseline layout
   document.getElementById("themeToggleItem").textContent = "Toggle Light Mode";
 }
 
-// DATA FETCH ENGINE - 🟢 FIXED: Converted to direct fetch without localStorage caching mechanics
 async function fetchCachedOrFreshData() {
   try {
-    console.log("🔄 Syncing raw level array payload from GitHub directly...");
     const response = await fetch(RAW_DATA_URL);
-    
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const freshData = await response.json();
-
-    return freshData;
+    return await response.json();
   } catch (error) {
     console.error("❌ Transmission Pipeline failed to refresh raw schema:", error);
     throw error;
@@ -495,15 +491,10 @@ async function fetchCachedOrFreshData() {
 async function loadDemonData() {
   try {
     const data = await fetchCachedOrFreshData();
-    
     globalListData = data.map((item) => {
       let detectedType = item.listType || item.listTType || "demon";
       detectedType = detectedType.toLowerCase().trim();
-      if (!detectedType.includes("challenge")) {
-        detectedType = "demon";
-      } else {
-        detectedType = "challenge";
-      }
+      detectedType = !detectedType.includes("challenge") ? "demon" : "challenge";
 
       return {
         ...item,
@@ -566,7 +557,6 @@ function switchMainListTab(type) {
 
 function executeCombinedFilter() {
   const query = searchInput.value.toLowerCase().trim();
-  
   const filtered = globalListData
     .filter(item => {
       const matchesTab = item.listType === currentFilterType;
@@ -668,16 +658,7 @@ function renderList(data) {
 
   data.forEach(item => {
     const row = document.createElement("div");
-    
-    // Split layout styling color tiers dynamically via calculated ranking index paths
-    let listTierClass = "row-main-list";
-    if (item.rank > 75 && item.rank <= 150) {
-      listTierClass = "row-extended-list";
-    } else if (item.rank > 150) {
-      listTierClass = "row-legacy-list";
-    }
-    
-    row.className = `row ${listTierClass}`;
+    row.className = "row";
     row.onclick = (e) => { if (!e.target.classList.contains('victor-link')) showDetail(item); };
 
     const maximumPointsPossible = calculatePoints(item.rank, 100);
@@ -837,8 +818,16 @@ function showProfile(playerName, initialLevelId = null) {
 
     let runtimeVideoUrl = match.video || (match.isVerifier ? level.video : "");
 
+    // Identify color tier by rank inside the stats viewer
+    let tierClass = "sv-tier-main";
+    if (level.rank > 75 && level.rank <= 150) {
+      tierClass = "sv-tier-extended";
+    } else if (level.rank > 150) {
+      tierClass = "sv-tier-legacy";
+    }
+
     const div = document.createElement("div");
-    div.className = "profile-level-item";
+    div.className = `profile-level-item ${tierClass}`;
     div.innerHTML = `
       <div><strong>#${level.rank} - ${level.name}</strong> ${badgeHTML}<div class="muted">Created by ${level.creator}</div></div>
       <div style="color: var(--accent); font-weight: bold;">+${pts.toFixed(2)} pts</div>
