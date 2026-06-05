@@ -230,6 +230,20 @@
   .victor-link { color: var(--accent); text-decoration: none; cursor: pointer; font-weight: bold; }
   .victor-link:hover { text-decoration: underline; }
   
+  /* Pointercrate Styled Records Table Components */
+  .records-container { text-align: center; padding: 24px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; }
+  .records-container h3 { font-size: 26px; font-weight: bold; margin: 0 0 6px 0; color: var(--text); }
+  .records-sub { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.4; }
+  .records-table { width: 100%; border-collapse: collapse; margin-top: 10px; overflow: hidden; border-radius: 6px; }
+  .records-table th { background: var(--accent); color: #ffffff; padding: 12px 16px; font-weight: bold; font-size: 14px; text-align: left; }
+  .records-table td { padding: 12px 16px; font-size: 14px; text-align: left; border-bottom: 1px solid var(--line); color: var(--text); background: rgba(0, 0, 0, 0.02); }
+  body.light-theme .records-table td { background: #ffffff; }
+  .records-table tr:last-child td { border-bottom: none; }
+  .records-table th:nth-child(2), .records-table td:nth-child(2) { text-align: center; }
+  .records-table th:nth-child(3), .records-table td:nth-child(3) { text-align: right; }
+  .proof-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; }
+  .proof-btn:hover { text-decoration: underline; }
+
   /* --- POINTERCRATE STATS VIEWER UI PANELS --- */
   #introCard {
     text-align: center;
@@ -261,23 +275,8 @@
     min-height: 540px;
   }
   
-  .sv-list-panel {
-    max-height: 620px;
-    overflow-y: auto;
-    background: var(--panel);
-    border-right: 1px solid var(--line);
-  }
-  
-  .sv-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--line);
-    cursor: pointer;
-    transition: background 0.15s;
-    font-size: 14px;
-  }
+  .sv-list-panel { max-height: 620px; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); }
+  .sv-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); cursor: pointer; transition: background 0.15s; font-size: 14px; }
   .sv-row:last-child { border-bottom: none; }
   .sv-row:hover { background: var(--sv-row-hover); }
   .sv-row.active-player { background: rgba(11, 132, 203, 0.15); border-left: 4px solid var(--accent); padding-left: 12px; }
@@ -287,22 +286,8 @@
   .sv-name { font-weight: bold; color: var(--text); }
   .sv-points { font-style: italic; font-size: 12px; color: var(--muted); }
 
-  .sv-detail-panel {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
-    padding: 30px;
-    max-height: 620px;
-    overflow-y: auto;
-  }
-  
-  .start-prompt {
-    margin: 100px auto 0;
-    color: var(--muted);
-    font-size: 18px;
-    font-style: italic;
-    text-align: center;
-  }
+  .sv-detail-panel { display: flex; flex-direction: column; background: var(--bg); padding: 30px; max-height: 620px; overflow-y: auto; }
+  .start-prompt { margin: 100px auto 0; color: var(--muted); font-size: 18px; font-style: italic; text-align: center; }
 
   .profile-title-row { text-align: center; margin-bottom: 24px; }
   .profile-title-row h3 { font-size: 28px; margin: 0; font-weight: 700; }
@@ -454,7 +439,7 @@
         </div>
       </div>
 
-      <div class="topbar">
+      <div style="margin-top: 16px;">
         <button class="btn btn-primary" id="submitBtn">Send for review</button>
       </div>
     </div>
@@ -505,10 +490,13 @@
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
+    
+    <div class="records-container" id="dRecordsContainer">
+      </div>
   </div>
 
   <div class="app-page" id="playerVideoPage">
-    <div class="back" onclick="switchPage('stats')">← Back to Stats Viewer</div>
+    <div class="back" id="pvBackBtn" onclick="switchPage('stats')">← Back</div>
     <h2 id="pvTitle" style="margin: 10px 0 16px 0;"></h2>
     <div class="video" id="pvVideo"></div>
   </div>
@@ -517,6 +505,7 @@
 
 <script>
 const LIST_MIN_PERCENT = 50;
+let lastVideoViewContext = 'stats';
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
 const RAW_DATA_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
@@ -539,7 +528,6 @@ const svWrapper = document.getElementById("svWrapper");
 let globalListData = [];
 let currentFilterType = "demon";
 
-// Multi-Page Router
 function switchPage(targetPageId) {
   document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
   
@@ -551,8 +539,7 @@ function switchPage(targetPageId) {
 
 function toggleThemeMode() {
   const isLight = document.body.classList.toggle("light-theme");
-  const toggleItem = document.getElementById("themeToggleItem");
-  toggleItem.textContent = isLight ? "Toggle Night Mode" : "Toggle Light Mode";
+  document.getElementById("themeToggleItem").textContent = isLight ? "Toggle Night Mode" : "Toggle Light Mode";
   toggleNavMenu();
 }
 
@@ -648,8 +635,6 @@ function parseParticipants(level) {
     if (!name) return;
     const isVerifier = name.toLowerCase() === verifierName.toLowerCase();
     const pct = v.percent !== undefined ? Number(v.percent) : 100;
-    
-    // Extract video link for the specific record
     const vid = v.link || v.video || null;
 
     if (pct >= LIST_MIN_PERCENT) {
@@ -681,13 +666,17 @@ function generateLeaderboard() {
     parseParticipants(level).forEach(p => {
       const pts = parseFloat(calculatePoints(level.rank, p.percent));
       const key = p.name.toLowerCase();
-      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0, completions: [], hardest: null };
+      if (!scores[key]) scores[key] = { name: p.name, totalPoints: 0, completions: [], verifications: [], hardest: null };
       
-      scores[key].totalPoints += pts;
-      // Fallback to the main level verification video if player video is missing, standard for verifiers
       const finalVideo = p.video || (p.isVerifier ? level.video : null);
-      
-      scores[key].completions.push({ name: level.name, rank: level.rank, percent: p.percent, video: finalVideo });
+      const completionItem = { name: level.name, rank: level.rank, percent: p.percent, video: finalVideo };
+
+      if (p.isVerifier) {
+        scores[key].verifications.push(completionItem);
+      } else {
+        scores[key].totalPoints += pts;
+        scores[key].completions.push(completionItem);
+      }
       
       if (!scores[key].hardest || level.rank < scores[key].hardest.rank) {
         scores[key].hardest = level;
@@ -791,11 +780,11 @@ function showLeaderboardProfile(playerObj, rankIndex) {
   const sortedCompletions = playerObj.completions.sort((a, b) => a.rank - b.rank);
   let mainCount = 0; let extCount = 0; let legCount = 0;
   
-  let demonsHTML = "";
+  let completionsHTML = "";
   if (sortedCompletions.length === 0) {
-    demonsHTML = "<span style='color:var(--muted);'>None</span>";
+    completionsHTML = "<span style='color:var(--muted);'>None</span>";
   } else {
-    demonsHTML = sortedCompletions.map((d, index) => {
+    completionsHTML = sortedCompletions.map((d, index) => {
       let tierClass = "cloud-legacy"; 
       if (d.rank <= 75) { tierClass = "cloud-main"; mainCount++; } 
       else if (d.rank <= 150) { tierClass = "cloud-extended"; extCount++; }
@@ -804,13 +793,31 @@ function showLeaderboardProfile(playerObj, rankIndex) {
       const separator = (index < sortedCompletions.length - 1) ? " - " : "";
       const label = d.percent < 100 ? `${d.name} (${d.percent}%)` : d.name;
       
-      // Escape names safely for inline JS insertion
       const safeVid = d.video ? `'${d.video}'` : `null`;
       const safeDemon = d.name.replace(/'/g, "\\'");
       const safePlayer = playerObj.name.replace(/'/g, "\\'");
 
-      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}')">${label}</span>${separator}`;
+      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'stats')">${label}</span>${separator}`;
     }).join("");
+  }
+
+  // Generate Verified Section HTML 
+  let verificationsHTML = "";
+  if (playerObj.verifications && playerObj.verifications.length > 0) {
+    verificationsHTML = playerObj.verifications.map((d, index) => {
+      let tierClass = "cloud-legacy";
+      if (d.rank <= 75) tierClass = "cloud-main";
+      else if (d.rank <= 150) tierClass = "cloud-extended";
+
+      const separator = (index < playerObj.verifications.length - 1) ? " - " : "";
+      const safeVid = d.video ? `'${d.video}'` : `null`;
+      const safeDemon = d.name.replace(/'/g, "\\'");
+      const safePlayer = playerObj.name.replace(/'/g, "\\'");
+
+      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'stats')">${d.name}</span>${separator}`;
+    }).join("");
+  } else {
+    verificationsHTML = "<span style='color:var(--muted);'>None</span>";
   }
 
   const hardestName = playerObj.hardest ? playerObj.hardest.name : "None";
@@ -842,13 +849,21 @@ function showLeaderboardProfile(playerObj, rankIndex) {
 
       <div class="demons-section">
         <h4>Demons completed</h4>
-        <div class="demons-cloud">${demonsHTML}</div>
+        <div class="demons-cloud">${completionsHTML}</div>
+      </div>
+
+      <div class="demons-section" style="margin-top: 25px;">
+        <h4>Demons verified</h4>
+        <div class="demons-cloud">${verificationsHTML}</div>
       </div>
     </div>
   `;
 }
 
-function playPlayerVideo(videoUrl, demonName, playerName) {
+function playPlayerVideo(videoUrl, demonName, playerName, returnContext) {
+  lastVideoViewContext = returnContext || 'stats';
+  document.getElementById("pvBackBtn").setAttribute("onclick", `switchPage('${lastVideoViewContext}')`);
+
   switchPage('playerVideo');
   document.getElementById("pvTitle").textContent = `${playerName}'s record on ${demonName}`;
   const videoWrap = document.getElementById("pvVideo");
@@ -866,28 +881,6 @@ function playPlayerVideo(videoUrl, demonName, playerName) {
   }
 }
 
-filterSelectionDropdownOptions = () => {
-  const selectedType = document.getElementById("listType").value;
-  existingLevelSelect.innerHTML = "";
-  const filteredLevels = globalListData.filter(item => item.listType === selectedType).sort((a,b) => a.rank - b.rank);
-  filteredLevels.forEach(item => {
-    const opt = document.createElement("option");
-    opt.value = item.name; opt.dataset.id = item.id; opt.dataset.creator = item.creator;
-    opt.textContent = `${item.name} (${item.id})`;
-    existingLevelSelect.appendChild(opt);
-  });
-};
-
-document.getElementById("listType").onchange = filterSelectionDropdownOptions;
-submissionType.onchange = () => {
-  if (submissionType.value === "record") {
-    existingLevelWrap.style.display = "block"; newLevelFields.style.display = "none";
-  } else {
-    existingLevelWrap.style.display = "none"; newLevelFields.style.display = "block";
-  }
-};
-searchInput.oninput = () => { executeCombinedFilter(); };
-
 function showDetail(item) {
   switchPage('detail');
   const pointsMax = calculatePoints(item.rank, 100);
@@ -902,8 +895,7 @@ function showDetail(item) {
     if (item.video.includes('watch?v=')) embedUrl = item.video.replace('watch?v=', 'embed/');
     else if (item.video.includes('youtu.be/')) embedUrl = item.video.replace('youtu.be/', 'youtube.com/embed/');
     videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-  }
-  else {
+  } else {
     videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
   }
   
@@ -912,7 +904,80 @@ function showDetail(item) {
     <div class="stat"><h4>Level Verifier</h4><p>${item.verifier || 'Unknown'}</p></div>
     <div class="stat"><h4>Total Records</h4><p>${participants.length}</p></div>
   `;
+
+  // Dynamic Pointercrate Style Records Generation
+  const recordsContainer = document.getElementById("dRecordsContainer");
+  const totalRecordsCount = participants.length;
+  const standardCompletionsCount = participants.filter(p => p.percent === 100).length;
+
+  let tableRowsHTML = "";
+  if(participants.length === 0) {
+    tableRowsHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">No registered records qualify for this level yet.</td></tr>`;
+  } else {
+    tableRowsHTML = participants.map(p => {
+      const displayPercent = p.percent === 100 ? "100%" : `${p.percent}%`;
+      const finalVid = p.video || (p.isVerifier ? item.video : null);
+      
+      const safeVid = finalVid ? `'${finalVid}'` : `null`;
+      const safeDemon = item.name.replace(/'/g, "\\'");
+      const safePlayer = p.name.replace(/'/g, "\\'");
+
+      const proofHTML = finalVid 
+        ? `<span class="proof-btn" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'detail')">Watch Video</span>` 
+        : `<span style="color:var(--muted); font-style:italic;">No link</span>`;
+
+      return `
+        <tr>
+          <td><strong>${p.name}</strong> ${p.isVerifier ? '<span class="muted">(Verifier)</span>' : ''}</td>
+          <td><strong>${displayPercent}</strong></td>
+          <td>${proofHTML}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  recordsContainer.innerHTML = `
+    <h3>Records</h3>
+    <div class="records-sub">${LIST_MIN_PERCENT}% or better required to qualify</div>
+    <div class="records-sub" style="margin-top:-12px; font-weight:bold;">
+      ${totalRecordsCount} records registered, out of which ${standardCompletionsCount} is 100%
+    </div>
+    <table class="records-table">
+      <thead>
+        <tr>
+          <th>Record Holder</th>
+          <th>Progress</th>
+          <th>Video Proof</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tableRowsHTML}
+      </tbody>
+    </table>
+  `;
 }
+
+function filterSelectionDropdownOptions() {
+  const selectedType = document.getElementById("listType").value;
+  existingLevelSelect.innerHTML = "";
+  const filteredLevels = globalListData.filter(item => item.listType === selectedType).sort((a,b) => a.rank - b.rank);
+  filteredLevels.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.name; opt.dataset.id = item.id; opt.dataset.creator = item.creator;
+    opt.textContent = `${item.name} (${item.id})`;
+    existingLevelSelect.appendChild(opt);
+  });
+}
+
+document.getElementById("listType").onchange = filterSelectionDropdownOptions;
+submissionType.onchange = () => {
+  if (submissionType.value === "record") {
+    existingLevelWrap.style.display = "block"; newLevelFields.style.display = "none";
+  } else {
+    existingLevelWrap.style.display = "none"; newLevelFields.style.display = "block";
+  }
+};
+searchInput.oninput = () => { executeCombinedFilter(); };
 
 submitBtn.onclick = async () => {
   const type = submissionType.value;
@@ -933,7 +998,11 @@ submitBtn.onclick = async () => {
 
   try {
     const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
-    if((await res.json()).status === "ok") { alert(`Success! Data written securely.`); document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; }
+    if((await res.json()).status === "ok") { 
+      alert(`Success! Data written securely.`); 
+      document.getElementById("username").value = ""; 
+      document.getElementById("recordLink").value = ""; 
+    }
   } catch(err) { alert("Pipeline failure."); } finally { submitBtn.disabled = false; submitBtn.textContent = "Send for review"; }
 };
 
