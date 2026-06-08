@@ -532,7 +532,6 @@
       }
     } catch (err) {
       console.warn("Could not load database. Falling back to structured local mock simulation matrix package.");
-      // Standard structured fallback data package array matrix matching backend
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] }
@@ -615,6 +614,60 @@
     });
   }
 
+  /**
+   * 🧮 DYNAMIC MATHEMATICAL LIST POINTS ALGORITHM
+   * Translates list rankings straight into your exact standalone point requirements.
+   */
+  function calculateLevelPoints(rank) {
+    const r = parseInt(rank, 10);
+    if (isNaN(r) || r <= 0 || r > 150) return 0.00;
+
+    // Phase 1: Top 20 Premium Curve
+    const top20Points = {
+      1: 350.00, 2: 331.71, 3: 313.42, 4: 291.70, 5: 271.78,
+      6: 253.53, 7: 236.80, 8: 221.47, 9: 207.42, 10: 194.54,
+      11: 182.73, 12: 171.91, 13: 161.99, 14: 152.89, 15: 144.56,
+      16: 136.92, 17: 129.92, 18: 123.50, 19: 117.62, 20: 112.23
+    };
+    if (r <= 20) return top20Points[r];
+
+    // Phase 2: Ranks 21–75 Linear Decay Matrix
+    const midZonePoints = {
+      21: 110.81, 22: 109.39, 23: 107.99, 24: 106.61, 25: 105.24,
+      26: 103.88, 27: 102.54, 28: 101.21, 29: 99.89, 30: 98.58,
+      31: 97.29, 32: 96.01, 33: 94.75, 34: 93.49, 35: 92.25,
+      36: 89.95, 37: 87.73, 38: 85.58, 39: 83.51, 40: 81.51,
+      41: 79.58, 42: 77.72, 43: 75.92, 44: 74.19, 45: 72.52,
+      46: 70.90, 47: 69.34, 48: 67.83, 49: 66.38, 50: 64.98,
+      51: 63.62, 52: 62.31, 53: 61.05, 54: 59.83, 55: 58.66,
+      56: 57.60, 57: 56.47, 58: 55.37, 59: 54.30, 60: 53.26,
+      61: 52.25, 62: 51.26, 63: 50.30, 64: 49.37, 65: 48.46,
+      66: 47.57, 67: 46.71, 68: 45.87, 69: 45.06, 70: 44.26,
+      71: 43.49, 72: 42.74, 73: 42.01, 74: 41.30, 75: 40.60
+    };
+    if (r <= 75) return midZonePoints[r];
+
+    // Phase 3: Ranks 76–150 Extended List Decay
+    const extendedPoints = {
+      76: 39.93, 77: 39.27, 78: 38.63, 79: 38.01, 80: 37.41,
+      81: 36.82, 82: 36.24, 83: 35.69, 84: 35.14, 85: 34.61,
+      86: 34.10, 87: 33.60, 88: 33.11, 89: 32.64, 90: 32.18,
+      91: 31.73, 92: 31.29, 93: 30.87, 94: 30.45, 95: 30.05,
+      96: 29.66, 97: 29.28, 98: 28.91, 99: 28.55, 100: 28.19,
+      101: 27.85, 102: 27.52, 103: 27.19, 104: 26.88, 105: 26.57,
+      106: 26.27, 107: 25.98, 108: 25.70, 109: 25.42, 110: 25.16,
+      111: 24.90, 112: 24.64, 113: 24.39, 114: 24.15, 115: 23.92,
+      116: 23.69, 117: 23.47, 118: 23.26, 119: 23.05, 120: 22.84,
+      121: 22.64, 122: 22.45, 123: 22.26, 124: 22.08, 125: 21.90,
+      126: 21.73, 127: 21.56, 128: 21.39, 129: 21.23, 130: 21.08,
+      131: 20.92, 132: 20.78, 133: 20.63, 134: 20.49, 135: 20.36,
+      136: 20.23, 137: 20.10, 138: 19.97, 139: 19.85, 140: 19.73,
+      141: 19.62, 142: 19.50, 143: 19.39, 144: 19.29, 145: 19.18,
+      146: 19.08, 147: 18.99, 148: 18.89, 149: 18.80, 150: 18.71
+    };
+    return extendedPoints[r] || 0.00;
+  }
+
   // COMPONENT RENDERING ROUTINES
   function switchMainListTab(tab) {
     currentMainTab = tab;
@@ -644,6 +697,7 @@
     }
 
     filtered.forEach(lvl => {
+      const displayPoints = calculateLevelPoints(lvl.rank);
       const row = document.createElement('div');
       row.className = 'row';
       row.onclick = () => showLevelDetailPage(lvl);
@@ -653,7 +707,7 @@
         <div class="info">
           <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
           <div class="sub">Created by ${lvl.creator} | Verified by ${lvl.verifier}</div>
-          <div class="points">Points Metric Tier Value: ${lvl.rawTier}</div>
+          <div class="points">${displayPoints.toFixed(2)} Points</div>
           ${lvl.campus ? `<div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus}</div>` : ''}
         </div>
       `;
@@ -669,9 +723,10 @@
     const videoWrap = document.getElementById('video');
     videoWrap.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No validation footage loaded.</div>`;
     
+    const calculatedPoints = calculateLevelPoints(lvl.rank);
     document.getElementById('stats').innerHTML = `
       <div class="stat"><h4>Rank</h4><p>#${lvl.rank}</p></div>
-      <div class="stat"><h4>Raw Tier</h4><p>${lvl.rawTier}</p></div>
+      <div class="stat"><h4>List Points</h4><p>${calculatedPoints.toFixed(2)}</p></div>
       <div class="stat"><h4>Completions</h4><p>${lvl.victorList ? lvl.victorList.length : 0}</p></div>
     `;
 
@@ -723,7 +778,6 @@
     const leaderboardBody = document.getElementById('leaderboardBody');
     leaderboardBody.innerHTML = '';
     
-    // Aggregate structural values across profile matrices
     let playerMap = {};
     const filteredLevels = allLevels.filter(lvl => lvl.listType === currentStatsTab);
 
@@ -733,9 +787,9 @@
           if (!playerMap[v.name]) {
             playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: v.campus || 'Main Campus' };
           }
-          // Pointercrate calculation metric style matrix: harder ranks and tiers scale algorithmic weight scores
-          let calculatedPoints = lvl.rawTier * (1 + (200 - lvl.rank) / 100);
-          playerMap[v.name].points += parseFloat(calculatedPoints.toFixed(2));
+          // Pulls points from the updated threshold table directly
+          let calculatedPoints = calculateLevelPoints(lvl.rank);
+          playerMap[v.name].points += calculatedPoints;
           playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video });
         });
       }
@@ -759,7 +813,7 @@
           <span class="sv-rank">#${index + 1}</span>
           <span class="sv-name">${player.name}</span>
         </div>
-        <span class="sv-points">${player.points.toFixed(1)} Pts</span>
+        <span class="sv-points">${player.points.toFixed(2)} Pts</span>
       `;
       leaderboardBody.appendChild(row);
     });
@@ -773,7 +827,6 @@
     const profileContent = document.getElementById('profileContent');
     profileContent.style.display = 'block';
 
-    // Break up into Main, Extended, Legacy lists
     let mainList = [];
     let extendedList = [];
     let legacyList = [];
@@ -899,6 +952,5 @@
     }
   };
 </script>
-
 </body>
 </html>
