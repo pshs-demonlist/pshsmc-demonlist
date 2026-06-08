@@ -787,7 +787,6 @@
           if (!playerMap[v.name]) {
             playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: v.campus || 'Main Campus' };
           }
-          // Pulls points from the updated threshold table directly
           let calculatedPoints = calculateLevelPoints(lvl.rank);
           playerMap[v.name].points += calculatedPoints;
           playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video });
@@ -837,9 +836,21 @@
       else legacyList.push(c);
     });
 
+    // Scans master level file array for items officially verified by this user profile
+    let verifiedList = allLevels.filter(lvl => 
+      lvl.listType === currentStatsTab && 
+      lvl.verifier && 
+      lvl.verifier.toLowerCase() === player.name.toLowerCase()
+    );
+
     const buildCloudHTML = (list, className) => {
       if (list.length === 0) return '<span class="muted">None recorded</span>';
       return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})</span>`).join(', ');
+    };
+
+    const buildVerifiedCloudHTML = (list, className) => {
+      if (list.length === 0) return '<span class="muted">---</span>';
+      return list.map(lvl => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${lvl.name}', '${lvl.video}')">${lvl.name} (#${lvl.rank})</span>`).join(', ');
     };
 
     profileContent.innerHTML = `
@@ -858,6 +869,8 @@
         <div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
         <h4 style="margin-top:20px;">Legacy Records</h4>
         <div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
+        <h4 style="margin-top:20px;">${currentStatsTab === 'demon' ? 'Demons Verified' : 'Challenges Verified'}</h4>
+        <div class="demons-cloud">${buildVerifiedCloudHTML(verifiedList, 'cloud-main')}</div>
       </div>
     `;
   }
