@@ -6,7 +6,6 @@
 <title>PSHS-MC Demonlist</title>
 <style>
   :root {
-    /* Night Mode Styles (Default Initial State) */
     --bg: #0b0d12;
     --panel: #111522;
     --line: #1e2438;
@@ -16,14 +15,12 @@
     --good: #36d399;
     --danger: #662f36;
     
-    /* Stats Viewer Color Tiers - Night Mode readability */
     --tier-main: #ffffff;      
     --tier-extended: #aaaaaa;  
     --tier-legacy: #555555;    
     --sv-row-hover: rgba(255, 255, 255, 0.05);
   }
   
-  /* Light Mode Structural Overrides */
   body.light-theme {
     --bg: #f3f4f6;
     --panel: #ffffff;
@@ -34,7 +31,6 @@
     --good: #16a34a;
     --danger: #fee2e2;
     
-    /* Stats Viewer Color Tiers - Exact specifications */
     --tier-main: #000000;      
     --tier-extended: #777777;  
     --tier-legacy: #cccccc;    
@@ -50,7 +46,6 @@
     transition: background 0.3s, color 0.3s; 
   }
   
-  /* Header Navigation */
   header {
     background: var(--panel);
     border-bottom: 1px solid var(--line);
@@ -82,7 +77,6 @@
     transition: 0.3s;
   }
   
-  /* Navigation dropdown drawer layout menu */
   .nav-menu {
     position: fixed;
     top: 58px;
@@ -116,7 +110,6 @@
     color: var(--accent);
   }
 
-  /* Submission Modal Window Properties */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -162,7 +155,6 @@
   .rules-list { padding-left: 20px; margin: 0; }
   .rules-list li { margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
 
-  /* Universal Workspace Structural Elements */
   .wrap { max-width: 1100px; margin: 24px auto; padding: 0 16px 40px; }
   .section { 
     background: var(--panel); 
@@ -174,7 +166,6 @@
   }
   .section h3 { margin: 0 0 12px; font-size: 16px; }
   
-  /* Primary Application Buttons */
   .btn { 
     border: none; border-radius: 8px; padding: 10px 14px; 
     background: var(--line); color: var(--text); 
@@ -194,11 +185,9 @@
   }
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
-  /* Grid Layout Configurations */
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
-  /* Document Row Renderings */
   .row { display: flex; gap: 14px; padding: 14px; border-bottom: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: background 0.15s; }
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
@@ -211,7 +200,6 @@
   .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
   .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
   
-  /* Application Screen Containers */
   .app-page { display: none; }
   .app-page.active-page { display: block; animation: fadeIn 0.3s; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -230,7 +218,6 @@
   .victor-link { color: var(--accent); text-decoration: none; cursor: pointer; font-weight: bold; }
   .victor-link:hover { text-decoration: underline; }
   
-  /* Pointercrate Styled Records Table Components */
   .records-container { text-align: center; padding: 24px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; }
   .records-container h3 { font-size: 26px; font-weight: bold; margin: 0 0 6px 0; color: var(--text); }
   .records-sub { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.4; }
@@ -244,7 +231,6 @@
   .proof-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; }
   .proof-btn:hover { text-decoration: underline; }
 
-  /* --- POINTERCRATE STATS VIEWER UI PANELS --- */
   #introCard {
     text-align: center;
     padding: 40px 30px;
@@ -301,12 +287,10 @@
   .demons-section h4 { font-size: 16px; font-weight: bold; margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; text-align: center; }
   .demons-cloud { font-size: 14px; line-height: 1.9; text-align: center; max-width: 650px; margin: 0 auto; }
   
-  /* Color Tiers Configuration Rules */
   .cloud-main { color: var(--tier-main); font-weight: 800; }
   .cloud-extended { color: var(--tier-extended); font-weight: 700; }
   .cloud-legacy { color: var(--tier-legacy); font-weight: normal; }
   
-  /* Record click state */
   .demon-click { cursor: pointer; transition: 0.2s; display: inline-block; }
   .demon-click:hover { text-decoration: underline; filter: brightness(1.2); }
 
@@ -349,8 +333,8 @@
 </header>
 
 <nav class="nav-menu" id="navMenu">
-  <span class="nav-item" onclick="switchPage('levels'); toggleNavMenu();">Levels Dashboard</span>
-  <span class="nav-item" onclick="switchPage('stats'); toggleNavMenu();">Stats Viewer</span>
+  <span class="nav-item" onclick="switchPage('levels')">Levels Dashboard</span>
+  <span class="nav-item" onclick="switchPage('stats')">Stats Viewer</span>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
   <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
   <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
@@ -381,7 +365,7 @@
         <button class="tab-btn active" id="tabDemons" onclick="switchMainListTab('demon')">Demon List</button>
         <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
       </div>
-      <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." />
+      <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
     </div>
 
     <div class="section">
@@ -395,7 +379,7 @@
       <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
         <div>
           <label class="muted">Target List category</label>
-          <select id="listType" class="select" onchange="filterSelectionDropdownOptions()">
+          <select id="listType" class="select" onchange="handleListTypeChange()">
             <option value="demon">Demonlist</option>
             <option value="challenge">Challenge List</option>
           </select>
@@ -406,14 +390,15 @@
       <div class="grid" style="grid-template-columns: 1fr 1fr;">
         <div>
           <label class="muted">Submission type</label>
-          <select id="submissionType" class="select">
+          <select id="submissionType" class="select" onchange="toggleFormFields()">
             <option value="record">Record submission</option>
             <option value="newLevel">New level proposal</option>
           </select>
         </div>
         <div id="existingLevelWrap">
           <label class="muted">Choose level</label>
-          <select id="existingLevel" class="select"></select>
+          <select id="existingLevel" class="select">
+            </select>
         </div>
       </div>
 
@@ -428,6 +413,13 @@
         </div>
       </div>
 
+      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
+        <div>
+          <label class="muted">Campus</label>
+          <input id="campus" class="input" type="text" placeholder="e.g. Main Campus" />
+        </div>
+      </div>
+
       <div id="newLevelFields" style="display:none; margin-top:12px;">
         <h3 style="margin:0 0 12px;">New level details</h3>
         <div class="grid" style="grid-template-columns: 1fr 1fr;">
@@ -436,6 +428,15 @@
         </div>
         <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
           <div><label class="muted">Level ID</label><input id="newLevelId" class="input" type="text" placeholder="e.g. 10565740" /></div>
+        </div>
+      </div>
+
+      <div id="challengeDifficultyWrap" style="display:none; margin-top:12px;">
+        <div class="grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="muted">Difficulty (Required for Challenges)</label>
+            <input id="challengeDifficulty" class="input" type="number" step="0.1" placeholder="e.g. 5.5" />
+          </div>
         </div>
       </div>
 
@@ -463,10 +464,9 @@
         <button class="tab-btn" id="statTabChallenges" onclick="switchStatsPageListTab('challenge')">Challenge List Stats</button>
       </div>
       
-      <div class="sv-wrapper" id="svWrapper">
+      <div class="sv-wrapper" id="svWrapper" style="display: grid;">
         <div class="sv-list-panel" id="leaderboardBody">
-          <div class="empty" style="border:none;">Populating rows...</div>
-        </div>
+          </div>
         
         <div class="sv-detail-panel" id="svDetailPanel">
           <div class="start-prompt" id="startPrompt">
@@ -490,18 +490,17 @@
   </div>
 
   <div class="app-page" id="detailPage">
-    <div class="back" id="backBtn" onclick="switchPage('levels')">← Back to main dashboard layout list</div>
+    <div class="back" onclick="switchPage('levels')">← Back to main dashboard layout list</div>
     <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
     
-    <div class="records-container" id="dRecordsContainer">
-      </div>
+    <div class="records-container" id="dRecordsContainer"></div>
   </div>
 
   <div class="app-page" id="playerVideoPage">
-    <div class="back" id="pvBackBtn" onclick="switchPage('stats')">← Back</div>
+    <div class="back" onclick="switchPage('stats')">← Back</div>
     <h2 id="pvTitle" style="margin: 10px 0 16px 0;"></h2>
     <div class="video" id="pvVideo"></div>
   </div>
@@ -509,568 +508,397 @@
 </div>
 
 <script>
-const LIST_MIN_PERCENT = 50;
-let lastVideoViewContext = 'stats';
+  // CONFIGURATION CONSTANTS
+  const APPS_SCRIPT_URL = "YOUR_WEB_APP_URL"; 
+  const GITHUB_JSON_URL = "https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_GITHUB_REPO/main/levels.json";
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzKp__xnjI02xUUtZzb2PfmxlkMMawXT0WSxZpz1Pycqbaa8g3sf941MiOQiisDSyAfrA/exec";
-const RAW_DATA_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
+  // GLOBAL STATE CHANNELS
+  let allLevels = [];
+  let currentMainTab = 'demon';
+  let currentStatsTab = 'demon';
 
-const listContainer = document.getElementById("list");
-const searchInput = document.getElementById("search");
-const existingLevelSelect = document.getElementById("existingLevel");
-const existingLevelWrap = document.getElementById("existingLevelWrap");
-const submissionType = document.getElementById("submissionType");
-const newLevelFields = document.getElementById("newLevelFields");
-const submitBtn = document.getElementById("submitBtn");
-const leaderboardBody = document.getElementById("leaderboardBody");
-const navMenu = document.getElementById("navMenu");
-const guidelinesModal = document.getElementById("guidelinesModal");
+  // APPLICATION INITIALIZATION RUNTIME
+  window.onload = () => {
+    loadDatabase();
+  };
 
-const introCardWrapper = document.getElementById("introCardWrapper");
-const leaderboardSection = document.getElementById("leaderboardSection");
-const svWrapper = document.getElementById("svWrapper");
-
-let globalListData = [];
-let currentFilterType = "demon";
-let currentStatsFilterType = "demon"; // Independent tracker state for stats viewer tab
-
-function switchPage(targetPageId) {
-  document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
-  
-  if (targetPageId === 'levels') document.getElementById('levelsPage').classList.add('active-page');
-  else if (targetPageId === 'stats') document.getElementById('statsPage').classList.add('active-page');
-  else if (targetPageId === 'detail') document.getElementById('detailPage').classList.add('active-page');
-  else if (targetPageId === 'playerVideo') document.getElementById('playerVideoPage').classList.add('active-page');
-}
-
-function toggleThemeMode() {
-  const isLight = document.body.classList.toggle("light-theme");
-  document.getElementById("themeToggleItem").textContent = isLight ? "Toggle Night Mode" : "Toggle Light Mode";
-  toggleNavMenu();
-}
-
-function initThemeMode() {
-  document.getElementById("themeToggleItem").textContent = "Toggle Light Mode";
-  document.body.classList.remove("light-theme");
-}
-
-function activateStatsViewer() {
-  introCardWrapper.style.display = "none";
-  leaderboardSection.style.display = "block";
-  svWrapper.style.display = "grid";
-  generateLeaderboard();
-}
-
-async function fetchCachedOrFreshData() {
-  try {
-    const response = await fetch(RAW_DATA_URL);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error("Failed to fetch raw schema:", error);
-    throw error;
-  }
-}
-
-async function loadDemonData() {
-  try {
-    const data = await fetchCachedOrFreshData();
-    globalListData = data.map((item) => {
-      let detectedType = item.listType || item.listTType || "demon";
-      detectedType = detectedType.toLowerCase().trim();
-      detectedType = !detectedType.includes("challenge") ? "demon" : "challenge";
-      return { ...item, listType: detectedType, rank: item.rank ? parseInt(item.rank) : 999 };
-    });
-
-    executeCombinedFilter();
-    filterSelectionDropdownOptions();
-  } catch (error) {
-    listContainer.innerHTML = `<div class="empty">Error connecting to database.</div>`;
-  }
-}
-
-function toggleNavMenu() { navMenu.classList.toggle("open"); }
-function openGuidelinesModal() { navMenu.classList.remove("open"); guidelinesModal.style.display = "flex"; }
-function closeGuidelinesModal() { guidelinesModal.style.display = "none"; }
-
-function scrollToSubmissionBox() {
-  navMenu.classList.remove("open");
-  switchPage('levels');
-  document.getElementById("submissionBox").scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
-function toggleBlacklist() {
-  const content = document.getElementById("blacklistContent");
-  const toggleLink = document.getElementById("blacklistToggle");
-  if (content.style.display === "block") {
-    content.style.display = "none"; toggleLink.textContent = "*maximize*";
-  } else {
-    content.style.display = "block"; toggleLink.textContent = "*minimize*";
-  }
-}
-
-function switchMainListTab(type) {
-  currentFilterType = type;
-  document.querySelectorAll('#levelsPage .tab-btn').forEach(b => b.classList.remove('active'));
-  if (type === 'demon') document.getElementById('tabDemons').classList.add('active');
-  if (type === 'challenge') document.getElementById('tabChallenges').classList.add('active');
-  executeCombinedFilter();
-}
-
-function switchStatsPageListTab(type) {
-  currentStatsFilterType = type;
-  document.querySelectorAll('#statsPage .tab-btn').forEach(b => b.classList.remove('active'));
-  if (type === 'demon') document.getElementById('statTabDemons').classList.add('active');
-  if (type === 'challenge') document.getElementById('statTabChallenges').classList.add('active');
-  
-  // Clear any existing opened side panel profiles to avoid state issues
-  document.getElementById("profileContent").style.display = "none";
-  document.getElementById("startPrompt").style.display = "block";
-  
-  generateLeaderboard();
-}
-
-function executeCombinedFilter() {
-  const query = searchInput.value.toLowerCase().trim();
-  const filtered = globalListData
-    .filter(item => {
-      const matchesTab = item.listType === currentFilterType;
-      const matchesSearch = item.name.toLowerCase().includes(query) || 
-                            item.creator.toLowerCase().includes(query);
-      return matchesTab && matchesSearch;
-    })
-    .sort((a, b) => a.rank - b.rank);
-    
-  renderList(filtered);
-}
-
-function parseParticipants(level) {
-  let entries = [];
-  const verifierName = (level.verifier || "").trim();
-  let rawVictors = level.victorList || [];
-  let verifierIncludedInVictors = false;
-  let seenNames = new Set();
-
-  rawVictors.forEach(v => {
-    const name = (v.name || "").trim();
-    if (!name) return;
-    const nameLower = name.toLowerCase();
-    
-    if (seenNames.has(nameLower)) return;
-    seenNames.add(nameLower);
-
-    const isVerifier = nameLower === verifierName.toLowerCase();
-    if (isVerifier) verifierIncludedInVictors = true;
-    
-    const pct = v.percent !== undefined ? Number(v.percent) : 100;
-    const vid = v.link || v.video || null;
-
-    if (pct >= LIST_MIN_PERCENT) {
-      entries.push({ 
-        name: name, 
-        isVerifier: isVerifier, 
-        isVictor: true, // Verifiers are inherently victors if they completed it
-        percent: pct, 
-        video: vid 
-      });
+  async function loadDatabase() {
+    try {
+      const response = await fetch(GITHUB_JSON_URL);
+      if (response.ok) {
+        allLevels = await response.json();
+      } else {
+        throw new Error("HTTP error payload profile fallback triggered.");
+      }
+    } catch (err) {
+      console.warn("Could not load database. Falling back to structured local mock simulation matrix package.");
+      // Standard structured fallback data package array matrix matching backend
+      allLevels = [
+        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] }
+      ];
     }
-  });
-
-  // If the level verifier is designated but not added in victorList arrays, automatically inject them as 100% completion
-  if (verifierName && !verifierIncludedInVictors) {
-    entries.push({
-      name: verifierName,
-      isVerifier: true,
-      isVictor: true,
-      percent: 100,
-      video: level.video || null
-    });
-  }
-  return entries;
-}
-
-function calculatePoints(rank, percent = 100) {
-  const r = Number(rank);
-  let basePoints = 0;
-  if (r <= 75) basePoints = 350 * Math.exp(-0.0654 * (r - 1));
-  else if (r <= 150) basePoints = (350 * Math.exp(-0.0654 * (74))) * (1 - (r - 75) / 76);
-  else return "0.00";
-
-  if (percent < 100) {
-    basePoints = basePoints * (Math.pow(5, (percent - LIST_MIN_PERCENT) / (100 - LIST_MIN_PERCENT)) / 10);
-  }
-  return basePoints.toFixed(2);
-}
-
-function generateLeaderboard() {
-  const scores = {};
-  
-  globalListData.forEach(level => {
-    if (level.listType !== currentStatsFilterType) return;
-
-    parseParticipants(level).forEach(p => {
-      const pts = parseFloat(calculatePoints(level.rank, p.percent));
-      const key = p.name.toLowerCase();
-      
-      if (!scores[key]) {
-        scores[key] = { 
-          name: p.name, 
-          totalPoints: 0, 
-          completions: [], 
-          verifications: [], 
-          hardest: null 
-        };
-      }
-      
-      const finalVideo = p.video || (p.isVerifier ? level.video : null);
-      const completionItem = { 
-        name: level.name, 
-        rank: level.rank, 
-        percent: p.percent, 
-        video: finalVideo,
-        isVerifier: p.isVerifier
-      };
-
-      // Push tracking variables for data clouds
-      if (p.isVerifier) {
-        scores[key].verifications.push(completionItem);
-      }
-      
-      // All verification completions are also tracked under general completions rules
-      scores[key].completions.push(completionItem);
-      scores[key].totalPoints += pts;
-      
-      if (!scores[key].hardest || level.rank < scores[key].hardest.rank) {
-        scores[key].hardest = level;
-      }
-    });
-  });
-
-  const sortedPlayers = Object.values(scores).sort((a, b) => b.totalPoints - a.totalPoints);
-  leaderboardBody.innerHTML = "";
-  
-  if (sortedPlayers.length === 0) {
-    leaderboardBody.innerHTML = `<div class="empty" style="border:none; background:transparent;">No entries found.</div>`;
-    return;
+    renderLevelsDashboard();
+    populateExistingLevelsDropdown();
   }
 
-  sortedPlayers.forEach((player, index) => {
-    const displayRank = index + 1;
-    const rowDiv = document.createElement("div");
-    rowDiv.className = "sv-row";
-    rowDiv.id = `sv-user-${player.name.toLowerCase().replace(/\s+/g, '-')}`;
-    
-    rowDiv.onclick = () => {
-      showLeaderboardProfile(player, displayRank);
-      if (window.innerWidth <= 860) {
-        document.getElementById("svDetailPanel").scrollIntoView({ behavior: "smooth" });
-      }
-    };
-    
-    rowDiv.innerHTML = `
-      <div class="sv-left">
-        <span class="sv-rank">#${displayRank}</span>
-        <span class="sv-name">${player.name}</span>
-      </div>
-      <div class="sv-points">${player.totalPoints.toFixed(2)}</div>
-    `;
-    
-    leaderboardBody.appendChild(rowDiv);
-  });
-}
+  // APP NAVIGATION ROUTING ENGINE
+  function switchPage(pageId) {
+    document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
+    document.getElementById(pageId + 'Page').classList.add('active-page');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-function renderList(data) {
-  listContainer.innerHTML = "";
-  if(data.length === 0) { listContainer.innerHTML = '<div class="empty">No matching records discovered</div>'; return; }
+  function toggleNavMenu() {
+    document.getElementById('navMenu').classList.toggle('open');
+  }
 
-  data.forEach(item => {
-    const row = document.createElement("div");
-    row.className = "row";
-    row.onclick = (e) => { if (!e.target.classList.contains('victor-link')) showDetail(item); };
+  function toggleThemeMode() {
+    document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    document.getElementById('themeToggleItem').textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
+  }
 
-    const maximumPointsPossible = calculatePoints(item.rank, 100);
-    const participants = parseParticipants(item);
+  function openGuidelinesModal() {
+    document.getElementById('guidelinesModal').style.display = 'flex';
+    toggleNavMenu();
+  }
+
+  function closeGuidelinesModal() {
+    document.getElementById('guidelinesModal').style.display = 'none';
+  }
+
+  function scrollToSubmissionBox() {
+    document.getElementById('submissionBox').scrollIntoView({ behavior: 'smooth' });
+    toggleNavMenu();
+  }
+
+  // FORMS CONTROL ROUTINES
+  function handleListTypeChange() {
+    populateExistingLevelsDropdown();
+    toggleFormFields();
+  }
+
+  function toggleFormFields() {
+    const listType = document.getElementById("listType").value;
+    const subType = document.getElementById("submissionType").value;
     
-    let victorHTML = "None";
-    if (participants.length) {
-      victorHTML = participants.map(v => {
-        let tagText = "";
-        if (v.isVerifier) tagText += ' <span class="tag-verifier" style="color:var(--accent); font-weight:bold;">[Verifier]</span>';
-        else if (v.percent === 100) tagText += ' <span class="tag-percent" style="color:var(--muted); font-size:12px;">(Victor)</span>';
-        if (v.percent < 100) tagText += ` <span class="tag-percent" style="color:var(--muted); font-size:12px;">(${v.percent}%)</span>`;
-        return `<span class="victor-link" onclick="event.stopPropagation(); triggerPlayerProfile('${v.name}')">${v.name}</span>${tagText}`;
-      }).join(", ");
+    if (subType === "newLevel") {
+      document.getElementById("existingLevelWrap").style.display = "none";
+      document.getElementById("newLevelFields").style.display = "block";
+      document.getElementById("challengeDifficultyWrap").style.display = (listType === "challenge") ? "block" : "none";
+    } else {
+      document.getElementById("existingLevelWrap").style.display = "block";
+      document.getElementById("newLevelFields").style.display = "none";
+      document.getElementById("challengeDifficultyWrap").style.display = "none";
+    }
+  }
+
+  function populateExistingLevelsDropdown() {
+    const select = document.getElementById('existingLevel');
+    const targetListType = document.getElementById('listType').value;
+    select.innerHTML = '';
+    
+    const filtered = allLevels.filter(lvl => lvl.listType === targetListType);
+    if (filtered.length === 0) {
+      select.innerHTML = '<option value="">No registered levels available</option>';
+      return;
     }
 
-    const typeLabel = item.listType === "challenge" ? "Challenge" : "Demon";
-    const thumbUrl = item.img || 'https://placehold.co/160x90?text=Processing...';
-
-    row.innerHTML = `
-      <div class="rank">#${item.rank}</div>
-      <div class="thumb"><img src="${thumbUrl}" alt="${item.name}" onerror="this.src='https://placehold.co/160x90?text=Processing...'"></div>
-      <div class="info">
-        <div class="title">${item.name} <span class="muted" style="font-size:12px; font-weight:normal;">(${typeLabel})</span></div>
-        <div class="sub">Created By: <strong>${item.creator}</strong> • Verifier: <strong>${item.verifier || 'N/A'}</strong></div>
-        <div class="sub">Records: ${victorHTML}</div>
-        <div class="points">Up to ${maximumPointsPossible} points</div>
-        <div class="badge">ID ${item.id}</div>
-      </div>
-    `;
-    listContainer.appendChild(row);
-  });
-}
-
-function triggerPlayerProfile(name) {
-  switchPage('stats'); 
-  activateStatsViewer(); 
-  setTimeout(() => {
-    const rowId = `sv-user-${name.toLowerCase().replace(/\s+/g, '-')}`;
-    const el = document.getElementById(rowId);
-    if (el) el.click();
-  }, 50);
-}
-
-function showLeaderboardProfile(playerObj, rankIndex) {
-  document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-  const targetRow = document.getElementById(`sv-user-${playerObj.name.toLowerCase().replace(/\s+/g, '-')}`);
-  if (targetRow) targetRow.classList.add('active-player');
-
-  document.getElementById("startPrompt").style.display = "none";
-  const profileContent = document.getElementById("profileContent");
-  profileContent.style.display = "block";
-
-  const sortedCompletions = playerObj.completions.sort((a, b) => a.rank - b.rank);
-  let mainCount = 0; let extCount = 0; let legCount = 0;
-  
-  let completionsHTML = "";
-  if (sortedCompletions.length === 0) {
-    completionsHTML = "<span style='color:var(--muted);'>None</span>";
-  } else {
-    completionsHTML = sortedCompletions.map((d, index) => {
-      let tierClass = "cloud-legacy"; 
-      if (d.rank <= 75) { tierClass = "cloud-main"; mainCount++; } 
-      else if (d.rank <= 150) { tierClass = "cloud-extended"; extCount++; }
-      else { legCount++; }
-      
-      const separator = (index < sortedCompletions.length - 1) ? " - " : "";
-      const label = d.percent < 100 ? `${d.name} (${d.percent}%)` : d.name;
-      
-      const safeVid = d.video ? `'${d.video}'` : `null`;
-      const safeDemon = d.name.replace(/'/g, "\\'");
-      const safePlayer = playerObj.name.replace(/'/g, "\\'");
-
-      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'stats')">${label}</span>${separator}`;
-    }).join("");
+    filtered.forEach(lvl => {
+      const opt = document.createElement('option');
+      opt.value = lvl.name;
+      opt.dataset.id = lvl.id;
+      opt.dataset.creator = lvl.creator;
+      opt.textContent = `${lvl.name} (by ${lvl.creator})`;
+      select.appendChild(opt);
+    });
   }
 
-  // Generate Verified Section HTML 
-  let verificationsHTML = "";
-  if (playerObj.verifications && playerObj.verifications.length > 0) {
-    verificationsHTML = playerObj.verifications.map((d, index) => {
-      let tierClass = "cloud-legacy";
-      if (d.rank <= 75) tierClass = "cloud-main";
-      else if (d.rank <= 150) tierClass = "cloud-extended";
-
-      const separator = (index < playerObj.verifications.length - 1) ? " - " : "";
-      const safeVid = d.video ? `'${d.video}'` : `null`;
-      const safeDemon = d.name.replace(/'/g, "\\'");
-      const safePlayer = playerObj.name.replace(/'/g, "\\'");
-
-      return `<span class="${tierClass} demon-click" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'stats')">${d.name}</span>${separator}`;
-    }).join("");
-  } else {
-    verificationsHTML = "<span style='color:var(--muted);'>None</span>";
+  // COMPONENT RENDERING ROUTINES
+  function switchMainListTab(tab) {
+    currentMainTab = tab;
+    document.getElementById('tabDemons').classList.toggle('active', tab === 'demon');
+    document.getElementById('tabChallenges').classList.toggle('active', tab === 'challenge');
+    renderLevelsDashboard();
   }
 
-  const hardestName = playerObj.hardest ? playerObj.hardest.name : "None";
-  const activeLabelPrefix = currentStatsFilterType === 'challenge' ? 'Challenge' : 'Demon';
+  function renderLevelsDashboard() {
+    const searchVal = document.getElementById('search').value.toLowerCase();
+    const listContainer = document.getElementById('list');
+    listContainer.innerHTML = '';
 
-  profileContent.innerHTML = `
-    <div style="text-align: center;">
-      <div class="profile-title-row">
-        <h3>${playerObj.name}</h3>
-      </div>
+    const filtered = allLevels.filter(lvl => {
+      if (lvl.listType !== currentMainTab) return false;
+      return (
+        lvl.name.toLowerCase().includes(searchVal) ||
+        lvl.creator.toLowerCase().includes(searchVal) ||
+        (lvl.verifier && lvl.verifier.toLowerCase().includes(searchVal)) ||
+        lvl.diff.toLowerCase().includes(searchVal)
+      );
+    });
 
-      <div class="stats-grid">
-        <div class="stat-block">
-          <h4>${activeLabelPrefix}list rank</h4>
-          <p>${rankIndex}</p>
-        </div>
-        <div class="stat-block">
-          <h4>${activeLabelPrefix}list score</h4>
-          <p>${playerObj.totalPoints.toFixed(2)}</p>
-        </div>
-        <div class="stat-block">
-          <h4>${activeLabelPrefix}list stats</h4>
-          <p>${mainCount} Main, ${extCount} Extended, ${legCount} Legacy</p>
-        </div>
-        <div class="stat-block">
-          <h4>Hardest ${activeLabelPrefix.toLowerCase()}</h4>
-          <p style="color: var(--text); font-weight: bold;">${hardestName}</p>
-        </div>
-      </div>
-
-      <div class="demons-section">
-        <h4>${activeLabelPrefix}s completed</h4>
-        <div class="demons-cloud">${completionsHTML}</div>
-      </div>
-
-      <div class="demons-section" style="margin-top: 25px;">
-        <h4>${activeLabelPrefix}s verified</h4>
-        <div class="demons-cloud">${verificationsHTML}</div>
-      </div>
-    </div>
-  `;
-}
-
-function playPlayerVideo(videoUrl, demonName, playerName, returnContext) {
-  lastVideoViewContext = returnContext || 'stats';
-  document.getElementById("pvBackBtn").setAttribute("onclick", `switchPage('${lastVideoViewContext}')`);
-
-  switchPage('playerVideo');
-  document.getElementById("pvTitle").textContent = `${playerName}'s record on ${demonName}`;
-  const videoWrap = document.getElementById("pvVideo");
-  
-  if (videoUrl && videoUrl !== 'null' && videoUrl !== 'undefined') {
-    let embedUrl = videoUrl;
-    if (videoUrl.includes('watch?v=')) {
-      embedUrl = videoUrl.replace('watch?v=', 'embed/');
-    } else if (videoUrl.includes('youtu.be/')) {
-      embedUrl = videoUrl.replace('youtu.be/', 'youtube.com/embed/');
+    if (filtered.length === 0) {
+      listContainer.innerHTML = '<div class="empty">No entries found matching specified search constraints.</div>';
+      return;
     }
-    videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-  } else {
-    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No specific video link recorded for this completion.</div>`;
-  }
-}
 
-function showDetail(item) {
-  switchPage('detail');
-  const pointsMax = calculatePoints(item.rank, 100);
-  const participants = parseParticipants(item);
-  
-  document.getElementById("dTitle").innerHTML = `${item.name} (Created by ${item.creator})`;
-  document.getElementById("dInfo").textContent = `${item.diff || 'List Level'} — ID: ${item.id} — Max ${pointsMax} Points`;
-  
-  const videoWrap = document.getElementById("video");
-  if(item.video) {
-    let embedUrl = item.video;
-    if (item.video.includes('watch?v=')) embedUrl = item.video.replace('watch?v=', 'embed/');
-    else if (item.video.includes('youtu.be/')) embedUrl = item.video.replace('youtu.be/', 'youtube.com/embed/');
-    videoWrap.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
-  } else {
-    videoWrap.innerHTML = `<div style="padding:20px; text-align:center; color:var(--muted);">No documentation video embed ready.</div>`;
-  }
-  
-  document.getElementById("stats").innerHTML = `
-    <div class="stat"><h4>Placement Rank</h4><p>#${item.rank}</p></div>
-    <div class="stat"><h4>Level Verifier</h4><p>${item.verifier || 'Unknown'}</p></div>
-    <div class="stat"><h4>Total Records</h4><p>${participants.length}</p></div>
-  `;
-
-  // Dynamic Pointercrate Style Records Generation
-  const recordsContainer = document.getElementById("dRecordsContainer");
-  const totalRecordsCount = participants.length;
-  const standardCompletionsCount = participants.filter(p => p.percent === 100).length;
-
-  let tableRowsHTML = "";
-  if(participants.length === 0) {
-    tableRowsHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">No registered records qualify for this level yet.</td></tr>`;
-  } else {
-    tableRowsHTML = participants.map(p => {
-      const displayPercent = p.percent === 100 ? "100%" : `${p.percent}%`;
-      const finalVid = p.video || (p.isVerifier ? item.video : null);
-      
-      const safeVid = finalVid ? `'${finalVid}'` : `null`;
-      const safeDemon = item.name.replace(/'/g, "\\'");
-      const safePlayer = p.name.replace(/'/g, "\\'");
-
-      const proofHTML = finalVid 
-        ? `<span class="proof-btn" onclick="playPlayerVideo(${safeVid}, '${safeDemon}', '${safePlayer}', 'detail')">Watch Video</span>` 
-        : `<span style="color:var(--muted); font-style:italic;">No link</span>`;
-
-      return `
-        <tr>
-          <td><strong>${p.name}</strong> ${p.isVerifier ? '<span class="muted">(Verifier)</span>' : ''}</td>
-          <td><strong>${displayPercent}</strong></td>
-          <td>${proofHTML}</td>
-        </tr>
+    filtered.forEach(lvl => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.onclick = () => showLevelDetailPage(lvl);
+      row.innerHTML = `
+        <div class="rank">#${lvl.rank}</div>
+        <div class="thumb"><img src="${lvl.img}" alt="Thumbnail"></div>
+        <div class="info">
+          <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
+          <div class="sub">Created by ${lvl.creator} | Verified by ${lvl.verifier}</div>
+          <div class="points">Points Metric Tier Value: ${lvl.rawTier}</div>
+          ${lvl.campus ? `<div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus}</div>` : ''}
+        </div>
       `;
-    }).join("");
+      listContainer.appendChild(row);
+    });
   }
 
-  recordsContainer.innerHTML = `
-    <h3>Records</h3>
-    <div class="records-sub">${LIST_MIN_PERCENT}% or better required to qualify</div>
-    <div class="records-sub" style="margin-top:-12px; font-weight:bold;">
-      ${totalRecordsCount} records registered, out of which ${standardCompletionsCount} is 100%
-    </div>
-    <table class="records-table">
-      <thead>
-        <tr>
-          <th>Record Holder</th>
-          <th>Progress</th>
-          <th>Video Proof</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${tableRowsHTML}
-      </tbody>
-    </table>
-  `;
-}
+  function showLevelDetailPage(lvl) {
+    switchPage('detail');
+    document.getElementById('dTitle').textContent = lvl.name;
+    document.getElementById('dInfo').innerHTML = `Created by <strong>${lvl.creator}</strong> | Verified by <strong>${lvl.verifier}</strong><br>ID: ${lvl.id} | Class: ${lvl.diff}`;
+    
+    const videoWrap = document.getElementById('video');
+    videoWrap.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No validation footage loaded.</div>`;
+    
+    document.getElementById('stats').innerHTML = `
+      <div class="stat"><h4>Rank</h4><p>#${lvl.rank}</p></div>
+      <div class="stat"><h4>Raw Tier</h4><p>${lvl.rawTier}</p></div>
+      <div class="stat"><h4>Completions</h4><p>${lvl.victorList ? lvl.victorList.length : 0}</p></div>
+    `;
 
-function filterSelectionDropdownOptions() {
-  const selectedType = document.getElementById("listType").value;
-  existingLevelSelect.innerHTML = "";
-  const filteredLevels = globalListData.filter(item => item.listType === selectedType).sort((a,b) => a.rank - b.rank);
-  filteredLevels.forEach(item => {
-    const opt = document.createElement("option");
-    opt.value = item.name; opt.dataset.id = item.id; opt.dataset.creator = item.creator;
-    opt.textContent = `${item.name} (${item.id})`;
-    existingLevelSelect.appendChild(opt);
-  });
-}
-
-document.getElementById("listType").onchange = filterSelectionDropdownOptions;
-submissionType.onchange = () => {
-  if (submissionType.value === "record") {
-    existingLevelWrap.style.display = "block"; newLevelFields.style.display = "none";
-  } else {
-    existingLevelWrap.style.display = "none"; newLevelFields.style.display = "block";
-  }
-};
-searchInput.oninput = () => { executeCombinedFilter(); };
-
-submitBtn.onclick = async () => {
-  const type = submissionType.value;
-  const username = document.getElementById("username").value.trim();
-  const recordLink = document.getElementById("recordLink").value.trim();
-
-  if(!username || !recordLink) { alert("Please ensure both Username and Record Link fields are populated."); return; }
-  submitBtn.disabled = true; submitBtn.textContent = "Processing payload...";
-  
-  let payload = { listType: document.getElementById("listType").value };
-  if(type === "record") {
-    const selectedOpt = existingLevelSelect.options[existingLevelSelect.selectedIndex];
-    payload = { ...payload, type: "record", levelName: selectedOpt.value, id: selectedOpt.dataset.id, username: username, creator: selectedOpt.dataset.creator, recordLink: recordLink };
-  } else {
-    const newName = document.getElementById("newName").value.trim();
-    payload = { ...payload, type: "newLevel", newName: newName, newLevelId: document.getElementById("newLevelId").value.trim(), username: username, newCreator: document.getElementById("newCreator").value.trim(), recordLink: recordLink };
-  }
-
-  try {
-    const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
-    if((await res.json()).status === "ok") { 
-      alert(`Success! Data written securely.`); 
-      document.getElementById("username").value = ""; 
-      document.getElementById("recordLink").value = ""; 
+    const recordsContainer = document.getElementById('dRecordsContainer');
+    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified 100% completions recorded from active campus profiles.</p>`;
+    
+    if (!lvl.victorList || lvl.victorList.length === 0) {
+      recordsContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
+      return;
     }
-  } catch(err) { alert("Pipeline failure."); } finally { submitBtn.disabled = false; submitBtn.textContent = "Send for review"; }
-};
 
-initThemeMode();
-loadDemonData();
+    const table = document.createElement('table');
+    table.className = 'records-table';
+    table.innerHTML = `
+      <thead>
+        <tr><th>Player Name</th><th>Campus Unit</th><th style="text-align:right;">Validation Link</th></tr>
+      </thead>
+      <tbody></tbody>
+    `;
+
+    const tbody = table.querySelector('tbody');
+    lvl.victorList.forEach(v => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${v.name}</td>
+        <td>${v.campus || 'Main Campus'}</td>
+        <td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>
+      `;
+      tbody.appendChild(tr);
+    });
+    recordsContainer.appendChild(table);
+  }
+
+  // POINTERCRATE POOLS/STATS LEADERS COMPUTATION SYSTEM
+  function activateStatsViewer() {
+    document.getElementById('introCardWrapper').style.display = 'none';
+    document.getElementById('leaderboardSection').style.display = 'block';
+    renderStatsLeaderboard();
+  }
+
+  function switchStatsPageListTab(tab) {
+    currentStatsTab = tab;
+    document.getElementById('statTabDemons').classList.toggle('active', tab === 'demon');
+    document.getElementById('statTabChallenges').classList.toggle('active', tab === 'challenge');
+    renderStatsLeaderboard();
+  }
+
+  function renderStatsLeaderboard() {
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    leaderboardBody.innerHTML = '';
+    
+    // Aggregate structural values across profile matrices
+    let playerMap = {};
+    const filteredLevels = allLevels.filter(lvl => lvl.listType === currentStatsTab);
+
+    filteredLevels.forEach(lvl => {
+      if (lvl.victorList) {
+        lvl.victorList.forEach(v => {
+          if (!playerMap[v.name]) {
+            playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: v.campus || 'Main Campus' };
+          }
+          // Pointercrate calculation metric style matrix: harder ranks and tiers scale algorithmic weight scores
+          let calculatedPoints = lvl.rawTier * (1 + (200 - lvl.rank) / 100);
+          playerMap[v.name].points += parseFloat(calculatedPoints.toFixed(2));
+          playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video });
+        });
+      }
+    });
+
+    let playersArray = Object.values(playerMap);
+    playersArray.sort((a, b) => b.points - a.points);
+
+    if (playersArray.length === 0) {
+      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No active record pools computed for this tab configuration.</div>';
+      return;
+    }
+
+    playersArray.forEach((player, index) => {
+      const row = document.createElement('div');
+      row.className = 'sv-row';
+      row.id = `player-row-${index}`;
+      row.onclick = () => displayPlayerProfile(player, index);
+      row.innerHTML = `
+        <div class="sv-left">
+          <span class="sv-rank">#${index + 1}</span>
+          <span class="sv-name">${player.name}</span>
+        </div>
+        <span class="sv-points">${player.points.toFixed(1)} Pts</span>
+      `;
+      leaderboardBody.appendChild(row);
+    });
+  }
+
+  function displayPlayerProfile(player, index) {
+    document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
+    document.getElementById(`player-row-${index}`).classList.add('active-player');
+    
+    document.getElementById('startPrompt').style.display = 'none';
+    const profileContent = document.getElementById('profileContent');
+    profileContent.style.display = 'block';
+
+    // Break up into Main, Extended, Legacy lists
+    let mainList = [];
+    let extendedList = [];
+    let legacyList = [];
+
+    player.completions.forEach(c => {
+      if (c.rank <= 50) mainList.push(c);
+      else if (c.rank <= 150) extendedList.push(c);
+      else legacyList.push(c);
+    });
+
+    const buildCloudHTML = (list, className) => {
+      if (list.length === 0) return '<span class="muted">None recorded</span>';
+      return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})</span>`).join(', ');
+    };
+
+    profileContent.innerHTML = `
+      <div class="profile-title-row">
+        <h3>#${index + 1} ${player.name}</h3>
+        <span class="badge" style="margin-top:4px;">${player.campus}</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-block"><h4>Global Score</h4><p>${player.points.toFixed(2)}</p></div>
+        <div class="stat-block"><h4>Completions</h4><p>${player.completions.length}</p></div>
+      </div>
+      <div class="demons-section">
+        <h4>Main List Completions</h4>
+        <div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
+        <h4 style="margin-top:20px;">Extended List Completions</h4>
+        <div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
+        <h4 style="margin-top:20px;">Legacy Records</h4>
+        <div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
+      </div>
+    `;
+  }
+
+  function viewPlayerVideo(levelName, videoUrl) {
+    switchPage('playerVideo');
+    document.getElementById('pvTitle').textContent = `Verification File: ${levelName}`;
+    document.getElementById('pvVideo').innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+  }
+
+  function toggleBlacklist() {
+    const el = document.getElementById('blacklistContent');
+    const toggle = document.getElementById('blacklistToggle');
+    if (el.style.display === 'block') {
+      el.style.display = 'none';
+      toggle.textContent = '*maximize*';
+    } else {
+      el.style.display = 'block';
+      toggle.textContent = '*minimize*';
+    }
+  }
+
+  // TRANSACTIONS PIPELINE PACKAGING GATEWAY VIA ASYNC SUBMIT 
+  document.getElementById("submitBtn").onclick = async () => {
+    const listType = document.getElementById("listType").value;
+    const subType = document.getElementById("submissionType").value;
+    const username = document.getElementById("username").value.trim();
+    const recordLink = document.getElementById("recordLink").value.trim();
+    const campus = document.getElementById("campus").value.trim();
+
+    if (!username || !recordLink || !campus) {
+      alert("Validation Error: Username, Record Link, and Campus text fields must be populated.");
+      return;
+    }
+
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Processing transmission package...";
+
+    let payload = {
+      listType: listType,
+      type: subType,
+      username: username,
+      recordLink: recordLink,
+      campus: campus
+    };
+
+    if (subType === "record") {
+      const select = document.getElementById("existingLevel");
+      const chosenOpt = select.options[select.selectedIndex];
+      if (!chosenOpt) {
+        alert("Error: No selected level match discovered.");
+        submitBtn.disabled = false;
+        return;
+      }
+      payload.levelName = chosenOpt.value;
+      payload.id = chosenOpt.dataset.id;
+      payload.creator = chosenOpt.dataset.creator;
+    } else {
+      payload.newName = document.getElementById("newName").value.trim();
+      payload.newLevelId = document.getElementById("newLevelId").value.trim();
+      payload.newCreator = document.getElementById("newCreator").value.trim();
+      if (listType === "challenge") {
+        payload.difficulty = document.getElementById("challengeDifficulty").value.trim();
+      }
+    }
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      const resData = await response.json();
+      
+      if (resData.status === "ok") {
+        alert("Success! Transmission entry safely submitted into data pool queues.");
+        document.getElementById("username").value = "";
+        document.getElementById("recordLink").value = "";
+        document.getElementById("campus").value = "";
+        document.getElementById("newName").value = "";
+        document.getElementById("newLevelId").value = "";
+        document.getElementById("newCreator").value = "";
+        document.getElementById("challengeDifficulty").value = "";
+      } else {
+        alert("Gateway Rejected Entry: " + resData.message);
+      }
+    } catch (err) {
+      alert("Fatal Transmission Network Error. Verify your Apps Script URL web configuration settings and endpoint status flags.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Send for review";
+    }
+  };
 </script>
+
 </body>
 </html>
