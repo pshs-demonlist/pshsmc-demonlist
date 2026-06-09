@@ -590,7 +590,9 @@
   }
 
   function toggleFormFields() {
-    const listType = document.getElementById("listType").value;
+    let listType = document.getElementById("listType").value;
+    if (listType === "platformer list") listType = "platformer"; // Normalization logic
+
     const subType = document.getElementById("submissionType").value;
     
     if (subType === "newLevel") {
@@ -606,7 +608,11 @@
 
   function populateExistingLevelsDropdown() {
     const select = document.getElementById('existingLevel');
-    const targetListType = document.getElementById('listType').value;
+    let targetListType = document.getElementById('listType').value;
+    
+    // Convert "platformer list" to "platformer" so the .filter matches your JSON database
+    if (targetListType === "platformer list") targetListType = "platformer";
+
     select.innerHTML = '';
     
     const filtered = allLevels.filter(lvl => lvl.listType === targetListType);
@@ -927,8 +933,13 @@
   }
 
   // TRANSACTIONS PIPELINE PACKAGING GATEWAY VIA ASYNC SUBMIT 
-  document.getElementById("submitBtn").onclick = async () => {
-    const listType = document.getElementById("listType").value;
+  // ADDED (e) AND e.preventDefault() SO THE BROWSER DOESN'T CANCEL YOUR FETCH
+  document.getElementById("submitBtn").onclick = async (e) => {
+    e.preventDefault(); 
+    
+    let listType = document.getElementById("listType").value;
+    if (listType === "platformer list") listType = "platformer"; // Normalization logic
+
     const subType = document.getElementById("submissionType").value;
     const username = document.getElementById("username").value.trim();
     const recordLink = document.getElementById("recordLink").value.trim();
@@ -944,8 +955,8 @@
     submitBtn.textContent = "Processing transmission package...";
 
     let payload = {
-      listType: listType, // "demon", "challenge", or "platformer"
-      type: subType,      // "record" or "newLevel"
+      listType: listType, 
+      type: subType,      
       username: username,
       recordLink: recordLink,
       campus: campus
@@ -954,9 +965,12 @@
     if (subType === "record") {
       const select = document.getElementById("existingLevel");
       const chosenOpt = select.options[select.selectedIndex];
-      if (!chosenOpt) {
-        alert("Error: No selected level match discovered.");
+      
+      // Safety check to ensure an actual ID exists before firing
+      if (!chosenOpt || !chosenOpt.dataset.id) {
+        alert("Error: No selected level match discovered. Make sure a level is selected.");
         submitBtn.disabled = false;
+        submitBtn.textContent = "Send for review";
         return;
       }
       payload.levelName = chosenOpt.value;
@@ -972,8 +986,12 @@
     }
 
     try {
+      // ADDED STRICT text/plain HEADERS TO PREVENT GOOGLE APPS SCRIPT CORS PREFLIGHT REJECTIONS
       const response = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
         body: JSON.stringify(payload)
       });
       const resData = await response.json();
@@ -983,15 +1001,16 @@
         document.getElementById("username").value = "";
         document.getElementById("recordLink").value = "";
         document.getElementById("campus").value = "";
-        document.getElementById("newName").value = "";
-        document.getElementById("newLevelId").value = "";
-        document.getElementById("newCreator").value = "";
-        document.getElementById("challengeDifficulty").value = "";
+        if (document.getElementById("newName")) document.getElementById("newName").value = "";
+        if (document.getElementById("newLevelId")) document.getElementById("newLevelId").value = "";
+        if (document.getElementById("newCreator")) document.getElementById("newCreator").value = "";
+        if (document.getElementById("challengeDifficulty")) document.getElementById("challengeDifficulty").value = "";
       } else {
         alert("Gateway Rejected Entry: " + resData.message);
       }
     } catch (err) {
       alert("Fatal Transmission Network Error. Verify your Apps Script URL web configuration settings and endpoint status flags.");
+      console.error(err);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Send for review";
