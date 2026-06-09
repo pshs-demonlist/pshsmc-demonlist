@@ -17,9 +17,8 @@ If you discover a security vulnerability, please do not open a public GitHub iss
 
 Instead, report the issue privately by contacting the project maintainers through one of the following methods:
 
-* GitHub private security advisory (if enabled)
+* GitHub private security advisory
 * Direct contact with a repository maintainer
-* Email (if a project email address is provided)
 
 When reporting a vulnerability, please include:
 
