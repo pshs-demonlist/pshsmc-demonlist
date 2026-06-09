@@ -253,7 +253,7 @@
     "id": "61079355",
     "img": "https://img.youtube.com/vi/5N0UqfDQ49c/maxresdefault.jpg",
     "listType": "demon",
-    "name": "acu",
+    "name": "Acu",
     "rank": 11,
     "rawTier": 24,
     "verifier": "voxigmd",
@@ -270,28 +270,6 @@
   {
     "aredlPlacement": null,
     "campus": "",
-    "creator": "ZioGDVN",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "id": "134645078",
-    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "amethyst",
-    "rank": 12,
-    "rawTier": 24,
-    "verifier": "daBlooKat121",
-    "victorList": [
-      {
-        "name": "daBlooKat121",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
     "creator": "SYNACTIVE GD",
     "diff": "Insane Demon",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
@@ -299,7 +277,7 @@
     "img": "https://i.ytimg.com/vi/ziHvsAriE3s/hqdefault.jpg",
     "listType": "demon",
     "name": "Denouement",
-    "rank": 13,
+    "rank": 12,
     "rawTier": 17,
     "verifier": "aldawg123",
     "victorList": [
@@ -327,7 +305,7 @@
     "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
     "listType": "demon",
     "name": "Poltergeist",
-    "rank": 14,
+    "rank": 13,
     "rawTier": 16,
     "verifier": "sadboi202",
     "victorList": [
@@ -349,7 +327,7 @@
     "img": "https://img.youtube.com/vi/ZKT1_Mq7hD0/maxresdefault.jpg",
     "listType": "demon",
     "name": "Forest temple",
-    "rank": 15,
+    "rank": 14,
     "rawTier": 14,
     "verifier": "aldawg123",
     "victorList": [
@@ -371,7 +349,7 @@
     "img": "https://img.youtube.com/vi/Dl3X3v5qTcQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Future Funk",
-    "rank": 16,
+    "rank": 15,
     "rawTier": 13,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -393,7 +371,7 @@
     "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
     "listType": "demon",
     "name": "Octagon Force",
-    "rank": 17,
+    "rank": 16,
     "rawTier": 11,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -415,7 +393,7 @@
     "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "listType": "demon",
     "name": "Nine Circles",
-    "rank": 18,
+    "rank": 17,
     "rawTier": 11,
     "verifier": "sadboi202",
     "victorList": [
@@ -447,7 +425,7 @@
     "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
     "listType": "demon",
     "name": "Jawbreaker",
-    "rank": 19,
+    "rank": 18,
     "rawTier": 11,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -479,7 +457,7 @@
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "listType": "demon",
     "name": "tower descent",
-    "rank": 20,
+    "rank": 19,
     "rawTier": 10,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -501,7 +479,7 @@
     "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "listType": "demon",
     "name": "Troll Madness",
-    "rank": 21,
+    "rank": 20,
     "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -523,7 +501,7 @@
     "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Thermal Madness",
-    "rank": 22,
+    "rank": 21,
     "rawTier": 8,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -545,7 +523,7 @@
     "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
     "listType": "demon",
     "name": "Liberation",
-    "rank": 23,
+    "rank": 22,
     "rawTier": 7,
     "verifier": "LightBlu",
     "victorList": [
@@ -572,7 +550,7 @@
     "img": "https://img.youtube.com/vi/uGuo5RFF45g/mqdefault.jpg",
     "listType": "demon",
     "name": "Sakupen Egg",
-    "rank": 24,
+    "rank": 23,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -588,6 +566,28 @@
       }
     ],
     "video": "https://www.youtube.com/embed/19Ct5w32jMk"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "ZioGDVN",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "134645078",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "amethyst",
+    "rank": 24,
+    "rawTier": 7,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
   },
   {
     "aredlPlacement": null,
