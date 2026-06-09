@@ -304,7 +304,7 @@
   .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
   .blacklist-item:last-child { border-bottom: none; }
 
-  .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
   .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
@@ -364,6 +364,7 @@
       <div class="filter-tabs">
         <button class="tab-btn active" id="tabDemons" onclick="switchMainListTab('demon')">Demon List</button>
         <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
+        <button class="tab-btn" id="tabPlatformer" onclick="switchMainListTab('platformer')">Platformer List</button>
       </div>
       <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
     </div>
@@ -382,6 +383,7 @@
           <select id="listType" class="select" onchange="handleListTypeChange()">
             <option value="demon">Demonlist</option>
             <option value="challenge">Challenge List</option>
+            <option value="platformer">Platformer List</option>
           </select>
         </div>
         <div></div>
@@ -398,7 +400,7 @@
         <div id="existingLevelWrap">
           <label class="muted">Choose level</label>
           <select id="existingLevel" class="select">
-            </select>
+          </select>
         </div>
       </div>
 
@@ -462,18 +464,19 @@
       <div class="filter-tabs" style="margin-bottom: 20px;">
         <button class="tab-btn active" id="statTabDemons" onclick="switchStatsPageListTab('demon')">Demon List Stats</button>
         <button class="tab-btn" id="statTabChallenges" onclick="switchStatsPageListTab('challenge')">Challenge List Stats</button>
+        <button class="tab-btn" id="statTabPlatformer" onclick="switchStatsPageListTab('platformer')">Platformer List Stats</button>
       </div>
       
       <div class="sv-wrapper" id="svWrapper" style="display: grid;">
         <div class="sv-list-panel" id="leaderboardBody">
-          </div>
+        </div>
         
         <div class="sv-detail-panel" id="svDetailPanel">
           <div class="start-prompt" id="startPrompt">
             Click on a player's name on the left to get started!
           </div>
           <div id="profileContent" style="display: none;">
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -534,7 +537,8 @@
       console.warn("Could not load database. Falling back to structured local mock simulation matrix package.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] }
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] },
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Main Campus", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] }
       ];
     }
     renderLevelsDashboard();
@@ -616,7 +620,6 @@
 
   /**
    * 🧮 DYNAMIC MATHEMATICAL LIST POINTS ALGORITHM
-   * Translates list rankings straight into your exact standalone point requirements.
    */
   function calculateLevelPoints(rank) {
     const r = parseInt(rank, 10);
@@ -673,6 +676,7 @@
     currentMainTab = tab;
     document.getElementById('tabDemons').classList.toggle('active', tab === 'demon');
     document.getElementById('tabChallenges').classList.toggle('active', tab === 'challenge');
+    document.getElementById('tabPlatformer').classList.toggle('active', tab === 'platformer');
     renderLevelsDashboard();
   }
 
@@ -750,7 +754,6 @@
     const tbody = table.querySelector('tbody');
     lvl.victorList.forEach(v => {
       const tr = document.createElement('tr');
-      // Append percentage directly next to player name inside the level details record block
       const scorePct = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
       tr.innerHTML = `
         <td>${v.name} <strong>(${scorePct}%)</strong></td>
@@ -773,6 +776,7 @@
     currentStatsTab = tab;
     document.getElementById('statTabDemons').classList.toggle('active', tab === 'demon');
     document.getElementById('statTabChallenges').classList.toggle('active', tab === 'challenge');
+    document.getElementById('statTabPlatformer').classList.toggle('active', tab === 'platformer');
     renderStatsLeaderboard();
   }
 
@@ -795,7 +799,6 @@
           let minRequiredPercent = typeof lvl.listPercent !== 'undefined' ? parseFloat(lvl.listPercent) : 0;
           let earnedPoints = 0;
           
-          // Scaled points calculation formula matching requested criteria 
           if (playerPercent >= minRequiredPercent && playerPercent <= 100) {
             earnedPoints = maxPoints * (playerPercent / 100);
           }
@@ -813,7 +816,6 @@
 
     let playersArray = Object.values(playerMap);
     
-    // Smooth out floating point summation calculations to 2 decimal places
     playersArray.forEach(player => {
       player.points = Math.round(player.points * 100) / 100;
     });
@@ -878,6 +880,10 @@
       return list.map(lvl => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${lvl.name}', '${lvl.video}')">${lvl.name} (#${lvl.rank})</span>`).join(', ');
     };
 
+    let tabVerifiedLabel = 'Demons Verified';
+    if (currentStatsTab === 'challenge') tabVerifiedLabel = 'Challenges Verified';
+    if (currentStatsTab === 'platformer') tabVerifiedLabel = 'Platformers Verified';
+
     profileContent.innerHTML = `
       <div class="profile-title-row">
         <h3>#${index + 1} ${player.name}</h3>
@@ -894,7 +900,7 @@
         <div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
         <h4 style="margin-top:20px;">Legacy Records</h4>
         <div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
-        <h4 style="margin-top:20px;">${currentStatsTab === 'demon' ? 'Demons Verified' : 'Challenges Verified'}</h4>
+        <h4 style="margin-top:20px;">${tabVerifiedLabel}</h4>
         <div class="demons-cloud">${buildVerifiedCloudHTML(verifiedList, 'cloud-main')}</div>
       </div>
     `;
