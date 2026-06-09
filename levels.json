@@ -1,5 +1,28 @@
 [
   {
+    "aredlPlacement": 3,
+    "campus": "",
+    "creator": "ZioGDVN",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "134645078",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "amethyst",
+    "rank": 1,
+    "rawTier": 24,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+  },
+  {
+    "aredlPlacement": 776,
     "campus": "",
     "creator": "Riot",
     "diff": "Extreme Demon",
@@ -8,7 +31,7 @@
     "img": "https://img.youtube.com/vi/vBBZvXb0HrA/maxresdefault.jpg",
     "listType": "demon",
     "name": "Bloodbath",
-    "rank": 1,
+    "rank": 2,
     "rawTier": 24,
     "verifier": "sadboi202",
     "victorList": [
@@ -21,32 +44,18 @@
         "name": "(TAMAYO)",
         "percent": 100,
         "video": "https://www.youtube.com/embed/28YwyFHeQAM"
+      },
+      {
+        "campus": "Davao Region Campus",
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/w9GP5jTVSys&t=44s"
       }
     ],
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
-    "campus": "",
-    "creator": "GGboy",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "id": "3979721",
-    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
-    "listType": "demon",
-    "name": "Cataclysm",
-    "rank": 2,
-    "rawTier": 21,
-    "verifier": "sadboi202",
-    "victorList": [
-      {
-        "name": "sadboi202",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/8x0gpGutHUE"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/8x0gpGutHUE"
-  },
-  {
+    "aredlPlacement": 1258,
     "campus": "Central Luzon Campus",
     "creator": "nikroplays",
     "diff": "Extreme Demon",
@@ -69,6 +78,29 @@
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0"
   },
   {
+    "aredlPlacement": 1378,
+    "campus": "",
+    "creator": "GGboy",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "3979721",
+    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
+    "listType": "demon",
+    "name": "Cataclysm",
+    "rank": 4,
+    "rawTier": 21,
+    "verifier": "sadboi202",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/8x0gpGutHUE"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/8x0gpGutHUE"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SYNACTIVE GD",
     "diff": "Insane Demon",
@@ -77,7 +109,7 @@
     "img": "https://i.ytimg.com/vi/ziHvsAriE3s/hqdefault.jpg",
     "listType": "demon",
     "name": "Denouement",
-    "rank": 4,
+    "rank": 5,
     "rawTier": 17,
     "verifier": "aldawg123",
     "victorList": [
@@ -96,6 +128,7 @@
     "video": "https://www.youtube.com/embed/jESMjFcXTv8"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "AndromedaGMD",
     "diff": "Insane Demon",
@@ -104,7 +137,7 @@
     "img": "https://preview.redd.it/rate-my-thumbnail-no-i-didnt-beat-poltergeist-v0-rn7l6xqluupc1.png?width=1280&format=png&auto=webp&s=c610c6b66f1bb0d37d4e147448698fe9b88d8a80",
     "listType": "demon",
     "name": "Poltergeist",
-    "rank": 5,
+    "rank": 6,
     "rawTier": 16,
     "verifier": "sadboi202",
     "victorList": [
@@ -117,6 +150,7 @@
     "video": "https://www.youtube.com/embed/N05ijX3vz9U"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Michigun",
     "diff": "Hard Demon",
@@ -125,7 +159,7 @@
     "img": "https://img.youtube.com/vi/ZKT1_Mq7hD0/maxresdefault.jpg",
     "listType": "demon",
     "name": "Forest temple",
-    "rank": 6,
+    "rank": 7,
     "rawTier": 14,
     "verifier": "aldawg123",
     "victorList": [
@@ -138,6 +172,7 @@
     "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "JonathanGD",
     "diff": "Hard Demon",
@@ -146,7 +181,7 @@
     "img": "https://img.youtube.com/vi/Dl3X3v5qTcQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Future Funk",
-    "rank": 7,
+    "rank": 8,
     "rawTier": 13,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -159,6 +194,7 @@
     "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "JamAttack",
     "diff": "Hard Demon",
@@ -167,7 +203,7 @@
     "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
     "listType": "demon",
     "name": "Octagon Force",
-    "rank": 8,
+    "rank": 9,
     "rawTier": 11,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -180,6 +216,7 @@
     "video": "https://www.youtube.com/embed/LhsUg_yadx4"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Zobros",
     "diff": "Hard Demon",
@@ -188,7 +225,7 @@
     "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "listType": "demon",
     "name": "Nine Circles",
-    "rank": 9,
+    "rank": 10,
     "rawTier": 11,
     "verifier": "sadboi202",
     "victorList": [
@@ -211,6 +248,7 @@
     "video": "https://www.youtube.com/embed/DO36t7DV0ec"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "ZenthicAlpha",
     "diff": "Hard Demon",
@@ -219,7 +257,7 @@
     "img": "https://img.youtube.com/vi/oQl4WFWzwZY/maxresdefault.jpg",
     "listType": "demon",
     "name": "Jawbreaker",
-    "rank": 10,
+    "rank": 11,
     "rawTier": 11,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -242,6 +280,7 @@
     "video": "https://www.youtube.com/embed/o4-PvIWPAtI"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "pocke",
     "diff": "Hard Demon",
@@ -250,7 +289,7 @@
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "listType": "demon",
     "name": "tower descent",
-    "rank": 11,
+    "rank": 12,
     "rawTier": 10,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -263,6 +302,7 @@
     "video": "https://www.youtube.com/embed/bQ06DXrynYU"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "zyphur",
     "diff": "Hard Demon",
@@ -271,7 +311,7 @@
     "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "listType": "demon",
     "name": "Troll Madness",
-    "rank": 12,
+    "rank": 13,
     "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -284,6 +324,7 @@
     "video": "https://www.youtube.com/embed/xtmBMchY4q0"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "ManiacDan",
     "diff": "Hard Demon",
@@ -292,7 +333,7 @@
     "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Thermal Madness",
-    "rank": 13,
+    "rank": 14,
     "rawTier": 8,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -305,6 +346,7 @@
     "video": "https://www.youtube.com/embed/eSzjgWEREGQ"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Serponge",
     "diff": "Medium Demon",
@@ -313,7 +355,7 @@
     "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
     "listType": "demon",
     "name": "Liberation",
-    "rank": 14,
+    "rank": 15,
     "rawTier": 7,
     "verifier": "LightBlu",
     "victorList": [
@@ -331,6 +373,7 @@
     "video": "https://www.youtube.com/embed/H3OIQNZkIrE"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Sivlol",
     "diff": "Medium Demon",
@@ -339,7 +382,7 @@
     "img": "https://img.youtube.com/vi/uGuo5RFF45g/mqdefault.jpg",
     "listType": "demon",
     "name": "Sakupen Egg",
-    "rank": 15,
+    "rank": 16,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -357,27 +400,7 @@
     "video": "https://www.youtube.com/embed/19Ct5w32jMk"
   },
   {
-    "campus": "",
-    "creator": "ZioGDVN",
-    "diff": "Medium Demon",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "134645078",
-    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "amethyst",
-    "rank": 16,
-    "rawTier": 7,
-    "verifier": "daBlooKat121",
-    "victorList": [
-      {
-        "name": "daBlooKat121",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-  },
-  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "YoReid",
     "diff": "Medium Demon",
@@ -399,6 +422,7 @@
     "video": "https://www.youtube.com/embed/tbQsoqY_z6k"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "ZurkQyulox",
     "diff": "Medium Demon",
@@ -420,6 +444,7 @@
     "video": "https://www.youtube.com/embed/YCMxCxHwols"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "D4rkGryf",
     "diff": "Medium Demon",
@@ -446,6 +471,7 @@
     "video": "https://www.youtube.com/embed/gknJ-1zqIQc"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "motleyorc",
     "diff": "Medium Demon",
@@ -472,6 +498,7 @@
     "video": "https://www.youtube.com/embed/msYWaxlIazs"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "MaFFaKa",
     "diff": "Medium Demon",
@@ -493,6 +520,7 @@
     "video": "https://www.youtube.com/embed/XvxEkXLayHU"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "RobTop",
     "diff": "Easy Demon",
@@ -514,6 +542,7 @@
     "video": "https://www.youtube.com/embed/REl1vktm9gg"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "RobTop",
     "diff": "Easy Demon",
@@ -545,6 +574,7 @@
     "video": "https://www.youtube.com/embed/7RI0yNMjT2U"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "IIINePtunEIII",
     "diff": "Easy Demon",
@@ -566,6 +596,7 @@
     "video": "https://www.youtube.com/embed/S3TRN7ZYWOg"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "J4cKy",
     "diff": "Easy Demon",
@@ -593,6 +624,7 @@
     "video": "https://www.youtube.com/embed/KRNorjZLr9U"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Serponge",
     "diff": "Easy Demon",
@@ -614,6 +646,7 @@
     "video": "https://www.youtube.com/embed/5bbC7WIM1Kw"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "iIiRulasiIi",
     "diff": "Easy Demon",
@@ -646,6 +679,7 @@
     "video": "https://drive.google.com/file/d/1sIMUM1ic6CE9TfiS_y6XKhg_Ak9E7co9/view?usp=drivesdk"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Voxicat",
     "diff": "Easy Demon",
@@ -667,6 +701,7 @@
     "video": "https://www.youtube.com/embed/Uj9kiAlhytY"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SpKale",
     "diff": "Easy Demon",
@@ -693,6 +728,7 @@
     "video": "https://www.youtube.com/embed/0zzEc-ryz9s"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Jerry4",
     "diff": "Easy Demon",
@@ -729,6 +765,7 @@
     "video": "https://www.youtube.com/embed/WceyniFxqh4"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Timeless Real",
     "diff": "Easy Demon",
@@ -756,6 +793,7 @@
     "video": "https://www.youtube.com/embed/fLfIPFw39SA"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Cyclic/Nayloren/Nranger55226",
     "diff": "Insane Challenge",
@@ -777,6 +815,7 @@
     "video": "https://www.youtube.com/embed/Yje0t87RhfE"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Byokki",
     "diff": "Hard Challenge",
@@ -798,6 +837,7 @@
     "video": "https://www.youtube.com/embed/f-OP3ioNdpk"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
@@ -819,6 +859,7 @@
     "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Nick240",
     "diff": "Medium Challenge",
@@ -840,6 +881,7 @@
     "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
   },
   {
+    "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "wavical",
     "diff": "Medium Challenge",
@@ -862,6 +904,7 @@
     "video": "https://www.youtube.com/embed/8LArrvVaf9g"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "eelektrance",
     "diff": "Medium Challenge",
@@ -888,6 +931,7 @@
     "video": "https://www.youtube.com/embed/w5uRX0poI50"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
@@ -909,6 +953,7 @@
     "video": "https://www.youtube.com/embed/RClLJRtHjGY"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
@@ -930,6 +975,7 @@
     "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
@@ -951,6 +997,7 @@
     "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
   },
   {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "diff": "Easy Challenge",
