@@ -337,6 +337,7 @@
   <span class="nav-item" onclick="switchPage('stats')">Stats Viewer</span>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
   <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
+  <span class="nav-item" onclick="showPlatformerSatireNotice()" style="color: #ffaa00;">Platformer Submissions</span>
   <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
 </nav>
 
@@ -576,6 +577,12 @@
     toggleNavMenu();
   }
 
+  // PLATFORMER NOTICE TRIGGER
+  function showPlatformerSatireNotice() {
+    alert("Platformer Submissions are only accepted when it is on the gdplatformerlist.com, as there are no way to currently rank your platformer levels. *note this is satire*.");
+    toggleNavMenu();
+  }
+
   // FORMS CONTROL ROUTINES
   function handleListTypeChange() {
     populateExistingLevelsDropdown();
@@ -618,14 +625,11 @@
     });
   }
 
-  /**
-   * 🧮 DYNAMIC MATHEMATICAL LIST POINTS ALGORITHM
-   */
+  // DYNAMIC MATHEMATICAL LIST POINTS ALGORITHM
   function calculateLevelPoints(rank) {
     const r = parseInt(rank, 10);
     if (isNaN(r) || r <= 0 || r > 150) return 0.00;
 
-    // Phase 1: Top 20 Premium Curve
     const top20Points = {
       1: 350.00, 2: 331.71, 3: 313.42, 4: 291.70, 5: 271.78,
       6: 253.53, 7: 236.80, 8: 221.47, 9: 207.42, 10: 194.54,
@@ -634,7 +638,6 @@
     };
     if (r <= 20) return top20Points[r];
 
-    // Phase 2: Ranks 21–75 Linear Decay Matrix
     const midZonePoints = {
       21: 110.81, 22: 109.39, 23: 107.99, 24: 106.61, 25: 105.24,
       26: 103.88, 27: 102.54, 28: 101.21, 29: 99.89, 30: 98.58,
@@ -650,7 +653,6 @@
     };
     if (r <= 75) return midZonePoints[r];
 
-    // Phase 3: Ranks 76–150 Extended List Decay
     const extendedPoints = {
       76: 39.93, 77: 39.27, 78: 38.63, 79: 38.01, 80: 37.41,
       81: 36.82, 82: 36.24, 83: 35.69, 84: 35.14, 85: 34.61,
@@ -942,8 +944,8 @@
     submitBtn.textContent = "Processing transmission package...";
 
     let payload = {
-      listType: listType,
-      type: subType,
+      listType: listType, // "demon", "challenge", or "platformer"
+      type: subType,      // "record" or "newLevel"
       username: username,
       recordLink: recordLink,
       campus: campus
