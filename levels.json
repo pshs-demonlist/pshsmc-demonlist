@@ -1,28 +1,6 @@
 [
   {
-    "aredlPlacement": 3,
-    "campus": "",
-    "creator": "ZioGDVN",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "id": "134645078",
-    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "amethyst",
-    "rank": 1,
-    "rawTier": 24,
-    "verifier": "daBlooKat121",
-    "victorList": [
-      {
-        "name": "daBlooKat121",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
-  },
-  {
-    "aredlPlacement": 143,
+    "aredlPlacement": null,
     "campus": "Davao Region Campus",
     "creator": "Bianox",
     "diff": "Extreme Demon",
@@ -31,7 +9,7 @@
     "img": "https://img.youtube.com/vi/k0x_RwvjJNQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Zodiac",
-    "rank": 2,
+    "rank": 1,
     "rawTier": 34,
     "verifier": "AliceMargatr0id",
     "victorList": [
@@ -45,7 +23,7 @@
     "video": "https://www.youtube.com/embed/k0x_RwvjJNQ"
   },
   {
-    "aredlPlacement": 184,
+    "aredlPlacement": null,
     "campus": "Davao Region Campus",
     "creator": "Neigefeu",
     "diff": "Extreme Demon",
@@ -54,10 +32,16 @@
     "img": "https://img.youtube.com/vi/S8T7Xl-pBEk/maxresdefault.jpg",
     "listType": "demon",
     "name": "RUST",
-    "rank": 3,
+    "rank": 2,
     "rawTier": 33,
     "verifier": "AliceMargatr0id",
     "victorList": [
+      {
+        "campus": "Davao Region Campus",
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/S8T7Xl-pBEk"
+      },
       {
         "campus": "Davao Region Campus",
         "name": "AliceMargatr0id",
@@ -68,7 +52,7 @@
     "video": "https://www.youtube.com/embed/S8T7Xl-pBEk"
   },
   {
-    "aredlPlacement": 689,
+    "aredlPlacement": null,
     "campus": "Davao Region Campus",
     "creator": "Manix648",
     "diff": "Extreme Demon",
@@ -77,7 +61,7 @@
     "img": "https://img.youtube.com/vi/SWJ28ivLm0Y/maxresdefault.jpg",
     "listType": "demon",
     "name": "Blade of Justice",
-    "rank": 4,
+    "rank": 3,
     "rawTier": 25,
     "verifier": "voxigmd",
     "victorList": [
@@ -91,7 +75,29 @@
     "video": "https://www.youtube.com/embed/SWJ28ivLm0Y"
   },
   {
-    "aredlPlacement": 776,
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "ZioGDVN",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "134645078",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "amethyst",
+    "rank": 4,
+    "rawTier": 24,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Riot",
     "diff": "Extreme Demon",
@@ -130,7 +136,30 @@
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
-    "aredlPlacement": 1258,
+    "aredlPlacement": null,
+    "campus": "Davao Region Campus",
+    "creator": "neigefeu",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "61079355",
+    "img": "https://img.youtube.com/vi/5N0UqfDQ49c/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "acu",
+    "rank": 6,
+    "rawTier": 24,
+    "verifier": "voxigmd",
+    "victorList": [
+      {
+        "campus": "Davao Region Campus",
+        "name": "voxigmd",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/5N0UqfDQ49c"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/5N0UqfDQ49c"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "Central Luzon Campus",
     "creator": "nikroplays",
     "diff": "Extreme Demon",
@@ -139,7 +168,7 @@
     "img": "https://img.youtube.com/vi/lIYKaQ6tRn0/maxresdefault.jpg",
     "listType": "demon",
     "name": "Allegiance",
-    "rank": 6,
+    "rank": 7,
     "rawTier": 21,
     "verifier": "JapanGD",
     "victorList": [
@@ -153,7 +182,7 @@
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0"
   },
   {
-    "aredlPlacement": 1378,
+    "aredlPlacement": null,
     "campus": "",
     "creator": "GGboy",
     "diff": "Extreme Demon",
@@ -162,7 +191,7 @@
     "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "listType": "demon",
     "name": "Cataclysm",
-    "rank": 7,
+    "rank": 8,
     "rawTier": 21,
     "verifier": "sadboi202",
     "victorList": [
@@ -173,29 +202,6 @@
       }
     ],
     "video": "https://www.youtube.com/embed/8x0gpGutHUE"
-  },
-  {
-    "aredlPlacement": 1463,
-    "campus": "Davao Region Campus",
-    "creator": "neigefeu",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "id": "61079355",
-    "img": "https://img.youtube.com/vi/5N0UqfDQ49c/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "acu",
-    "rank": 8,
-    "rawTier": 24,
-    "verifier": "voxigmd",
-    "victorList": [
-      {
-        "campus": "Davao Region Campus",
-        "name": "voxigmd",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/5N0UqfDQ49c"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/5N0UqfDQ49c"
   },
   {
     "aredlPlacement": null,
