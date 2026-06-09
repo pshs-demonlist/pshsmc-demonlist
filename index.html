@@ -731,7 +731,7 @@
     `;
 
     const recordsContainer = document.getElementById('dRecordsContainer');
-    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified 100% completions recorded from active campus profiles.</p>`;
+    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions recorded from active campus profiles.</p>`;
     
     if (!lvl.victorList || lvl.victorList.length === 0) {
       recordsContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
@@ -750,8 +750,10 @@
     const tbody = table.querySelector('tbody');
     lvl.victorList.forEach(v => {
       const tr = document.createElement('tr');
+      // Append percentage directly next to player name inside the level details record block
+      const scorePct = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
       tr.innerHTML = `
-        <td>${v.name}</td>
+        <td>${v.name} <strong>(${scorePct}%)</strong></td>
         <td>${v.campus || 'Main Campus'}</td>
         <td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>
       `;
@@ -787,14 +789,35 @@
           if (!playerMap[v.name]) {
             playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: v.campus || 'Main Campus' };
           }
-          let calculatedPoints = calculateLevelPoints(lvl.rank);
-          playerMap[v.name].points += calculatedPoints;
-          playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video });
+          
+          let maxPoints = calculateLevelPoints(lvl.rank);
+          let playerPercent = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
+          let minRequiredPercent = typeof lvl.listPercent !== 'undefined' ? parseFloat(lvl.listPercent) : 0;
+          let earnedPoints = 0;
+          
+          // Scaled points calculation formula matching requested criteria 
+          if (playerPercent >= minRequiredPercent && playerPercent <= 100) {
+            earnedPoints = maxPoints * (playerPercent / 100);
+          }
+
+          playerMap[v.name].points += earnedPoints;
+          playerMap[v.name].completions.push({ 
+            name: lvl.name, 
+            rank: lvl.rank, 
+            video: v.video,
+            percent: playerPercent
+          });
         });
       }
     });
 
     let playersArray = Object.values(playerMap);
+    
+    // Smooth out floating point summation calculations to 2 decimal places
+    playersArray.forEach(player => {
+      player.points = Math.round(player.points * 100) / 100;
+    });
+
     playersArray.sort((a, b) => b.points - a.points);
 
     if (playersArray.length === 0) {
@@ -836,7 +859,6 @@
       else legacyList.push(c);
     });
 
-    // Scans master level file array for items officially verified by this user profile
     let verifiedList = allLevels.filter(lvl => 
       lvl.listType === currentStatsTab && 
       lvl.verifier && 
@@ -845,7 +867,10 @@
 
     const buildCloudHTML = (list, className) => {
       if (list.length === 0) return '<span class="muted">None recorded</span>';
-      return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})</span>`).join(', ');
+      return list.map(c => {
+        const pctTag = c.percent < 100 ? ` (${c.percent}%)` : '';
+        return `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})${pctTag}</span>`;
+      }).join(', ');
     };
 
     const buildVerifiedCloudHTML = (list, className) => {
