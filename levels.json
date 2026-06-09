@@ -92,6 +92,29 @@
     "video": "https://www.youtube.com/embed/kFyAg9u666o"
   },
   {
+    "aredlPlacement": 222,
+    "campus": "Davao Region Campus",
+    "creator": "Waterbound",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "id": "112351854",
+    "img": "https://img.youtube.com/vi/jmNfq4EqOh0/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Sank",
+    "rank": 5,
+    "rawTier": 21,
+    "verifier": "AliceMargatr0id",
+    "victorList": [
+      {
+        "campus": "Davao Region Campus",
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/jmNfq4EqOh0"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/jmNfq4EqOh0"
+  },
+  {
     "aredlPlacement": 344,
     "campus": "Davao Region Campus",
     "creator": "lSunix",
@@ -101,7 +124,7 @@
     "img": "https://img.youtube.com/vi/2PdD07iM3kU/maxresdefault.jpg",
     "listType": "demon",
     "name": "Sonic Wave",
-    "rank": 5,
+    "rank": 6,
     "rawTier": 30,
     "verifier": "AliceMargatr0id",
     "victorList": [
@@ -113,29 +136,6 @@
       }
     ],
     "video": "https://www.youtube.com/embed/2PdD07iM3kU"
-  },
-  {
-    "aredlPlacement": 477,
-    "campus": "Davao Region Campus",
-    "creator": "qalli",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "id": "111797205",
-    "img": "https://img.youtube.com/vi/mlrnLT4SUF4/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "find the answer",
-    "rank": 6,
-    "rawTier": 27,
-    "verifier": "AliceMargatr0id",
-    "victorList": [
-      {
-        "campus": "Davao Region Campus",
-        "name": "AliceMargatr0id",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/mlrnLT4SUF4"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/mlrnLT4SUF4"
   },
   {
     "aredlPlacement": 689,
