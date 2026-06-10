@@ -558,7 +558,6 @@
       ];
     }
     
-    // Auto-detect and populate dynamic campus dropdown configurations from dataset arrays
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
@@ -569,7 +568,6 @@
     let campusSet = new Set();
     
     allLevels.forEach(lvl => {
-      // Clean target properties and apply safe fallback assignments
       let lvlCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       campusSet.add(lvlCampus);
       
@@ -581,7 +579,6 @@
       }
     });
 
-    // Arrange elements neatly into an array
     let sortedCampuses = Array.from(campusSet).sort();
 
     const dFilter = document.getElementById("dashboardCampusFilter");
@@ -754,7 +751,23 @@
       if (lvl.listType !== currentMainTab) return false;
       
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      if (campusFilter !== "ALL" && levelCampus !== campusFilter) return false;
+      
+      // Inclusion check: level campus matches OR any victor matches the selected campus filter
+      let matchesCampus = false;
+      if (campusFilter === "ALL") {
+        matchesCampus = true;
+      } else {
+        if (levelCampus === campusFilter) {
+          matchesCampus = true;
+        } else if (lvl.victorList) {
+          matchesCampus = lvl.victorList.some(v => {
+            let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
+            return vCampus === campusFilter;
+          });
+        }
+      }
+
+      if (!matchesCampus) return false;
 
       return (
         lvl.name.toLowerCase().includes(searchVal) ||
@@ -764,7 +777,7 @@
       );
     });
 
-    // Step 2: Sort isolated arrays to form an actual distinct campus ranking order list
+    // Step 2: Keep global sorting layout sequence intact
     filtered.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
 
     if (filtered.length === 0) {
@@ -772,16 +785,15 @@
       return;
     }
 
-    filtered.forEach((lvl, idx) => {
-      // Dynamic placement index notation calculation if filtered by a specific campus
-      const dynamicRank = (campusFilter === "ALL") ? lvl.rank : (idx + 1);
-      const displayPoints = calculateLevelPoints(dynamicRank);
+    filtered.forEach(lvl => {
+      // The rank and points scale calculations remain fixed globally
+      const displayPoints = calculateLevelPoints(lvl.rank);
       
       const row = document.createElement('div');
       row.className = 'row';
-      row.onclick = () => showLevelDetailPage(lvl, dynamicRank);
+      row.onclick = () => showLevelDetailPage(lvl, lvl.rank);
       row.innerHTML = `
-        <div class="rank">#${dynamicRank}</div>
+        <div class="rank">#${lvl.rank}</div>
         <div class="thumb"><img src="${lvl.img}" alt="Thumbnail"></div>
         <div class="info">
           <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
@@ -841,7 +853,7 @@
     recordsContainer.appendChild(table);
   }
 
-  // LEADERS COMPUTATION SYSTEM WITH ADAPTIVE CAMPUS SUBSETS
+  // LEADERS COMPUTATION SYSTEM
   function activateStatsViewer() {
     document.getElementById('introCardWrapper').style.display = 'none';
     document.getElementById('leaderboardSection').style.display = 'block';
@@ -863,18 +875,26 @@
     
     let playerMap = {};
     
-    // Process local ranks matching active campus subset constraints
     let filteredLevels = allLevels.filter(lvl => {
       if (lvl.listType !== currentStatsTab) return false;
+      
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      if (campusFilter !== "ALL" && levelCampus !== campusFilter) return false;
-      return true;
+      
+      // Match if global setting or if either verification or victor profile belongs to filter criteria
+      if (campusFilter === "ALL") return true;
+      if (levelCampus === campusFilter) return true;
+      if (lvl.victorList) {
+        return lvl.victorList.some(v => {
+          let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
+          return vCampus === campusFilter;
+        });
+      }
+      return false;
     });
 
-    // Create a structured list position sorting template mapping array index offsets
     filteredLevels.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
 
-    filteredLevels.forEach((lvl, idx) => {
+    filteredLevels.forEach(lvl => {
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
           const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
@@ -884,8 +904,7 @@
             playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
           }
           
-          const dynamicRank = (campusFilter === "ALL") ? lvl.rank : (idx + 1);
-          let maxPoints = calculateLevelPoints(dynamicRank);
+          let maxPoints = calculateLevelPoints(lvl.rank);
           let playerPercent = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
           let minRequiredPercent = typeof lvl.listPercent !== 'undefined' ? parseFloat(lvl.listPercent) : 0;
           let earnedPoints = 0;
@@ -897,7 +916,7 @@
           playerMap[v.name].points += earnedPoints;
           playerMap[v.name].completions.push({ 
             name: lvl.name, 
-            rank: dynamicRank, 
+            rank: lvl.rank, 
             video: v.video,
             percent: playerPercent
           });
