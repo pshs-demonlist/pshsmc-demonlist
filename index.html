@@ -308,6 +308,9 @@
   .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
+  .filter-container-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 8px; }
+  @media (max-width: 640px) { .filter-container-grid { grid-template-columns: 1fr; } }
+
   @media (max-width:860px){
     .sv-wrapper { grid-template-columns: 1fr; }
     .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 260px; }
@@ -367,7 +370,14 @@
         <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
         <button class="tab-btn" id="tabPlatformer" onclick="switchMainListTab('platformer')">Platformer List</button>
       </div>
-      <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
+      <div class="filter-container-grid">
+        <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
+        <select id="dashboardCampusFilter" class="select" onchange="renderLevelsDashboard()">
+          <option value="ALL">All Campuses</option>
+          <option value="Main Campus">Main Campus</option>
+          <option value="Regional Campus">Regional Campus</option>
+        </select>
+      </div>
     </div>
 
     <div class="section">
@@ -462,10 +472,19 @@
     <div id="leaderboardSection" style="display: none;">
       <h2 style="margin: 0 0 10px 4px; font-size: 24px; font-weight: bold;">Stats Viewer Leaderboard</h2>
       
-      <div class="filter-tabs" style="margin-bottom: 20px;">
+      <div class="filter-tabs" style="margin-bottom: 12px;">
         <button class="tab-btn active" id="statTabDemons" onclick="switchStatsPageListTab('demon')">Demon List Stats</button>
         <button class="tab-btn" id="statTabChallenges" onclick="switchStatsPageListTab('challenge')">Challenge List Stats</button>
         <button class="tab-btn" id="statTabPlatformer" onclick="switchStatsPageListTab('platformer')">Platformer List Stats</button>
+      </div>
+
+      <div style="margin-bottom: 20px; max-width: 300px;">
+        <label class="muted" style="display: block; margin-bottom: 4px;">Filter Leaderboard by Campus</label>
+        <select id="statsCampusFilter" class="select" onchange="renderStatsLeaderboard()">
+          <option value="ALL">All Campuses</option>
+          <option value="Main Campus">Main Campus</option>
+          <option value="Regional Campus">Regional Campus</option>
+        </select>
       </div>
       
       <div class="sv-wrapper" id="svWrapper" style="display: grid;">
@@ -539,7 +558,7 @@
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Main Campus", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] }
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88" }] }
       ];
     }
     renderLevelsDashboard();
@@ -563,6 +582,12 @@
     document.getElementById('themeToggleItem').textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
   }
 
+  // PLATFORMER NOTICE TRIGGER
+  function showPlatformerSatireNotice() {
+    alert("Platformer Submissions are only accepted when it is on the gdplatformerlist.com, as there are no way to currently rank your platformer levels. *note this is satire*.");
+    toggleNavMenu();
+  }
+
   function openGuidelinesModal() {
     document.getElementById('guidelinesModal').style.display = 'flex';
     toggleNavMenu();
@@ -577,12 +602,6 @@
     toggleNavMenu();
   }
 
-  // PLATFORMER NOTICE TRIGGER
-  function showPlatformerSatireNotice() {
-    alert("Platformer Submissions are only accepted when it is on the gdplatformerlist.com, as there are no way to currently rank your platformer levels. *note this is satire*.");
-    toggleNavMenu();
-  }
-
   // FORMS CONTROL ROUTINES
   function handleListTypeChange() {
     populateExistingLevelsDropdown();
@@ -591,7 +610,7 @@
 
   function toggleFormFields() {
     let listType = document.getElementById("listType").value;
-    if (listType === "platformer list") listType = "platformer"; // Normalization logic
+    if (listType === "platformer list") listType = "platformer";
 
     const subType = document.getElementById("submissionType").value;
     
@@ -610,7 +629,6 @@
     const select = document.getElementById('existingLevel');
     let targetListType = document.getElementById('listType').value;
     
-    // Convert "platformer list" to "platformer" so the .filter matches your JSON database
     if (targetListType === "platformer list") targetListType = "platformer";
 
     select.innerHTML = '';
@@ -690,11 +708,17 @@
 
   function renderLevelsDashboard() {
     const searchVal = document.getElementById('search').value.toLowerCase();
+    const campusFilter = document.getElementById('dashboardCampusFilter').value;
     const listContainer = document.getElementById('list');
     listContainer.innerHTML = '';
 
     const filtered = allLevels.filter(lvl => {
       if (lvl.listType !== currentMainTab) return false;
+      
+      // Fallback unassigned level campus definitions to 'Main Campus'
+      const levelCampus = lvl.campus || "Main Campus";
+      if (campusFilter !== "ALL" && levelCampus !== campusFilter) return false;
+
       return (
         lvl.name.toLowerCase().includes(searchVal) ||
         lvl.creator.toLowerCase().includes(searchVal) ||
@@ -704,7 +728,7 @@
     });
 
     if (filtered.length === 0) {
-      listContainer.innerHTML = '<div class="empty">No entries found matching specified search constraints.</div>';
+      listContainer.innerHTML = '<div class="empty">No entries found matching specified search or campus constraints.</div>';
       return;
     }
 
@@ -720,7 +744,7 @@
           <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
           <div class="sub">Created by ${lvl.creator} | Verified by ${lvl.verifier}</div>
           <div class="points">${displayPoints.toFixed(2)} Points</div>
-          ${lvl.campus ? `<div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus}</div>` : ''}
+          <div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus || 'Main Campus'}</div>
         </div>
       `;
       listContainer.appendChild(row);
@@ -790,6 +814,7 @@
 
   function renderStatsLeaderboard() {
     const leaderboardBody = document.getElementById('leaderboardBody');
+    const campusFilter = document.getElementById('statsCampusFilter').value;
     leaderboardBody.innerHTML = '';
     
     let playerMap = {};
@@ -798,8 +823,13 @@
     filteredLevels.forEach(lvl => {
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
+          const playerCampus = v.campus || 'Main Campus';
+          
+          // Strict filtering of metric vectors based on selected campus dropdown configurations
+          if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
+
           if (!playerMap[v.name]) {
-            playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: v.campus || 'Main Campus' };
+            playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
           }
           
           let maxPoints = calculateLevelPoints(lvl.rank);
@@ -831,7 +861,9 @@
     playersArray.sort((a, b) => b.points - a.points);
 
     if (playersArray.length === 0) {
-      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No active record pools computed for this tab configuration.</div>';
+      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No active record pools computed for this campus filter.</div>';
+      document.getElementById('profileContent').style.display = 'none';
+      document.getElementById('startPrompt').style.display = 'block';
       return;
     }
 
@@ -853,7 +885,8 @@
 
   function displayPlayerProfile(player, index) {
     document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-    document.getElementById(`player-row-${index}`).classList.add('active-player');
+    const selectedRow = document.getElementById(`player-row-${index}`);
+    if (selectedRow) selectedRow.classList.add('active-player');
     
     document.getElementById('startPrompt').style.display = 'none';
     const profileContent = document.getElementById('profileContent');
@@ -933,12 +966,11 @@
   }
 
   // TRANSACTIONS PIPELINE PACKAGING GATEWAY VIA ASYNC SUBMIT 
-  // ADDED (e) AND e.preventDefault() SO THE BROWSER DOESN'T CANCEL YOUR FETCH
   document.getElementById("submitBtn").onclick = async (e) => {
     e.preventDefault(); 
     
     let listType = document.getElementById("listType").value;
-    if (listType === "platformer list") listType = "platformer"; // Normalization logic
+    if (listType === "platformer list") listType = "platformer";
 
     const subType = document.getElementById("submissionType").value;
     const username = document.getElementById("username").value.trim();
@@ -966,7 +998,6 @@
       const select = document.getElementById("existingLevel");
       const chosenOpt = select.options[select.selectedIndex];
       
-      // Safety check to ensure an actual ID exists before firing
       if (!chosenOpt || !chosenOpt.dataset.id) {
         alert("Error: No selected level match discovered. Make sure a level is selected.");
         submitBtn.disabled = false;
@@ -986,7 +1017,6 @@
     }
 
     try {
-      // ADDED STRICT text/plain HEADERS TO PREVENT GOOGLE APPS SCRIPT CORS PREFLIGHT REJECTIONS
       const response = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
         headers: {
