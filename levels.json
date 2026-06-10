@@ -1131,6 +1131,30 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "Jax",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "13519",
+    "img": "https://img.youtube.com/vi/_NevWh9u9W0/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "The Nightmare",
+    "platPosition": null,
+    "rank": 44,
+    "rawTier": 1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/_NevWh9u9W0"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/_NevWh9u9W0"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Cyclic/Nayloren/Nranger55226",
     "diff": "Insane Challenge",
