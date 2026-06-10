@@ -374,8 +374,6 @@
         <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
         <select id="dashboardCampusFilter" class="select" onchange="renderLevelsDashboard()">
           <option value="ALL">All Campuses</option>
-          <option value="Main Campus">Main Campus</option>
-          <option value="Regional Campus">Regional Campus</option>
         </select>
       </div>
     </div>
@@ -428,8 +426,8 @@
 
       <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
         <div>
-          <label class="muted">Campus</label>
-          <input id="campus" class="input" type="text" placeholder="e.g. Main Campus" />
+          <label class="muted">Campus Name</label>
+          <input id="campus" class="input" type="text" placeholder="e.g. Main Campus, Central Luzon Campus" />
         </div>
       </div>
 
@@ -482,8 +480,6 @@
         <label class="muted" style="display: block; margin-bottom: 4px;">Filter Leaderboard by Campus</label>
         <select id="statsCampusFilter" class="select" onchange="renderStatsLeaderboard()">
           <option value="ALL">All Campuses</option>
-          <option value="Main Campus">Main Campus</option>
-          <option value="Regional Campus">Regional Campus</option>
         </select>
       </div>
       
@@ -554,15 +550,57 @@
         throw new Error("HTTP error payload profile fallback triggered.");
       }
     } catch (err) {
-      console.warn("Could not load database. Falling back to structured local mock simulation matrix package.");
+      console.warn("Could not load database. Falling back to structured local mock package.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Main Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Regional Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88" }] }
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
       ];
     }
+    
+    // Auto-detect and populate dynamic campus dropdown configurations from dataset arrays
+    populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
+  }
+
+  // DYNAMIC FILTER EXTRACTION CONTROLLER
+  function populateCampusDropdownFilters() {
+    let campusSet = new Set();
+    
+    allLevels.forEach(lvl => {
+      // Clean target properties and apply safe fallback assignments
+      let lvlCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
+      campusSet.add(lvlCampus);
+      
+      if (lvl.victorList) {
+        lvl.victorList.forEach(v => {
+          let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
+          campusSet.add(vCampus);
+        });
+      }
+    });
+
+    // Arrange elements neatly into an array
+    let sortedCampuses = Array.from(campusSet).sort();
+
+    const dFilter = document.getElementById("dashboardCampusFilter");
+    const sFilter = document.getElementById("statsCampusFilter");
+
+    dFilter.innerHTML = '<option value="ALL">All Campuses</option>';
+    sFilter.innerHTML = '<option value="ALL">All Campuses</option>';
+
+    sortedCampuses.forEach(cName => {
+      let optD = document.createElement("option");
+      optD.value = cName;
+      optD.textContent = cName;
+      dFilter.appendChild(optD);
+
+      let optS = document.createElement("option");
+      optS.value = cName;
+      optS.textContent = cName;
+      sFilter.appendChild(optS);
+    });
   }
 
   // APP NAVIGATION ROUTING ENGINE
@@ -582,7 +620,6 @@
     document.getElementById('themeToggleItem').textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
   }
 
-  // PLATFORMER NOTICE TRIGGER
   function showPlatformerSatireNotice() {
     alert("Platformer Submissions are only accepted when it is on the gdplatformerlist.com, as there are no way to currently rank your platformer levels. *note this is satire*.");
     toggleNavMenu();
@@ -712,11 +749,11 @@
     const listContainer = document.getElementById('list');
     listContainer.innerHTML = '';
 
-    const filtered = allLevels.filter(lvl => {
+    // Step 1: Filter raw levels matching conditions
+    let filtered = allLevels.filter(lvl => {
       if (lvl.listType !== currentMainTab) return false;
       
-      // Fallback unassigned level campus definitions to 'Main Campus'
-      const levelCampus = lvl.campus || "Main Campus";
+      let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       if (campusFilter !== "ALL" && levelCampus !== campusFilter) return false;
 
       return (
@@ -727,18 +764,24 @@
       );
     });
 
+    // Step 2: Sort isolated arrays to form an actual distinct campus ranking order list
+    filtered.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
+
     if (filtered.length === 0) {
       listContainer.innerHTML = '<div class="empty">No entries found matching specified search or campus constraints.</div>';
       return;
     }
 
-    filtered.forEach(lvl => {
-      const displayPoints = calculateLevelPoints(lvl.rank);
+    filtered.forEach((lvl, idx) => {
+      // Dynamic placement index notation calculation if filtered by a specific campus
+      const dynamicRank = (campusFilter === "ALL") ? lvl.rank : (idx + 1);
+      const displayPoints = calculateLevelPoints(dynamicRank);
+      
       const row = document.createElement('div');
       row.className = 'row';
-      row.onclick = () => showLevelDetailPage(lvl);
+      row.onclick = () => showLevelDetailPage(lvl, dynamicRank);
       row.innerHTML = `
-        <div class="rank">#${lvl.rank}</div>
+        <div class="rank">#${dynamicRank}</div>
         <div class="thumb"><img src="${lvl.img}" alt="Thumbnail"></div>
         <div class="info">
           <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
@@ -751,17 +794,18 @@
     });
   }
 
-  function showLevelDetailPage(lvl) {
+  function showLevelDetailPage(lvl, functionalRank) {
     switchPage('detail');
+    const displayRank = functionalRank || lvl.rank;
     document.getElementById('dTitle').textContent = lvl.name;
     document.getElementById('dInfo').innerHTML = `Created by <strong>${lvl.creator}</strong> | Verified by <strong>${lvl.verifier}</strong><br>ID: ${lvl.id} | Class: ${lvl.diff}`;
     
     const videoWrap = document.getElementById('video');
     videoWrap.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No validation footage loaded.</div>`;
     
-    const calculatedPoints = calculateLevelPoints(lvl.rank);
+    const calculatedPoints = calculateLevelPoints(displayRank);
     document.getElementById('stats').innerHTML = `
-      <div class="stat"><h4>Rank</h4><p>#${lvl.rank}</p></div>
+      <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
       <div class="stat"><h4>List Points</h4><p>${calculatedPoints.toFixed(2)}</p></div>
       <div class="stat"><h4>Completions</h4><p>${lvl.victorList ? lvl.victorList.length : 0}</p></div>
     `;
@@ -797,7 +841,7 @@
     recordsContainer.appendChild(table);
   }
 
-  // POINTERCRATE POOLS/STATS LEADERS COMPUTATION SYSTEM
+  // LEADERS COMPUTATION SYSTEM WITH ADAPTIVE CAMPUS SUBSETS
   function activateStatsViewer() {
     document.getElementById('introCardWrapper').style.display = 'none';
     document.getElementById('leaderboardSection').style.display = 'block';
@@ -818,21 +862,30 @@
     leaderboardBody.innerHTML = '';
     
     let playerMap = {};
-    const filteredLevels = allLevels.filter(lvl => lvl.listType === currentStatsTab);
+    
+    // Process local ranks matching active campus subset constraints
+    let filteredLevels = allLevels.filter(lvl => {
+      if (lvl.listType !== currentStatsTab) return false;
+      let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
+      if (campusFilter !== "ALL" && levelCampus !== campusFilter) return false;
+      return true;
+    });
 
-    filteredLevels.forEach(lvl => {
+    // Create a structured list position sorting template mapping array index offsets
+    filteredLevels.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
+
+    filteredLevels.forEach((lvl, idx) => {
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
-          const playerCampus = v.campus || 'Main Campus';
-          
-          // Strict filtering of metric vectors based on selected campus dropdown configurations
+          const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
           if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
 
           if (!playerMap[v.name]) {
             playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
           }
           
-          let maxPoints = calculateLevelPoints(lvl.rank);
+          const dynamicRank = (campusFilter === "ALL") ? lvl.rank : (idx + 1);
+          let maxPoints = calculateLevelPoints(dynamicRank);
           let playerPercent = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
           let minRequiredPercent = typeof lvl.listPercent !== 'undefined' ? parseFloat(lvl.listPercent) : 0;
           let earnedPoints = 0;
@@ -844,7 +897,7 @@
           playerMap[v.name].points += earnedPoints;
           playerMap[v.name].completions.push({ 
             name: lvl.name, 
-            rank: lvl.rank, 
+            rank: dynamicRank, 
             video: v.video,
             percent: playerPercent
           });
@@ -853,7 +906,6 @@
     });
 
     let playersArray = Object.values(playerMap);
-    
     playersArray.forEach(player => {
       player.points = Math.round(player.points * 100) / 100;
     });
@@ -965,7 +1017,7 @@
     }
   }
 
-  // TRANSACTIONS PIPELINE PACKAGING GATEWAY VIA ASYNC SUBMIT 
+  // TRANSACTION SUBMISSION ENGINE Pipeline
   document.getElementById("submitBtn").onclick = async (e) => {
     e.preventDefault(); 
     
@@ -1039,7 +1091,7 @@
         alert("Gateway Rejected Entry: " + resData.message);
       }
     } catch (err) {
-      alert("Fatal Transmission Network Error. Verify your Apps Script URL web configuration settings and endpoint status flags.");
+      alert("Fatal Transmission Network Error. Verify your configuration settings.");
       console.error(err);
     } finally {
       submitBtn.disabled = false;
