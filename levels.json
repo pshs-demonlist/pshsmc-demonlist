@@ -1,6 +1,6 @@
 [
   {
-    "aredlPlacement": 105,
+    "aredlPlacement": 106,
     "campus": "Davao Region Campus",
     "creator": "Swib",
     "diff": "Extreme Demon",
@@ -24,7 +24,7 @@
     "video": "https://www.youtube.com/embed/L6mt9WoCbWI"
   },
   {
-    "aredlPlacement": 143,
+    "aredlPlacement": 144,
     "campus": "Davao Region Campus",
     "creator": "Bianox",
     "diff": "Extreme Demon",
@@ -48,7 +48,7 @@
     "video": "https://www.youtube.com/embed/k0x_RwvjJNQ"
   },
   {
-    "aredlPlacement": 184,
+    "aredlPlacement": 187,
     "campus": "Davao Region Campus",
     "creator": "Neigefeu",
     "diff": "Extreme Demon",
@@ -72,7 +72,7 @@
     "video": "https://www.youtube.com/embed/S8T7Xl-pBEk"
   },
   {
-    "aredlPlacement": 197,
+    "aredlPlacement": 200,
     "campus": "Davao Region Campus",
     "creator": "ItzKiba",
     "diff": "Extreme Demon",
@@ -96,7 +96,7 @@
     "video": "https://www.youtube.com/embed/kFyAg9u666o"
   },
   {
-    "aredlPlacement": 222,
+    "aredlPlacement": 225,
     "campus": "Davao Region Campus",
     "creator": "Waterbound",
     "diff": "Extreme Demon",
@@ -120,7 +120,7 @@
     "video": "https://www.youtube.com/embed/jmNfq4EqOh0"
   },
   {
-    "aredlPlacement": 344,
+    "aredlPlacement": 347,
     "campus": "Davao Region Campus",
     "creator": "lSunix",
     "diff": "Extreme Demon",
@@ -144,7 +144,7 @@
     "video": "https://www.youtube.com/embed/2PdD07iM3kU"
   },
   {
-    "aredlPlacement": 369,
+    "aredlPlacement": 372,
     "campus": "Davao Region Campus",
     "creator": "alkali",
     "diff": "Extreme Demon",
@@ -168,7 +168,7 @@
     "video": "https://www.youtube.com/embed/Har8lkc3VMU"
   },
   {
-    "aredlPlacement": 689,
+    "aredlPlacement": 692,
     "campus": "Davao Region Campus",
     "creator": "Manix648",
     "diff": "Extreme Demon",
@@ -192,7 +192,7 @@
     "video": "https://www.youtube.com/embed/SWJ28ivLm0Y"
   },
   {
-    "aredlPlacement": 767,
+    "aredlPlacement": 770,
     "campus": "Davao Region Campus",
     "creator": "lexycat",
     "diff": "Extreme Demon",
@@ -216,7 +216,7 @@
     "video": "https://www.youtube.com/embed/O0qVfqo1pPg"
   },
   {
-    "aredlPlacement": 776,
+    "aredlPlacement": 779,
     "campus": "",
     "creator": "Riot",
     "diff": "Extreme Demon",
@@ -256,7 +256,7 @@
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
-    "aredlPlacement": 1258,
+    "aredlPlacement": 1262,
     "campus": "Central Luzon Campus",
     "creator": "nikroplays",
     "diff": "Extreme Demon",
@@ -280,7 +280,7 @@
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0"
   },
   {
-    "aredlPlacement": 1378,
+    "aredlPlacement": 1382,
     "campus": "",
     "creator": "GGboy",
     "diff": "Extreme Demon",
@@ -303,7 +303,7 @@
     "video": "https://www.youtube.com/embed/8x0gpGutHUE"
   },
   {
-    "aredlPlacement": 1463,
+    "aredlPlacement": 1469,
     "campus": "Davao Region Campus",
     "creator": "neigefeu",
     "diff": "Extreme Demon",
@@ -1303,35 +1303,12 @@
     "creator": "sSeanyboii",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141601536",
-    "img": "https://img.youtube.com/vi/RClLJRtHjGY/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Shubra",
-    "platPosition": null,
-    "rank": 7,
-    "rawTier": 6,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/RClLJRtHjGY"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/RClLJRtHjGY"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "sSeanyboii",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "141277411",
     "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
     "listType": "challenge",
     "name": "Abbasiya",
     "platPosition": null,
-    "rank": 8,
+    "rank": 7,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1354,7 +1331,7 @@
     "listType": "challenge",
     "name": "Ramses",
     "platPosition": null,
-    "rank": 9,
+    "rank": 8,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1377,7 +1354,7 @@
     "listType": "challenge",
     "name": "Maadi",
     "platPosition": null,
-    "rank": 10,
+    "rank": 9,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1393,5 +1370,34 @@
       }
     ],
     "video": "https://www.youtube.com/embed/zDJNwDmzHRY"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "sSeanyboii",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "141601536",
+    "img": "https://img.youtube.com/vi/RClLJRtHjGY/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Shubra",
+    "platPosition": null,
+    "rank": 10,
+    "rawTier": 1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/RClLJRtHjGY"
+      },
+      {
+        "campus": "Main Campus",
+        "name": "Akoay",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/iudRdpkH1KU"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/RClLJRtHjGY"
   }
 ]
