@@ -622,6 +622,7 @@
     toggleNavMenu();
   }
 
+  // MODAL UTILITIES
   function openGuidelinesModal() {
     document.getElementById('guidelinesModal').style.display = 'flex';
     toggleNavMenu();
@@ -746,13 +747,11 @@
     const listContainer = document.getElementById('list');
     listContainer.innerHTML = '';
 
-    // Step 1: Filter raw levels matching conditions
     let filtered = allLevels.filter(lvl => {
       if (lvl.listType !== currentMainTab) return false;
       
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       
-      // Inclusion check: level campus matches OR any victor matches the selected campus filter
       let matchesCampus = false;
       if (campusFilter === "ALL") {
         matchesCampus = true;
@@ -777,7 +776,6 @@
       );
     });
 
-    // Step 2: Keep global sorting layout sequence intact
     filtered.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
 
     if (filtered.length === 0) {
@@ -786,7 +784,6 @@
     }
 
     filtered.forEach(lvl => {
-      // The rank and points scale calculations remain fixed globally
       const displayPoints = calculateLevelPoints(lvl.rank);
       
       const row = document.createElement('div');
@@ -880,7 +877,6 @@
       
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       
-      // Match if global setting or if either verification or victor profile belongs to filter criteria
       if (campusFilter === "ALL") return true;
       if (levelCampus === campusFilter) return true;
       if (lvl.victorList) {
@@ -967,8 +963,9 @@
     let extendedList = [];
     let legacyList = [];
 
+    // CRITICAL FIX: Cutoffs correctly re-aligned (Main: 1-75, Extended: 76-150)
     player.completions.forEach(c => {
-      if (c.rank <= 50) mainList.push(c);
+      if (c.rank <= 75) mainList.push(c);
       else if (c.rank <= 150) extendedList.push(c);
       else legacyList.push(c);
     });
