@@ -61,48 +61,48 @@
     transition: background 0.3s, border-color 0.3s;
   }
   .menu-trigger {
+    background: none;
+    border: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    background: none;
-    border: none;
     padding: 5px;
   }
   .menu-trigger span {
-    display: block;
-    width: 24px;
-    height: 3px;
     background: var(--text);
+    display: block;
+    height: 3px;
     transition: 0.3s;
+    width: 24px;
   }
   
   .nav-menu {
-    position: fixed;
-    top: 58px;
-    right: 0;
-    width: 100%;
-    max-width: 300px;
     background: var(--panel);
-    border-left: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    max-width: 300px;
+    padding: 10px 0;
+    position: fixed;
+    right: 0;
+    top: 58px;
     transform: translateY(-150%);
     transition: transform 0.4s ease, background 0.3s, border-color 0.3s;
+    width: 100%;
     z-index: 99;
-    padding: 10px 0;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
   }
   .nav-menu.open {
     transform: translateY(0);
   }
   .nav-item {
-    display: block;
-    padding: 14px 20px;
     color: var(--text);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
     cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px 20px;
+    text-decoration: none;
     transition: background 0.2s, color 0.2s;
   }
   .nav-item:hover {
@@ -111,61 +111,64 @@
   }
 
   .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(3px);
-    z-index: 200;
-    display: none;
     align-items: center;
+    backdrop-filter: blur(3px);
+    background: rgba(0,0,0,0.75);
+    display: none;
+    height: 100%;
     justify-content: center;
+    left: 0;
     padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
   }
   .modal {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 12px;
-    width: 100%;
-    max-width: 650px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     max-height: 85vh;
+    max-width: 650px;
     overflow-y: auto;
     padding: 24px;
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    width: 100%;
   }
   .modal-header {
+    border-bottom: 1px solid var(--line);
+    color: var(--accent);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 16px;
-    color: var(--accent);
-    border-bottom: 1px solid var(--line);
     padding-bottom: 10px;
   }
   .modal-close {
-    position: absolute;
-    top: 18px;
-    right: 20px;
     background: none;
     border: none;
     color: var(--muted);
-    font-size: 22px;
     cursor: pointer;
+    font-size: 22px;
+    position: absolute;
+    right: 20px;
+    top: 18px;
   }
   .modal-close:hover { color: var(--text); }
-  .rules-list { padding-left: 20px; margin: 0; }
-  .rules-list li { margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
+  .rules-list { margin: 0; padding-left: 20px; }
+  .rules-list li { color: var(--text); font-size: 14px; line-height: 1.5; margin-bottom: 12px; }
 
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 16px; }
+  .wrap { margin: 0 auto; max-width: 1200px; padding: 40px 16px; }
   
   .hero-container {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 40px;
-    margin-bottom: 40px;
     align-items: start;
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1.4fr 1fr;
+    margin-bottom: 40px;
   }
   @media (max-width: 900px) {
-    .hero-container { grid-template-columns: 1fr; gap: 30px; }
+    .hero-container { gap: 30px; grid-template-columns: 1fr; }
   }
 
   .hero-left h1 {
@@ -178,23 +181,23 @@
     color: var(--accent);
   }
   .hero-p {
-    font-size: 16px;
     color: var(--muted);
+    font-size: 16px;
     line-height: 1.6;
     margin: 0 0 24px 0;
     max-width: 540px;
   }
   .hero-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 40px;
-    flex-wrap: wrap;
   }
   
   .stat-cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
     margin-bottom: 24px;
   }
   .stat-card {
@@ -205,23 +208,23 @@
     text-align: center;
   }
   .stat-card-num {
+    color: var(--accent);
     font-size: 36px;
     font-weight: 800;
-    color: var(--accent);
     margin-bottom: 4px;
   }
   .stat-card-label {
+    color: var(--muted);
     font-size: 11px;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--muted);
+    text-transform: uppercase;
   }
 
   .infra-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
   }
   .infra-card {
     background: var(--panel);
@@ -230,15 +233,15 @@
     padding: 20px;
   }
   .infra-card h3 {
-    margin: 0 0 6px 0;
     font-size: 15px;
     font-weight: 700;
+    margin: 0 0 6px 0;
   }
   .infra-card p {
-    margin: 0;
-    font-size: 13px;
     color: var(--muted);
+    font-size: 13px;
     line-height: 1.4;
+    margin: 0;
   }
 
   .news-panel {
@@ -248,16 +251,16 @@
     padding: 24px;
   }
   .news-panel h2 {
-    margin: 0 0 4px 0;
     font-size: 24px;
     font-weight: 800;
+    margin: 0 0 4px 0;
   }
   .news-panel h2 span {
     color: var(--accent);
   }
   .news-sub {
-    font-size: 13px;
     color: var(--muted);
+    font-size: 13px;
     margin-bottom: 24px;
   }
   
@@ -270,11 +273,11 @@
     padding-right: 4px;
   }
   .changelog-date {
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
     font-size: 12px;
     font-weight: 700;
-    color: var(--muted);
     margin-bottom: 10px;
-    border-bottom: 1px solid var(--line);
     padding-bottom: 4px;
   }
   .changelog-item {
@@ -288,176 +291,173 @@
     background: rgba(0, 0, 0, 0.01);
   }
   .changelog-tag {
+    color: var(--accent);
     font-size: 10px;
     font-weight: 800;
-    text-transform: uppercase;
-    color: var(--accent);
     letter-spacing: 0.5px;
     margin-bottom: 4px;
+    text-transform: uppercase;
   }
-  .changelog-tag.shift { color: #ffaa00; }
   .changelog-item-title {
     font-size: 14px;
     font-weight: 700;
     margin-bottom: 4px;
   }
   .changelog-item-desc {
-    font-size: 12px;
     color: var(--muted);
+    font-size: 12px;
     font-style: italic;
   }
   .changelog-time {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    font-size: 11px;
     color: var(--muted);
+    font-size: 11px;
+    position: absolute;
+    right: 14px;
+    top: 12px;
   }
 
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
     border-radius: 12px; 
-    padding: 16px; 
     margin-bottom: 20px; 
+    padding: 16px; 
     transition: background 0.3s, border-color 0.3s; 
   }
-  .section h3 { margin: 0 0 12px; font-size: 16px; }
+  .section h3 { font-size: 16px; margin: 0 0 12px; }
   
   .btn { 
-    border: none; border-radius: 8px; padding: 12px 20px; 
-    background: var(--line); color: var(--text); 
-    cursor: pointer; font-weight: 700; font-size: 14px;
-    transition: background 0.2s, filter 0.2s; 
+    background: var(--line); border: none; border-radius: 8px; 
+    color: var(--text); cursor: pointer; font-size: 14px; font-weight: 700;
+    padding: 12px 20px; transition: background 0.2s, filter 0.2s; 
   }
-  .btn:hover { filter: brightness(1.08); background: var(--muted); color: var(--bg); }
+  .btn:hover { background: var(--muted); color: var(--bg); filter: brightness(1.08); }
   .btn-primary { background: var(--accent); color: white; }
   .btn-outline { background: transparent; border: 1px solid var(--line); color: var(--text); }
   .btn-outline:hover { background: var(--line); color: var(--text); }
   
-  .badge { display: inline-block; margin-top: 8px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; color: var(--text); background: var(--bg); }
+  .badge { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; color: var(--text); display: inline-block; font-size: 12px; margin-top: 8px; padding: 4px 8px; }
   .muted { color: var(--muted); font-size: 13px; }
   
   #search, .input, .select { 
-    width: 100%; padding: 12px 14px; border-radius: 8px; 
-    border: 1px solid var(--line); background: var(--bg); 
-    color: var(--text); outline: none; font-size: 14px; 
-    transition: background 0.3s, border-color 0.3s; 
+    background: var(--bg); border: 1px solid var(--line); border-radius: 8px; 
+    color: var(--text); font-size: 14px; outline: none; padding: 12px 14px; 
+    transition: background 0.3s, border-color 0.3s; width: 100%; 
   }
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .grid { align-items: start; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
   .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
-  .row { display: flex; gap: 14px; padding: 14px; border-bottom: 1px solid var(--line); background: var(--panel); cursor: pointer; transition: background 0.15s; }
+  .row { background: var(--panel); border-bottom: 1px solid var(--line); cursor: pointer; display: flex; gap: 14px; padding: 14px; transition: background 0.15s; }
   .row:hover { background: rgba(120, 120, 120, 0.1); }
   .row:last-child { border-bottom: none; }
   
-  .rank { width: 50px; color: var(--accent); font-weight: 700; font-size: 18px; flex-shrink: 0; }
-  .thumb { width: 140px; height: 80px; background: #222; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
-  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .rank { color: var(--accent); flex-shrink: 0; font-size: 18px; font-weight: 700; width: 50px; }
+  .thumb { background: #222; border-radius: 6px; flex-shrink: 0; height: 80px; overflow: hidden; width: 140px; }
+  .thumb img { display: block; height: 100%; object-fit: cover; width: 100%; }
   .info { flex: 1; min-width: 0; }
   .title { font-size: 17px; font-weight: 700; }
-  .sub { font-size: 13px; color: var(--muted); margin-top: 4px; word-break: break-word; }
-  .points { font-size: 13px; color: var(--text); opacity: 0.9; margin-top: 6px; }
+  .sub { color: var(--muted); font-size: 13px; margin-top: 4px; word-break: break-word; }
+  .points { color: var(--text); font-size: 13px; margin-top: 6px; opacity: 0.9; }
   
   .app-page { display: none; }
-  .app-page.active-page { display: block; animation: fadeIn 0.3s; }
+  .app-page.active-page { animation: fadeIn 0.3s; display: block; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   
-  .back { color: var(--muted); cursor: pointer; margin-bottom: 12px; display: inline-block; font-weight: bold; }
+  .back { color: var(--muted); cursor: pointer; display: inline-block; font-weight: bold; margin-bottom: 12px; }
   .back:hover { color: var(--text); }
-  .video { width: 100%; aspect-ratio: 16/9; margin-top: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-  iframe { width: 100%; height: 100%; border: none; }
+  .video { aspect-ratio: 16/9; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; margin-top: 12px; overflow: hidden; width: 100%; }
+  iframe { border: none; height: 100%; width: 100%; }
   
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; font-size: 13px; color: var(--muted); }
-  .stat { background: var(--bg); border: 1px solid var(--line); padding: 10px; border-radius: 8px; text-align: center; }
-  .stat h4 { margin: 0 0 4px 0; font-size: 11px; text-transform: uppercase; color: var(--muted); }
-  .stat p { margin: 0; font-size: 16px; font-weight: bold; color: var(--text); }
-  .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-align: center; }
+  .stats { color: var(--muted); display: grid; gap: 10px; font-size: 13px; grid-template-columns: repeat(3, 1fr); margin-top: 14px; }
+  .stat { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; text-align: center; }
+  .stat h4 { color: var(--muted); font-size: 11px; margin: 0 0 4px 0; text-transform: uppercase; }
+  .stat p { color: var(--text); font-size: 16px; font-weight: bold; margin: 0; }
+  .empty { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--muted); padding: 16px; text-align: center; }
   
-  .records-container { text-align: center; padding: 24px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; }
-  .records-container h3 { font-size: 26px; font-weight: bold; margin: 0 0 6px 0; color: var(--text); }
-  .records-sub { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.4; }
-  .records-table { width: 100%; border-collapse: collapse; margin-top: 10px; overflow: hidden; border-radius: 6px; }
-  .records-table th { background: var(--accent); color: #ffffff; padding: 12px 16px; font-weight: bold; font-size: 14px; text-align: left; }
-  .records-table td { padding: 12px 16px; font-size: 14px; text-align: left; border-bottom: 1px solid var(--line); color: var(--text); background: rgba(0, 0, 0, 0.02); }
+  .records-container { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; padding: 24px 16px; text-align: center; }
+  .records-container h3 { color: var(--text); font-size: 26px; font-weight: bold; margin: 0 0 6px 0; }
+  .records-sub { color: var(--muted); font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
+  .records-table { border-collapse: collapse; border-radius: 6px; margin-top: 10px; overflow: hidden; width: 100%; }
+  .records-table th { background: var(--accent); color: #ffffff; font-size: 14px; font-weight: bold; padding: 12px 16px; text-align: left; }
+  .records-table td { background: rgba(0, 0, 0, 0.02); border-bottom: 1px solid var(--line); color: var(--text); font-size: 14px; padding: 12px 16px; text-align: left; }
   body.light-theme .records-table td { background: #ffffff; }
   .records-table tr:last-child td { border-bottom: none; }
-  .proof-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; }
+  .proof-btn { color: var(--accent); font-weight: bold; text-decoration: none; }
   .proof-btn:hover { text-decoration: underline; }
 
   .sv-wrapper {
-    display: grid; 
-    grid-template-columns: 300px 1fr;
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 10px;
-    background: var(--panel);
-    overflow: hidden;
+    display: grid; 
+    grid-template-columns: 300px 1fr;
     min-height: 540px;
+    overflow: hidden;
   }
   
-  .sv-list-panel { max-height: 620px; overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); }
-  .sv-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); cursor: pointer; transition: background 0.15s; font-size: 14px; }
+  .sv-list-panel { background: var(--panel); border-right: 1px solid var(--line); max-height: 620px; overflow-y: auto; }
+  .sv-row { align-items: center; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; font-size: 14px; justify-content: space-between; padding: 12px 16px; transition: background 0.15s; }
   .sv-row:last-child { border-bottom: none; }
   .sv-row:hover { background: var(--sv-row-hover); }
   .sv-row.active-player { background: rgba(11, 132, 203, 0.15); border-left: 4px solid var(--accent); padding-left: 12px; }
   
-  .sv-left { display: flex; align-items: center; gap: 8px; }
-  .sv-rank { font-weight: bold; color: var(--text); }
-  .sv-name { font-weight: bold; color: var(--text); }
-  .sv-points { font-style: italic; font-size: 12px; color: var(--muted); }
+  .sv-left { align-items: center; display: flex; gap: 8px; }
+  .sv-rank { color: var(--text); font-weight: bold; }
+  .sv-name { color: var(--text); font-weight: bold; }
+  .sv-points { color: var(--muted); font-size: 12px; font-style: italic; }
 
-  .sv-detail-panel { display: flex; flex-direction: column; background: var(--bg); padding: 30px; max-height: 620px; overflow-y: auto; }
-  .start-prompt { margin: 100px auto 0; color: var(--muted); font-size: 18px; font-style: italic; text-align: center; }
+  .sv-detail-panel { background: var(--bg); display: flex; flex-direction: column; max-height: 620px; overflow-y: auto; padding: 30px; }
+  .start-prompt { color: var(--muted); font-size: 18px; font-style: italic; margin: 100px auto 0; text-align: center; }
 
-  .profile-title-row { text-align: center; margin-bottom: 24px; }
-  .profile-title-row h3 { font-size: 28px; margin: 0; font-weight: 700; }
+  .profile-title-row { margin-bottom: 24px; text-align: center; }
+  .profile-title-row h3 { font-size: 28px; font-weight: 700; margin: 0; }
 
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 25px; }
-  .stat-block { background: var(--panel); border: 1px solid var(--line); padding: 14px; border-radius: 8px; text-align: center; }
-  .stat-block h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--text); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-  .stat-block p { margin: 0; font-size: 15px; color: var(--muted); }
+  .stats-grid { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-bottom: 25px; }
+  .stat-block { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; }
+  .stat-block h4 { color: var(--text); font-size: 13px; font-weight: bold; letter-spacing: 0.5px; margin: 0 0 6px 0; text-transform: uppercase; }
+  .stat-block p { color: var(--muted); font-size: 15px; margin: 0; }
 
   .demons-section { margin-top: 20px; }
-  .demons-section h4 { font-size: 16px; font-weight: bold; margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; text-align: center; }
-  .demons-cloud { font-size: 14px; line-height: 1.9; text-align: center; max-width: 650px; margin: 0 auto; }
+  .demons-section h4 { border-bottom: 1px solid var(--line); font-size: 16px; font-weight: bold; margin-bottom: 12px; padding-bottom: 6px; text-align: center; }
+  .demons-cloud { font-size: 14px; line-height: 1.9; margin: 0 auto; max-width: 650px; text-align: center; }
   
   .cloud-main { color: var(--tier-main); font-weight: 800; }
   .cloud-extended { color: var(--tier-extended); font-weight: 700; }
   .cloud-legacy { color: var(--tier-legacy); font-weight: normal; }
   
-  .demon-click { cursor: pointer; transition: 0.2s; display: inline-block; }
-  .demon-click:hover { text-decoration: underline; filter: brightness(1.2); }
+  .demon-click { cursor: pointer; display: inline-block; transition: 0.2s; }
+  .demon-click:hover { filter: brightness(1.2); text-decoration: underline; }
 
-  .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-  .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-  .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .filter-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .tab-btn { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; color: var(--muted); cursor: pointer; font-weight: bold; padding: 8px 16px; transition: 0.2s; }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
 
-  .filter-container-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 8px; }
+  .filter-container-grid { display: grid; gap: 12px; grid-template-columns: 2fr 1fr; margin-top: 8px; }
   
   footer {
-    margin-top: 60px;
     border-top: 1px solid var(--line);
-    padding-top: 24px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
     gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+    padding-top: 24px;
   }
-  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+  .footer-brand { align-items: center; display: flex; gap: 10px; font-size: 14px; font-weight: 700; }
   .footer-links { display: flex; gap: 20px; font-size: 13px; font-weight: 700; }
   .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 
   @media (max-width: 860px) {
     .sv-wrapper { grid-template-columns: 1fr; }
-    .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 260px; }
+    .sv-wrapper .sv-list-panel { border-bottom: 1px solid var(--line); border-right: none; max-height: 260px; }
   }
   @media (max-width: 640px) {
     .row { flex-direction: column; }
-    .thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
+    .thumb { aspect-ratio: 16/9; height: auto; width: 100%; }
     .stats { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
     .stat-cards-grid { grid-template-columns: 1fr; }
@@ -718,27 +718,35 @@
     try {
       const response = await fetch(GITHUB_JSON_URL);
       if (response.ok) {
-        allLevels = await response.json();
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          allLevels = data;
+        } else if (data.levels && Array.isArray(data.levels)) {
+          allLevels = data.levels;
+        } else if (data.list && Array.isArray(data.list)) {
+          allLevels = data.list;
+        } else {
+          allLevels = [];
+        }
       } else {
-        throw new Error("Payload profile fallback triggered.");
+        throw new Error("Payload fallback triggered.");
       }
     } catch (err) {
       console.warn("Falling back to structured local mock package.");
       allLevels = [
-        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-10", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-02", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", createdDate: "2026-06-15", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
+        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-10", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-02", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", createdDate: "2026-06-15", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
       ];
     }
     
+    calculateCounterMetrics();
     processLiveDecayFilterAndNews();
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
-    calculateCounterMetrics();
   }
 
-  /* --- LIVE DYNAMIC NEWS & DECAY LOGIC ENGINE --- */
   function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -821,25 +829,21 @@
     });
   }
 
-  /* --- DYNAMIC METRICS PARSING ENGINE FROM LIVE JSON --- */
   function calculateCounterMetrics() {
-    // 1. Amount of Ranked Tiers / Levels directly from the file array length
     document.getElementById('heroCountLevels').textContent = allLevels.length;
     
     let userSet = new Set();
     let recordCount = 0;
     
     allLevels.forEach(lvl => {
-      if (lvl.victorList) {
-        lvl.victorList.forEach(v => {
-          // 2. Active Players collected strictly by unique username tracking configurations
-          if (v.name && v.name.trim() !== "") {
-            userSet.add(v.name.trim());
-          }
-          // 3. Verified Records compiled calculation accumulation from nested entries
-          recordCount++;
-        });
-      }
+      let recordList = lvl.records || lvl.victorList || [];
+      recordList.forEach(rec => {
+        let player = rec.username || rec.name;
+        if (player && player.trim() !== "") {
+          userSet.add(player.trim());
+        }
+        recordCount++;
+      });
     });
     
     document.getElementById('heroCountPlayers').textContent = userSet.size;
@@ -851,12 +855,11 @@
     allLevels.forEach(lvl => {
       let lvlCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       campusSet.add(lvlCampus);
-      if (lvl.victorList) {
-        lvl.victorList.forEach(v => {
-          let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
-          campusSet.add(vCampus);
-        });
-      }
+      let recordList = lvl.records || lvl.victorList || [];
+      recordList.forEach(v => {
+        let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
+        campusSet.add(vCampus);
+      });
     });
 
     let sortedCampuses = Array.from(campusSet).sort();
@@ -951,7 +954,8 @@
     let filtered = allLevels.filter(lvl => {
       if (lvl.listType !== currentMainTab) return false;
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (lvl.victorList && lvl.victorList.some(v => ((v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus") === campusFilter)));
+      let recordList = lvl.records || lvl.victorList || [];
+      let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (recordList.some(v => ((v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus") === campusFilter)));
       if (!matchesCampus) return false;
       return (lvl.name.toLowerCase().includes(searchVal) || lvl.creator.toLowerCase().includes(searchVal) || lvl.diff.toLowerCase().includes(searchVal));
     });
@@ -984,6 +988,8 @@
   function showLevelDetailPage(lvl, functionalRank) {
     switchPage('detail');
     const displayRank = functionalRank || lvl.rank;
+    let recordList = lvl.records || lvl.victorList || [];
+
     document.getElementById('dTitle').textContent = lvl.name;
     document.getElementById('dInfo').innerHTML = `Created by <strong>${lvl.creator}</strong> | Verified by <strong>${lvl.verifier}</strong><br>ID: ${lvl.id} | Class: ${lvl.diff}`;
     document.getElementById('video').innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No footage loaded.</div>`;
@@ -991,12 +997,12 @@
     document.getElementById('stats').innerHTML = `
       <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
       <div class="stat"><h4>List Points</h4><p>${calculateLevelPoints(displayRank).toFixed(2)}</p></div>
-      <div class="stat"><h4>Completions</h4><p>${lvl.victorList ? lvl.victorList.length : 0}</p></div>
+      <div class="stat"><h4>Completions</h4><p>${recordList.length}</p></div>
     `;
 
     const recordsContainer = document.getElementById('dRecordsContainer');
     recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions from active campus profiles.</p>`;
-    if (!lvl.victorList || lvl.victorList.length === 0) {
+    if (recordList.length === 0) {
       recordsContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
       return;
     }
@@ -1005,9 +1011,10 @@
     table.className = 'records-table';
     table.innerHTML = `<thead><tr><th>Player Name</th><th>Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
     const tbody = table.querySelector('tbody');
-    lvl.victorList.forEach(v => {
+    recordList.forEach(v => {
+      let pName = v.username || v.name;
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${v.name} <strong>(${v.percent || 100}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>`;
+      tr.innerHTML = `<td>${pName} <strong>(${v.percent || 100}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>`;
       tbody.appendChild(tr);
     });
     recordsContainer.appendChild(table);
@@ -1028,17 +1035,17 @@
     let playerMap = {};
     
     allLevels.filter(lvl => lvl.listType === currentStatsTab).forEach(lvl => {
-      if (lvl.victorList) {
-        lvl.victorList.forEach(v => {
-          const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
-          if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
-          if (!playerMap[v.name]) playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
-          
-          let earnedPoints = calculateLevelPoints(lvl.rank) * ((v.percent || 100) / 100);
-          playerMap[v.name].points += earnedPoints;
-          playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video, percent: v.percent || 100 });
-        });
-      }
+      let recordList = lvl.records || lvl.victorList || [];
+      recordList.forEach(v => {
+        let pName = v.username || v.name;
+        const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
+        if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
+        if (!playerMap[pName]) playerMap[pName] = { name: pName, points: 0, completions: [], campus: playerCampus };
+        
+        let earnedPoints = calculateLevelPoints(lvl.rank) * ((v.percent || 100) / 100);
+        playerMap[pName].points += earnedPoints;
+        playerMap[pName].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video, percent: v.percent || 100 });
+      });
     });
 
     let playersArray = Object.values(playerMap);
