@@ -1078,6 +1078,30 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "ch4rlie03",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "77132030",
+    "img": "https://img.youtube.com/vi/o7GUSgTW4N0/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Ratio Circles",
+    "platPosition": null,
+    "rank": 43,
+    "rawTier": 2,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/o7GUSgTW4N0"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/o7GUSgTW4N0"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SpKale",
     "diff": "Easy Demon",
@@ -1087,7 +1111,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 43,
+    "rank": 44,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1115,7 +1139,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 44,
+    "rank": 45,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1153,7 +1177,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 45,
+    "rank": 46,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1188,7 +1212,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 46,
+    "rank": 47,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
