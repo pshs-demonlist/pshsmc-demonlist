@@ -732,69 +732,75 @@
         throw new Error("Payload fallback triggered.");
       }
     } catch (err) {
-      console.warn("Falling back to structured local mock package.");
+      console.warn("Falling back to structured local mock package due to data fetch constraints.");
       allLevels = [
-        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-10", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-02", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", createdDate: "2026-06-15", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
+        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", createdDate: "2026-06-14", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
       ];
     }
     
-    calculateCounterMetrics();
+    // Process operations safely without destroying the master reference
     processLiveDecayFilterAndNews();
+    calculateCounterMetrics();
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
+    renderStatsLeaderboard();
   }
 
   function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const activeFilteredList = [];
     const newsByDateMap = {};
 
     allLevels.forEach(lvl => {
+      // Parse base level ranking defaults safely
+      let baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
+      if (isNaN(baseRank)) baseRank = 999;
+      if (!lvl.initialRank) lvl.initialRank = baseRank;
+
       if (!lvl.createdDate) {
         lvl.createdDate = "2026-06-14"; 
       }
 
       const spawnDate = new Date(lvl.createdDate);
+      if (isNaN(spawnDate.getTime())) {
+        lvl.rank = baseRank;
+        return;
+      }
+      
       spawnDate.setHours(0, 0, 0, 0);
-
       const structuralMsDiff = today.getTime() - spawnDate.getTime();
       const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
 
+      // Calculate recent shift values if within news window without cleaning out old maps
       if (elapsedDays >= 0 && elapsedDays < 14) {
         const displayDateString = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[displayDateString]) {
           newsByDateMap[displayDateString] = [];
         }
 
+        const currentDynamicRank = baseRank + elapsedDays;
         let tierLabel = "Legacy Records";
-        if (lvl.rank + elapsedDays <= 75) tierLabel = "Main List 1-75";
-        else if (lvl.rank + elapsedDays <= 150) tierLabel = "Extended Records 76-150";
+        if (currentDynamicRank <= 75) tierLabel = "Main List 1-75";
+        else if (currentDynamicRank <= 150) tierLabel = "Extended Records 76-150";
 
         newsByDateMap[displayDateString].push({
           title: lvl.name,
-          category: lvl.listType.charAt(0).toUpperCase() + lvl.listType.slice(1),
-          desc: `New dynamic track entry > #${lvl.rank + elapsedDays} (Assigned to ${tierLabel})`,
+          category: lvl.listType ? (lvl.listType.charAt(0).toUpperCase() + lvl.listType.slice(1)) : "Level",
+          desc: `New tracking entry shifts -> #${currentDynamicRank} (${tierLabel})`,
           daysLeft: 14 - elapsedDays
         });
+        
+        lvl.rank = currentDynamicRank;
+      } else {
+        // Safe tracking retention fallback for non-decay active records
+        lvl.rank = baseRank;
       }
-
-      if (elapsedDays >= 14 || elapsedDays < 0) {
-        return; 
-      }
-
-      const baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
-      if (!lvl.initialRank) lvl.initialRank = baseRank; 
-      
-      lvl.rank = baseRank + elapsedDays; 
-      activeFilteredList.push(lvl);
     });
 
-    allLevels = activeFilteredList;
     renderDynamicNewsFeed(newsByDateMap);
   }
 
@@ -803,7 +809,7 @@
     const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
 
     if (sortedDates.length === 0) {
-      feedContainer.innerHTML = '<div class="empty">No recent dynamic tracking shifts logs found within past 14 days.</div>';
+      feedContainer.innerHTML = '<div class="empty">No tracking status shifts updated within the last 14 days.</div>';
       return;
     }
 
@@ -952,15 +958,15 @@
     listContainer.innerHTML = '';
 
     let filtered = allLevels.filter(lvl => {
-      if (lvl.listType !== currentMainTab) return false;
+      if (!lvl.listType || lvl.listType !== currentMainTab) return false;
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       let recordList = lvl.records || lvl.victorList || [];
       let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (recordList.some(v => ((v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus") === campusFilter)));
       if (!matchesCampus) return false;
-      return (lvl.name.toLowerCase().includes(searchVal) || lvl.creator.toLowerCase().includes(searchVal) || lvl.diff.toLowerCase().includes(searchVal));
+      return ((lvl.name && lvl.name.toLowerCase().includes(searchVal)) || (lvl.creator && lvl.creator.toLowerCase().includes(searchVal)) || (lvl.diff && lvl.diff.toLowerCase().includes(searchVal)));
     });
 
-    filtered.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
+    filtered.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
     if (filtered.length === 0) {
       listContainer.innerHTML = '<div class="empty">No entries found matching search or campus constraints.</div>';
       return;
@@ -973,10 +979,10 @@
       row.onclick = () => showLevelDetailPage(lvl, lvl.rank);
       row.innerHTML = `
         <div class="rank">#${lvl.rank}</div>
-        <div class="thumb"><img src="${lvl.img}" alt="Thumb"></div>
+        <div class="thumb"><img src="${lvl.img || 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'}" alt="Thumb"></div>
         <div class="info">
-          <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
-          <div class="sub">Created by ${lvl.creator} | Verified by ${lvl.verifier}</div>
+          <div class="title">${lvl.name || 'Unnamed'} <span class="badge">${lvl.diff || 'Demon'}</span></div>
+          <div class="sub">Created by ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
           <div class="points">${displayPoints.toFixed(2)} Points</div>
           <div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus || 'Main Campus'}</div>
         </div>
@@ -1038,8 +1044,10 @@
       let recordList = lvl.records || lvl.victorList || [];
       recordList.forEach(v => {
         let pName = v.username || v.name;
+        if (!pName || pName.trim() === "") return;
         const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
         if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
+        
         if (!playerMap[pName]) playerMap[pName] = { name: pName, points: 0, completions: [], campus: playerCampus };
         
         let earnedPoints = calculateLevelPoints(lvl.rank) * ((v.percent || 100) / 100);
@@ -1069,7 +1077,9 @@
 
   function displayPlayerProfile(player, index) {
     document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-    document.getElementById(`player-row-${index}`).classList.add('active-player');
+    const selectedRow = document.getElementById(`player-row-${index}`);
+    if (selectedRow) selectedRow.classList.add('active-player');
+    
     document.getElementById('startPrompt').style.display = 'none';
     const profileContent = document.getElementById('profileContent');
     profileContent.style.display = 'block';
@@ -1129,6 +1139,7 @@
 
     if (payload.type === "record") {
       const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
+      if (!chosenOpt) { alert("Select a level first."); submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return; }
       payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
     } else {
       payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
