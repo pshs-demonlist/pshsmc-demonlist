@@ -157,7 +157,6 @@
 
   .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 16px; }
   
-  /* NEW LANDING HERO GRID */
   .hero-container {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
@@ -192,7 +191,6 @@
     flex-wrap: wrap;
   }
   
-  /* HERO STAT CARDS */
   .stat-cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -220,7 +218,6 @@
     color: var(--muted);
   }
 
-  /* INFRASTRUCTURE FEATURES */
   .infra-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -244,7 +241,6 @@
     line-height: 1.4;
   }
 
-  /* RIGHT HAND CHANGELOG/NEWS PANEL */
   .news-panel {
     background: var(--panel);
     border: 1px solid var(--line);
@@ -318,7 +314,6 @@
     color: var(--muted);
   }
 
-  /* REUSED DASHBOARD STYLES */
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
@@ -441,7 +436,6 @@
 
   .filter-container-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 8px; }
   
-  /* FOOTER BRANDING */
   footer {
     margin-top: 60px;
     border-top: 1px solid var(--line);
@@ -550,45 +544,11 @@
       </div>
 
       <div class="news-panel">
-        <h2>Latest <span>News</span></h2>
-        <div class="news-sub">Recent changes in the tier arrays</div>
+        <h2>Latest <span>News Feed</span></h2>
+        <div class="news-sub">Real-time live tier dynamic changes</div>
         
-        <div class="changelog-feed">
-          <div>
-            <div class="changelog-date">15 June 2026</div>
-            <div class="changelog-item" style="margin-bottom: 12px;">
-              <div class="changelog-tag">Create</div>
-              <div class="changelog-time">21:53</div>
-              <div class="changelog-item-title">Star Chaser</div>
-              <div class="changelog-item-desc">New entry &gt; #162 (Placed into Legacy Records)</div>
-            </div>
-            <div class="changelog-item">
-              <div class="changelog-tag">Create</div>
-              <div class="changelog-time">21:53</div>
-              <div class="changelog-item-title">Dispersion Beam</div>
-              <div class="changelog-item-desc">New entry &gt; #161 (Placed into Legacy Records)</div>
-            </div>
-          </div>
-
-          <div>
-            <div class="changelog-date">07 June 2026</div>
-            <div class="changelog-item">
-              <div class="changelog-tag">Create</div>
-              <div class="changelog-time">05:08</div>
-              <div class="changelog-item-title">Our Fountain</div>
-              <div class="changelog-item-desc">New entry &gt; #46 (Placed into Main List 1-75)</div>
-            </div>
-          </div>
-
-          <div>
-            <div class="changelog-date">01 June 2026</div>
-            <div class="changelog-item">
-              <div class="changelog-tag shift">Tier Shift</div>
-              <div class="changelog-time">00:00</div>
-              <div class="changelog-item-title">Main List Structural Alignment</div>
-              <div class="changelog-item-desc">Main list limits locked down to ranks #1-#75. Extended brackets reassigned to #76-#150.</div>
-            </div>
-          </div>
+        <div class="changelog-feed" id="liveChangelogFeed">
+          <div class="empty">Loading recent tracking changes...</div>
         </div>
       </div>
     </div>
@@ -771,24 +731,22 @@
       ];
     }
     
-    // Apply time-decay filters and drop out-of-bounds maps automatically
-    processLiveDecayFilter();
+    processLiveDecayFilterAndNews();
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
     calculateCounterMetrics();
   }
 
-  /* --- TIME DECAY LOGIC ENGINE --- */
-  function processLiveDecayFilter() {
-    // Standardize system perspective matching midnight current run profile
+  /* --- LIVE DYNAMIC NEWS & DECAY LOGIC ENGINE --- */
+  function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     const activeFilteredList = [];
+    const newsByDateMap = {};
 
     allLevels.forEach(lvl => {
-      // Fallback timestamp window mapping if API response misses data
       if (!lvl.createdDate) {
         lvl.createdDate = "2026-06-14"; 
       }
@@ -796,16 +754,34 @@
       const spawnDate = new Date(lvl.createdDate);
       spawnDate.setHours(0, 0, 0, 0);
 
-      // Compute physical time differences
       const structuralMsDiff = today.getTime() - spawnDate.getTime();
       const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
 
-      // 1. Filter Check: Remove level completely if age hits or exceeds 14 days
+      // Capture dynamic group log event if the item is inside the active live feed window
+      if (elapsedDays >= 0 && elapsedDays < 14) {
+        const displayDateString = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
+        if (!newsByDateMap[displayDateString]) {
+          newsByDateMap[displayDateString] = [];
+        }
+
+        let tierLabel = "Legacy Records";
+        if (lvl.rank + elapsedDays <= 75) tierLabel = "Main List 1-75";
+        else if (lvl.rank + elapsedDays <= 150) tierLabel = "Extended Records 76-150";
+
+        newsByDateMap[displayDateString].push({
+          title: lvl.name,
+          category: lvl.listType.charAt(0).toUpperCase() + lvl.listType.slice(1),
+          desc: `New dynamic track entry > #${lvl.rank + elapsedDays} (Assigned to ${tierLabel})`,
+          daysLeft: 14 - elapsedDays
+        });
+      }
+
+      // 1. Structural Dropout Filter Check: Remove level completely at 2 weeks
       if (elapsedDays >= 14 || elapsedDays < 0) {
         return; 
       }
 
-      // 2. Count Down / Rank Shift Logic: Add age value to shift down on live dashboard feed
+      // 2. Count Down Drift Execution
       const baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
       if (!lvl.initialRank) lvl.initialRank = baseRank; 
       
@@ -814,6 +790,38 @@
     });
 
     allLevels = activeFilteredList;
+    renderDynamicNewsFeed(newsByDateMap);
+  }
+
+  function renderDynamicNewsFeed(newsMap) {
+    const feedContainer = document.getElementById('liveChangelogFeed');
+    const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
+
+    if (sortedDates.length === 0) {
+      feedContainer.innerHTML = '<div class="empty">No recent dynamic tracking shifts logs found within past 14 days.</div>';
+      return;
+    }
+
+    feedContainer.innerHTML = '';
+    sortedDates.forEach(dateStr => {
+      const dayWrapper = document.createElement('div');
+      dayWrapper.style.marginBottom = "16px";
+      
+      let itemsHTML = `<div class="changelog-date">${dateStr}</div>`;
+      newsMap[dateStr].forEach(item => {
+        itemsHTML += `
+          <div class="changelog-item" style="margin-bottom: 8px;">
+            <div class="changelog-tag">${item.category}</div>
+            <div class="changelog-time">${item.daysLeft}d left</div>
+            <div class="changelog-item-title">${item.title}</div>
+            <div class="changelog-item-desc">${item.desc}</div>
+          </div>
+        `;
+      });
+      
+      dayWrapper.innerHTML = itemsHTML;
+      feedContainer.appendChild(dayWrapper);
+    });
   }
 
   function calculateCounterMetrics() {
@@ -1098,7 +1106,6 @@
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.disabled = true; submitBtn.textContent = "Processing transmission package...";
 
-    // Capture entry time matching midnight pattern configuration
     const generationStamp = new Date().toISOString().split('T')[0];
 
     let payload = { 
