@@ -704,41 +704,88 @@
 
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
-  const GITHUB_JSON_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
+  
+  // Primary and CDN Failover paths for your repository JSON file
+  const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
+  const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
   let allLevels = [];
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
   window.onload = () => {
+    // Set immediate safe UI placeholders before the network request finishes
+    clearUIFieldsToZero();
     loadDatabase();
   };
 
-  async function loadDatabase() {
+  function clearUIFieldsToZero() {
+    const lvlCountEl = document.getElementById('heroCountLevels');
+    const playerCountEl = document.getElementById('heroCountPlayers');
+    const recCountEl = document.getElementById('heroCountRecords');
+    if (lvlCountEl) lvlCountEl.textContent = "0";
+    if (playerCountEl) playerCountEl.textContent = "0";
+    if (recCountEl) recCountEl.textContent = "0";
+  }
+
+  async function fetchWithTimeout(url, options = {}, timeout = 4000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
     try {
-      const response = await fetch(GITHUB_JSON_URL);
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(id);
+      return response;
+    } catch (e) {
+      clearTimeout(id);
+      throw e;
+    }
+  }
+
+  async function loadDatabase() {
+    let success = false;
+    let rawData = null;
+
+    // Attempt 1: Try Primary GitHub Raw Domain
+    try {
+      const response = await fetchWithTimeout(GITHUB_PRIMARY_URL);
       if (response.ok) {
-        const data = await response.json();
-        
-        if (Array.isArray(data)) {
-          allLevels = data;
-        } else if (data && typeof data === 'object') {
-          if (Array.isArray(data.levels)) allLevels = data.levels;
-          else if (Array.isArray(data.list)) allLevels = data.list;
-          else {
-            allLevels = Object.values(data).filter(item => item && typeof item === 'object');
-          }
-        }
-        
-        // Final catch if parsed array came back empty
-        if (!allLevels || allLevels.length === 0) {
-          throw new Error("Empty dataset parsed from live repository source.");
-        }
-      } else {
-        throw new Error("Repository connection returned non-OK status.");
+        rawData = await response.json();
+        success = true;
       }
     } catch (err) {
-      console.warn("Falling back to structured local mock data package.", err);
+      console.warn("Primary GitHub Raw connection failed or timed out. Trying CDN backup mirror...", err);
+    }
+
+    // Attempt 2: Try CORS-friendly CDN Mirror fallback
+    if (!success) {
+      try {
+        const response = await fetchWithTimeout(GITHUB_CDN_URL);
+        if (response.ok) {
+          rawData = await response.json();
+          success = true;
+        }
+      } catch (err) {
+        console.error("All network endpoints for levels.json failed.", err);
+      }
+    }
+
+    // Process structural layout translation safely
+    if (success && rawData) {
+      if (Array.isArray(rawData)) {
+        allLevels = rawData;
+      } else if (typeof rawData === 'object') {
+        if (Array.isArray(rawData.levels)) allLevels = rawData.levels;
+        else if (Array.isArray(rawData.list)) rawData.list = rawData.list;
+        else {
+          // If JSON is formatted as an object with level keys instead of an array
+          allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
+        }
+      }
+    }
+
+    // Final Safe Fallback: Populates local tracking array if both network operations fail
+    if (!allLevels || allLevels.length === 0) {
+      console.warn("Loading backup local dataset packages onto components view dashboard.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
@@ -746,7 +793,7 @@
       ];
     }
     
-    // Execute rendering modules securely
+    // Execute rendering engine modules safely
     processLiveDecayFilterAndNews();
     calculateCounterMetrics();
     populateCampusDropdownFilters();
@@ -755,11 +802,8 @@
     renderStatsLeaderboard();
   }
 
-  // Deeply scans level keys to automatically classify missing categories
   function getNormalizedListType(lvl) {
     if (!lvl) return 'demon';
-    
-    // Scan all keys looking for matching type definitions
     for (let key in lvl) {
       if (key.toLowerCase().includes('type')) {
         let val = String(lvl[key]).toLowerCase();
@@ -768,22 +812,16 @@
         if (val.includes('demon')) return 'demon';
       }
     }
-    
-    // Secondary fallback using the difficulty string if explicitly populated
     if (lvl.diff || lvl.difficulty) {
       let dVal = String(lvl.diff || lvl.difficulty).toLowerCase();
       if (dVal.includes('challenge')) return 'challenge';
       if (dVal.includes('platformer')) return 'platformer';
     }
-    
-    // Default fallback to main list group
     return 'demon';
   }
 
-  // Deep structural record extractor (Checks for completions, victors, or records case-insensitively)
   function getRecordList(lvl) {
     if (!lvl || typeof lvl !== 'object') return [];
-    
     for (let key in lvl) {
       let lowerKey = key.toLowerCase();
       if (lowerKey.includes('record') || lowerKey.includes('completion') || lowerKey.includes('victor') || lowerKey.includes('vid') || lowerKey.includes('player')) {
@@ -793,7 +831,6 @@
     return lvl.records || lvl.completions || [];
   }
 
-  // Safe helper to grab a player's identity name string from varying JSON schemas
   function getPlayerName(rec) {
     if (!rec) return '';
     return rec.username || rec.name || rec.player || rec.playerName || '';
@@ -872,6 +909,7 @@
           </div>
         `;
       });
+      dayWrapper.innerHTML = itemsHTML;
       dayWrapper.innerHTML = itemsHTML;
       feedContainer.appendChild(dayWrapper);
     });
