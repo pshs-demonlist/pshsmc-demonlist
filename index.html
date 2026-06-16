@@ -155,7 +155,170 @@
   .rules-list { padding-left: 20px; margin: 0; }
   .rules-list li { margin-bottom: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
 
-  .wrap { max-width: 1100px; margin: 24px auto; padding: 0 16px 40px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 16px; }
+  
+  /* NEW LANDING HERO GRID */
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .hero-container { grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  .hero-left h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 16px 0;
+  }
+  .hero-left h1 span {
+    color: var(--accent);
+  }
+  .hero-p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+    max-width: 540px;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  
+  /* HERO STAT CARDS */
+  .stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .stat-card-num {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .stat-card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+
+  /* INFRASTRUCTURE FEATURES */
+  .infra-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .infra-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .infra-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .infra-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* RIGHT HAND CHANGELOG/NEWS PANEL */
+  .news-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .news-panel h2 {
+    margin: 0 0 4px 0;
+    font-size: 24px;
+    font-weight: 800;
+  }
+  .news-panel h2 span {
+    color: var(--accent);
+  }
+  .news-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  
+  .changelog-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-height: 520px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .changelog-date {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+  }
+  .changelog-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    position: relative;
+  }
+  body.light-theme .changelog-item {
+    background: rgba(0, 0, 0, 0.01);
+  }
+  .changelog-tag {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .changelog-tag.shift { color: #ffaa00; }
+  .changelog-item-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .changelog-item-desc {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .changelog-time {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* REUSED DASHBOARD STYLES */
   .section { 
     background: var(--panel); 
     border: 1px solid var(--line); 
@@ -167,12 +330,15 @@
   .section h3 { margin: 0 0 12px; font-size: 16px; }
   
   .btn { 
-    border: none; border-radius: 8px; padding: 10px 14px; 
+    border: none; border-radius: 8px; padding: 12px 20px; 
     background: var(--line); color: var(--text); 
-    cursor: pointer; font-weight: 700; transition: background 0.2s, filter 0.2s; 
+    cursor: pointer; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, filter 0.2s; 
   }
   .btn:hover { filter: brightness(1.08); background: var(--muted); color: var(--bg); }
   .btn-primary { background: var(--accent); color: white; }
+  .btn-outline { background: transparent; border: 1px solid var(--line); color: var(--text); }
+  .btn-outline:hover { background: var(--line); color: var(--text); }
   
   .badge { display: inline-block; margin-top: 8px; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; color: var(--text); background: var(--bg); }
   .muted { color: var(--muted); font-size: 13px; }
@@ -215,9 +381,6 @@
   .stat p { margin: 0; font-size: 16px; font-weight: bold; color: var(--text); }
   .empty { padding: 16px; color: var(--muted); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); text-align: center; }
   
-  .victor-link { color: var(--accent); text-decoration: none; cursor: pointer; font-weight: bold; }
-  .victor-link:hover { text-decoration: underline; }
-  
   .records-container { text-align: center; padding: 24px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; }
   .records-container h3 { font-size: 26px; font-weight: bold; margin: 0 0 6px 0; color: var(--text); }
   .records-sub { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.4; }
@@ -226,33 +389,11 @@
   .records-table td { padding: 12px 16px; font-size: 14px; text-align: left; border-bottom: 1px solid var(--line); color: var(--text); background: rgba(0, 0, 0, 0.02); }
   body.light-theme .records-table td { background: #ffffff; }
   .records-table tr:last-child td { border-bottom: none; }
-  .records-table th:nth-child(2), .records-table td:nth-child(2) { text-align: center; }
-  .records-table th:nth-child(3), .records-table td:nth-child(3) { text-align: right; }
   .proof-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; }
   .proof-btn:hover { text-decoration: underline; }
 
-  #introCard {
-    text-align: center;
-    padding: 40px 30px;
-    background: var(--panel);
-    border: 1px dashed var(--muted);
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 40px auto;
-  }
-  #introCard h2 { font-size: 32px; margin: 0 0 15px; color: var(--text); }
-  #introCard hr { border: none; border-top: 1px solid var(--line); margin-bottom: 20px; }
-  #introCard p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 30px; }
-  
-  .btn-blue {
-    background: var(--accent); color: white; border: none; padding: 14px 28px;
-    font-size: 18px; font-weight: bold; border-radius: 6px; cursor: pointer;
-    transition: background 0.2s; width: 100%; max-width: 320px;
-  }
-  .btn-blue:hover { filter: brightness(1.1); }
-
   .sv-wrapper {
-    display: none; 
+    display: grid; 
     grid-template-columns: 300px 1fr;
     border: 1px solid var(--line);
     border-radius: 10px;
@@ -294,40 +435,49 @@
   .demon-click { cursor: pointer; transition: 0.2s; display: inline-block; }
   .demon-click:hover { text-decoration: underline; filter: brightness(1.2); }
 
-  .section-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .section-header-flex h3 { margin: 0; }
-  
-  .toggle-link { font-size: 13px; color: var(--accent); cursor: pointer; font-weight: bold; user-select: none; }
-  .toggle-link:hover { text-decoration: underline; }
-  
-  .blacklist-content { display: none; padding: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; margin-top: 10px; }
-  .blacklist-item { padding: 8px 4px; color: #ff6b6b; font-weight: bold; border-bottom: 1px solid rgba(255, 75, 75, 0.1); }
-  .blacklist-item:last-child { border-bottom: none; }
-
   .filter-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
   .tab-btn { background: var(--bg); border: 1px solid var(--line); color: var(--muted); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.2s; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
   .filter-container-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 8px; }
-  @media (max-width: 640px) { .filter-container-grid { grid-template-columns: 1fr; } }
+  
+  /* FOOTER BRANDING */
+  footer {
+    margin-top: 60px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; }
+  .footer-links { display: flex; gap: 20px; font-size: 13px; font-weight: 700; }
+  .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
 
-  @media (max-width:860px){
+  @media (max-width: 860px) {
     .sv-wrapper { grid-template-columns: 1fr; }
     .sv-wrapper .sv-list-panel { border-right: none; border-bottom: 1px solid var(--line); max-height: 260px; }
   }
-  @media (max-width:640px) {
+  @media (max-width: 640px) {
     .row { flex-direction: column; }
     .thumb { width: 100%; height: auto; aspect-ratio: 16/9; }
     .stats { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
+    .stat-cards-grid { grid-template-columns: 1fr; }
+    .infra-grid { grid-template-columns: 1fr; }
+    .filter-container-grid { grid-template-columns: 1fr; }
     .nav-menu { max-width: 100%; }
+    footer { flex-direction: column; text-align: center; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div>PSHS-MC Demonlist</div>
+  <div style="cursor:pointer;" onclick="switchPage('landing')">PSHS-MC Demonlist</div>
   <button class="menu-trigger" onclick="toggleNavMenu()" aria-label="Toggle Menu">
     <span></span>
     <span></span>
@@ -336,11 +486,10 @@
 </header>
 
 <nav class="nav-menu" id="navMenu">
-  <span class="nav-item" onclick="switchPage('levels')">Levels Dashboard</span>
-  <span class="nav-item" onclick="switchPage('stats')">Stats Viewer</span>
+  <span class="nav-item" onclick="switchPage('landing')">Home Dashboard</span>
+  <span class="nav-item" onclick="goToLevelsDashboard()">View the Lists</span>
+  <span class="nav-item" onclick="switchPage('stats')">Leaderboards</span>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
-  <span class="nav-item" onclick="scrollToSubmissionBox()">Submit Record</span>
-  <span class="nav-item" onclick="showPlatformerSatireNotice()" style="color: #ffaa00;">Platformer Submissions</span>
   <span class="nav-item" id="themeToggleItem" onclick="toggleThemeMode()" style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
 </nav>
 
@@ -362,7 +511,90 @@
 
 <div class="wrap">
   
-  <div class="app-page active-page" id="levelsPage">
+  <div class="app-page active-page" id="landingPage">
+    <div class="hero-container">
+      <div class="hero-left">
+        <h1>The Go-To Ranking of <span>Every Level</span></h1>
+        <p class="hero-p">Track your campus progress, compete on localized global leaderboards, and conquer the hardest platformer, challenge, and demon list maps in school history.</p>
+        
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="goToSubmissionBox()">Submit Record</button>
+          <button class="btn btn-outline" onclick="goToLevelsDashboard()">View the List</button>
+        </div>
+
+        <div class="stat-cards-grid">
+          <div class="stat-card">
+            <div class="stat-card-num" id="heroCountLevels">--</div>
+            <div class="stat-card-label">Ranked Tiers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num" id="heroCountPlayers">--</div>
+            <div class="stat-card-label">Active Players</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-num" id="heroCountRecords">--</div>
+            <div class="stat-card-label">Verified Records</div>
+          </div>
+        </div>
+
+        <div class="infra-grid">
+          <div class="infra-card">
+            <h3>Full Staff Workflow</h3>
+            <p>Submission queues, verification logs, and audited structural tier placement control.</p>
+          </div>
+          <div class="infra-card">
+            <h3>List Management</h3>
+            <p>Strictly calculated parameters covering Main (1-75) and Extended (76-150) tiers safely.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="news-panel">
+        <h2>Latest <span>News</span></h2>
+        <div class="news-sub">Recent changes in the tier arrays</div>
+        
+        <div class="changelog-feed">
+          <div>
+            <div class="changelog-date">15 June 2026</div>
+            <div class="changelog-item" style="margin-bottom: 12px;">
+              <div class="changelog-tag">Create</div>
+              <div class="changelog-time">21:53</div>
+              <div class="changelog-item-title">Star Chaser</div>
+              <div class="changelog-item-desc">New entry &gt; #162 (Placed into Legacy Records)</div>
+            </div>
+            <div class="changelog-item">
+              <div class="changelog-tag">Create</div>
+              <div class="changelog-time">21:53</div>
+              <div class="changelog-item-title">Dispersion Beam</div>
+              <div class="changelog-item-desc">New entry &gt; #161 (Placed into Legacy Records)</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="changelog-date">07 June 2026</div>
+            <div class="changelog-item">
+              <div class="changelog-tag">Create</div>
+              <div class="changelog-time">05:08</div>
+              <div class="changelog-item-title">Our Fountain</div>
+              <div class="changelog-item-desc">New entry &gt; #46 (Placed into Main List 1-75)</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="changelog-date">01 June 2026</div>
+            <div class="changelog-item">
+              <div class="changelog-tag shift">Tier Shift</div>
+              <div class="changelog-time">00:00</div>
+              <div class="changelog-item-title">Main List Structural Alignment</div>
+              <div class="changelog-item-desc">Main list limits locked down to ranks #1-#75. Extended brackets reassigned to #76-#150.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="app-page" id="levelsPage">
     <div class="section">
       <h3>Search & Filtering</h3>
       <div class="filter-tabs">
@@ -408,8 +640,7 @@
         </div>
         <div id="existingLevelWrap">
           <label class="muted">Choose level</label>
-          <select id="existingLevel" class="select">
-          </select>
+          <select id="existingLevel" class="select"></select>
         </div>
       </div>
 
@@ -458,17 +689,8 @@
   </div>
 
   <div class="app-page" id="statsPage">
-    <div id="introCardWrapper">
-      <div id="introCard">
-        <h2>Stats Viewer</h2>
-        <hr>
-        <p>Get a detailed overview of who completed the most, created the most demons or beat the hardest demons! There is even a leaderboard to compare yourself to the very best!</p>
-        <button class="btn-blue" onclick="activateStatsViewer()">Open the stats viewer!</button>
-      </div>
-    </div>
-
-    <div id="leaderboardSection" style="display: none;">
-      <h2 style="margin: 0 0 10px 4px; font-size: 24px; font-weight: bold;">Stats Viewer Leaderboard</h2>
+    <div id="leaderboardSection">
+      <h2 style="margin: 0 0 10px 4px; font-size: 24px; font-weight: bold;">Stats Leaderboard</h2>
       
       <div class="filter-tabs" style="margin-bottom: 12px;">
         <button class="tab-btn active" id="statTabDemons" onclick="switchStatsPageListTab('demon')">Demon List Stats</button>
@@ -483,60 +705,51 @@
         </select>
       </div>
       
-      <div class="sv-wrapper" id="svWrapper" style="display: grid;">
-        <div class="sv-list-panel" id="leaderboardBody">
-        </div>
-        
+      <div class="sv-wrapper" id="svWrapper">
+        <div class="sv-list-panel" id="leaderboardBody"></div>
         <div class="sv-detail-panel" id="svDetailPanel">
-          <div class="start-prompt" id="startPrompt">
-            Click on a player's name on the left to get started!
-          </div>
-          <div id="profileContent" style="display: none;">
-          </div>
+          <div class="start-prompt" id="startPrompt">Click on a player's name on the left to get started!</div>
+          <div id="profileContent" style="display: none;"></div>
         </div>
-      </div>
-    </div>
-
-    <div class="section" style="margin-top: 25px;">
-      <div class="section-header-flex">
-        <h3>Blacklisted Players</h3>
-        <span id="blacklistToggle" class="toggle-link" onclick="toggleBlacklist()">*maximize*</span>
-      </div>
-      <div id="blacklistContent" class="blacklist-content">
-        <div class="blacklist-item">c0ms</div>
       </div>
     </div>
   </div>
 
   <div class="app-page" id="detailPage">
-    <div class="back" onclick="switchPage('levels')">← Back to main dashboard layout list</div>
+    <div class="back" onclick="switchPage('levels')">← Back to main dashboard list</div>
     <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
     <div class="stats" id="stats"></div>
-    
     <div class="records-container" id="dRecordsContainer"></div>
   </div>
 
   <div class="app-page" id="playerVideoPage">
-    <div class="back" onclick="switchPage('stats')">← Back</div>
+    <div class="back" onclick="switchPage('stats')">← Back to Stats</div>
     <h2 id="pvTitle" style="margin: 10px 0 16px 0;"></h2>
     <div class="video" id="pvVideo"></div>
   </div>
 
+  <footer>
+    <div class="footer-brand">
+      <span>PSHS-MC Demonlist</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com" target="_blank">GitHub Organization</a>
+      <a href="https://github.com" target="_blank">API Documentation</a>
+    </div>
+  </footer>
+
 </div>
 
 <script>
-  // CONFIGURATION CONSTANTS
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
   const GITHUB_JSON_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
 
-  // GLOBAL STATE CHANNELS
   let allLevels = [];
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // APPLICATION INITIALIZATION RUNTIME
   window.onload = () => {
     loadDatabase();
   };
@@ -547,10 +760,10 @@
       if (response.ok) {
         allLevels = await response.json();
       } else {
-        throw new Error("HTTP error payload profile fallback triggered.");
+        throw new Error("Payload profile fallback triggered.");
       }
     } catch (err) {
-      console.warn("Could not load database. Falling back to structured local mock package.");
+      console.warn("Falling back to structured local mock package.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
@@ -561,16 +774,34 @@
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
+    calculateCounterMetrics();
   }
 
-  // DYNAMIC FILTER EXTRACTION CONTROLLER
+  // COMPUTE HOME METRIC CARDS
+  function calculateCounterMetrics() {
+    document.getElementById('heroCountLevels').textContent = allLevels.length;
+    
+    let userSet = new Set();
+    let recordCount = 0;
+    
+    allLevels.forEach(lvl => {
+      if (lvl.victorList) {
+        lvl.victorList.forEach(v => {
+          userSet.add(v.name);
+          recordCount++;
+        });
+      }
+    });
+    
+    document.getElementById('heroCountPlayers').textContent = userSet.size || "0";
+    document.getElementById('heroCountRecords').textContent = recordCount || "0";
+  }
+
   function populateCampusDropdownFilters() {
     let campusSet = new Set();
-    
     allLevels.forEach(lvl => {
       let lvlCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       campusSet.add(lvlCampus);
-      
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
           let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
@@ -580,7 +811,6 @@
     });
 
     let sortedCampuses = Array.from(campusSet).sort();
-
     const dFilter = document.getElementById("dashboardCampusFilter");
     const sFilter = document.getElementById("statsCampusFilter");
 
@@ -588,67 +818,34 @@
     sFilter.innerHTML = '<option value="ALL">All Campuses</option>';
 
     sortedCampuses.forEach(cName => {
-      let optD = document.createElement("option");
-      optD.value = cName;
-      optD.textContent = cName;
-      dFilter.appendChild(optD);
-
-      let optS = document.createElement("option");
-      optS.value = cName;
-      optS.textContent = cName;
-      sFilter.appendChild(optS);
+      let optD = document.createElement("option"); optD.value = cName; optD.textContent = cName; dFilter.appendChild(optD);
+      let optS = document.createElement("option"); optS.value = cName; optS.textContent = cName; sFilter.appendChild(optS);
     });
   }
 
-  // APP NAVIGATION ROUTING ENGINE
   function switchPage(pageId) {
     document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
     document.getElementById(pageId + 'Page').classList.add('active-page');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function toggleNavMenu() {
-    document.getElementById('navMenu').classList.toggle('open');
-  }
-
+  function toggleNavMenu() { document.getElementById('navMenu').classList.toggle('open'); }
   function toggleThemeMode() {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     document.getElementById('themeToggleItem').textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
   }
 
-  function showPlatformerSatireNotice() {
-    alert("Platformer Submissions are only accepted when it is on the gdplatformerlist.com, as there are no way to currently rank your platformer levels. *note this is satire*.");
-    toggleNavMenu();
-  }
+  function openGuidelinesModal() { document.getElementById('guidelinesModal').style.display = 'flex'; toggleNavMenu(); }
+  var closeGuidelinesModal = function() { document.getElementById('guidelinesModal').style.display = 'none'; };
 
-  // MODAL UTILITIES
-  function openGuidelinesModal() {
-    document.getElementById('guidelinesModal').style.display = 'flex';
-    toggleNavMenu();
-  }
+  function goToLevelsDashboard() { switchPage('levels'); if(document.getElementById('navMenu').classList.contains('open')) toggleNavMenu(); }
+  function goToSubmissionBox() { switchPage('levels'); setTimeout(() => { document.getElementById('submissionBox').scrollIntoView({ behavior: 'smooth' }); }, 150); if(document.getElementById('navMenu').classList.contains('open')) toggleNavMenu(); }
 
-  function closeGuidelinesModal() {
-    document.getElementById('guidelinesModal').style.display = 'none';
-  }
-
-  function scrollToSubmissionBox() {
-    document.getElementById('submissionBox').scrollIntoView({ behavior: 'smooth' });
-    toggleNavMenu();
-  }
-
-  // FORMS CONTROL ROUTINES
-  function handleListTypeChange() {
-    populateExistingLevelsDropdown();
-    toggleFormFields();
-  }
-
+  function handleListTypeChange() { populateExistingLevelsDropdown(); toggleFormFields(); }
   function toggleFormFields() {
     let listType = document.getElementById("listType").value;
-    if (listType === "platformer list") listType = "platformer";
-
     const subType = document.getElementById("submissionType").value;
-    
     if (subType === "newLevel") {
       document.getElementById("existingLevelWrap").style.display = "none";
       document.getElementById("newLevelFields").style.display = "block";
@@ -663,76 +860,31 @@
   function populateExistingLevelsDropdown() {
     const select = document.getElementById('existingLevel');
     let targetListType = document.getElementById('listType').value;
-    
-    if (targetListType === "platformer list") targetListType = "platformer";
-
     select.innerHTML = '';
-    
     const filtered = allLevels.filter(lvl => lvl.listType === targetListType);
     if (filtered.length === 0) {
       select.innerHTML = '<option value="">No registered levels available</option>';
       return;
     }
-
     filtered.forEach(lvl => {
-      const opt = document.createElement('option');
-      opt.value = lvl.name;
-      opt.dataset.id = lvl.id;
-      opt.dataset.creator = lvl.creator;
-      opt.textContent = `${lvl.name} (by ${lvl.creator})`;
-      select.appendChild(opt);
+      const opt = document.createElement('option'); opt.value = lvl.name; opt.dataset.id = lvl.id; opt.dataset.creator = lvl.creator;
+      opt.textContent = `${lvl.name} (by ${lvl.creator})`; select.appendChild(opt);
     });
   }
 
-  // DYNAMIC MATHEMATICAL LIST POINTS ALGORITHM
   function calculateLevelPoints(rank) {
     const r = parseInt(rank, 10);
     if (isNaN(r) || r <= 0 || r > 150) return 0.00;
-
-    const top20Points = {
-      1: 350.00, 2: 331.71, 3: 313.42, 4: 291.70, 5: 271.78,
-      6: 253.53, 7: 236.80, 8: 221.47, 9: 207.42, 10: 194.54,
-      11: 182.73, 12: 171.91, 13: 161.99, 14: 152.89, 15: 144.56,
-      16: 136.92, 17: 129.92, 18: 123.50, 19: 117.62, 20: 112.23
-    };
+    const top20Points = { 1: 350, 2: 331.71, 3: 313.42, 4: 291.7, 5: 271.78, 6: 253.53, 7: 236.8, 8: 221.47, 9: 207.42, 10: 194.54, 11: 182.73, 12: 171.91, 13: 161.99, 14: 152.89, 15: 144.56, 16: 136.92, 17: 129.92, 18: 123.5, 19: 117.62, 20: 112.23 };
     if (r <= 20) return top20Points[r];
-
-    const midZonePoints = {
-      21: 110.81, 22: 109.39, 23: 107.99, 24: 106.61, 25: 105.24,
-      26: 103.88, 27: 102.54, 28: 101.21, 29: 99.89, 30: 98.58,
-      31: 97.29, 32: 96.01, 33: 94.75, 34: 93.49, 35: 92.25,
-      36: 89.95, 37: 87.73, 38: 85.58, 39: 83.51, 40: 81.51,
-      41: 79.58, 42: 77.72, 43: 75.92, 44: 74.19, 45: 72.52,
-      46: 70.90, 47: 69.34, 48: 67.83, 49: 66.38, 50: 64.98,
-      51: 63.62, 52: 62.31, 53: 61.05, 54: 59.83, 55: 58.66,
-      56: 57.60, 57: 56.47, 58: 55.37, 59: 54.30, 60: 53.26,
-      61: 52.25, 62: 51.26, 63: 50.30, 64: 49.37, 65: 48.46,
-      66: 47.57, 67: 46.71, 68: 45.87, 69: 45.06, 70: 44.26,
-      71: 43.49, 72: 42.74, 73: 42.01, 74: 41.30, 75: 40.60
-    };
-    if (r <= 75) return midZonePoints[r];
-
-    const extendedPoints = {
-      76: 39.93, 77: 39.27, 78: 38.63, 79: 38.01, 80: 37.41,
-      81: 36.82, 82: 36.24, 83: 35.69, 84: 35.14, 85: 34.61,
-      86: 34.10, 87: 33.60, 88: 33.11, 89: 32.64, 90: 32.18,
-      91: 31.73, 92: 31.29, 93: 30.87, 94: 30.45, 95: 30.05,
-      96: 29.66, 97: 29.28, 98: 28.91, 99: 28.55, 100: 28.19,
-      101: 27.85, 102: 27.52, 103: 27.19, 104: 26.88, 105: 26.57,
-      106: 26.27, 107: 25.98, 108: 25.70, 109: 25.42, 110: 25.16,
-      111: 24.90, 112: 24.64, 113: 24.39, 114: 24.15, 115: 23.92,
-      116: 23.69, 117: 23.47, 118: 23.26, 119: 23.05, 120: 22.84,
-      121: 22.64, 122: 22.45, 123: 22.26, 124: 22.08, 125: 21.90,
-      126: 21.73, 127: 21.56, 128: 21.39, 129: 21.23, 130: 21.08,
-      131: 20.92, 132: 20.78, 133: 20.63, 134: 20.49, 135: 20.36,
-      136: 20.23, 137: 20.10, 138: 19.97, 139: 19.85, 140: 19.73,
-      141: 19.62, 142: 19.50, 143: 19.39, 144: 19.29, 145: 19.18,
-      146: 19.08, 147: 18.99, 148: 18.89, 149: 18.80, 150: 18.71
-    };
+    if (r <= 75) {
+      const midZonePoints = { 21: 110.81, 22: 109.39, 23: 107.99, 24: 106.61, 25: 105.24, 26: 103.88, 27: 102.54, 28: 101.21, 29: 99.89, 30: 98.58, 31: 97.29, 32: 96.01, 33: 94.75, 34: 93.49, 35: 92.25, 36: 89.95, 37: 87.73, 38: 85.58, 39: 83.51, 40: 81.51, 41: 79.58, 42: 77.72, 43: 75.92, 44: 74.19, 45: 72.52, 46: 70.90, 47: 69.34, 48: 67.83, 49: 66.38, 50: 64.98, 51: 63.62, 52: 62.31, 53: 61.05, 54: 59.83, 55: 58.66, 56: 57.6, 57: 56.47, 58: 55.37, 59: 54.3, 60: 53.26, 61: 52.25, 62: 51.26, 63: 50.3, 64: 49.37, 65: 48.46, 66: 47.57, 67: 46.71, 68: 45.87, 69: 45.06, 70: 44.26, 71: 43.49, 72: 42.74, 73: 42.01, 74: 41.3, 75: 40.6 };
+      return midZonePoints[r];
+    }
+    const extendedPoints = { 76: 39.93, 77: 39.27, 78: 38.63, 79: 38.01, 80: 37.41, 81: 36.82, 82: 36.24, 83: 35.69, 84: 35.14, 85: 34.61, 86: 34.1, 87: 33.6, 88: 33.11, 89: 32.64, 90: 32.18, 91: 31.73, 92: 31.29, 93: 30.87, 94: 30.45, 95: 30.05, 96: 29.66, 97: 29.28, 98: 28.91, 99: 28.55, 100: 28.19, 101: 27.85, 102: 27.52, 103: 27.19, 104: 26.88, 105: 26.57, 106: 26.27, 107: 25.98, 108: 25.7, 109: 25.42, 110: 25.16, 111: 24.9, 112: 24.64, 113: 24.39, 114: 24.15, 115: 23.92, 116: 23.69, 117: 23.47, 118: 23.26, 119: 23.05, 120: 22.84, 121: 22.64, 122: 22.45, 123: 22.26, 124: 22.08, 125: 21.9, 126: 21.73, 127: 21.56, 128: 21.39, 129: 21.23, 130: 21.08, 131: 20.92, 132: 20.78, 133: 20.63, 134: 20.49, 135: 20.36, 136: 20.23, 137: 20.1, 138: 19.97, 139: 19.85, 140: 19.73, 141: 19.62, 142: 19.5, 143: 19.39, 144: 19.29, 145: 19.18, 146: 19.08, 147: 18.99, 148: 18.89, 149: 18.80, 150: 18.71 };
     return extendedPoints[r] || 0.00;
   }
 
-  // COMPONENT RENDERING ROUTINES
   function switchMainListTab(tab) {
     currentMainTab = tab;
     document.getElementById('tabDemons').classList.toggle('active', tab === 'demon');
@@ -749,49 +901,26 @@
 
     let filtered = allLevels.filter(lvl => {
       if (lvl.listType !== currentMainTab) return false;
-      
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      
-      let matchesCampus = false;
-      if (campusFilter === "ALL") {
-        matchesCampus = true;
-      } else {
-        if (levelCampus === campusFilter) {
-          matchesCampus = true;
-        } else if (lvl.victorList) {
-          matchesCampus = lvl.victorList.some(v => {
-            let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
-            return vCampus === campusFilter;
-          });
-        }
-      }
-
+      let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (lvl.victorList && lvl.victorList.some(v => ((v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus") === campusFilter)));
       if (!matchesCampus) return false;
-
-      return (
-        lvl.name.toLowerCase().includes(searchVal) ||
-        lvl.creator.toLowerCase().includes(searchVal) ||
-        (lvl.verifier && lvl.verifier.toLowerCase().includes(searchVal)) ||
-        lvl.diff.toLowerCase().includes(searchVal)
-      );
+      return (lvl.name.toLowerCase().includes(searchVal) || lvl.creator.toLowerCase().includes(searchVal) || lvl.diff.toLowerCase().includes(searchVal));
     });
 
     filtered.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
-
     if (filtered.length === 0) {
-      listContainer.innerHTML = '<div class="empty">No entries found matching specified search or campus constraints.</div>';
+      listContainer.innerHTML = '<div class="empty">No entries found matching search or campus constraints.</div>';
       return;
     }
 
     filtered.forEach(lvl => {
       const displayPoints = calculateLevelPoints(lvl.rank);
-      
       const row = document.createElement('div');
       row.className = 'row';
       row.onclick = () => showLevelDetailPage(lvl, lvl.rank);
       row.innerHTML = `
         <div class="rank">#${lvl.rank}</div>
-        <div class="thumb"><img src="${lvl.img}" alt="Thumbnail"></div>
+        <div class="thumb"><img src="${lvl.img}" alt="Thumb"></div>
         <div class="info">
           <div class="title">${lvl.name} <span class="badge">${lvl.diff}</span></div>
           <div class="sub">Created by ${lvl.creator} | Verified by ${lvl.verifier}</div>
@@ -808,20 +937,16 @@
     const displayRank = functionalRank || lvl.rank;
     document.getElementById('dTitle').textContent = lvl.name;
     document.getElementById('dInfo').innerHTML = `Created by <strong>${lvl.creator}</strong> | Verified by <strong>${lvl.verifier}</strong><br>ID: ${lvl.id} | Class: ${lvl.diff}`;
+    document.getElementById('video').innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No footage loaded.</div>`;
     
-    const videoWrap = document.getElementById('video');
-    videoWrap.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No validation footage loaded.</div>`;
-    
-    const calculatedPoints = calculateLevelPoints(displayRank);
     document.getElementById('stats').innerHTML = `
       <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
-      <div class="stat"><h4>List Points</h4><p>${calculatedPoints.toFixed(2)}</p></div>
+      <div class="stat"><h4>List Points</h4><p>${calculateLevelPoints(displayRank).toFixed(2)}</p></div>
       <div class="stat"><h4>Completions</h4><p>${lvl.victorList ? lvl.victorList.length : 0}</p></div>
     `;
 
     const recordsContainer = document.getElementById('dRecordsContainer');
-    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions recorded from active campus profiles.</p>`;
-    
+    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions from active campus profiles.</p>`;
     if (!lvl.victorList || lvl.victorList.length === 0) {
       recordsContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
       return;
@@ -829,32 +954,14 @@
 
     const table = document.createElement('table');
     table.className = 'records-table';
-    table.innerHTML = `
-      <thead>
-        <tr><th>Player Name</th><th>Campus Unit</th><th style="text-align:right;">Validation Link</th></tr>
-      </thead>
-      <tbody></tbody>
-    `;
-
+    table.innerHTML = `<thead><tr><th>Player Name</th><th>Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
     const tbody = table.querySelector('tbody');
     lvl.victorList.forEach(v => {
       const tr = document.createElement('tr');
-      const scorePct = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
-      tr.innerHTML = `
-        <td>${v.name} <strong>(${scorePct}%)</strong></td>
-        <td>${v.campus || 'Main Campus'}</td>
-        <td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>
-      `;
+      tr.innerHTML = `<td>${v.name} <strong>(${v.percent || 100}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>`;
       tbody.appendChild(tr);
     });
     recordsContainer.appendChild(table);
-  }
-
-  // LEADERS COMPUTATION SYSTEM
-  function activateStatsViewer() {
-    document.getElementById('introCardWrapper').style.display = 'none';
-    document.getElementById('leaderboardSection').style.display = 'block';
-    renderStatsLeaderboard();
   }
 
   function switchStatsPageListTab(tab) {
@@ -869,250 +976,106 @@
     const leaderboardBody = document.getElementById('leaderboardBody');
     const campusFilter = document.getElementById('statsCampusFilter').value;
     leaderboardBody.innerHTML = '';
-    
     let playerMap = {};
     
-    let filteredLevels = allLevels.filter(lvl => {
-      if (lvl.listType !== currentStatsTab) return false;
-      
-      let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      
-      if (campusFilter === "ALL") return true;
-      if (levelCampus === campusFilter) return true;
-      if (lvl.victorList) {
-        return lvl.victorList.some(v => {
-          let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
-          return vCampus === campusFilter;
-        });
-      }
-      return false;
-    });
-
-    filteredLevels.sort((a, b) => parseInt(a.rank) - parseInt(b.rank));
-
-    filteredLevels.forEach(lvl => {
+    allLevels.filter(lvl => lvl.listType === currentStatsTab).forEach(lvl => {
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
           const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
           if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
-
-          if (!playerMap[v.name]) {
-            playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
-          }
+          if (!playerMap[v.name]) playerMap[v.name] = { name: v.name, points: 0, completions: [], campus: playerCampus };
           
-          let maxPoints = calculateLevelPoints(lvl.rank);
-          let playerPercent = typeof v.percent !== 'undefined' ? parseFloat(v.percent) : 100;
-          let minRequiredPercent = typeof lvl.listPercent !== 'undefined' ? parseFloat(lvl.listPercent) : 0;
-          let earnedPoints = 0;
-          
-          if (playerPercent >= minRequiredPercent && playerPercent <= 100) {
-            earnedPoints = maxPoints * (playerPercent / 100);
-          }
-
+          let earnedPoints = calculateLevelPoints(lvl.rank) * ((v.percent || 100) / 100);
           playerMap[v.name].points += earnedPoints;
-          playerMap[v.name].completions.push({ 
-            name: lvl.name, 
-            rank: lvl.rank, 
-            video: v.video,
-            percent: playerPercent
-          });
+          playerMap[v.name].completions.push({ name: lvl.name, rank: lvl.rank, video: v.video, percent: v.percent || 100 });
         });
       }
     });
 
     let playersArray = Object.values(playerMap);
-    playersArray.forEach(player => {
-      player.points = Math.round(player.points * 100) / 100;
-    });
-
+    playersArray.forEach(p => p.points = Math.round(p.points * 100) / 100);
     playersArray.sort((a, b) => b.points - a.points);
 
     if (playersArray.length === 0) {
-      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No active record pools computed for this campus filter.</div>';
+      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No records match filter values.</div>';
       document.getElementById('profileContent').style.display = 'none';
       document.getElementById('startPrompt').style.display = 'block';
       return;
     }
 
     playersArray.forEach((player, index) => {
-      const row = document.createElement('div');
-      row.className = 'sv-row';
-      row.id = `player-row-${index}`;
+      const row = document.createElement('div'); row.className = 'sv-row'; row.id = `player-row-${index}`;
       row.onclick = () => displayPlayerProfile(player, index);
-      row.innerHTML = `
-        <div class="sv-left">
-          <span class="sv-rank">#${index + 1}</span>
-          <span class="sv-name">${player.name}</span>
-        </div>
-        <span class="sv-points">${player.points.toFixed(2)} Pts</span>
-      `;
+      row.innerHTML = `<div class="sv-left"><span class="sv-rank">#${index + 1}</span><span class="sv-name">${player.name}</span></div><span class="sv-points">${player.points.toFixed(2)} Pts</span>`;
       leaderboardBody.appendChild(row);
     });
   }
 
   function displayPlayerProfile(player, index) {
     document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-    const selectedRow = document.getElementById(`player-row-${index}`);
-    if (selectedRow) selectedRow.classList.add('active-player');
-    
+    document.getElementById(`player-row-${index}`).classList.add('active-player');
     document.getElementById('startPrompt').style.display = 'none';
     const profileContent = document.getElementById('profileContent');
     profileContent.style.display = 'block';
 
-    let mainList = [];
-    let extendedList = [];
-    let legacyList = [];
-
-    // CRITICAL FIX: Cutoffs correctly re-aligned (Main: 1-75, Extended: 76-150)
+    let mainList = [], extendedList = [], legacyList = [];
     player.completions.forEach(c => {
       if (c.rank <= 75) mainList.push(c);
       else if (c.rank <= 150) extendedList.push(c);
       else legacyList.push(c);
     });
 
-    let verifiedList = allLevels.filter(lvl => 
-      lvl.listType === currentStatsTab && 
-      lvl.verifier && 
-      lvl.verifier.toLowerCase() === player.name.toLowerCase()
-    );
-
     const buildCloudHTML = (list, className) => {
       if (list.length === 0) return '<span class="muted">None recorded</span>';
-      return list.map(c => {
-        const pctTag = c.percent < 100 ? ` (${c.percent}%)` : '';
-        return `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})${pctTag}</span>`;
-      }).join(', ');
+      return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name}', '${c.video}')">${c.name} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(', ');
     };
-
-    const buildVerifiedCloudHTML = (list, className) => {
-      if (list.length === 0) return '<span class="muted">---</span>';
-      return list.map(lvl => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${lvl.name}', '${lvl.video}')">${lvl.name} (#${lvl.rank})</span>`).join(', ');
-    };
-
-    let tabVerifiedLabel = 'Demons Verified';
-    if (currentStatsTab === 'challenge') tabVerifiedLabel = 'Challenges Verified';
-    if (currentStatsTab === 'platformer') tabVerifiedLabel = 'Platformers Verified';
 
     profileContent.innerHTML = `
-      <div class="profile-title-row">
-        <h3>#${index + 1} ${player.name}</h3>
-        <span class="badge" style="margin-top:4px;">${player.campus}</span>
-      </div>
+      <div class="profile-title-row"><h3>#${index + 1} ${player.name}</h3><span class="badge" style="margin-top:4px;">${player.campus}</span></div>
       <div class="stats-grid">
         <div class="stat-block"><h4>Global Score</h4><p>${player.points.toFixed(2)}</p></div>
         <div class="stat-block"><h4>Completions</h4><p>${player.completions.length}</p></div>
       </div>
       <div class="demons-section">
-        <h4>Main List Completions</h4>
-        <div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
-        <h4 style="margin-top:20px;">Extended List Completions</h4>
-        <div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
-        <h4 style="margin-top:20px;">Legacy Records</h4>
-        <div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
-        <h4 style="margin-top:20px;">${tabVerifiedLabel}</h4>
-        <div class="demons-cloud">${buildVerifiedCloudHTML(verifiedList, 'cloud-main')}</div>
+        <h4>Main List Completions (1-75)</h4><div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
+        <h4 style="margin-top:20px;">Extended List Completions (76-150)</h4><div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
+        <h4 style="margin-top:20px;">Legacy Records</h4><div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
       </div>
     `;
   }
 
   function viewPlayerVideo(levelName, videoUrl) {
     switchPage('playerVideo');
-    document.getElementById('pvTitle').textContent = `Verification File: ${levelName}`;
+    document.getElementById('pvTitle').textContent = `Verification: ${levelName}`;
     document.getElementById('pvVideo').innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
   }
 
-  function toggleBlacklist() {
-    const el = document.getElementById('blacklistContent');
-    const toggle = document.getElementById('blacklistToggle');
-    if (el.style.display === 'block') {
-      el.style.display = 'none';
-      toggle.textContent = '*maximize*';
-    } else {
-      el.style.display = 'block';
-      toggle.textContent = '*minimize*';
-    }
-  }
-
-  // TRANSACTION SUBMISSION ENGINE Pipeline
   document.getElementById("submitBtn").onclick = async (e) => {
-    e.preventDefault(); 
-    
-    let listType = document.getElementById("listType").value;
-    if (listType === "platformer list") listType = "platformer";
-
-    const subType = document.getElementById("submissionType").value;
+    e.preventDefault();
     const username = document.getElementById("username").value.trim();
     const recordLink = document.getElementById("recordLink").value.trim();
     const campus = document.getElementById("campus").value.trim();
-
-    if (!username || !recordLink || !campus) {
-      alert("Validation Error: Username, Record Link, and Campus text fields must be populated.");
-      return;
-    }
+    if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
 
     const submitBtn = document.getElementById("submitBtn");
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Processing transmission package...";
+    submitBtn.disabled = true; submitBtn.textContent = "Processing transmission package...";
 
-    let payload = {
-      listType: listType, 
-      type: subType,      
-      username: username,
-      recordLink: recordLink,
-      campus: campus
-    };
-
-    if (subType === "record") {
-      const select = document.getElementById("existingLevel");
-      const chosenOpt = select.options[select.selectedIndex];
-      
-      if (!chosenOpt || !chosenOpt.dataset.id) {
-        alert("Error: No selected level match discovered. Make sure a level is selected.");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Send for review";
-        return;
-      }
-      payload.levelName = chosenOpt.value;
-      payload.id = chosenOpt.dataset.id;
-      payload.creator = chosenOpt.dataset.creator;
+    let payload = { listType: document.getElementById("listType").value, type: document.getElementById("submissionType").value, username: username, recordLink: recordLink, campus: campus };
+    if (payload.type === "record") {
+      const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
+      payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
     } else {
-      payload.newName = document.getElementById("newName").value.trim();
-      payload.newLevelId = document.getElementById("newLevelId").value.trim();
-      payload.newCreator = document.getElementById("newCreator").value.trim();
-      if (listType === "challenge") {
-        payload.difficulty = document.getElementById("challengeDifficulty").value.trim();
-      }
+      payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
     }
 
     try {
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(payload)
-      });
+      const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
       const resData = await response.json();
-      
       if (resData.status === "ok") {
-        alert("Success! Transmission entry safely submitted into data pool queues.");
-        document.getElementById("username").value = "";
-        document.getElementById("recordLink").value = "";
-        document.getElementById("campus").value = "";
-        if (document.getElementById("newName")) document.getElementById("newName").value = "";
-        if (document.getElementById("newLevelId")) document.getElementById("newLevelId").value = "";
-        if (document.getElementById("newCreator")) document.getElementById("newCreator").value = "";
-        if (document.getElementById("challengeDifficulty")) document.getElementById("challengeDifficulty").value = "";
-      } else {
-        alert("Gateway Rejected Entry: " + resData.message);
-      }
-    } catch (err) {
-      alert("Fatal Transmission Network Error. Verify your configuration settings.");
-      console.error(err);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Send for review";
-    }
+        alert("Transmission entry safely queued.");
+        document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
+      } else { alert("Rejected: " + resData.message); }
+    } catch (err) { alert("Transmission error."); } finally { submitBtn.disabled = false; submitBtn.textContent = "Send for review"; }
   };
 </script>
 </body>
