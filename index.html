@@ -705,7 +705,7 @@
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
   
-  // Primary and CDN Failover paths for your repository JSON file
+  // File endpoints configuration targeting your levels database
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
@@ -714,7 +714,6 @@
   let currentStatsTab = 'demon';
 
   window.onload = () => {
-    // Set immediate safe UI placeholders before the network request finishes
     clearUIFieldsToZero();
     loadDatabase();
   };
@@ -745,7 +744,6 @@
     let success = false;
     let rawData = null;
 
-    // Attempt 1: Try Primary GitHub Raw Domain
     try {
       const response = await fetchWithTimeout(GITHUB_PRIMARY_URL);
       if (response.ok) {
@@ -753,10 +751,9 @@
         success = true;
       }
     } catch (err) {
-      console.warn("Primary GitHub Raw connection failed or timed out. Trying CDN backup mirror...", err);
+      console.warn("Primary raw file path timed out. Rerouting via CDN mirror tracking network...", err);
     }
 
-    // Attempt 2: Try CORS-friendly CDN Mirror fallback
     if (!success) {
       try {
         const response = await fetchWithTimeout(GITHUB_CDN_URL);
@@ -765,27 +762,24 @@
           success = true;
         }
       } catch (err) {
-        console.error("All network endpoints for levels.json failed.", err);
+        console.error("All source endpoint hooks failed to locate levels.json structural layouts.", err);
       }
     }
 
-    // Process structural layout translation safely
     if (success && rawData) {
       if (Array.isArray(rawData)) {
         allLevels = rawData;
       } else if (typeof rawData === 'object') {
         if (Array.isArray(rawData.levels)) allLevels = rawData.levels;
-        else if (Array.isArray(rawData.list)) rawData.list = rawData.list;
+        else if (Array.isArray(rawData.list)) allLevels = rawData.list;
         else {
-          // If JSON is formatted as an object with level keys instead of an array
           allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
         }
       }
     }
 
-    // Final Safe Fallback: Populates local tracking array if both network operations fail
     if (!allLevels || allLevels.length === 0) {
-      console.warn("Loading backup local dataset packages onto components view dashboard.");
+      console.warn("Loading standard structural templates onto components view dashboard.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
@@ -793,7 +787,6 @@
       ];
     }
     
-    // Execute rendering engine modules safely
     processLiveDecayFilterAndNews();
     calculateCounterMetrics();
     populateCampusDropdownFilters();
@@ -909,7 +902,6 @@
           </div>
         `;
       });
-      dayWrapper.innerHTML = itemsHTML;
       dayWrapper.innerHTML = itemsHTML;
       feedContainer.appendChild(dayWrapper);
     });
@@ -1208,8 +1200,10 @@
     leaderboardBody.innerHTML = '';
     let playerMap = {};
     
-    allLevels.filter(lvl => getNormalizedListType(lvl) === currentStatsTab).forEach(lvl => {
+    allLevels.forEach(lvl => {
       let recordList = getRecordList(lvl);
+      let catType = getNormalizedListType(lvl);
+      
       recordList.forEach(v => {
         let pName = getPlayerName(v);
         if (!pName || pName.trim() === "") return;
@@ -1218,23 +1212,45 @@
         const playerCampus = (v.campus && String(v.campus).trim() !== "") ? String(v.campus).trim() : 'Main Campus';
         if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
         
-        if (!playerMap[pName]) playerMap[pName] = { name: pName, points: 0, completions: [], campus: playerCampus };
+        if (!playerMap[pName]) {
+          playerMap[pName] = { 
+            name: pName, 
+            points: 0, 
+            completions: [], 
+            campus: playerCampus,
+            demonCount: 0,
+            challengeCount: 0,
+            platformerCount: 0
+          };
+        }
         
         let targetRank = parseInt(lvl.rank || lvl.placement || 999, 10);
         let targetPercent = parseInt(v.percent || v.percentage || 100, 10);
         let earnedPoints = calculateLevelPoints(targetRank) * (targetPercent / 100);
         
-        playerMap[pName].points += earnedPoints;
+        if (catType === currentStatsTab) {
+          playerMap[pName].points += earnedPoints;
+        }
+
+        if (targetPercent === 100) {
+          if (catType === 'demon') playerMap[pName].demonCount++;
+          else if (catType === 'challenge') playerMap[pName].challengeCount++;
+          else if (catType === 'platformer') playerMap[pName].platformerCount++;
+        }
+        
         playerMap[pName].completions.push({ 
           name: lvl.name || lvl.levelName || 'Unnamed', 
           rank: targetRank, 
           video: v.video || v.link || v.proof || '#', 
-          percent: targetPercent 
+          percent: targetPercent,
+          category: catType
         });
       });
     });
 
     let playersArray = Object.values(playerMap);
+    
+    playersArray = playersArray.filter(p => p.completions.some(c => c.category === currentStatsTab));
     playersArray.forEach(p => p.points = Math.round(p.points * 100) / 100);
     playersArray.sort((a, b) => b.points - a.points);
 
@@ -1249,9 +1265,23 @@
     }
 
     playersArray.forEach((player, index) => {
-      const row = document.createElement('div'); row.className = 'sv-row'; row.id = `player-row-${index}`;
+      const row = document.createElement('div'); 
+      row.className = 'sv-row'; 
+      row.id = `player-row-${index}`;
       row.onclick = () => displayPlayerProfile(player, index);
-      row.innerHTML = `<div class="sv-left"><span class="sv-rank">#${index + 1}</span><span class="sv-name">${player.name}</span></div><span class="sv-points">${player.points.toFixed(2)} Pts</span>`;
+      
+      let countBadgeStr = "";
+      if (currentStatsTab === 'demon') countBadgeStr = `${player.demonCount} Demons Verified`;
+      else if (currentStatsTab === 'challenge') countBadgeStr = `${player.challengeCount} Challenges Verified`;
+      else if (currentStatsTab === 'platformer') countBadgeStr = `${player.platformerCount} Platformers Verified`;
+
+      row.innerHTML = `
+        <div class="sv-left">
+          <span class="sv-rank">#${index + 1}</span>
+          <span class="sv-name">${player.name} <small style="display:block; opacity:0.6; font-size:11px; font-weight:normal; color:var(--accent);">${countBadgeStr}</small></span>
+        </div>
+        <span class="sv-points">${player.points.toFixed(2)} Pts</span>
+      `;
       leaderboardBody.appendChild(row);
     });
   }
@@ -1270,7 +1300,8 @@
     profileContent.style.display = 'block';
 
     let mainList = [], extendedList = [], legacyList = [];
-    player.completions.forEach(c => {
+    
+    player.completions.filter(c => c.category === currentStatsTab).forEach(c => {
       if (c.rank <= 75) mainList.push(c);
       else if (c.rank <= 150) extendedList.push(c);
       else legacyList.push(c);
@@ -1281,15 +1312,20 @@
       return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name.replace(/'/g, "\\'")}', '${c.video}')">${c.name} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(', ');
     };
 
+    let contextHeaderName = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
+
     profileContent.innerHTML = `
       <div class="profile-title-row"><h3>#${index + 1} ${player.name}</h3><span class="badge" style="margin-top:4px;">${player.campus}</span></div>
+      <div class="stats-summary-row" style="margin: 12px 0; font-size:13px; display:flex; gap:10px; opacity:0.85;">
+         <span>👹 ${player.demonCount} Demons</span> | <span>⚡ ${player.challengeCount} Challenges</span> | <span>🎮 ${player.platformerCount} Platformers</span>
+      </div>
       <div class="stats-grid">
-        <div class="stat-block"><h4>Global Score</h4><p>${player.points.toFixed(2)}</p></div>
-        <div class="stat-block"><h4>Completions</h4><p>${player.completions.length}</p></div>
+        <div class="stat-block"><h4>Category Score</h4><p>${player.points.toFixed(2)}</p></div>
+        <div class="stat-block"><h4>Completions</h4><p>${player.completions.filter(c => c.category === currentStatsTab).length}</p></div>
       </div>
       <div class="demons-section">
-        <h4>Main List Completions (1-75)</h4><div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
-        <h4 style="margin-top:20px;">Extended List Completions (76-150)</h4><div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
+        <h4>Main ${contextHeaderName} Completions (1-75)</h4><div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
+        <h4 style="margin-top:20px;">Extended ${contextHeaderName} Completions (76-150)</h4><div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
         <h4 style="margin-top:20px;">Legacy Records</h4><div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
       </div>
     `;
