@@ -757,7 +757,6 @@
       const structuralMsDiff = today.getTime() - spawnDate.getTime();
       const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
 
-      // Capture dynamic group log event if the item is inside the active live feed window
       if (elapsedDays >= 0 && elapsedDays < 14) {
         const displayDateString = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[displayDateString]) {
@@ -776,12 +775,10 @@
         });
       }
 
-      // 1. Structural Dropout Filter Check: Remove level completely at 2 weeks
       if (elapsedDays >= 14 || elapsedDays < 0) {
         return; 
       }
 
-      // 2. Count Down Drift Execution
       const baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
       if (!lvl.initialRank) lvl.initialRank = baseRank; 
       
@@ -824,7 +821,9 @@
     });
   }
 
+  /* --- DYNAMIC METRICS PARSING ENGINE FROM LIVE JSON --- */
   function calculateCounterMetrics() {
+    // 1. Amount of Ranked Tiers / Levels directly from the file array length
     document.getElementById('heroCountLevels').textContent = allLevels.length;
     
     let userSet = new Set();
@@ -833,14 +832,18 @@
     allLevels.forEach(lvl => {
       if (lvl.victorList) {
         lvl.victorList.forEach(v => {
-          userSet.add(v.name);
+          // 2. Active Players collected strictly by unique username tracking configurations
+          if (v.name && v.name.trim() !== "") {
+            userSet.add(v.name.trim());
+          }
+          // 3. Verified Records compiled calculation accumulation from nested entries
           recordCount++;
         });
       }
     });
     
-    document.getElementById('heroCountPlayers').textContent = userSet.size || "0";
-    document.getElementById('heroCountRecords').textContent = recordCount || "0";
+    document.getElementById('heroCountPlayers').textContent = userSet.size;
+    document.getElementById('heroCountRecords').textContent = recordCount;
   }
 
   function populateCampusDropdownFilters() {
