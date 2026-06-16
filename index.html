@@ -765,19 +765,57 @@
     } catch (err) {
       console.warn("Falling back to structured local mock package.");
       allLevels = [
-        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
+        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-10", victorList: [{ name: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
+        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-02", victorList: [{ name: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
+        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", rawTier: 22, campus: "Davao Region Campus", createdDate: "2026-06-15", victorList: [{ name: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
       ];
     }
     
+    // Apply time-decay filters and drop out-of-bounds maps automatically
+    processLiveDecayFilter();
     populateCampusDropdownFilters();
     renderLevelsDashboard();
     populateExistingLevelsDropdown();
     calculateCounterMetrics();
   }
 
-  // COMPUTE HOME METRIC CARDS
+  /* --- TIME DECAY LOGIC ENGINE --- */
+  function processLiveDecayFilter() {
+    // Standardize system perspective matching midnight current run profile
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const activeFilteredList = [];
+
+    allLevels.forEach(lvl => {
+      // Fallback timestamp window mapping if API response misses data
+      if (!lvl.createdDate) {
+        lvl.createdDate = "2026-06-14"; 
+      }
+
+      const spawnDate = new Date(lvl.createdDate);
+      spawnDate.setHours(0, 0, 0, 0);
+
+      // Compute physical time differences
+      const structuralMsDiff = today.getTime() - spawnDate.getTime();
+      const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
+
+      // 1. Filter Check: Remove level completely if age hits or exceeds 14 days
+      if (elapsedDays >= 14 || elapsedDays < 0) {
+        return; 
+      }
+
+      // 2. Count Down / Rank Shift Logic: Add age value to shift down on live dashboard feed
+      const baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
+      if (!lvl.initialRank) lvl.initialRank = baseRank; 
+      
+      lvl.rank = baseRank + elapsedDays; 
+      activeFilteredList.push(lvl);
+    });
+
+    allLevels = activeFilteredList;
+  }
+
   function calculateCounterMetrics() {
     document.getElementById('heroCountLevels').textContent = allLevels.length;
     
@@ -1060,7 +1098,18 @@
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.disabled = true; submitBtn.textContent = "Processing transmission package...";
 
-    let payload = { listType: document.getElementById("listType").value, type: document.getElementById("submissionType").value, username: username, recordLink: recordLink, campus: campus };
+    // Capture entry time matching midnight pattern configuration
+    const generationStamp = new Date().toISOString().split('T')[0];
+
+    let payload = { 
+      listType: document.getElementById("listType").value, 
+      type: document.getElementById("submissionType").value, 
+      username: username, 
+      recordLink: recordLink, 
+      campus: campus,
+      createdDate: generationStamp
+    };
+
     if (payload.type === "record") {
       const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
       payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
