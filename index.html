@@ -719,20 +719,23 @@
       const response = await fetch(GITHUB_JSON_URL);
       if (response.ok) {
         const data = await response.json();
+        
         if (Array.isArray(data)) {
           allLevels = data;
-        } else if (data.levels && Array.isArray(data.levels)) {
-          allLevels = data.levels;
-        } else if (data.list && Array.isArray(data.list)) {
-          allLevels = data.list;
+        } else if (data && typeof data === 'object') {
+          if (Array.isArray(data.levels)) allLevels = data.levels;
+          else if (Array.isArray(data.list)) allLevels = data.list;
+          else {
+            allLevels = Object.values(data).filter(item => item && typeof item === 'object' && (item.name || item.id));
+          }
         } else {
-          allLevels = [];
+          throw new Error("Unrecognized data format structure.");
         }
       } else {
         throw new Error("Payload fallback triggered.");
       }
     } catch (err) {
-      console.warn("Falling back to structured local mock package due to data fetch constraints.");
+      console.warn("Falling back to local mock data package due to network restrictions or JSON formatting rules.");
       allLevels = [
         { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", rawTier: 24, campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
         { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", rawTier: 17, campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
@@ -740,7 +743,7 @@
       ];
     }
     
-    // Process operations safely without destroying the master reference
+    // Execute rendering stages safely
     processLiveDecayFilterAndNews();
     calculateCounterMetrics();
     populateCampusDropdownFilters();
@@ -749,21 +752,40 @@
     renderStatsLeaderboard();
   }
 
+  // Safely predicts list groups if your online JSON is missing explicit "listType" fields
+  function getNormalizedListType(lvl) {
+    if (!lvl) return 'demon';
+    let typeRaw = lvl.listType || lvl.type || '';
+    typeRaw = String(typeRaw).toLowerCase().trim();
+    
+    if (typeRaw.includes('challenge')) return 'challenge';
+    if (typeRaw.includes('platformer')) return 'platformer';
+    if (typeRaw.includes('demon')) return 'demon';
+    
+    if (lvl.diff) {
+      let diffRaw = String(lvl.diff).toLowerCase();
+      if (diffRaw.includes('challenge')) return 'challenge';
+      if (diffRaw.includes('platformer')) return 'platformer';
+    }
+    return 'demon';
+  }
+
+  function getRecordList(lvl) {
+    if (!lvl) return [];
+    return lvl.records || lvl.victorList || lvl.completions || lvl.vids || [];
+  }
+
   function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     const newsByDateMap = {};
 
     allLevels.forEach(lvl => {
-      // Parse base level ranking defaults safely
       let baseRank = parseInt(lvl.initialRank || lvl.rank, 10);
       if (isNaN(baseRank)) baseRank = 999;
       if (!lvl.initialRank) lvl.initialRank = baseRank;
 
-      if (!lvl.createdDate) {
-        lvl.createdDate = "2026-06-14"; 
-      }
+      if (!lvl.createdDate) lvl.createdDate = "2026-06-14"; 
 
       const spawnDate = new Date(lvl.createdDate);
       if (isNaN(spawnDate.getTime())) {
@@ -775,28 +797,24 @@
       const structuralMsDiff = today.getTime() - spawnDate.getTime();
       const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
 
-      // Calculate recent shift values if within news window without cleaning out old maps
       if (elapsedDays >= 0 && elapsedDays < 14) {
         const displayDateString = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
-        if (!newsByDateMap[displayDateString]) {
-          newsByDateMap[displayDateString] = [];
-        }
+        if (!newsByDateMap[displayDateString]) newsByDateMap[displayDateString] = [];
 
         const currentDynamicRank = baseRank + elapsedDays;
         let tierLabel = "Legacy Records";
         if (currentDynamicRank <= 75) tierLabel = "Main List 1-75";
         else if (currentDynamicRank <= 150) tierLabel = "Extended Records 76-150";
 
+        const computedCategory = getNormalizedListType(lvl);
         newsByDateMap[displayDateString].push({
-          title: lvl.name,
-          category: lvl.listType ? (lvl.listType.charAt(0).toUpperCase() + lvl.listType.slice(1)) : "Level",
+          title: lvl.name || "Unnamed",
+          category: computedCategory.charAt(0).toUpperCase() + computedCategory.slice(1),
           desc: `New tracking entry shifts -> #${currentDynamicRank} (${tierLabel})`,
           daysLeft: 14 - elapsedDays
         });
-        
         lvl.rank = currentDynamicRank;
       } else {
-        // Safe tracking retention fallback for non-decay active records
         lvl.rank = baseRank;
       }
     });
@@ -806,8 +824,9 @@
 
   function renderDynamicNewsFeed(newsMap) {
     const feedContainer = document.getElementById('liveChangelogFeed');
-    const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
+    if (!feedContainer) return; // Guard against missing element
 
+    const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
       feedContainer.innerHTML = '<div class="empty">No tracking status shifts updated within the last 14 days.</div>';
       return;
@@ -829,31 +848,32 @@
           </div>
         `;
       });
-      
       dayWrapper.innerHTML = itemsHTML;
       feedContainer.appendChild(dayWrapper);
     });
   }
 
   function calculateCounterMetrics() {
-    document.getElementById('heroCountLevels').textContent = allLevels.length;
-    
     let userSet = new Set();
     let recordCount = 0;
     
     allLevels.forEach(lvl => {
-      let recordList = lvl.records || lvl.victorList || [];
+      let recordList = getRecordList(lvl);
       recordList.forEach(rec => {
-        let player = rec.username || rec.name;
-        if (player && player.trim() !== "") {
-          userSet.add(player.trim());
-        }
+        let player = rec.username || rec.name || rec.player;
+        if (player && player.trim() !== "") userSet.add(player.trim());
         recordCount++;
       });
     });
     
-    document.getElementById('heroCountPlayers').textContent = userSet.size;
-    document.getElementById('heroCountRecords').textContent = recordCount;
+    // Guarded status metrics
+    const lvlCountEl = document.getElementById('heroCountLevels');
+    const playerCountEl = document.getElementById('heroCountPlayers');
+    const recCountEl = document.getElementById('heroCountRecords');
+    
+    if (lvlCountEl) lvlCountEl.textContent = allLevels.length;
+    if (playerCountEl) playerCountEl.textContent = userSet.size;
+    if (recCountEl) recCountEl.textContent = recordCount;
   }
 
   function populateCampusDropdownFilters() {
@@ -861,8 +881,7 @@
     allLevels.forEach(lvl => {
       let lvlCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
       campusSet.add(lvlCampus);
-      let recordList = lvl.records || lvl.victorList || [];
-      recordList.forEach(v => {
+      getRecordList(lvl).forEach(v => {
         let vCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus";
         campusSet.add(vCampus);
       });
@@ -872,61 +891,107 @@
     const dFilter = document.getElementById("dashboardCampusFilter");
     const sFilter = document.getElementById("statsCampusFilter");
 
-    dFilter.innerHTML = '<option value="ALL">All Campuses</option>';
-    sFilter.innerHTML = '<option value="ALL">All Campuses</option>';
-
-    sortedCampuses.forEach(cName => {
-      let optD = document.createElement("option"); optD.value = cName; optD.textContent = cName; dFilter.appendChild(optD);
-      let optS = document.createElement("option"); optS.value = cName; optS.textContent = cName; sFilter.appendChild(optS);
-    });
+    if (dFilter) {
+      dFilter.innerHTML = '<option value="ALL">All Campuses</option>';
+      sortedCampuses.forEach(cName => {
+        let opt = document.createElement("option"); opt.value = cName; opt.textContent = cName; dFilter.appendChild(opt);
+      });
+    }
+    if (sFilter) {
+      sFilter.innerHTML = '<option value="ALL">All Campuses</option>';
+      sortedCampuses.forEach(cName => {
+        let opt = document.createElement("option"); opt.value = cName; opt.textContent = cName; sFilter.appendChild(opt);
+      });
+    }
   }
 
   function switchPage(pageId) {
-    document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active-page'));
-    document.getElementById(pageId + 'Page').classList.add('active-page');
+    const page = document.getElementById(pageId + 'Page');
+    if (!page) return;
+    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
+    page.classList.add('active-page');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function toggleNavMenu() { document.getElementById('navMenu').classList.toggle('open'); }
+  function toggleNavMenu() { 
+    const menu = document.getElementById('navMenu');
+    if (menu) menu.classList.toggle('open'); 
+  }
+  
   function toggleThemeMode() {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
-    document.getElementById('themeToggleItem').textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
+    const toggleItem = document.getElementById('themeToggleItem');
+    if (toggleItem) toggleItem.textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
   }
 
-  function openGuidelinesModal() { document.getElementById('guidelinesModal').style.display = 'flex'; toggleNavMenu(); }
-  var closeGuidelinesModal = function() { document.getElementById('guidelinesModal').style.display = 'none'; };
+  function openGuidelinesModal() { 
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) modal.style.display = 'flex'; 
+    toggleNavMenu(); 
+  }
+  
+  function closeGuidelinesModal() { 
+    const modal = document.getElementById('guidelinesModal');
+    if (modal) modal.style.display = 'none'; 
+  }
 
-  function goToLevelsDashboard() { switchPage('levels'); if(document.getElementById('navMenu').classList.contains('open')) toggleNavMenu(); }
-  function goToSubmissionBox() { switchPage('levels'); setTimeout(() => { document.getElementById('submissionBox').scrollIntoView({ behavior: 'smooth' }); }, 150); if(document.getElementById('navMenu').classList.contains('open')) toggleNavMenu(); }
+  function goToLevelsDashboard() { 
+    switchPage('levels'); 
+    const menu = document.getElementById('navMenu');
+    if (menu && menu.classList.contains('open')) toggleNavMenu(); 
+  }
+  
+  function goToSubmissionBox() { 
+    switchPage('levels'); 
+    setTimeout(() => { 
+      const box = document.getElementById('submissionBox');
+      if (box) box.scrollIntoView({ behavior: 'smooth' }); 
+    }, 150); 
+    const menu = document.getElementById('navMenu');
+    if (menu && menu.classList.contains('open')) toggleNavMenu(); 
+  }
 
   function handleListTypeChange() { populateExistingLevelsDropdown(); toggleFormFields(); }
+  
   function toggleFormFields() {
-    let listType = document.getElementById("listType").value;
-    const subType = document.getElementById("submissionType").value;
+    const typeEl = document.getElementById("listType");
+    const subTypeEl = document.getElementById("submissionType");
+    if (!typeEl || !subTypeEl) return;
+
+    let listType = typeEl.value;
+    const subType = subTypeEl.value;
+    
+    const existWrap = document.getElementById("existingLevelWrap");
+    const newFields = document.getElementById("newLevelFields");
+    const challengeWrap = document.getElementById("challengeDifficultyWrap");
+
     if (subType === "newLevel") {
-      document.getElementById("existingLevelWrap").style.display = "none";
-      document.getElementById("newLevelFields").style.display = "block";
-      document.getElementById("challengeDifficultyWrap").style.display = (listType === "challenge") ? "block" : "none";
+      if (existWrap) existWrap.style.display = "none";
+      if (newFields) newFields.style.display = "block";
+      if (challengeWrap) challengeWrap.style.display = (listType === "challenge") ? "block" : "none";
     } else {
-      document.getElementById("existingLevelWrap").style.display = "block";
-      document.getElementById("newLevelFields").style.display = "none";
-      document.getElementById("challengeDifficultyWrap").style.display = "none";
+      if (existWrap) existWrap.style.display = "block";
+      if (newFields) newFields.style.display = "none";
+      if (challengeWrap) challengeWrap.style.display = "none";
     }
   }
 
   function populateExistingLevelsDropdown() {
     const select = document.getElementById('existingLevel');
-    let targetListType = document.getElementById('listType').value;
+    const typeEl = document.getElementById('listType');
+    if (!select || !typeEl) return;
+
+    let targetListType = typeEl.value;
     select.innerHTML = '';
-    const filtered = allLevels.filter(lvl => lvl.listType === targetListType);
+    const filtered = allLevels.filter(lvl => getNormalizedListType(lvl) === targetListType);
     if (filtered.length === 0) {
       select.innerHTML = '<option value="">No registered levels available</option>';
       return;
     }
     filtered.forEach(lvl => {
       const opt = document.createElement('option'); opt.value = lvl.name; opt.dataset.id = lvl.id; opt.dataset.creator = lvl.creator;
-      opt.textContent = `${lvl.name} (by ${lvl.creator})`; select.appendChild(opt);
+      opt.textContent = `${lvl.name} (by ${lvl.creator || 'Unknown'})`; select.appendChild(opt);
     });
   }
 
@@ -945,24 +1010,36 @@
 
   function switchMainListTab(tab) {
     currentMainTab = tab;
-    document.getElementById('tabDemons').classList.toggle('active', tab === 'demon');
-    document.getElementById('tabChallenges').classList.toggle('active', tab === 'challenge');
-    document.getElementById('tabPlatformer').classList.toggle('active', tab === 'platformer');
+    const tDem = document.getElementById('tabDemons');
+    const tCha = document.getElementById('tabChallenges');
+    const tPla = document.getElementById('tabPlatformer');
+    
+    if (tDem) tDem.classList.toggle('active', tab === 'demon');
+    if (tCha) tCha.classList.toggle('active', tab === 'challenge');
+    if (tPla) tPla.classList.toggle('active', tab === 'platformer');
     renderLevelsDashboard();
   }
 
   function renderLevelsDashboard() {
-    const searchVal = document.getElementById('search').value.toLowerCase();
-    const campusFilter = document.getElementById('dashboardCampusFilter').value;
     const listContainer = document.getElementById('list');
+    if (!listContainer) return; // Crash prevention guard
+    
+    const searchEl = document.getElementById('search');
+    const searchVal = searchEl ? searchEl.value.toLowerCase() : '';
+    
+    const campEl = document.getElementById('dashboardCampusFilter');
+    const campusFilter = campEl ? campEl.value : 'ALL';
+    
     listContainer.innerHTML = '';
 
     let filtered = allLevels.filter(lvl => {
-      if (!lvl.listType || lvl.listType !== currentMainTab) return false;
+      if (getNormalizedListType(lvl) !== currentMainTab) return false;
+      
       let levelCampus = (lvl.campus && lvl.campus.trim() !== "") ? lvl.campus.trim() : "Main Campus";
-      let recordList = lvl.records || lvl.victorList || [];
+      let recordList = getRecordList(lvl);
       let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (recordList.some(v => ((v.campus && v.campus.trim() !== "") ? v.campus.trim() : "Main Campus") === campusFilter)));
       if (!matchesCampus) return false;
+      
       return ((lvl.name && lvl.name.toLowerCase().includes(searchVal)) || (lvl.creator && lvl.creator.toLowerCase().includes(searchVal)) || (lvl.diff && lvl.diff.toLowerCase().includes(searchVal)));
     });
 
@@ -977,9 +1054,16 @@
       const row = document.createElement('div');
       row.className = 'row';
       row.onclick = () => showLevelDetailPage(lvl, lvl.rank);
+      
+      let thumbImg = lvl.img || `https://img.youtube.com/vi/${lvl.id}/maxdefault.jpg`;
+      if (!lvl.img && lvl.video && lvl.video.includes('embed/')) {
+        let parts = lvl.video.split('embed/');
+        if (parts[1]) thumbImg = `https://img.youtube.com/vi/${parts[1].split('?')[0]}/maxdefault.jpg`;
+      }
+
       row.innerHTML = `
         <div class="rank">#${lvl.rank}</div>
-        <div class="thumb"><img src="${lvl.img || 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'}" alt="Thumb"></div>
+        <div class="thumb"><img src="${thumbImg}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'" alt="Thumb"></div>
         <div class="info">
           <div class="title">${lvl.name || 'Unnamed'} <span class="badge">${lvl.diff || 'Demon'}</span></div>
           <div class="sub">Created by ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
@@ -994,57 +1078,77 @@
   function showLevelDetailPage(lvl, functionalRank) {
     switchPage('detail');
     const displayRank = functionalRank || lvl.rank;
-    let recordList = lvl.records || lvl.victorList || [];
+    let recordList = getRecordList(lvl);
 
-    document.getElementById('dTitle').textContent = lvl.name;
-    document.getElementById('dInfo').innerHTML = `Created by <strong>${lvl.creator}</strong> | Verified by <strong>${lvl.verifier}</strong><br>ID: ${lvl.id} | Class: ${lvl.diff}`;
-    document.getElementById('video').innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No footage loaded.</div>`;
+    const tEl = document.getElementById('dTitle');
+    const iEl = document.getElementById('dInfo');
+    const vEl = document.getElementById('video');
+    const sEl = document.getElementById('stats');
+    const recContainer = document.getElementById('dRecordsContainer');
+
+    if (tEl) tEl.textContent = lvl.name || "Unnamed";
+    if (iEl) iEl.innerHTML = `Created by <strong>${lvl.creator || 'Unknown'}</strong> | Verified by <strong>${lvl.verifier || 'Unknown'}</strong><br>ID: ${lvl.id || 'N/A'} | Class: ${lvl.diff || 'Demon'}`;
+    if (vEl) vEl.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No footage loaded.</div>`;
     
-    document.getElementById('stats').innerHTML = `
-      <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
-      <div class="stat"><h4>List Points</h4><p>${calculateLevelPoints(displayRank).toFixed(2)}</p></div>
-      <div class="stat"><h4>Completions</h4><p>${recordList.length}</p></div>
-    `;
-
-    const recordsContainer = document.getElementById('dRecordsContainer');
-    recordsContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions from active campus profiles.</p>`;
-    if (recordList.length === 0) {
-      recordsContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
-      return;
+    if (sEl) {
+      sEl.innerHTML = `
+        <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
+        <div class="stat"><h4>List Points</h4><p>${calculateLevelPoints(displayRank).toFixed(2)}</p></div>
+        <div class="stat"><h4>Completions</h4><p>${recordList.length}</p></div>
+      `;
     }
 
-    const table = document.createElement('table');
-    table.className = 'records-table';
-    table.innerHTML = `<thead><tr><th>Player Name</th><th>Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
-    const tbody = table.querySelector('tbody');
-    recordList.forEach(v => {
-      let pName = v.username || v.name;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${pName} <strong>(${v.percent || 100}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${v.video}" target="_blank">Watch Proof</a></td>`;
-      tbody.appendChild(tr);
-    });
-    recordsContainer.appendChild(table);
+    if (recContainer) {
+      recContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions from active campus profiles.</p>`;
+      if (recordList.length === 0) {
+        recContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
+        return;
+      }
+
+      const table = document.createElement('table');
+      table.className = 'records-table';
+      table.innerHTML = `<thead><tr><th>Player Name</th><th>Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
+      const tbody = table.querySelector('tbody');
+      
+      recordList.forEach(v => {
+        let pName = v.username || v.name || v.player || "Unknown Player";
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${pName} <strong>(${v.percent || 100}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${v.video || '#'}" target="_blank">Watch Proof</a></td>`;
+        tbody.appendChild(tr);
+      });
+      recContainer.appendChild(table);
+    }
   }
 
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
-    document.getElementById('statTabDemons').classList.toggle('active', tab === 'demon');
-    document.getElementById('statTabChallenges').classList.toggle('active', tab === 'challenge');
-    document.getElementById('statTabPlatformer').classList.toggle('active', tab === 'platformer');
+    const sDem = document.getElementById('statTabDemons');
+    const sCha = document.getElementById('statTabChallenges');
+    const sPla = document.getElementById('statTabPlatformer');
+
+    if (sDem) sDem.classList.toggle('active', tab === 'demon');
+    if (sCha) sCha.classList.toggle('active', tab === 'challenge');
+    if (sPla) sPla.classList.toggle('active', tab === 'platformer');
     renderStatsLeaderboard();
   }
 
   function renderStatsLeaderboard() {
     const leaderboardBody = document.getElementById('leaderboardBody');
-    const campusFilter = document.getElementById('statsCampusFilter').value;
+    if (!leaderboardBody) return; // Guard against crash
+
+    const campEl = document.getElementById('statsCampusFilter');
+    const campusFilter = campEl ? campEl.value : 'ALL';
+    
     leaderboardBody.innerHTML = '';
     let playerMap = {};
     
-    allLevels.filter(lvl => lvl.listType === currentStatsTab).forEach(lvl => {
-      let recordList = lvl.records || lvl.victorList || [];
+    allLevels.filter(lvl => getNormalizedListType(lvl) === currentStatsTab).forEach(lvl => {
+      let recordList = getRecordList(lvl);
       recordList.forEach(v => {
-        let pName = v.username || v.name;
+        let pName = v.username || v.name || v.player;
         if (!pName || pName.trim() === "") return;
+        pName = pName.trim();
+        
         const playerCampus = (v.campus && v.campus.trim() !== "") ? v.campus.trim() : 'Main Campus';
         if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
         
@@ -1060,10 +1164,13 @@
     playersArray.forEach(p => p.points = Math.round(p.points * 100) / 100);
     playersArray.sort((a, b) => b.points - a.points);
 
+    const profContent = document.getElementById('profileContent');
+    const startPrompt = document.getElementById('startPrompt');
+
     if (playersArray.length === 0) {
       leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No records match filter values.</div>';
-      document.getElementById('profileContent').style.display = 'none';
-      document.getElementById('startPrompt').style.display = 'block';
+      if (profContent) profContent.style.display = 'none';
+      if (startPrompt) startPrompt.style.display = 'block';
       return;
     }
 
@@ -1080,8 +1187,12 @@
     const selectedRow = document.getElementById(`player-row-${index}`);
     if (selectedRow) selectedRow.classList.add('active-player');
     
-    document.getElementById('startPrompt').style.display = 'none';
+    const startPrompt = document.getElementById('startPrompt');
     const profileContent = document.getElementById('profileContent');
+    
+    if (startPrompt) startPrompt.style.display = 'none';
+    if (!profileContent) return;
+    
     profileContent.style.display = 'block';
 
     let mainList = [], extendedList = [], legacyList = [];
@@ -1112,48 +1223,52 @@
 
   function viewPlayerVideo(levelName, videoUrl) {
     switchPage('playerVideo');
-    document.getElementById('pvTitle').textContent = `Verification: ${levelName}`;
-    document.getElementById('pvVideo').innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+    const pvTitle = document.getElementById('pvTitle');
+    const pvVideo = document.getElementById('pvVideo');
+    if (pvTitle) pvTitle.textContent = `Verification: ${levelName}`;
+    if (pvVideo) pvVideo.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
   }
 
-  document.getElementById("submitBtn").onclick = async (e) => {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const recordLink = document.getElementById("recordLink").value.trim();
-    const campus = document.getElementById("campus").value.trim();
-    if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
+  // Guarded event assignment setup
+  const sBtn = document.getElementById("submitBtn");
+  if (sBtn) {
+    sBtn.onclick = async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const recordLink = document.getElementById("recordLink").value.trim();
+      const campus = document.getElementById("campus").value.trim();
+      if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
 
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.disabled = true; submitBtn.textContent = "Processing transmission package...";
+      sBtn.disabled = true; sBtn.textContent = "Processing transmission package...";
+      const generationStamp = new Date().toISOString().split('T')[0];
 
-    const generationStamp = new Date().toISOString().split('T')[0];
+      let payload = { 
+        listType: document.getElementById("listType").value, 
+        type: document.getElementById("submissionType").value, 
+        username: username, 
+        recordLink: recordLink, 
+        campus: campus,
+        createdDate: generationStamp
+      };
 
-    let payload = { 
-      listType: document.getElementById("listType").value, 
-      type: document.getElementById("submissionType").value, 
-      username: username, 
-      recordLink: recordLink, 
-      campus: campus,
-      createdDate: generationStamp
+      if (payload.type === "record") {
+        const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
+        if (!chosenOpt) { alert("Select a level first."); sBtn.disabled = false; sBtn.textContent = "Send for review"; return; }
+        payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
+      } else {
+        payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
+      }
+
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+        const resData = await response.json();
+        if (resData.status === "ok") {
+          alert("Transmission entry safely queued.");
+          document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
+        } else { alert("Rejected: " + resData.message); }
+      } catch (err) { alert("Transmission error."); } finally { sBtn.disabled = false; sBtn.textContent = "Send for review"; }
     };
-
-    if (payload.type === "record") {
-      const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
-      if (!chosenOpt) { alert("Select a level first."); submitBtn.disabled = false; submitBtn.textContent = "Send for review"; return; }
-      payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
-    } else {
-      payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
-    }
-
-    try {
-      const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
-      const resData = await response.json();
-      if (resData.status === "ok") {
-        alert("Transmission entry safely queued.");
-        document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
-      } else { alert("Rejected: " + resData.message); }
-    } catch (err) { alert("Transmission error."); } finally { submitBtn.disabled = false; submitBtn.textContent = "Send for review"; }
-  };
+  }
 </script>
 </body>
 </html>
