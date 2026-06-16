@@ -545,40 +545,16 @@
   },
   {
     "aredlPlacement": null,
-    "campus": "Main Campus",
-    "creator": "notxo",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "94716697",
-    "img": "https://img.youtube.com/vi/27tbhOlt_l8/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "CELESTIA",
-    "platPosition": null,
-    "rank": 22,
-    "rawTier": 11,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "Main Campus",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/27tbhOlt_l8"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/27tbhOlt_l8"
-  },
-  {
-    "aredlPlacement": null,
     "campus": "",
     "creator": "pocke",
-    "diff": "Medium Demon",
+    "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "92742742",
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "listType": "demon",
     "name": "tower descent",
     "platPosition": null,
-    "rank": 23,
+    "rank": 22,
     "rawTier": 10,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -594,14 +570,14 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "zyphur",
-    "diff": "Medium Demon",
+    "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "114532158",
     "img": "https://img.youtube.com/vi/jUv_1Ic9TCM/maxresdefault.jpg",
     "listType": "demon",
     "name": "Troll Madness",
     "platPosition": null,
-    "rank": 24,
+    "rank": 23,
     "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -617,14 +593,14 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "ManiacDan",
-    "diff": "Medium Demon",
+    "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "111205474",
     "img": "https://img.youtube.com/vi/AvNHIIMGHyQ/maxresdefault.jpg",
     "listType": "demon",
     "name": "Thermal Madness",
     "platPosition": null,
-    "rank": 25,
+    "rank": 24,
     "rawTier": 8,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -647,7 +623,7 @@
     "listType": "demon",
     "name": "Liberation",
     "platPosition": null,
-    "rank": 26,
+    "rank": 25,
     "rawTier": 7,
     "verifier": "LightBlu",
     "victorList": [
@@ -675,7 +651,7 @@
     "listType": "demon",
     "name": "Sakupen Egg",
     "platPosition": null,
-    "rank": 27,
+    "rank": 26,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -703,7 +679,7 @@
     "listType": "demon",
     "name": "amethyst",
     "platPosition": null,
-    "rank": 28,
+    "rank": 27,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -726,7 +702,7 @@
     "listType": "demon",
     "name": "FINAL DESTINATION",
     "platPosition": null,
-    "rank": 29,
+    "rank": 28,
     "rawTier": 7,
     "verifier": "eelektrance",
     "victorList": [
@@ -737,6 +713,30 @@
       }
     ],
     "video": "https://www.youtube.com/embed/YCMxCxHwols"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "notxo",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "94716697",
+    "img": "https://img.youtube.com/vi/27tbhOlt_l8/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "CELESTIA",
+    "platPosition": null,
+    "rank": 29,
+    "rawTier": 7,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/27tbhOlt_l8"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/27tbhOlt_l8"
   },
   {
     "aredlPlacement": null,
