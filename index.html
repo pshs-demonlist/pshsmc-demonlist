@@ -704,8 +704,8 @@
 
 <script>
   /**
-   * PSHS-MC Demonlist Framework Controller
-   * Engineered with safety overrides to prevent script crashes on multi-page view states.
+   * PSHS-MC Demonlist Production-Grade Application Engine
+   * Engineered with absolute component isolation and null-safety guards.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -716,31 +716,40 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // --- AUTOMATIC APPS INITIALIZATION LIFECYCLE ---
-  window.onload = async () => {
-    console.log("[System] Booting core view states...");
+  // --- SAFE LIFECYCLE INITIALIZATION ---
+  window.addEventListener('DOMContentLoaded', () => {
+    console.log("[Demonlist Engine] DOM fully loaded. Launching initialization pipeline...");
+    initApp();
+  });
+
+  async function initApp() {
     clearUIFieldsToZero();
     
     const dataLoaded = await loadDatabase();
-    
-    if (dataLoaded && allLevels.length > 0) {
-      console.log(`[System] Synced ${allLevels.length} raw map entities successfully.`);
-      
-      // Execute processes with strict safety null checking
-      processLiveDecayFilterAndNews();
-      calculateCounterMetrics();
-      populateCampusDropdownFilters();
-      renderLevelsDashboard();
-      populateExistingLevelsDropdown();
-      renderStatsLeaderboard();
-      
-      console.log("[System] Initial paint routine complete.");
-    } else {
-      console.error("[Fatal] Data source returned null or empty structure array.");
-      const list = document.getElementById('list');
-      if (list) list.innerHTML = '<div style="color:var(--accent); text-align:center; padding:20px;">Failed to link live database registry.</div>';
+    if (!dataLoaded || allLevels.length === 0) {
+      console.error("[Critical] Could not initialize app state. Database array is empty.");
+      displayFallbackUIMessage("list", "Failed to sync remote data. Please verify your data stream connection.");
+      return;
     }
-  };
+
+    console.log(`[Success] Master database updated with ${allLevels.length} entries.`);
+    
+    // Execute rendering steps inside independent execution tracks to prevent cascading crashes
+    safeExecute(processLiveDecayFilterAndNews, "Changelog Pipeline");
+    safeExecute(calculateCounterMetrics, "Global Metrics");
+    safeExecute(populateCampusDropdownFilters, "Campus Filters");
+    safeExecute(renderLevelsDashboard, "Main Dashboard View");
+    safeExecute(populateExistingLevelsDropdown, "Form Dropdowns");
+    safeExecute(renderStatsLeaderboard, "Leaderboard View");
+  }
+
+  function safeExecute(fn, context) {
+    try {
+      fn();
+    } catch (err) {
+      console.error(`[Runtime Crash Avoided] Error during: ${context}. Details:`, err);
+    }
+  }
 
   function clearUIFieldsToZero() {
     ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'].forEach(id => {
@@ -749,47 +758,48 @@
     });
   }
 
-  async function fetchWithTimeout(url, options = {}, timeout = 5000) {
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
-    try {
-      const response = await fetch(url, { ...options, signal: controller.signal });
-      clearTimeout(id);
-      return response;
-    } catch (e) {
-      clearTimeout(id);
-      throw e;
-    }
-  }
-
+  // --- RESILIENT DATA STREAM PARSER ---
   async function loadDatabase() {
     let rawData = null;
+    
+    const fetchPayload = async (url) => {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const res = await fetch(url, { cache: "no-cache", signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
+      return await res.json();
+    };
+
     try {
-      const response = await fetchWithTimeout(GITHUB_PRIMARY_URL, { cache: "no-cache" });
-      if (response.ok) rawData = await response.json();
+      rawData = await fetchPayload(GITHUB_PRIMARY_URL);
     } catch (err) {
-      console.warn("[Network] Primary stream failed. Diverting down CDN node...");
+      console.warn("[Network Mirroring] Primary dataset fetch timed out or failed. Attempting CDN mirror access...", err);
       try {
-        const response = await fetchWithTimeout(GITHUB_CDN_URL, { cache: "no-cache" });
-        if (response.ok) rawData = await response.json();
-      } catch (err2) {
-        console.error("[Network] Critical: All remote endpoints unresponsive.");
+        rawData = await fetchPayload(GITHUB_CDN_URL);
+      } catch (cdnErr) {
+        console.error("[Network Error] All remote database targets are completely unreachable.", cdnErr);
         return false;
       }
     }
 
-    if (rawData) {
+    if (!rawData) return false;
+
+    try {
+      // Unrolls whatever variant of structure object github provides (Array vs Keyed Object)
       if (Array.isArray(rawData)) {
         allLevels = rawData;
-      } else if (typeof rawData === 'object' && rawData !== null) {
+      } else if (typeof rawData === 'object') {
         allLevels = rawData.levels || rawData.list || rawData.data || Object.values(rawData).filter(item => item && typeof item === 'object');
       }
-      return allLevels.length > 0;
+      return Array.isArray(allLevels) && allLevels.length > 0;
+    } catch (parseError) {
+      console.error("[Data Parsing Error] Structure of JSON payload is unmappable.", parseError);
+      return false;
     }
-    return false;
   }
 
-  // --- DATA EXTRACTION NORMALIZERS ---
+  // --- DEFENSIVE FIELD EXTRACTORS ---
   function getNormalizedListType(lvl) {
     if (!lvl) return 'demon';
     const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
@@ -811,8 +821,11 @@
     return String(rec.username || rec.name || rec.player || rec.playerName || '').trim();
   }
 
-  // --- DYNAMIC CHANGELOG CONTROLLER ---
+  // --- CHANGELOG TIMELINE ENGINE ---
   function processLiveDecayFilterAndNews() {
+    const feed = document.getElementById('liveChangelogFeed');
+    if (!feed) return;
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const newsByDateMap = {};
@@ -843,7 +856,7 @@
         newsByDateMap[localizedDate].push({
           title: lvl.name || lvl.levelName || "Unnamed Map",
           category: cat.charAt(0).toUpperCase() + cat.slice(1),
-          desc: `Track shifted to #${dynamicRank} (${tierLabel})`,
+          desc: `Dynamic Position Tracking at #${dynamicRank} (${tierLabel})`,
           daysLeft: 14 - dayDiff
         });
         lvl.rank = dynamicRank;
@@ -852,41 +865,34 @@
       }
     });
 
-    renderDynamicNewsFeed(newsByDateMap);
-  }
-
-  function renderDynamicNewsFeed(newsMap) {
-    const feed = document.getElementById('liveChangelogFeed');
-    if (!feed) return;
-
-    const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
+    const sortedDates = Object.keys(newsByDateMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color:#64748b; font-size:12px; text-align:center; padding:10px;">No tracking updates over last 14 days.</div>';
+      feed.innerHTML = '<div style="color: #64748b; padding: 12px; font-size: 12px;">No adjustments logged inside past 14-day tracking tracking timeline.</div>';
       return;
     }
 
     feed.innerHTML = '';
     sortedDates.forEach(date => {
-      const group = document.createElement('div');
-      group.style.marginBottom = "12px";
-      let html = `<div style="font-size:10px; color:var(--accent); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${date}</div>`;
-      newsMap[date].forEach(item => {
+      const container = document.createElement('div');
+      container.style.marginBottom = "12px";
+      let html = `<div style="font-size:11px; color:var(--accent); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${date}</div>`;
+      newsByDateMap[date].forEach(item => {
         html += `
-          <div style="background:rgba(255,255,255,0.02); border-left:2px solid var(--accent); padding:6px 10px; margin-bottom:4px; border-radius:0 4px 4px 0;">
-            <div style="display:flex; justify-content:between; font-size:12px;">
-              <strong style="color:#fff; flex-grow:1;">${item.title}</strong>
-              <span style="opacity:0.5; font-size:10px;">${item.daysLeft}d</span>
+          <div style="background: rgba(255,255,255,0.02); border-left: 2px solid var(--accent); padding: 8px 12px; margin-bottom: 4px; border-radius: 0 4px 4px 0;">
+            <div style="display:flex; justify-content:space-between; font-size:12px;">
+              <span style="font-weight:bold; color:#fff;">${item.title}</span>
+              <span style="opacity:0.5; font-size:10px;">${item.daysLeft}d left</span>
             </div>
             <div style="font-size:11px; opacity:0.7;">[${item.category}] ${item.desc}</div>
           </div>
         `;
       });
-      group.innerHTML = html;
-      feed.appendChild(group);
+      container.innerHTML = html;
+      feed.appendChild(container);
     });
   }
 
-  // --- SCOREBOARD AND COUNTER ENGINE ---
+  // --- SCORE COUNTER MODULE ---
   function calculateCounterMetrics() {
     let uniquePlayers = new Set();
     let totalRecordsCount = 0;
@@ -918,11 +924,12 @@
     });
 
     const sorted = Array.from(campuses).sort();
-    const dFilter = document.getElementById("dashboardCampusFilter");
-    const sFilter = document.getElementById("statsCampusFilter");
     const optionsStr = '<option value="ALL">All Campuses</option>' + sorted.map(c => `<option value="${c}">${c}</option>`).join('');
     
+    const dFilter = document.getElementById("dashboardCampusFilter");
     if (dFilter) dFilter.innerHTML = optionsStr;
+
+    const sFilter = document.getElementById("statsCampusFilter");
     if (sFilter) sFilter.innerHTML = optionsStr;
   }
 
@@ -937,17 +944,22 @@
     renderLevelsDashboard();
   }
 
-  // --- TRACKING BOARD RENDER ENGINE ---
+  // --- MAIN REGISTRY DASHBOARD ---
   function renderLevelsDashboard() {
     const list = document.getElementById('list');
     if (!list) return;
 
-    const query = document.getElementById('search') ? document.getElementById('search').value.toLowerCase() : '';
-    const campusVal = document.getElementById('dashboardCampusFilter') ? document.getElementById('dashboardCampusFilter').value : 'ALL';
+    const queryEl = document.getElementById('search');
+    const query = queryEl ? queryEl.value.toLowerCase() : '';
+    
+    const campusEl = document.getElementById('dashboardCampusFilter');
+    const campusVal = campusEl ? campusEl.value : 'ALL';
+
     list.innerHTML = '';
 
     let displayedItems = allLevels.filter(lvl => {
       if (getNormalizedListType(lvl) !== currentMainTab) return false;
+      
       const lvlCampus = String(lvl.campus || 'Main Campus').trim();
       const records = getRecordList(lvl);
       const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => String(r.campus || 'Main Campus').trim() === campusVal));
@@ -963,7 +975,7 @@
     displayedItems.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
     if (displayedItems.length === 0) {
-      list.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5; font-size:13px;">No entries match conditions.</div>';
+      list.innerHTML = '<div style="text-align:center; padding:24px; opacity:0.5; font-size:13px;">No tier entries match these filtering criteria.</div>';
       return;
     }
 
@@ -986,8 +998,8 @@
         <div class="info">
           <div class="title">${lvl.name || lvl.levelName || 'Unnamed'} <span class="badge" style="font-size:10px;">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
           <div class="sub">By ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
-          <div class="points">${pts.toFixed(2)} Pts</div>
-          <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:1px;">${lvl.campus || 'Main Campus'}</div>
+          <div class="points">${pts.toFixed(2)} Points</div>
+          <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:2px; font-size:11px;">Campus: ${lvl.campus || 'Main Campus'}</div>
         </div>
       `;
       list.appendChild(itemRow);
@@ -1012,39 +1024,39 @@
     const stats = document.getElementById('stats');
     const container = document.getElementById('dRecordsContainer');
 
-    if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed";
-    if (info) info.innerHTML = `Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifier: <strong>${lvl.verifier || 'Unknown'}</strong><br>ID: ${lvl.id || 'N/A'}`;
-    if (vid) vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No gameplay linked.</div>';
+    if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
+    if (info) info.innerHTML = `Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifier: <strong>${lvl.verifier || 'Unknown'}</strong><br>ID Reference: ${lvl.id || 'N/A'}`;
+    if (vid) vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No linked video data.</div>';
     
     if (stats) {
       stats.innerHTML = `
-        <div class="stat"><h4>Rank</h4><p>#${finalRank}</p></div>
-        <div class="stat"><h4>Weight</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
-        <div class="stat"><h4>Records</h4><p>${records.length}</p></div>
+        <div class="stat"><h4>Rank Spectrum</h4><p>#${finalRank}</p></div>
+        <div class="stat"><h4>Point Value</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
+        <div class="stat"><h4>Total Records</h4><p>${records.length}</p></div>
       `;
     }
 
     if (container) {
-      container.innerHTML = `<h3 style="font-size:15px; margin-top:15px;">Level Victors</h3>`;
+      container.innerHTML = `<h3 style="font-size:14px; margin-top:16px;">Verified Level Victors</h3>`;
       if (records.length === 0) {
-        container.innerHTML += '<div style="padding:10px; opacity:0.4; font-size:12px; text-align:center;">No submissions found.</div>';
+        container.innerHTML += '<div style="padding:12px; opacity:0.4; font-size:12px; text-align:center;">No campus completion data records approved.</div>';
         return;
       }
       const table = document.createElement('table');
       table.className = 'records-table';
       table.style.width = "100%";
-      table.innerHTML = `<thead><tr><th style="text-align:left;">Player</th><th style="text-align:left;">Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
+      table.innerHTML = `<thead><tr><th style="text-align:left;">Player</th><th style="text-align:left;">Campus</th><th style="text-align:right;">Proof</th></tr></thead><tbody></tbody>`;
       const tbody = table.querySelector('tbody');
       records.forEach(r => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${getPlayerName(r)} <strong>(${r.percent || 100}%)</strong></td><td>${r.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px;">Link</a></td>`;
+        row.innerHTML = `<td>${getPlayerName(r)} <strong>(${r.percent || 100}%)</strong></td><td>${r.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
         tbody.appendChild(row);
       });
       container.appendChild(table);
     }
   }
 
-  // --- STATS VISUALIZER LEADERBOARD ENGINE ---
+  // --- STAT LEADERBOARD ENGINE ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
     ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
@@ -1060,7 +1072,8 @@
     const targetBody = document.getElementById('leaderboardBody');
     if (!targetBody) return;
 
-    const campusFilter = document.getElementById('statsCampusFilter') ? document.getElementById('statsCampusFilter').value : 'ALL';
+    const campusEl = document.getElementById('statsCampusFilter');
+    const campusFilter = campusEl ? campusEl.value : 'ALL';
     targetBody.innerHTML = '';
     
     let processedPlayers = {};
@@ -1103,7 +1116,7 @@
     const profView = document.getElementById('profileContent');
 
     if (leaderboardData.length === 0) {
-      targetBody.innerHTML = '<div style="padding:15px; font-size:12px; opacity:0.5; text-align:center;">No entries match parameters.</div>';
+      targetBody.innerHTML = '<div style="padding:16px; font-size:12px; opacity:0.5; text-align:center;">No player records matched specifications.</div>';
       if (profView) profView.style.display = "none";
       if (prompt) prompt.style.display = "block";
       return;
@@ -1129,7 +1142,7 @@
       targetBody.appendChild(row);
     });
 
-    // CRITICAL: Forces execution of profile zero immediately so interface container isn't blank on boot
+    // INSTANTLY RENDER HIGHEST RANKED PLAYER TO PREVENT BLANK PLACEHOLDERS
     if (leaderboardData.length > 0) {
       displayPlayerProfile(leaderboardData[0], 0);
     }
@@ -1155,8 +1168,8 @@
     });
 
     const buildCloud = (arr, typeClass) => {
-      if (arr.length === 0) return '<span style="opacity:0.3; font-size:12px;">None verified</span>';
-      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:2px 6px; background:rgba(255,255,255,0.04); border-radius:3px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(' ');
+      if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
+      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(' ');
     };
 
     let contextHeader = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
@@ -1164,16 +1177,16 @@
     canvas.innerHTML = `
       <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
         <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
-        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">${player.campus}</span>
+        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">Campus Scope: ${player.campus}</span>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
-        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">SCORE</span><strong style="font-size:16px; color:var(--accent);">${player.points.toFixed(2)}</strong></div>
-        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">RUNS</span><strong style="font-size:16px;">${player.completions.length}</strong></div>
+        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">TOTAL SCORE</span><strong style="font-size:16px; color:var(--accent);">${player.points.toFixed(2)}</strong></div>
+        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">COMPLETIONS</span><strong style="font-size:16px;">${player.completions.length}</strong></div>
       </div>
       <div>
-        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8;">Main ${contextHeader} List (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8;">Extended ${contextHeader} List (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8;">Legacy Records</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
+        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} Records (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} Records (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Archived Legacy Placements</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
   }
@@ -1182,19 +1195,26 @@
     switchPage('playerVideo');
     const title = document.getElementById('pvTitle');
     const targetFrame = document.getElementById('pvVideo');
-    if (title) title.textContent = `Footage Link: ${lvlName}`;
+    if (title) title.textContent = `Record Verification Run: ${lvlName}`;
     if (targetFrame) {
-      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:20px; opacity:0.5; text-align:center;">No footage variant available.</div>';
+      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; opacity:0.5; text-align:center;">No digital video reference archived.</div>';
     }
   }
 
   function switchPage(pageId) {
     document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
     const target = document.getElementById(pageId + 'Page');
-    if (target) target.classList.add('active-page');
+    if (target) {
+      target.classList.add('active-page');
+    }
   }
 
-  // --- REGISTRY INPUT CONTROLS ---
+  function displayFallbackUIMessage(elementId, message) {
+    const el = document.getElementById(elementId);
+    if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
+  }
+
+  // --- SUBMISSION PACKET HANDLERS ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
@@ -1202,7 +1222,7 @@
     d.innerHTML = '';
     const filtered = allLevels.filter(l => getNormalizedListType(l) === t.value);
     if (filtered.length === 0) {
-      d.innerHTML = '<option value="">No targets registered</option>';
+      d.innerHTML = '<option value="">No maps found matching type criteria</option>';
       return;
     }
     filtered.forEach(l => {
@@ -1219,6 +1239,7 @@
     const t = document.getElementById("listType");
     const s = document.getElementById("submissionType");
     if (!t || !s) return;
+    
     const eWrap = document.getElementById("existingLevelWrap");
     const nFields = document.getElementById("newLevelFields");
     const cWrap = document.getElementById("challengeDifficultyWrap");
@@ -1239,43 +1260,45 @@
     toggleFormFields();
   }
 
+  // Secure binding listeners for forms
   document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("submitBtn");
-    if (btn) {
-      btn.onclick = async (e) => {
-        e.preventDefault();
-        const user = document.getElementById("username").value.trim();
-        const link = document.getElementById("recordLink").value.trim();
-        const campus = document.getElementById("campus").value.trim();
-        if (!user || !link || !campus) { alert("Please complete input fields completely."); return; }
+    if (!btn) return;
+    
+    btn.onclick = async (e) => {
+      e.preventDefault();
+      const user = document.getElementById("username") ? document.getElementById("username").value.trim() : '';
+      const link = document.getElementById("recordLink") ? document.getElementById("recordLink").value.trim() : '';
+      const campus = document.getElementById("campus") ? document.getElementById("campus").value.trim() : '';
+      
+      if (!user || !link || !campus) { alert("Please input complete field details."); return; }
 
-        btn.disabled = true; btn.textContent = "Transmitting...";
-        const stamp = new Date().toISOString().split('T')[0];
+      btn.disabled = true; btn.textContent = "Forwarding record packet...";
+      const stamp = new Date().toISOString().split('T')[0];
 
-        let body = { 
-          listType: document.getElementById("listType").value, 
-          type: document.getElementById("submissionType").value, 
-          username: user, recordLink: link, campus: campus, createdDate: stamp
-        };
-
-        if (body.type === "record") {
-          const sel = document.getElementById("existingLevel");
-          const opt = sel.options[sel.selectedIndex];
-          if (!opt) { alert("Select valid map assignment."); btn.disabled = false; return; }
-          body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
-        } else {
-          body.newName = document.getElementById("newName").value.trim();
-          body.newLevelId = document.getElementById("newLevelId").value.trim();
-          body.newCreator = document.getElementById("newCreator").value.trim();
-        }
-
-        try {
-          const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
-          const res = await r.json();
-          if (res.status === "ok") { alert("Submission forwarded successfully."); } else { alert("Error: " + res.message); }
-        } catch (err) { alert("Network exception."); } finally { btn.disabled = false; btn.textContent = "Send for review"; }
+      let body = { 
+        listType: document.getElementById("listType").value, 
+        type: document.getElementById("submissionType").value, 
+        username: user, recordLink: link, campus: campus, createdDate: stamp
       };
-    }
+
+      if (body.type === "record") {
+        const sel = document.getElementById("existingLevel");
+        if (!sel || sel.selectedIndex === -1) { alert("Select a target level connection."); btn.disabled = false; return; }
+        const opt = sel.options[sel.selectedIndex];
+        body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
+      } else {
+        body.newName = document.getElementById("newName").value.trim();
+        body.newLevelId = document.getElementById("newLevelId").value.trim();
+        body.newCreator = document.getElementById("newCreator").value.trim();
+      }
+
+      try {
+        const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
+        const res = await r.json();
+        if (res.status === "ok") { alert("Record transaction committed successfully."); } else { alert("Exception: " + res.message); }
+      } catch (err) { alert("System communication breakdown."); } finally { btn.disabled = false; btn.textContent = "Send for review"; }
+    };
   });
 </script>
 </body>
