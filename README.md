@@ -45,7 +45,7 @@ pshs-demonlist/
 The site can be hosted via GitHub Pages:
 
 ```text
-https://YOUR_USERNAME.github.io/pshs-demonlist/
+https://pshs-demonlist.github.io/pshs-mcdemonlist/
 ```
 
 No external services are required—all data is stored inside the repository.
