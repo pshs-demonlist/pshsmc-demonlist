@@ -860,7 +860,7 @@
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    const trackingBaseline = new Date("2026-06-17T00:00:00");
+    const trackingBaseline = new Date("2026-06-17T00:00:00+08:00");
     const newsByDateMap = {};
     const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
