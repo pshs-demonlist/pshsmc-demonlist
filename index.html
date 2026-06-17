@@ -704,35 +704,29 @@
 
 <script>
   /**
-   * PSHS-MC Demonlist Core Database & UI Rendering Engine
-   * Engineered for synchronized lifecycle initialization to prevent race-condition zeroing bugs.
+   * PSHS-MC Demonlist Framework Controller
+   * Engineered with safety overrides to prevent script crashes on multi-page view states.
    */
 
-  // --- CONFIGURATION CONSTANTS ---
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
-  // --- GLOBAL STATE REGISTRIES ---
   let allLevels = [];
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  /**
-   * Window Initialization Lifecycle Hook
-   * Forces a sequential, synchronous-like load order ensuring zeroed elements are immediately overwritten.
-   */
+  // --- AUTOMATIC APPS INITIALIZATION LIFECYCLE ---
   window.onload = async () => {
-    console.log("Initializing Demonlist core system...");
+    console.log("[System] Booting core view states...");
     clearUIFieldsToZero();
     
-    // Core synchronous network pull
     const dataLoaded = await loadDatabase();
     
     if (dataLoaded && allLevels.length > 0) {
-      console.log(`Database sync success. Total records retrieved: ${allLevels.length}`);
+      console.log(`[System] Synced ${allLevels.length} raw map entities successfully.`);
       
-      // Execute dependent logic chains in strict procedural hierarchy
+      // Execute processes with strict safety null checking
       processLiveDecayFilterAndNews();
       calculateCounterMetrics();
       populateCampusDropdownFilters();
@@ -740,32 +734,22 @@
       populateExistingLevelsDropdown();
       renderStatsLeaderboard();
       
-      console.log("Dashboard pipeline completely mounted and structural layouts rendered.");
+      console.log("[System] Initial paint routine complete.");
     } else {
-      console.error("Critical System Failure: Remote database could not be mapped to memory array.");
-      displayNetworkFailureFallback();
+      console.error("[Fatal] Data source returned null or empty structure array.");
+      const list = document.getElementById('list');
+      if (list) list.innerHTML = '<div style="color:var(--accent); text-align:center; padding:20px;">Failed to link live database registry.</div>';
     }
   };
 
-  /**
-   * Resets counter metrics layout elements to clean zeros instantly on boot
-   */
   function clearUIFieldsToZero() {
-    const fields = ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'];
-    fields.forEach(id => {
+    ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) {
-        el.textContent = "0";
-      } else {
-        console.warn(`Precise Warning: Expected metric counter DOM element '#${id}' was missing from the HTML markup.`);
-      }
+      if (el) el.textContent = "0";
     });
   }
 
-  /**
-   * Custom Network Fetch Wrapper with Abort Controller Signal Interruption
-   */
-  async function fetchWithTimeout(url, options = {}, timeout = 6000) {
+  async function fetchWithTimeout(url, options = {}, timeout = 5000) {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     try {
@@ -778,68 +762,34 @@
     }
   }
 
-  /**
-   * High-Precision Data Normalizer & Object Cloud Resolver
-   */
   async function loadDatabase() {
     let rawData = null;
-    
-    // Attempt Route A: Primary GitHub Data Repository
     try {
-      console.log("Resolving Primary Data Stream...");
       const response = await fetchWithTimeout(GITHUB_PRIMARY_URL, { cache: "no-cache" });
-      if (response.ok) {
-        rawData = await response.json();
-      } else {
-        throw new Error(`HTTP Status Error: ${response.status}`);
-      }
+      if (response.ok) rawData = await response.json();
     } catch (err) {
-      console.warn("Primary database stream unreachable. Rerouting tracking request down CDN Mirror...", err);
-      
-      // Attempt Route B: JsDelivr Global Edge CDN Mirror
+      console.warn("[Network] Primary stream failed. Diverting down CDN node...");
       try {
         const response = await fetchWithTimeout(GITHUB_CDN_URL, { cache: "no-cache" });
-        if (response.ok) {
-          rawData = await response.json();
-        } else {
-          throw new Error(`CDN Mirror HTTP Status Error: ${response.status}`);
-        }
+        if (response.ok) rawData = await response.json();
       } catch (err2) {
-        console.error("Critical Network Failure: Both Primary and Mirror repositories refused connection.", err2);
+        console.error("[Network] Critical: All remote endpoints unresponsive.");
         return false;
       }
     }
 
-    // Structure Normalization Layer: Sanitizes incoming payloads into flat operational arrays
     if (rawData) {
-      try {
-        if (Array.isArray(rawData)) {
-          allLevels = rawData;
-        } else if (typeof rawData === 'object' && rawData !== null) {
-          if (Array.isArray(rawData.levels)) {
-            allLevels = rawData.levels;
-          } else if (Array.isArray(rawData.list)) {
-            allLevels = rawData.list;
-          } else if (Array.isArray(rawData.data)) {
-            allLevels = rawData.data;
-          } else {
-            // Structural Fallback Loop: Extracts array properties from raw root keys
-            allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
-          }
-        }
-        
-        // Final structural data integrity assertion check
-        return allLevels.length > 0;
-      } catch (processingError) {
-        console.error("Internal Structural Error: JSON format doesn't match object maps.", processingError);
-        return false;
+      if (Array.isArray(rawData)) {
+        allLevels = rawData;
+      } else if (typeof rawData === 'object' && rawData !== null) {
+        allLevels = rawData.levels || rawData.list || rawData.data || Object.values(rawData).filter(item => item && typeof item === 'object');
       }
+      return allLevels.length > 0;
     }
     return false;
   }
 
-  // --- STRICT DATA MAPPING UTILITIES ---
-  
+  // --- DATA EXTRACTION NORMALIZERS ---
   function getNormalizedListType(lvl) {
     if (!lvl) return 'demon';
     const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
@@ -861,9 +811,7 @@
     return String(rec.username || rec.name || rec.player || rec.playerName || '').trim();
   }
 
-  /**
-   * Computes Dynamic Rank Offsets and Injects Recent Additions into the News Feed
-   */
+  // --- DYNAMIC CHANGELOG CONTROLLER ---
   function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -872,12 +820,10 @@
     allLevels.forEach(lvl => {
       let baseRank = parseInt(lvl.rank || lvl.placement || lvl.position, 10);
       if (isNaN(baseRank)) baseRank = 999;
-      
       if (!lvl.initialRank) lvl.initialRank = baseRank;
 
       let dateStr = lvl.createdDate || lvl.date || "2026-06-14";
       const spawnDate = new Date(dateStr);
-      
       if (isNaN(spawnDate.getTime())) {
         lvl.rank = baseRank;
         return;
@@ -886,7 +832,6 @@
       spawnDate.setHours(0, 0, 0, 0);
       const dayDiff = Math.floor((today.getTime() - spawnDate.getTime()) / (1000 * 60 * 60 * 24));
 
-      // Tracking adjustments within a 14-day chronological window
       if (dayDiff >= 0 && dayDiff < 14) {
         const localizedDate = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[localizedDate]) newsByDateMap[localizedDate] = [];
@@ -898,7 +843,7 @@
         newsByDateMap[localizedDate].push({
           title: lvl.name || lvl.levelName || "Unnamed Map",
           category: cat.charAt(0).toUpperCase() + cat.slice(1),
-          desc: `Placement Change -> Set to #${dynamicRank} (${tierLabel})`,
+          desc: `Track shifted to #${dynamicRank} (${tierLabel})`,
           daysLeft: 14 - dayDiff
         });
         lvl.rank = dynamicRank;
@@ -910,45 +855,38 @@
     renderDynamicNewsFeed(newsByDateMap);
   }
 
-  /**
-   * Generates and injects the live activity feed into the DOM container
-   */
   function renderDynamicNewsFeed(newsMap) {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
     const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color: #64748b; padding: 16px; font-size: 13px; font-style: italic; text-align: center;">No dynamic tracking modifications registered over the past 14 days.</div>';
+      feed.innerHTML = '<div style="color:#64748b; font-size:12px; text-align:center; padding:10px;">No tracking updates over last 14 days.</div>';
       return;
     }
 
     feed.innerHTML = '';
     sortedDates.forEach(date => {
-      const container = document.createElement('div');
-      container.className = 'changelog-date-group';
-      container.style.marginBottom = "14px";
-      
-      let html = `<div class="changelog-date" style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.5px;">${date}</div>`;
+      const group = document.createElement('div');
+      group.style.marginBottom = "12px";
+      let html = `<div style="font-size:10px; color:var(--accent); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${date}</div>`;
       newsMap[date].forEach(item => {
         html += `
-          <div class="changelog-item" style="background: rgba(255,255,255,0.01); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0; transition: background 0.2s ease;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap: 10px;">
-              <span style="font-weight:600; color:#ffffff;">${item.title}</span>
-              <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d left</span>
+          <div style="background:rgba(255,255,255,0.02); border-left:2px solid var(--accent); padding:6px 10px; margin-bottom:4px; border-radius:0 4px 4px 0;">
+            <div style="display:flex; justify-content:between; font-size:12px;">
+              <strong style="color:#fff; flex-grow:1;">${item.title}</strong>
+              <span style="opacity:0.5; font-size:10px;">${item.daysLeft}d</span>
             </div>
-            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] ${item.desc}</div>
+            <div style="font-size:11px; opacity:0.7;">[${item.category}] ${item.desc}</div>
           </div>
         `;
       });
-      container.innerHTML = html;
-      feed.appendChild(container);
+      group.innerHTML = html;
+      feed.appendChild(group);
     });
   }
 
-  /**
-   * Compiles global dashboard counts with absolute structural certainty
-   */
+  // --- SCOREBOARD AND COUNTER ENGINE ---
   function calculateCounterMetrics() {
     let uniquePlayers = new Set();
     let totalRecordsCount = 0;
@@ -956,9 +894,7 @@
     allLevels.forEach(lvl => {
       getRecordList(lvl).forEach(rec => {
         const name = getPlayerName(rec);
-        if (name && name !== "") {
-          uniquePlayers.add(name);
-        }
+        if (name) uniquePlayers.add(name);
         totalRecordsCount++;
       });
     });
@@ -972,60 +908,46 @@
     if (recEl) recEl.textContent = totalRecordsCount;
   }
 
-  /**
-   * Populates both filters across separate tab views with parsed campus variants
-   */
   function populateCampusDropdownFilters() {
     let campuses = new Set();
     allLevels.forEach(lvl => {
-      if (lvl.campus && String(lvl.campus).trim() !== "") campuses.add(String(lvl.campus).trim());
+      if (lvl.campus) campuses.add(String(lvl.campus).trim());
       getRecordList(lvl).forEach(rec => {
-        if (rec.campus && String(rec.campus).trim() !== "") campuses.add(String(rec.campus).trim());
+        if (rec.campus) campuses.add(String(rec.campus).trim());
       });
     });
 
-    const sortedCampuses = Array.from(campuses).sort();
+    const sorted = Array.from(campuses).sort();
     const dFilter = document.getElementById("dashboardCampusFilter");
     const sFilter = document.getElementById("statsCampusFilter");
-
-    const optionsStr = '<option value="ALL">All Campuses</option>' + sortedCampuses.map(c => `<option value="${c}">${c}</option>`).join('');
+    const optionsStr = '<option value="ALL">All Campuses</option>' + sorted.map(c => `<option value="${c}">${c}</option>`).join('');
     
     if (dFilter) dFilter.innerHTML = optionsStr;
     if (sFilter) sFilter.innerHTML = optionsStr;
   }
 
-  /**
-   * Switches primary view tracking tabs and automatically refreshes list bindings
-   */
   function switchMainListTab(tab) {
     currentMainTab = tab;
     ['tabDemons', 'tabChallenges', 'tabPlatformer'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.remove('active');
     });
-    
-    let targetId = tab === 'demon' ? 'tabDemons' : tab === 'challenge' ? 'tabChallenges' : 'tabPlatformer';
-    const target = document.getElementById(targetId);
+    const target = document.getElementById(tab === 'demon' ? 'tabDemons' : tab === 'challenge' ? 'tabChallenges' : 'tabPlatformer');
     if (target) target.classList.add('active');
-    
     renderLevelsDashboard();
   }
 
-  /**
-   * Main Level Registry Renderer
-   */
+  // --- TRACKING BOARD RENDER ENGINE ---
   function renderLevelsDashboard() {
     const list = document.getElementById('list');
     if (!list) return;
 
     const query = document.getElementById('search') ? document.getElementById('search').value.toLowerCase() : '';
     const campusVal = document.getElementById('dashboardCampusFilter') ? document.getElementById('dashboardCampusFilter').value : 'ALL';
-
     list.innerHTML = '';
 
     let displayedItems = allLevels.filter(lvl => {
       if (getNormalizedListType(lvl) !== currentMainTab) return false;
-
       const lvlCampus = String(lvl.campus || 'Main Campus').trim();
       const records = getRecordList(lvl);
       const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => String(r.campus || 'Main Campus').trim() === campusVal));
@@ -1041,7 +963,7 @@
     displayedItems.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
     if (displayedItems.length === 0) {
-      list.innerHTML = '<div style="text-align:center; padding:32px; opacity:0.5; font-size:14px;">No active tier entries match your selected criteria.</div>';
+      list.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5; font-size:13px;">No entries match conditions.</div>';
       return;
     }
 
@@ -1054,50 +976,31 @@
 
       let thumb = lvl.img || lvl.thumbnail;
       if (!thumb && lvl.video && lvl.video.includes('embed/')) {
-        try {
-          thumb = `https://img.youtube.com/vi/${lvl.video.split('embed/')[1].split('?')[0]}/maxdefault.jpg`;
-        } catch(e) {
-          thumb = 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg';
-        }
+        try { thumb = `https://img.youtube.com/vi/${lvl.video.split('embed/')[1].split('?')[0]}/maxdefault.jpg`; } catch(e) {}
       }
       if (!thumb) thumb = 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg';
 
       itemRow.innerHTML = `
         <div class="rank">#${rank}</div>
-        <div class="thumb"><img src="${thumb}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'" alt="Preview"></div>
+        <div class="thumb"><img src="${thumb}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'"></div>
         <div class="info">
-          <div class="title">${lvl.name || lvl.levelName || 'Unnamed Record'} <span class="badge" style="font-size:10px; padding:2px 5px;">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
-          <div class="sub">Created by ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
-          <div class="points">${pts.toFixed(2)} Points</div>
-          <div class="sub" style="color:var(--accent); font-weight:600; margin-top:3px; font-size:11px;">Campus Distribution: ${lvl.campus || 'Main Campus'}</div>
+          <div class="title">${lvl.name || lvl.levelName || 'Unnamed'} <span class="badge" style="font-size:10px;">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
+          <div class="sub">By ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
+          <div class="points">${pts.toFixed(2)} Pts</div>
+          <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:1px;">${lvl.campus || 'Main Campus'}</div>
         </div>
       `;
       list.appendChild(itemRow);
     });
   }
 
-  /**
-   * Precise Point Distribution Formula Generator
-   */
   function calculateLevelPoints(rank) {
-    const r = parseInt(rank, 10);
-    if (isNaN(r) || r <= 0 || r > 150) return 0.00;
-    
-    // Top Tier Placement Spectrum
-    if (r <= 20) {
-      return 350.00 - (r - 1) * 12.51; 
-    }
-    // Main Mid-Tier Configuration Vector
-    if (r <= 75) {
-      return 112.23 - (r - 20) * 1.30;
-    }
-    // Extended Tier Value Deceleration Array
-    return 40.60 - (r - 75) * 0.29;
+    if (isNaN(rank) || rank <= 0 || rank > 150) return 0;
+    if (rank <= 20) return 350.00 - (rank - 1) * 12.51; 
+    if (rank <= 75) return 112.23 - (rank - 20) * 1.30;
+    return 40.60 - (rank - 75) * 0.29;
   }
 
-  /**
-   * Renders the deep detail layout for a selected item row entry
-   */
   function showLevelDetailPage(lvl, forceRank) {
     switchPage('detail');
     const finalRank = forceRank || lvl.rank || 999;
@@ -1109,65 +1012,50 @@
     const stats = document.getElementById('stats');
     const container = document.getElementById('dRecordsContainer');
 
-    if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Entry";
-    if (info) info.innerHTML = `Track Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifying Record Holder: <strong>${lvl.verifier || 'Unknown'}</strong><br>Network ID Mapping: code_${lvl.id || 'N/A'}`;
-    if (vid) {
-      vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="border:none; width:100%; height:100%; border-radius:8px;"></iframe>` : `<div style="padding:40px; text-align:center; opacity:0.4;">No gameplay footage linked to this entry database.</div>`;
-    }
+    if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed";
+    if (info) info.innerHTML = `Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifier: <strong>${lvl.verifier || 'Unknown'}</strong><br>ID: ${lvl.id || 'N/A'}`;
+    if (vid) vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="width:100%; height:100%; border:none;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No gameplay linked.</div>';
     
     if (stats) {
       stats.innerHTML = `
-        <div class="stat"><h4>List Rank</h4><p>#${finalRank}</p></div>
-        <div class="stat"><h4>Weight Points</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
-        <div class="stat"><h4>Approved Submissions</h4><p>${records.length}</p></div>
+        <div class="stat"><h4>Rank</h4><p>#${finalRank}</p></div>
+        <div class="stat"><h4>Weight</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
+        <div class="stat"><h4>Records</h4><p>${records.length}</p></div>
       `;
     }
 
     if (container) {
-      container.innerHTML = `<h3 style="font-size:16px; margin: 20px 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">Level Victors</h3>`;
+      container.innerHTML = `<h3 style="font-size:15px; margin-top:15px;">Level Victors</h3>`;
       if (records.length === 0) {
-        container.innerHTML += '<div style="padding:16px; opacity:0.4; font-size:13px; text-align:center;">No campus completions currently approved for this rank.</div>';
+        container.innerHTML += '<div style="padding:10px; opacity:0.4; font-size:12px; text-align:center;">No submissions found.</div>';
         return;
       }
-      
       const table = document.createElement('table');
       table.className = 'records-table';
       table.style.width = "100%";
-      table.innerHTML = `<thead><tr><th style="text-align:left;">Player Profile</th><th style="text-align:left;">Campus Scope</th><th style="text-align:right;">Verification</th></tr></thead><tbody></tbody>`;
+      table.innerHTML = `<thead><tr><th style="text-align:left;">Player</th><th style="text-align:left;">Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
       const tbody = table.querySelector('tbody');
-      
       records.forEach(r => {
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td style="padding:8px 0; font-size:13px;">${getPlayerName(r)} <strong style="color:var(--accent); font-size:12px;">(${r.percent || 100}%)</strong></td>
-          <td style="padding:8px 0; font-size:13px; opacity:0.8;">${r.campus || 'Main Campus'}</td>
-          <td style="padding:8px 0; text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px; text-decoration:none; color:inherit;">Watch Run</a></td>
-        `;
+        row.innerHTML = `<td>${getPlayerName(r)} <strong>(${r.percent || 100}%)</strong></td><td>${r.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px;">Link</a></td>`;
         tbody.appendChild(row);
       });
       container.appendChild(table);
     }
   }
 
-  // --- STATS ENGINE AND LEADERBOARD GENERATOR ---
-
+  // --- STATS VISUALIZER LEADERBOARD ENGINE ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
     ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.remove('active');
     });
-    
-    let targetId = tab === 'demon' ? 'statTabDemons' : tab === 'challenge' ? 'statTabChallenges' : 'statTabPlatformer';
-    const target = document.getElementById(targetId);
+    const target = document.getElementById(tab === 'demon' ? 'statTabDemons' : tab === 'challenge' ? 'statTabChallenges' : 'statTabPlatformer');
     if (target) target.classList.add('active');
-    
     renderStatsLeaderboard();
   }
 
-  /**
-   * Generates leaderboards based on point tallies
-   */
   function renderStatsLeaderboard() {
     const targetBody = document.getElementById('leaderboardBody');
     if (!targetBody) return;
@@ -1177,7 +1065,6 @@
     
     let processedPlayers = {};
 
-    // Map metrics into memory storage arrays
     allLevels.forEach(lvl => {
       const cat = getNormalizedListType(lvl);
       const rank = parseInt(lvl.rank || 999, 10);
@@ -1185,7 +1072,7 @@
 
       records.forEach(r => {
         const name = getPlayerName(r);
-        if (!name || name === "") return;
+        if (!name) return;
 
         const playerCampus = String(r.campus || 'Main Campus').trim();
         if (campusFilter !== 'ALL' && playerCampus !== campusFilter) return;
@@ -1197,18 +1084,14 @@
         const pct = parseInt(r.percent || 100, 10);
         const score = calculateLevelPoints(rank) * (pct / 100);
 
-        // Append points only if it aligns to the currently requested score category
         if (cat === currentStatsTab) {
           processedPlayers[name].points += score;
         }
-
-        // Keep running catalog totals
         if (pct === 100) {
           if (cat === 'demon') processedPlayers[name].demons++;
           else if (cat === 'challenge') processedPlayers[name].challenges++;
           else if (cat === 'platformer') processedPlayers[name].platformers++;
         }
-
         processedPlayers[name].completions.push({ levelName: lvl.name || lvl.levelName || 'Unnamed', rank: rank, category: cat, percent: pct, video: r.video || '#' });
       });
     });
@@ -1220,7 +1103,7 @@
     const profView = document.getElementById('profileContent');
 
     if (leaderboardData.length === 0) {
-      targetBody.innerHTML = '<div style="padding:20px; font-size:13px; opacity:0.5; text-align:center;">No player profiles found matching these parameters.</div>';
+      targetBody.innerHTML = '<div style="padding:15px; font-size:12px; opacity:0.5; text-align:center;">No entries match parameters.</div>';
       if (profView) profView.style.display = "none";
       if (prompt) prompt.style.display = "block";
       return;
@@ -1232,29 +1115,26 @@
       row.id = `leaderboard-player-${idx}`;
       row.onclick = () => displayPlayerProfile(player, idx);
 
-      let subLabel = `${player.demons} Demons Verified`;
-      if (currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges Cleaned`;
-      if (currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers Handled`;
+      let subLabel = `${player.demons} Demons`;
+      if (currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges`;
+      if (currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers`;
 
       row.innerHTML = `
         <div class="sv-left">
           <span class="sv-rank">#${idx + 1}</span>
-          <span class="sv-name">${player.name} <small style="display:block; opacity:0.4; font-size:10px; font-weight:400; margin-top:1px;">${subLabel}</small></span>
+          <span class="sv-name">${player.name} <small style="display:block; opacity:0.4; font-size:10px;">${subLabel}</small></span>
         </div>
-        <span class="sv-points" style="font-weight:700;">${player.points.toFixed(2)}</span>
+        <span class="sv-points" style="font-weight:bold;">${player.points.toFixed(2)}</span>
       `;
       targetBody.appendChild(row);
     });
 
-    // AUTO-LOAD THE TOP RANKED PLAYER INTERFACE IMMEDIATELY
+    // CRITICAL: Forces execution of profile zero immediately so interface container isn't blank on boot
     if (leaderboardData.length > 0) {
       displayPlayerProfile(leaderboardData[0], 0);
     }
   }
 
-  /**
-   * Generates dynamic list clouds based on the player profile structure
-   */
   function displayPlayerProfile(player, activeIdx) {
     document.querySelectorAll('.sv-row').forEach(r => r.classList.remove('active-player'));
     const targetedRow = document.getElementById(`leaderboard-player-${activeIdx}`);
@@ -1275,25 +1155,25 @@
     });
 
     const buildCloud = (arr, typeClass) => {
-      if (arr.length === 0) return '<span style="opacity:0.3; font-size:12px; font-style:italic; padding-left:4px;">No records listed</span>';
-      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:3px 4px; padding:4px 8px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); border-radius:5px; font-size:11px; font-weight:500; cursor:pointer; transition:all 0.2s;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} <span style="opacity:0.6;">(#${c.rank})</span>${c.percent < 100 ? ` <span style="color:var(--accent); font-weight:bold;">(${c.percent}%)</span>` : ''}</span>`).join(' ');
+      if (arr.length === 0) return '<span style="opacity:0.3; font-size:12px;">None verified</span>';
+      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:2px 6px; background:rgba(255,255,255,0.04); border-radius:3px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(' ');
     };
 
     let contextHeader = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
 
     canvas.innerHTML = `
-      <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px; margin-bottom:14px;">
-        <h3 style="margin:0; font-size:22px; font-weight:800; tracking-letter:-0.5px;">#${activeIdx + 1} ${player.name}</h3>
-        <span class="badge" style="background:var(--accent); font-size:10px; padding:3px 7px; border-radius:4px; color:#000000; font-weight:700; display:inline-block; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Campus: ${player.campus}</span>
+      <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
+        <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
+        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">${player.campus}</span>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
-        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:8px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Points Score</span><strong style="font-size:20px; color:var(--accent); font-weight:800;">${player.points.toFixed(2)}</strong></div>
-        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:8px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Total Entries</span><strong style="font-size:20px; font-weight:800;">${player.completions.length}</strong></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">SCORE</span><strong style="font-size:16px; color:var(--accent);">${player.points.toFixed(2)}</strong></div>
+        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">RUNS</span><strong style="font-size:16px;">${player.completions.length}</strong></div>
       </div>
       <div>
-        <h4 style="margin:12px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Main ${contextHeader} List (1-75)</h4><div class="demons-cloud">${buildCloud(main, 'cloud-main')}</div>
-        <h4 style="margin:18px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Extended ${contextHeader} List (76-150)</h4><div class="demons-cloud">${buildCloud(extended, 'cloud-extended')}</div>
-        <h4 style="margin:18px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Legacy Archives</h4><div class="demons-cloud">${buildCloud(legacy, 'cloud-legacy')}</div>
+        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8;">Main ${contextHeader} List (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8;">Extended ${contextHeader} List (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8;">Legacy Records</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
   }
@@ -1304,7 +1184,7 @@
     const targetFrame = document.getElementById('pvVideo');
     if (title) title.textContent = `Footage Link: ${lvlName}`;
     if (targetFrame) {
-      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:8px;"></iframe>` : '<div style="padding:40px; opacity:0.5; text-align:center; font-size:14px;">No verifiable video backup linked.</div>';
+      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:20px; opacity:0.5; text-align:center;">No footage variant available.</div>';
     }
   }
 
@@ -1314,8 +1194,7 @@
     if (target) target.classList.add('active-page');
   }
 
-  // --- SUBMISSION TRANSMISSION UTILITIES ---
-
+  // --- REGISTRY INPUT CONTROLS ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
@@ -1360,7 +1239,6 @@
     toggleFormFields();
   }
 
-  // Listeners for outgoing payload transmissions
   document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("submitBtn");
     if (btn) {
@@ -1369,9 +1247,9 @@
         const user = document.getElementById("username").value.trim();
         const link = document.getElementById("recordLink").value.trim();
         const campus = document.getElementById("campus").value.trim();
-        if (!user || !link || !campus) { alert("Please fill out all identity form inputs completely."); return; }
+        if (!user || !link || !campus) { alert("Please complete input fields completely."); return; }
 
-        btn.disabled = true; btn.textContent = "Packing submission bundle...";
+        btn.disabled = true; btn.textContent = "Transmitting...";
         const stamp = new Date().toISOString().split('T')[0];
 
         let body = { 
@@ -1383,7 +1261,7 @@
         if (body.type === "record") {
           const sel = document.getElementById("existingLevel");
           const opt = sel.options[sel.selectedIndex];
-          if (!opt) { alert("Select a valid level registry association."); btn.disabled = false; return; }
+          if (!opt) { alert("Select valid map assignment."); btn.disabled = false; return; }
           body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
         } else {
           body.newName = document.getElementById("newName").value.trim();
@@ -1394,24 +1272,11 @@
         try {
           const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
           const res = await r.json();
-          if (res.status === "ok") { 
-            alert("Record transmission safely forwarded to audit queue."); 
-          } else { 
-            alert("Verification Exception Rejected: " + res.message); 
-          }
-        } catch (err) { 
-          alert("Network connection error encountered during form transmission."); 
-        } finally { 
-          btn.disabled = false; btn.textContent = "Send for review"; 
-        }
+          if (res.status === "ok") { alert("Submission forwarded successfully."); } else { alert("Error: " + res.message); }
+        } catch (err) { alert("Network exception."); } finally { btn.disabled = false; btn.textContent = "Send for review"; }
       };
     }
   });
-
-  function displayNetworkFailureFallback() {
-    const list = document.getElementById('list');
-    if(list) list.innerHTML = '<div style="color:var(--accent); text-align:center; padding:20px;">Unable to mount live database. Check internet connection or CORS block configuration policies.</div>';
-  }
 </script>
 </body>
 </html>
