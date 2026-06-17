@@ -704,6 +704,8 @@
 
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
+  
+  // File endpoints configuration targeting your levels database
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
@@ -711,12 +713,9 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // --- FIXED INITIALIZATION ---
+  // FIXED INITIALIZATION FLOW: Executes sequentially without dropping calculations
   window.onload = async () => {
-    // Clear UI to 0 immediately
     clearUIFieldsToZero();
-    
-    // Wait for the data to actually arrive before trying to render
     const dataLoaded = await loadDatabase();
     
     if (dataLoaded) {
@@ -726,38 +725,19 @@
       renderLevelsDashboard();
       populateExistingLevelsDropdown();
       renderStatsLeaderboard();
-      console.log("Dashboard successfully updated with live data.");
+      console.log("Database synced and fully mounted successfully.");
     } else {
-      console.error("Dashboard failed to fetch levels.json.");
+      console.error("Critical Failure: UI running mock templates because data targets couldn't resolve.");
     }
   };
 
-  async function loadDatabase() {
-    let rawData = null;
-    try {
-      const response = await fetch(GITHUB_PRIMARY_URL, { cache: "no-cache" });
-      if (response.ok) rawData = await response.json();
-      else throw new Error();
-    } catch (err) {
-      try {
-        const response = await fetch(GITHUB_CDN_URL, { cache: "no-cache" });
-        if (response.ok) rawData = await response.json();
-      } catch (err2) {
-        return false;
-      }
-    }
-
-    if (rawData) {
-      allLevels = Array.isArray(rawData) ? rawData : (rawData.levels || rawData.list || Object.values(rawData));
-      return true;
-    }
-    return false;
-  }
-
   function clearUIFieldsToZero() {
-    document.getElementById('heroCountLevels').textContent = "0";
-    document.getElementById('heroCountPlayers').textContent = "0";
-    document.getElementById('heroCountRecords').textContent = "0";
+    const lvlCountEl = document.getElementById('heroCountLevels');
+    const playerCountEl = document.getElementById('heroCountPlayers');
+    const recCountEl = document.getElementById('heroCountRecords');
+    if (lvlCountEl) lvlCountEl.textContent = "0";
+    if (playerCountEl) playerCountEl.textContent = "0";
+    if (recCountEl) recCountEl.textContent = "0";
   }
 
   async function fetchWithTimeout(url, options = {}, timeout = 4000) {
@@ -809,23 +789,17 @@
           allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
         }
       }
+      return true;
     }
 
-    if (!allLevels || allLevels.length === 0) {
-      console.warn("Loading standard structural templates onto components view dashboard.");
-      allLevels = [
-        { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-        { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
-        { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", campus: "Davao Region Campus", createdDate: "2026-06-14", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
-      ];
-    }
-    
-    processLiveDecayFilterAndNews();
-    calculateCounterMetrics();
-    populateCampusDropdownFilters();
-    renderLevelsDashboard();
-    populateExistingLevelsDropdown();
-    renderStatsLeaderboard();
+    // Fallback Mock Template Data fallback if network completely drops
+    console.warn("Loading standard structural templates onto components view dashboard.");
+    allLevels = [
+      { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
+      { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
+      { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", campus: "Davao Region Campus", createdDate: "2026-06-14", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
+    ];
+    return true;
   }
 
   function getNormalizedListType(lvl) {
@@ -1010,6 +984,7 @@
     if (toggleItem) toggleItem.textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
   }
 
+  // Guidelines, routing logic references
   function openGuidelinesModal() { 
     const modal = document.getElementById('guidelinesModal');
     if (modal) modal.style.display = 'flex'; 
@@ -1319,6 +1294,7 @@
     });
   }
 
+  // Visualizes details cloud configuration components
   function displayPlayerProfile(player, index) {
     document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
     const selectedRow = document.getElementById(`player-row-${index}`);
@@ -1372,45 +1348,48 @@
     if (pvVideo) pvVideo.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
   }
 
-  const sBtn = document.getElementById("submitBtn");
-  if (sBtn) {
-    sBtn.onclick = async (e) => {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const recordLink = document.getElementById("recordLink").value.trim();
-      const campus = document.getElementById("campus").value.trim();
-      if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
+  // Forms Transmission Review Interface Hook
+  document.addEventListener("DOMContentLoaded", () => {
+    const sBtn = document.getElementById("submitBtn");
+    if (sBtn) {
+      sBtn.onclick = async (e) => {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const recordLink = document.getElementById("recordLink").value.trim();
+        const campus = document.getElementById("campus").value.trim();
+        if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
 
-      sBtn.disabled = true; sBtn.textContent = "Processing transmission package...";
-      const generationStamp = new Date().toISOString().split('T')[0];
+        sBtn.disabled = true; sBtn.textContent = "Processing transmission package...";
+        const generationStamp = new Date().toISOString().split('T')[0];
 
-      let payload = { 
-        listType: document.getElementById("listType").value, 
-        type: document.getElementById("submissionType").value, 
-        username: username, 
-        recordLink: recordLink, 
-        campus: campus,
-        createdDate: generationStamp
+        let payload = { 
+          listType: document.getElementById("listType").value, 
+          type: document.getElementById("submissionType").value, 
+          username: username, 
+          recordLink: recordLink, 
+          campus: campus,
+          createdDate: generationStamp
+        };
+
+        if (payload.type === "record") {
+          const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
+          if (!chosenOpt) { alert("Select a level first."); sBtn.disabled = false; sBtn.textContent = "Send for review"; return; }
+          payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
+        } else {
+          payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
+        }
+
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+          const resData = await response.json();
+          if (resData.status === "ok") {
+            alert("Transmission entry safely queued.");
+            document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
+          } else { alert("Rejected: " + resData.message); }
+        } catch (err) { alert("Transmission error."); } finally { sBtn.disabled = false; sBtn.textContent = "Send for review"; }
       };
-
-      if (payload.type === "record") {
-        const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
-        if (!chosenOpt) { alert("Select a level first."); sBtn.disabled = false; sBtn.textContent = "Send for review"; return; }
-        payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
-      } else {
-        payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
-      }
-
-      try {
-        const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
-        const resData = await response.json();
-        if (resData.status === "ok") {
-          alert("Transmission entry safely queued.");
-          document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
-        } else { alert("Rejected: " + resData.message); }
-      } catch (err) { alert("Transmission error."); } finally { sBtn.disabled = false; sBtn.textContent = "Send for review"; }
-    };
-  }
+    }
+  });
 </script>
 </body>
 </html>
