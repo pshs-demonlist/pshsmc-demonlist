@@ -704,8 +704,6 @@
 
 <script>
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
-  
-  // File endpoints configuration targeting your levels database
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
@@ -713,18 +711,53 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  window.onload = () => {
+  // --- FIXED INITIALIZATION ---
+  window.onload = async () => {
+    // Clear UI to 0 immediately
     clearUIFieldsToZero();
-    loadDatabase();
+    
+    // Wait for the data to actually arrive before trying to render
+    const dataLoaded = await loadDatabase();
+    
+    if (dataLoaded) {
+      processLiveDecayFilterAndNews();
+      calculateCounterMetrics();
+      populateCampusDropdownFilters();
+      renderLevelsDashboard();
+      populateExistingLevelsDropdown();
+      renderStatsLeaderboard();
+      console.log("Dashboard successfully updated with live data.");
+    } else {
+      console.error("Dashboard failed to fetch levels.json.");
+    }
   };
 
+  async function loadDatabase() {
+    let rawData = null;
+    try {
+      const response = await fetch(GITHUB_PRIMARY_URL, { cache: "no-cache" });
+      if (response.ok) rawData = await response.json();
+      else throw new Error();
+    } catch (err) {
+      try {
+        const response = await fetch(GITHUB_CDN_URL, { cache: "no-cache" });
+        if (response.ok) rawData = await response.json();
+      } catch (err2) {
+        return false;
+      }
+    }
+
+    if (rawData) {
+      allLevels = Array.isArray(rawData) ? rawData : (rawData.levels || rawData.list || Object.values(rawData));
+      return true;
+    }
+    return false;
+  }
+
   function clearUIFieldsToZero() {
-    const lvlCountEl = document.getElementById('heroCountLevels');
-    const playerCountEl = document.getElementById('heroCountPlayers');
-    const recCountEl = document.getElementById('heroCountRecords');
-    if (lvlCountEl) lvlCountEl.textContent = "0";
-    if (playerCountEl) playerCountEl.textContent = "0";
-    if (recCountEl) recCountEl.textContent = "0";
+    document.getElementById('heroCountLevels').textContent = "0";
+    document.getElementById('heroCountPlayers').textContent = "0";
+    document.getElementById('heroCountRecords').textContent = "0";
   }
 
   async function fetchWithTimeout(url, options = {}, timeout = 4000) {
