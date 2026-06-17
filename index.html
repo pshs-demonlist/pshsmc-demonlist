@@ -705,7 +705,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Engineered with absolute component isolation and null-safety guards.
+   * Chronological Date Filter Version: Active Reference Date June 17, 2026
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -716,9 +716,9 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // --- SAFE LIFECYCLE INITIALIZATION ---
+  // --- AUTOMATED INITIALIZATION ---
   window.addEventListener('DOMContentLoaded', () => {
-    console.log("[Demonlist Engine] DOM fully loaded. Launching initialization pipeline...");
+    console.log("[Demonlist] DOM mounted. Initializing application data vectors...");
     initApp();
   });
 
@@ -727,14 +727,12 @@
     
     const dataLoaded = await loadDatabase();
     if (!dataLoaded || allLevels.length === 0) {
-      console.error("[Critical] Could not initialize app state. Database array is empty.");
+      console.error("[Critical] Empty master database array. Checking fallback states...");
       displayFallbackUIMessage("list", "Failed to sync remote data. Please verify your data stream connection.");
       return;
     }
-
-    console.log(`[Success] Master database updated with ${allLevels.length} entries.`);
     
-    // Execute rendering steps inside independent execution tracks to prevent cascading crashes
+    // Execute logic chains with error safety barriers
     safeExecute(processLiveDecayFilterAndNews, "Changelog Pipeline");
     safeExecute(calculateCounterMetrics, "Global Metrics");
     safeExecute(populateCampusDropdownFilters, "Campus Filters");
@@ -747,7 +745,7 @@
     try {
       fn();
     } catch (err) {
-      console.error(`[Runtime Crash Avoided] Error during: ${context}. Details:`, err);
+      console.error(`[Runtime Guard] Error during execution of ${context}:`, err);
     }
   }
 
@@ -758,7 +756,7 @@
     });
   }
 
-  // --- RESILIENT DATA STREAM PARSER ---
+  // --- FAULT-TOLERANT DATA FETCH ENGINE ---
   async function loadDatabase() {
     let rawData = null;
     
@@ -774,11 +772,11 @@
     try {
       rawData = await fetchPayload(GITHUB_PRIMARY_URL);
     } catch (err) {
-      console.warn("[Network Mirroring] Primary dataset fetch timed out or failed. Attempting CDN mirror access...", err);
+      console.warn("[Network Node] Primary database stream timing out. Falling back to global CDN node...", err);
       try {
         rawData = await fetchPayload(GITHUB_CDN_URL);
       } catch (cdnErr) {
-        console.error("[Network Error] All remote database targets are completely unreachable.", cdnErr);
+        console.error("[Network Error] Root database streams are completely unreachable.", cdnErr);
         return false;
       }
     }
@@ -786,7 +784,6 @@
     if (!rawData) return false;
 
     try {
-      // Unrolls whatever variant of structure object github provides (Array vs Keyed Object)
       if (Array.isArray(rawData)) {
         allLevels = rawData;
       } else if (typeof rawData === 'object') {
@@ -794,12 +791,12 @@
       }
       return Array.isArray(allLevels) && allLevels.length > 0;
     } catch (parseError) {
-      console.error("[Data Parsing Error] Structure of JSON payload is unmappable.", parseError);
+      console.error("[Data Parsing Error] Remote dataset schema structure unexpected.", parseError);
       return false;
     }
   }
 
-  // --- DEFENSIVE FIELD EXTRACTORS ---
+  // --- VALUE SELECTION FILTER MAPPINGS ---
   function getNormalizedListType(lvl) {
     if (!lvl) return 'demon';
     const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
@@ -821,13 +818,13 @@
     return String(rec.username || rec.name || rec.player || rec.playerName || '').trim();
   }
 
-  // --- CHANGELOG TIMELINE ENGINE ---
+  // --- LIVE CHRONOLOGICAL NEWS FEED TIMELINE ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Fixed Reference Timeline: June 17, 2026 @ 12:00 AM
+    const trackingBaseline = new Date("2026-06-17T00:00:00");
     const newsByDateMap = {};
 
     allLevels.forEach(lvl => {
@@ -835,55 +832,62 @@
       if (isNaN(baseRank)) baseRank = 999;
       if (!lvl.initialRank) lvl.initialRank = baseRank;
 
-      let dateStr = lvl.createdDate || lvl.date || "2026-06-14";
-      const spawnDate = new Date(dateStr);
-      if (isNaN(spawnDate.getTime())) {
+      // Extract the entry verification date
+      let dateStr = lvl.createdDate || lvl.date;
+      if (!dateStr) {
+        lvl.rank = baseRank;
+        return; 
+      }
+
+      const entryDate = new Date(dateStr);
+      if (isNaN(entryDate.getTime())) {
         lvl.rank = baseRank;
         return;
       }
-      
-      spawnDate.setHours(0, 0, 0, 0);
-      const dayDiff = Math.floor((today.getTime() - spawnDate.getTime()) / (1000 * 60 * 60 * 24));
 
-      if (dayDiff >= 0 && dayDiff < 14) {
-        const localizedDate = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
-        if (!newsByDateMap[localizedDate]) newsByDateMap[localizedDate] = [];
+      // Filter Vector: Must be on or after June 17, 2026 @ 12:00 AM
+      if (entryDate >= trackingBaseline) {
+        const msDifference = trackingBaseline.getTime() - entryDate.getTime();
+        const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
+        const daysRemaining = 14 - daysPassed;
 
-        const dynamicRank = baseRank + dayDiff;
-        const tierLabel = dynamicRank <= 75 ? "Main List 1-75" : "Extended Records 76-150";
-        const cat = getNormalizedListType(lvl);
+        // Automatically delete from feed after 14 days expiration
+        if (daysRemaining > 0 && daysRemaining <= 14) {
+          const localizedGroupKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
+          if (!newsByDateMap[localizedGroupKey]) newsByDateMap[localizedGroupKey] = [];
 
-        newsByDateMap[localizedDate].push({
-          title: lvl.name || lvl.levelName || "Unnamed Map",
-          category: cat.charAt(0).toUpperCase() + cat.slice(1),
-          desc: `Dynamic Position Tracking at #${dynamicRank} (${tierLabel})`,
-          daysLeft: 14 - dayDiff
-        });
-        lvl.rank = dynamicRank;
-      } else {
-        lvl.rank = baseRank;
+          const cat = getNormalizedListType(lvl);
+          newsByDateMap[localizedGroupKey].push({
+            title: lvl.name || lvl.levelName || "Unnamed Map",
+            category: cat.charAt(0).toUpperCase() + cat.slice(1),
+            rank: baseRank,
+            daysLeft: daysRemaining
+          });
+        }
       }
+      
+      lvl.rank = baseRank; // Protect placement tiers from artificial layout degradation
     });
 
     const sortedDates = Object.keys(newsByDateMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color: #64748b; padding: 12px; font-size: 12px;">No adjustments logged inside past 14-day tracking tracking timeline.</div>';
+      feed.innerHTML = '<div style="color: #64748b; padding: 16px; font-size: 12px; text-align: center; font-style: italic;">No new tracker entries recorded since 17/06/2026.</div>';
       return;
     }
 
     feed.innerHTML = '';
     sortedDates.forEach(date => {
       const container = document.createElement('div');
-      container.style.marginBottom = "12px";
-      let html = `<div style="font-size:11px; color:var(--accent); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${date}</div>`;
-      newsByDateMap[date].forEach(item => {
+      container.style.marginBottom = "14px";
+      let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${date}</div>`;
+      newsMap[date].forEach(item => {
         html += `
-          <div style="background: rgba(255,255,255,0.02); border-left: 2px solid var(--accent); padding: 8px 12px; margin-bottom: 4px; border-radius: 0 4px 4px 0;">
-            <div style="display:flex; justify-content:space-between; font-size:12px;">
-              <span style="font-weight:bold; color:#fff;">${item.title}</span>
-              <span style="opacity:0.5; font-size:10px;">${item.daysLeft}d left</span>
+          <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap: 10px;">
+              <span style="font-weight:600; color:#ffffff;">${item.title}</span>
+              <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d remaining</span>
             </div>
-            <div style="font-size:11px; opacity:0.7;">[${item.category}] ${item.desc}</div>
+            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] Level registered onto official charts at position #${item.rank}.</div>
           </div>
         `;
       });
@@ -892,7 +896,7 @@
     });
   }
 
-  // --- SCORE COUNTER MODULE ---
+  // --- STAT COUNTER METRICS ---
   function calculateCounterMetrics() {
     let uniquePlayers = new Set();
     let totalRecordsCount = 0;
@@ -944,9 +948,20 @@
     renderLevelsDashboard();
   }
 
-  // --- MAIN REGISTRY DASHBOARD ---
+  // --- MAIN LEVELS BOARD CONTROLLER ---
   function renderLevelsDashboard() {
-    const list = document.getElementById('list');
+    // Structural Guard: Resolves fallback searches if element configurations lack explicit identifiers
+    let list = document.getElementById('list');
+    if (!list) {
+      const fallbacks = document.querySelectorAll('div');
+      for (let f of fallbacks) {
+        if (f.textContent.includes("Loading list records from database")) {
+          list = f;
+          list.id = "list"; 
+          break;
+        }
+      }
+    }
     if (!list) return;
 
     const queryEl = document.getElementById('search');
@@ -1039,7 +1054,7 @@
     if (container) {
       container.innerHTML = `<h3 style="font-size:14px; margin-top:16px;">Verified Level Victors</h3>`;
       if (records.length === 0) {
-        container.innerHTML += '<div style="padding:12px; opacity:0.4; font-size:12px; text-align:center;">No campus completion data records approved.</div>';
+        container.innerHTML += '<div style="padding:12px; opacity:0.4; font-size:12px; text-align:center;">No campus data records approved.</div>';
         return;
       }
       const table = document.createElement('table');
@@ -1056,7 +1071,7 @@
     }
   }
 
-  // --- STAT LEADERBOARD ENGINE ---
+  // --- STATS VISUALIZATION CONTROLLERS ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
     ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
@@ -1116,7 +1131,7 @@
     const profView = document.getElementById('profileContent');
 
     if (leaderboardData.length === 0) {
-      targetBody.innerHTML = '<div style="padding:16px; font-size:12px; opacity:0.5; text-align:center;">No player records matched specifications.</div>';
+      targetBody.innerHTML = '<div style="padding:16px; font-size:12px; opacity:0.5; text-align:center;">No records match conditions.</div>';
       if (profView) profView.style.display = "none";
       if (prompt) prompt.style.display = "block";
       return;
@@ -1142,7 +1157,6 @@
       targetBody.appendChild(row);
     });
 
-    // INSTANTLY RENDER HIGHEST RANKED PLAYER TO PREVENT BLANK PLACEHOLDERS
     if (leaderboardData.length > 0) {
       displayPlayerProfile(leaderboardData[0], 0);
     }
@@ -1177,16 +1191,16 @@
     canvas.innerHTML = `
       <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
         <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
-        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">Campus Scope: ${player.campus}</span>
+        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">Campus: ${player.campus}</span>
       </div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
         <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">TOTAL SCORE</span><strong style="font-size:16px; color:var(--accent);">${player.points.toFixed(2)}</strong></div>
         <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">COMPLETIONS</span><strong style="font-size:16px;">${player.completions.length}</strong></div>
       </div>
       <div>
-        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} Records (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} Records (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Archived Legacy Placements</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
+        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Legacy</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
   }
@@ -1195,18 +1209,16 @@
     switchPage('playerVideo');
     const title = document.getElementById('pvTitle');
     const targetFrame = document.getElementById('pvVideo');
-    if (title) title.textContent = `Record Verification Run: ${lvlName}`;
+    if (title) title.textContent = `Record Run: ${lvlName}`;
     if (targetFrame) {
-      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; opacity:0.5; text-align:center;">No digital video reference archived.</div>';
+      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; opacity:0.5; text-align:center;">No video reference saved.</div>';
     }
   }
 
   function switchPage(pageId) {
     document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
     const target = document.getElementById(pageId + 'Page');
-    if (target) {
-      target.classList.add('active-page');
-    }
+    if (target) target.classList.add('active-page');
   }
 
   function displayFallbackUIMessage(elementId, message) {
@@ -1214,7 +1226,7 @@
     if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
   }
 
-  // --- SUBMISSION PACKET HANDLERS ---
+  // --- SUBMISSION PACKET UTILITIES ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
@@ -1222,7 +1234,7 @@
     d.innerHTML = '';
     const filtered = allLevels.filter(l => getNormalizedListType(l) === t.value);
     if (filtered.length === 0) {
-      d.innerHTML = '<option value="">No maps found matching type criteria</option>';
+      d.innerHTML = '<option value="">No maps found</option>';
       return;
     }
     filtered.forEach(l => {
@@ -1260,7 +1272,6 @@
     toggleFormFields();
   }
 
-  // Secure binding listeners for forms
   document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("submitBtn");
     if (!btn) return;
@@ -1271,9 +1282,9 @@
       const link = document.getElementById("recordLink") ? document.getElementById("recordLink").value.trim() : '';
       const campus = document.getElementById("campus") ? document.getElementById("campus").value.trim() : '';
       
-      if (!user || !link || !campus) { alert("Please input complete field details."); return; }
+      if (!user || !link || !campus) { alert("Please fill out form input sections completely."); return; }
 
-      btn.disabled = true; btn.textContent = "Forwarding record packet...";
+      btn.disabled = true; btn.textContent = "Processing packet transmission...";
       const stamp = new Date().toISOString().split('T')[0];
 
       let body = { 
@@ -1284,7 +1295,7 @@
 
       if (body.type === "record") {
         const sel = document.getElementById("existingLevel");
-        if (!sel || sel.selectedIndex === -1) { alert("Select a target level connection."); btn.disabled = false; return; }
+        if (!sel || sel.selectedIndex === -1) { alert("Select a target connection."); btn.disabled = false; return; }
         const opt = sel.options[sel.selectedIndex];
         body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
       } else {
@@ -1296,7 +1307,7 @@
       try {
         const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
         const res = await r.json();
-        if (res.status === "ok") { alert("Record transaction committed successfully."); } else { alert("Exception: " + res.message); }
+        if (res.status === "ok") { alert("Record transaction forwarded successfully."); } else { alert("Exception: " + res.message); }
       } catch (err) { alert("System communication breakdown."); } finally { btn.disabled = false; btn.textContent = "Send for review"; }
     };
   });
