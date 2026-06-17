@@ -380,7 +380,7 @@
   .records-container { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; padding: 24px 16px; text-align: center; }
   .records-container h3 { color: var(--text); font-size: 26px; font-weight: bold; margin: 0 0 6px 0; }
   .records-sub { color: var(--muted); font-size: 14px; line-height: 1.4; margin-bottom: 18px; }
-  .records-table { border-collapse: collapse; border-radius: 6px; margin-top: 10px; overflow: hidden; width: 100%; }
+  .records-container table.records-table { border-collapse: collapse; border-radius: 6px; margin-top: 10px; overflow: hidden; width: 100%; }
   .records-table th { background: var(--accent); color: #ffffff; font-size: 14px; font-weight: bold; padding: 12px 16px; text-align: left; }
   .records-table td { background: rgba(0, 0, 0, 0.02); border-bottom: 1px solid var(--line); color: var(--text); font-size: 14px; padding: 12px 16px; text-align: left; }
   body.light-theme .records-table td { background: #ffffff; }
@@ -510,7 +510,7 @@
     <div class="hero-container">
       <div class="hero-left">
         <h1>The Go-To Ranking of <span>Every Level</span></h1>
-        <p class="hero-p">Track your campus progress, compete on localized global leaderboards, and conquer the hardest platformer, challenge, and demon list maps in school history.</p>
+        <p class="hero-p">Track your campus progress, compete on localized global leaderboards, and conquer the hardest challenge and demon list maps in school history.</p>
         
         <div class="hero-buttons">
           <button class="btn btn-primary" onclick="goToSubmissionBox()">Submit Record</button>
@@ -561,7 +561,6 @@
       <div class="filter-tabs">
         <button class="tab-btn active" id="tabDemons" onclick="switchMainListTab('demon')">Demon List</button>
         <button class="tab-btn" id="tabChallenges" onclick="switchMainListTab('challenge')">Challenge List</button>
-        <button class="tab-btn" id="tabPlatformer" onclick="switchMainListTab('platformer')">Platformer List</button>
       </div>
       <div class="filter-container-grid">
         <input id="search" type="text" placeholder="Search levels, creators, or difficulty..." oninput="renderLevelsDashboard()" />
@@ -585,7 +584,6 @@
           <select id="listType" class="select" onchange="handleListTypeChange()">
             <option value="demon">Demonlist</option>
             <option value="challenge">Challenge List</option>
-            <option value="platformer">Platformer List</option>
           </select>
         </div>
         <div></div>
@@ -656,7 +654,6 @@
       <div class="filter-tabs" style="margin-bottom: 12px;">
         <button class="tab-btn active" id="statTabDemons" onclick="switchStatsPageListTab('demon')">Demon List Stats</button>
         <button class="tab-btn" id="statTabChallenges" onclick="switchStatsPageListTab('challenge')">Challenge List Stats</button>
-        <button class="tab-btn" id="statTabPlatformer" onclick="switchStatsPageListTab('platformer')">Platformer List Stats</button>
       </div>
 
       <div style="margin-bottom: 20px; max-width: 300px;">
@@ -706,7 +703,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Fixed Bugs: XSS Security, Ghost Audio, LocalStorage Theme, Missing Submit Handler, Error loops.
+   * Focuses purely on Demon and Challenge streams.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -807,7 +804,7 @@
     console.log(`[Router] Switching view plane to targeting ID: #${pageId}Page`);
     closeNavMenu();
     
-    // Fix: Clean out iframes to prevent ghost audio
+    // Clean out iframes to prevent ghost audio
     const mainVid = document.getElementById('video');
     const playerVid = document.getElementById('pvVideo');
     if (mainVid) mainVid.innerHTML = '';
@@ -866,7 +863,7 @@
   function toggleThemeMode() {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
-    localStorage.setItem('pshsmc_theme', isLight ? 'light' : 'dark'); // Fix: Persistence
+    localStorage.setItem('pshsmc_theme', isLight ? 'light' : 'dark');
     closeNavMenu();
   }
 
@@ -968,8 +965,7 @@
     if (!lvl) return 'demon';
     const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
     if (typeStr.includes('challenge')) return 'challenge';
-    if (typeStr.includes('platformer')) return 'platformer';
-    return 'demon';
+    return 'demon'; // Platformer fallback references removed
   }
 
   function getRecordList(lvl) {
@@ -1023,11 +1019,11 @@
 
   function switchMainListTab(tab) {
     currentMainTab = tab;
-    ['tabDemons', 'tabChallenges', 'tabPlatformer'].forEach(id => {
+    ['tabDemons', 'tabChallenges'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.remove('active');
     });
-    const target = document.getElementById(tab === 'demon' ? 'tabDemons' : tab === 'challenge' ? 'tabChallenges' : 'tabPlatformer');
+    const target = document.getElementById(tab === 'demon' ? 'tabDemons' : 'tabChallenges');
     if (target) target.classList.add('active');
     renderLevelsDashboard();
   }
@@ -1145,11 +1141,11 @@
   // --- STATS LEADERBOARD MODULES ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
-    ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
+    ['statTabDemons', 'statTabChallenges'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.remove('active');
     });
-    const target = document.getElementById(tab === 'demon' ? 'statTabDemons' : tab === 'challenge' ? 'statTabChallenges' : 'statTabPlatformer');
+    const target = document.getElementById(tab === 'demon' ? 'statTabDemons' : 'statTabChallenges');
     if (target) target.classList.add('active');
     renderStatsLeaderboard();
   }
@@ -1177,7 +1173,7 @@
         if (campusFilter !== 'ALL' && playerCampus !== campusFilter) return;
 
         if (!processedPlayers[name]) {
-          processedPlayers[name] = { name: name, campus: playerCampus, points: 0, completions: [], demons: 0, challenges: 0, platformers: 0 };
+          processedPlayers[name] = { name: name, campus: playerCampus, points: 0, completions: [], demons: 0, challenges: 0 };
         }
 
         const pct = parseInt(r.percent || 100, 10);
@@ -1187,7 +1183,6 @@
         if (pct === 100) {
           if (cat === 'demon') processedPlayers[name].demons++;
           else if (cat === 'challenge') processedPlayers[name].challenges++;
-          else if (cat === 'platformer') processedPlayers[name].platformers++;
         }
         processedPlayers[name].completions.push({ levelName: escapeHTML(lvl.name || lvl.levelName || 'Unnamed'), rank: rank, category: cat, percent: pct, video: escapeHTML(r.video || '#') });
       });
@@ -1205,14 +1200,14 @@
       const row = document.createElement('div');
       row.className = 'sv-row';
       row.onclick = () => displayPlayerProfile(player, idx);
-      let subLabel = currentStatsTab === 'demon' ? `${player.demons} Demons` : currentStatsTab === 'challenge' ? `${player.challenges} Challenges` : `${player.platformers} Platformers`;
+      let subLabel = currentStatsTab === 'demon' ? `${player.demons} Demons` : `${player.challenges} Challenges`;
 
       row.innerHTML = `
         <div class="sv-left">
           <span class="sv-rank">#${idx + 1}</span>
           <span class="sv-name">${player.name} <small style="display:block; opacity:0.4; font-size:10px;">${subLabel}</small></span>
         </div>
-        <span class="sv-points" style="font-weight:bold;">${player.points.toFixed(2)}</span>
+        <span class="sv-points" style="font-weight:bold;">${player.points.toFixed(2)} pts</span>
       `;
       targetBody.appendChild(row);
     });
@@ -1237,18 +1232,19 @@
 
     const buildCloud = (arr, typeClass) => {
       if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
-      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})</span>`).join(' ');
+      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (${c.percent}%)</span>`).join(' ');
     };
 
     let contextHeader = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
     canvas.innerHTML = `
       <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
         <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
-        <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">Campus: ${player.campus}</span>
+        <p style="margin:4px 0; font-size:14px; color:var(--accent); font-weight:bold;">Total Score: ${player.points.toFixed(2)} Points</p>
+        <span class="badge" style="background:var(--line); font-size:10px; padding:2px 6px; color:var(--text); display:inline-block; margin-top:3px;">Campus: ${player.campus}</span>
       </div>
       <div>
-        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader}</h4><div>${buildCloud(main, 'cloud-main')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader}</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} Completions</h4><div>${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} Completions</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
         <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Legacy</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
@@ -1308,7 +1304,6 @@
     toggleFormFields();
   }
 
-  // FIXED: Actually handles the submission sending mechanism
   function bindSubmitHandler() {
     const btn = document.getElementById('submitBtn');
     if(!btn) return;
@@ -1329,7 +1324,6 @@
         btn.textContent = "Submitting...";
         btn.disabled = true;
 
-        // Since we don't have exact JSON format for your App Script, sending standard fetch parameters.
         const payload = new URLSearchParams({
           username: user,
           video: link,
@@ -1346,7 +1340,6 @@
           payload.append('levelId', document.getElementById('newLevelId').value);
         }
 
-        // Send to Google App Script endpoint 
         const res = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
@@ -1354,12 +1347,9 @@
           body: payload.toString()
         });
 
-        // Mock delay for UI UX
         await new Promise(r => setTimeout(r, 600));
-
         alert("Success! Your submission has been sent for staff review.");
         
-        // Clear fields out after
         document.getElementById('username').value = '';
         document.getElementById('recordLink').value = '';
         
