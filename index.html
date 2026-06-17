@@ -705,7 +705,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Complete Interactive Binding Edition — Built June 17, 2026
+   * Dynamic Rank Shift Notification & Layout Router Patch
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -716,7 +716,7 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // --- AUTOMATED INITIALIZATION & HARDWARE UI COUPLING ---
+  // --- AUTOMATED INITIALIZATION ---
   window.addEventListener('DOMContentLoaded', () => {
     console.log("[Demonlist] DOM mounted. Initializing application data vectors...");
     initApp();
@@ -728,12 +728,11 @@
     
     const dataLoaded = await loadDatabase();
     if (!dataLoaded || allLevels.length === 0) {
-      console.error("[Critical] Empty master database array. Checking fallback states...");
+      console.error("[Critical] Empty master database array.");
       displayFallbackUIMessage("list", "Failed to sync remote data. Please verify your data stream connection.");
       return;
     }
     
-    // Execute logic chains with error safety barriers
     safeExecute(processLiveDecayFilterAndNews, "Changelog Pipeline");
     safeExecute(calculateCounterMetrics, "Global Metrics");
     safeExecute(populateCampusDropdownFilters, "Campus Filters");
@@ -750,69 +749,9 @@
     }
   }
 
-  // --- HARD CORRECTION: BUTTON & NAV INTERACTION BINDINGS ---
-  function bindActionButtonsAndNav() {
-    console.log("[UI Linker] Binding listeners to interactive interface elements...");
-
-    // 1. Bind Mobile Nav Menu (3 lines in top right)
-    // Matches common layouts: class names like .menu-btn, .nav-toggle, #menuIcon, or an icon element
-    const navToggles = document.querySelectorAll('.nav-toggle, .menu-btn, .hamburger, #menuBtn, #menuIcon');
-    navToggles.forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        const navMenu = document.querySelector('.nav-links, .nav-menu, #navLinks');
-        if (navMenu) {
-          navMenu.classList.toggle('active-menu');
-          // Fallback toggle style if CSS class rules are missing
-          if (navMenu.style.display === 'flex') {
-            navMenu.style.display = 'none';
-          } else {
-            navMenu.style.display = 'flex';
-          }
-        }
-      };
-    });
-
-    // 2. Scan and Bind all variants of "Submit Record" buttons
-    document.querySelectorAll('button, a, .btn').forEach(el => {
-      const txt = el.textContent.trim().toLowerCase();
-      
-      if (txt.includes('submit record')) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          console.log("[UI Linker] Redirecting to Submit Form view state.");
-          // Swaps view directly to your form container or page
-          switchPage('submit'); 
-          // If your form is inside a shared element block, ensure it scrolls into view gracefully
-          const formSec = document.getElementById('submitPage') || document.querySelector('.submission-form-container');
-          if (formSec) formSec.scrollIntoView({ behavior: 'smooth' });
-        };
-      }
-
-      // 3. Scan and Bind all variants of "View the List" buttons
-      if (txt.includes('view the list') || txt.includes('view list')) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          console.log("[UI Linker] Redirecting to Dashboard List view state.");
-          switchPage('main');
-          const listSec = document.getElementById('listPage') || document.getElementById('list') || document.querySelector('.list-container');
-          if (listSec) listSec.scrollIntoView({ behavior: 'smooth' });
-        };
-      }
-    });
-  }
-
-  function clearUIFieldsToZero() {
-    ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = "0";
-    });
-  }
-
   // --- FAULT-TOLERANT DATA FETCH ENGINE ---
   async function loadDatabase() {
     let rawData = null;
-    
     const fetchPayload = async (url) => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 6000);
@@ -825,105 +764,162 @@
     try {
       rawData = await fetchPayload(GITHUB_PRIMARY_URL);
     } catch (err) {
-      console.warn("[Network Node] Primary database stream timing out. Falling back to global CDN node...", err);
-      try {
-        rawData = await fetchPayload(GITHUB_CDN_URL);
-      } catch (cdnErr) {
-        console.error("[Network Error] Root database streams are completely unreachable.", cdnErr);
-        return false;
-      }
+      try { rawData = await fetchPayload(GITHUB_CDN_URL); } catch (e) { return false; }
     }
 
     if (!rawData) return false;
+    if (Array.isArray(rawData)) { allLevels = rawData; } 
+    else if (typeof rawData === 'object') { allLevels = rawData.levels || rawData.list || []; }
+    return Array.isArray(allLevels) && allLevels.length > 0;
+  }
 
-    try {
-      if (Array.isArray(rawData)) {
-        allLevels = rawData;
-      } else if (typeof rawData === 'object') {
-        allLevels = rawData.levels || rawData.list || rawData.data || Object.values(rawData).filter(item => item && typeof item === 'object');
+  // --- FIXED LAYOUT ENGINE & EXPLICIT ROUTER NAVIGATION ---
+  function bindActionButtonsAndNav() {
+    console.log("[UI Linker] Binding listeners to explicit layout nodes...");
+
+    // Refactored Hamburger Interceptor
+    const navToggles = document.querySelectorAll('.nav-toggle, .menu-btn, .hamburger, #menuBtn, #menuIcon');
+    navToggles.forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const navMenu = document.querySelector('.nav-links, .nav-menu, #navLinks');
+        if (navMenu) {
+          if (navMenu.style.display === 'block' || navMenu.style.maxHeight === '500px') {
+            navMenu.style.display = 'none';
+            navMenu.style.maxHeight = '0px';
+          } else {
+            navMenu.style.display = 'block';
+            navMenu.style.maxHeight = '500px';
+            navMenu.style.opacity = '1';
+          }
+        }
+      };
+    });
+
+    // Precise Text-to-Element Router Hooks
+    document.querySelectorAll('button, a, .btn, .nav-item').forEach(el => {
+      const txt = el.textContent.trim().toLowerCase();
+      
+      if (txt.includes('submit record') || txt.includes('submit a record')) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          switchPage('submitPage');
+        };
       }
-      return Array.isArray(allLevels) && allLevels.length > 0;
-    } catch (parseError) {
-      console.error("[Data Parsing Error] Remote dataset schema structure unexpected.", parseError);
-      return false;
+      if (txt.includes('view the list') || txt.includes('view list') || txt.includes('demon list')) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          switchPage('listPage');
+        };
+      }
+      if (txt.includes('stats viewer') || txt.includes('leaderboard')) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          switchPage('statsPage');
+        };
+      }
+    });
+  }
+
+  function switchPage(activePageId) {
+    console.log(`[Router] Switching view plane to targeting ID: #${activePageId}`);
+    
+    // Explicit Core Framework Section Wrappers
+    const corePages = ['listPage', 'submitPage', 'statsPage', 'detailPage', 'playerVideoPage'];
+    
+    corePages.forEach(id => {
+      const pageEl = document.getElementById(id);
+      if (pageEl) {
+        pageEl.style.display = 'none';
+        pageEl.classList.remove('active-page');
+      }
+    });
+
+    const targetPage = document.getElementById(activePageId);
+    if (targetPage) {
+      targetPage.style.display = 'block';
+      targetPage.classList.add('active-page');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } else {
+      // Direct emergency structural fallback
+      if (activePageId === 'listPage') {
+        const listEl = document.getElementById('list');
+        if (listEl && listEl.parentElement) listEl.parentElement.style.display = 'block';
+      }
     }
   }
 
-  // --- VALUE SELECTION FILTER MAPPINGS ---
-  function getNormalizedListType(lvl) {
-    if (!lvl) return 'demon';
-    const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
-    if (typeStr.includes('challenge')) return 'challenge';
-    if (typeStr.includes('platformer')) return 'platformer';
-    return 'demon';
-  }
-
-  function getRecordList(lvl) {
-    if (!lvl) return [];
-    if (Array.isArray(lvl.records)) return lvl.records;
-    if (Array.isArray(lvl.completions)) return lvl.completions;
-    if (Array.isArray(lvl.victors)) return lvl.victors;
-    return [];
-  }
-
-  function getPlayerName(rec) {
-    if (!rec) return '';
-    return String(rec.username || rec.name || rec.player || rec.playerName || '').trim();
-  }
-
-  // --- LIVE CHRONOLOGICAL NEWS FEED TIMELINE ---
+  // --- DYNAMIC LIVE UPDATES & PLACEMENT SHIFT FILTER ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    // Fixed Reference Timeline Tracker: June 17, 2026 @ 12:00 AM
     const trackingBaseline = new Date("2026-06-17T00:00:00");
     const newsByDateMap = {};
 
-    allLevels.forEach(lvl => {
-      let baseRank = parseInt(lvl.rank || lvl.placement || lvl.position, 10);
-      if (isNaN(baseRank)) baseRank = 999;
-      if (!lvl.initialRank) lvl.initialRank = baseRank;
+    // Sort global list copies chronologically by placement to compute relative context safely
+    const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-      let dateStr = lvl.createdDate || lvl.date;
-      if (!dateStr) {
-        lvl.rank = baseRank;
-        return; 
-      }
+    allLevels.forEach(lvl => {
+      const currentRank = parseInt(lvl.rank || 999, 10);
+      const dateStr = lvl.createdDate || lvl.date;
+      if (!dateStr) return;
 
       const entryDate = new Date(dateStr);
-      if (isNaN(entryDate.getTime())) {
-        lvl.rank = baseRank;
-        return;
-      }
+      if (isNaN(entryDate.getTime()) || entryDate < trackingBaseline) return;
 
-      // Filter Vector: Must be on or forward from June 17, 2026 @ 12:00 AM
-      if (entryDate >= trackingBaseline) {
-        const msDifference = trackingBaseline.getTime() - entryDate.getTime();
-        const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
-        const daysRemaining = 14 - daysPassed;
+      const msDifference = Date.now() - entryDate.getTime();
+      const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
+      const daysRemaining = 14 - daysPassed;
 
-        // Auto-deleted from rendering loop if past the 2-week threshold
-        if (daysRemaining > 0 && daysRemaining <= 14) {
-          const localizedGroupKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
-          if (!newsByDateMap[localizedGroupKey]) newsByDateMap[localizedGroupKey] = [];
+      // Retain tracking data if it falls within the 2-week active validation cycle
+      if (daysRemaining > 0 && daysRemaining <= 14) {
+        const localizedKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
+        if (!newsByDateMap[localizedKey]) newsByDateMap[localizedKey] = [];
 
-          const cat = getNormalizedListType(lvl);
-          newsByDateMap[localizedGroupKey].push({
-            title: lvl.name || lvl.levelName || "Unnamed Map",
-            category: cat.charAt(0).toUpperCase() + cat.slice(1),
-            rank: baseRank,
-            daysLeft: daysRemaining
-          });
+        // Determine context nodes immediately adjacent to the current tier entry
+        const indexInSorted = baseSortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
+        let belowLevel = "None";
+        let aboveLevel = "None";
+
+        if (indexInSorted > 0) {
+          belowLevel = baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName;
         }
+        if (indexInSorted !== -1 && indexInSorted < baseSortedLevels.length - 1) {
+          aboveLevel = baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName;
+        }
+
+        // Calculate cascading threshold displacements
+        let displacementNotice = "";
+        if (currentRank <= 75) {
+          const bumpedFromMain = baseSortedLevels.find(item => parseInt(item.rank) === 76);
+          if (bumpedFromMain) {
+            displacementNotice = `<span style="color:#f43f5e; font-weight:600;">Pushed ${bumpedFromMain.name || bumpedFromMain.levelName} out of the Main List.</span>`;
+          }
+        } else if (currentRank <= 150) {
+          const bumpedToLegacy = baseSortedLevels.find(item => parseInt(item.rank) === 151);
+          if (bumpedToLegacy) {
+            displacementNotice = `<span style="color:#ef4444; font-weight:600;">Pushed ${bumpedToLegacy.name || bumpedToLegacy.levelName} into the Legacy List.</span>`;
+          }
+        }
+
+        const cat = getNormalizedListType(lvl);
+        newsByDateMap[localizedKey].push({
+          title: lvl.name || lvl.levelName || "Unnamed Level",
+          category: cat.charAt(0).toUpperCase() + cat.slice(1),
+          rank: currentRank,
+          below: belowLevel,
+          above: aboveLevel,
+          displacement: displacementNotice,
+          daysLeft: daysRemaining
+        });
       }
-      
-      lvl.rank = baseRank;
     });
 
     const sortedDates = Object.keys(newsByDateMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color: #64748b; padding: 16px; font-size: 12px; text-align: center; font-style: italic;">No new tracker entries recorded since 17/06/2026.</div>';
+      feed.innerHTML = '<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No recent tier tracking adjustments since 17/06/2026.</div>';
       return;
     }
 
@@ -935,11 +931,14 @@
       newsByDateMap[date].forEach(item => {
         html += `
           <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap: 10px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
               <span style="font-weight:600; color:#ffffff;">${item.title}</span>
               <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d remaining</span>
             </div>
-            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] Level registered onto charts at position #${item.rank}.</div>
+            <div style="font-size:11px; opacity:0.85; line-height: 1.4; color:#cbd5e1;">
+              Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, below <strong>${item.below}</strong> and above <strong>${item.above}</strong>.
+            </div>
+            ${item.displacement ? `<div style="font-size:10px; margin-top:4px; line-height:1.2;">${item.displacement}</div>` : ''}
           </div>
         `;
       });
@@ -948,11 +947,35 @@
     });
   }
 
-  // --- METRIC COUNTERS ENGINE ---
+  // --- HELPERS & VALUE SELECTION FILTER MAPPINGS ---
+  function getNormalizedListType(lvl) {
+    if (!lvl) return 'demon';
+    const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
+    if (typeStr.includes('challenge')) return 'challenge';
+    if (typeStr.includes('platformer')) return 'platformer';
+    return 'demon';
+  }
+
+  function getRecordList(lvl) {
+    if (!lvl) return [];
+    return Array.isArray(lvl.records) ? lvl.records : Array.isArray(lvl.completions) ? lvl.completions : [];
+  }
+
+  function getPlayerName(rec) {
+    if (!rec) return '';
+    return String(rec.username || rec.name || rec.player || '').trim();
+  }
+
+  function clearUIFieldsToZero() {
+    ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = "0";
+    });
+  }
+
   function calculateCounterMetrics() {
     let uniquePlayers = new Set();
     let totalRecordsCount = 0;
-
     allLevels.forEach(lvl => {
       getRecordList(lvl).forEach(rec => {
         const name = getPlayerName(rec);
@@ -960,11 +983,9 @@
         totalRecordsCount++;
       });
     });
-
     const lvlEl = document.getElementById('heroCountLevels');
     const playEl = document.getElementById('heroCountPlayers');
     const recEl = document.getElementById('heroCountRecords');
-
     if (lvlEl) lvlEl.textContent = allLevels.length;
     if (playEl) playEl.textContent = uniquePlayers.size;
     if (recEl) recEl.textContent = totalRecordsCount;
@@ -974,17 +995,12 @@
     let campuses = new Set();
     allLevels.forEach(lvl => {
       if (lvl.campus) campuses.add(String(lvl.campus).trim());
-      getRecordList(lvl).forEach(rec => {
-        if (rec.campus) campuses.add(String(rec.campus).trim());
-      });
+      getRecordList(lvl).forEach(rec => { if (rec.campus) campuses.add(String(rec.campus).trim()); });
     });
-
     const sorted = Array.from(campuses).sort();
     const optionsStr = '<option value="ALL">All Campuses</option>' + sorted.map(c => `<option value="${c}">${c}</option>`).join('');
-    
     const dFilter = document.getElementById("dashboardCampusFilter");
     if (dFilter) dFilter.innerHTML = optionsStr;
-
     const sFilter = document.getElementById("statsCampusFilter");
     if (sFilter) sFilter.innerHTML = optionsStr;
   }
@@ -1003,21 +1019,10 @@
   // --- RENDERING DASHBOARD CONTROLLER ---
   function renderLevelsDashboard() {
     let list = document.getElementById('list');
-    if (!list) {
-      const fallbacks = document.querySelectorAll('div');
-      for (let f of fallbacks) {
-        if (f.textContent.includes("Loading list records from database")) {
-          list = f;
-          list.id = "list"; 
-          break;
-        }
-      }
-    }
     if (!list) return;
 
     const queryEl = document.getElementById('search');
     const query = queryEl ? queryEl.value.toLowerCase() : '';
-    
     const campusEl = document.getElementById('dashboardCampusFilter');
     const campusVal = campusEl ? campusEl.value : 'ALL';
 
@@ -1025,7 +1030,6 @@
 
     let displayedItems = allLevels.filter(lvl => {
       if (getNormalizedListType(lvl) !== currentMainTab) return false;
-      
       const lvlCampus = String(lvl.campus || 'Main Campus').trim();
       const records = getRecordList(lvl);
       const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => String(r.campus || 'Main Campus').trim() === campusVal));
@@ -1080,7 +1084,7 @@
   }
 
   function showLevelDetailPage(lvl, forceRank) {
-    switchPage('detail');
+    switchPage('detailPage');
     const finalRank = forceRank || lvl.rank || 999;
     const records = getRecordList(lvl);
 
@@ -1163,9 +1167,7 @@
         const pct = parseInt(r.percent || 100, 10);
         const score = calculateLevelPoints(rank) * (pct / 100);
 
-        if (cat === currentStatsTab) {
-          processedPlayers[name].points += score;
-        }
+        if (cat === currentStatsTab) processedPlayers[name].points += score;
         if (pct === 100) {
           if (cat === 'demon') processedPlayers[name].demons++;
           else if (cat === 'challenge') processedPlayers[name].challenges++;
@@ -1178,25 +1180,16 @@
     let leaderboardData = Object.values(processedPlayers).filter(p => p.completions.some(c => c.category === currentStatsTab));
     leaderboardData.sort((a, b) => b.points - a.points);
 
-    const prompt = document.getElementById('startPrompt');
-    const profView = document.getElementById('profileContent');
-
     if (leaderboardData.length === 0) {
       targetBody.innerHTML = '<div style="padding:16px; font-size:12px; opacity:0.5; text-align:center;">No records match conditions.</div>';
-      if (profView) profView.style.display = "none";
-      if (prompt) prompt.style.display = "block";
       return;
     }
 
     leaderboardData.forEach((player, idx) => {
       const row = document.createElement('div');
       row.className = 'sv-row';
-      row.id = `leaderboard-player-${idx}`;
       row.onclick = () => displayPlayerProfile(player, idx);
-
-      let subLabel = `${player.demons} Demons`;
-      if (currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges`;
-      if (currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers`;
+      let subLabel = currentStatsTab === 'demon' ? `${player.demons} Demons` : currentStatsTab === 'challenge' ? `${player.challenges} Challenges` : `${player.platformers} Platformers`;
 
       row.innerHTML = `
         <div class="sv-left">
@@ -1208,22 +1201,12 @@
       targetBody.appendChild(row);
     });
 
-    if (leaderboardData.length > 0) {
-      displayPlayerProfile(leaderboardData[0], 0);
-    }
+    if (leaderboardData.length > 0) displayPlayerProfile(leaderboardData[0], 0);
   }
 
   function displayPlayerProfile(player, activeIdx) {
-    document.querySelectorAll('.sv-row').forEach(r => r.classList.remove('active-player'));
-    const targetedRow = document.getElementById(`leaderboard-player-${activeIdx}`);
-    if (targetedRow) targetedRow.classList.add('active-player');
-
-    const prompt = document.getElementById('startPrompt');
     const canvas = document.getElementById('profileContent');
-
-    if (prompt) prompt.style.display = 'none';
     if (!canvas) return;
-    canvas.style.display = 'block';
 
     let main = [], extended = [], legacy = [];
     player.completions.filter(c => c.category === currentStatsTab).forEach(c => {
@@ -1234,30 +1217,25 @@
 
     const buildCloud = (arr, typeClass) => {
       if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
-      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(' ');
+      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (#${c.rank})</span>`).join(' ');
     };
 
     let contextHeader = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
-
     canvas.innerHTML = `
       <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
         <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
         <span class="badge" style="background:var(--accent); font-size:10px; padding:1px 5px; color:#000; font-weight:bold; display:inline-block; margin-top:3px;">Campus: ${player.campus}</span>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
-        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">TOTAL SCORE</span><strong style="font-size:16px; color:var(--accent);">${player.points.toFixed(2)}</strong></div>
-        <div style="background:rgba(255,255,255,0.02); padding:8px; border-radius:4px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px;">COMPLETIONS</span><strong style="font-size:16px;">${player.completions.length}</strong></div>
-      </div>
       <div>
-        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} (1-75)</h4><div>${buildCloud(main, 'cloud-main')}</div>
-        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} (76-150)</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader}</h4><div>${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader}</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
         <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Legacy</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
   }
 
   function viewPlayerVideo(lvlName, link) {
-    switchPage('playerVideo');
+    switchPage('playerVideoPage');
     const title = document.getElementById('pvTitle');
     const targetFrame = document.getElementById('pvVideo');
     if (title) title.textContent = `Record Run: ${lvlName}`;
@@ -1266,37 +1244,18 @@
     }
   }
 
-  function switchPage(pageId) {
-    // Dynamic Fallback Safety Override to map pages seamlessly
-    document.querySelectorAll('.app-page, [id$="Page"], .page-view').forEach(p => {
-      p.classList.remove('active-page');
-      p.style.display = 'none'; // absolute override toggle
-    });
-    
-    // Find matching container target
-    const exactTarget = document.getElementById(pageId + 'Page') || document.getElementById(pageId) || document.querySelector('.' + pageId + '-page');
-    if (exactTarget) {
-      exactTarget.classList.add('active-page');
-      exactTarget.style.display = 'block';
-    }
-  }
-
   function displayFallbackUIMessage(elementId, message) {
     const el = document.getElementById(elementId);
     if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
   }
 
-  // --- SUBMISSION REPOSITORIES UTILITIES ---
+  // --- SUBMISSION PACKET DROPDOWNS ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
     if (!d || !t) return;
     d.innerHTML = '';
     const filtered = allLevels.filter(l => getNormalizedListType(l) === t.value);
-    if (filtered.length === 0) {
-      d.innerHTML = '<option value="">No maps found</option>';
-      return;
-    }
     filtered.forEach(l => {
       const opt = document.createElement('option');
       opt.value = l.name || l.levelName;
@@ -1314,16 +1273,13 @@
     
     const eWrap = document.getElementById("existingLevelWrap");
     const nFields = document.getElementById("newLevelFields");
-    const cWrap = document.getElementById("challengeDifficultyWrap");
-
+    
     if (s.value === "newLevel") {
       if (eWrap) eWrap.style.display = "none";
       if (nFields) nFields.style.display = "block";
-      if (cWrap) cWrap.style.display = t.value === "challenge" ? "block" : "none";
     } else {
       if (eWrap) eWrap.style.display = "block";
       if (nFields) nFields.style.display = "none";
-      if (cWrap) cWrap.style.display = "none";
     }
   }
 
@@ -1331,46 +1287,6 @@
     populateExistingLevelsDropdown();
     toggleFormFields();
   }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("submitBtn");
-    if (!btn) return;
-    
-    btn.onclick = async (e) => {
-      e.preventDefault();
-      const user = document.getElementById("username") ? document.getElementById("username").value.trim() : '';
-      const link = document.getElementById("recordLink") ? document.getElementById("recordLink").value.trim() : '';
-      const campus = document.getElementById("campus") ? document.getElementById("campus").value.trim() : '';
-      
-      if (!user || !link || !campus) { alert("Please fill out form input sections completely."); return; }
-
-      btn.disabled = true; btn.textContent = "Processing packet transmission...";
-      const stamp = new Date().toISOString().split('T')[0];
-
-      let body = { 
-        listType: document.getElementById("listType").value, 
-        type: document.getElementById("submissionType").value, 
-        username: user, recordLink: link, campus: campus, createdDate: stamp
-      };
-
-      if (body.type === "record") {
-        const sel = document.getElementById("existingLevel");
-        if (!sel || sel.selectedIndex === -1) { alert("Select a target connection."); btn.disabled = false; return; }
-        const opt = sel.options[sel.selectedIndex];
-        body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
-      } else {
-        body.newName = document.getElementById("newName").value.trim();
-        body.newLevelId = document.getElementById("newLevelId").value.trim();
-        body.newCreator = document.getElementById("newCreator").value.trim();
-      }
-
-      try {
-        const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
-        const res = await r.json();
-        if (res.status === "ok") { alert("Record transaction forwarded successfully."); } else { alert("Exception: " + res.message); }
-      } catch (err) { alert("System communication breakdown."); } finally { btn.disabled = false; btn.textContent = "Send for review"; }
-    };
-  });
 </script>
 </body>
 </html>
