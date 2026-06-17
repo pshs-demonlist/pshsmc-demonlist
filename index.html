@@ -705,7 +705,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Dynamic Rank Shift Notification & Layout Router Patch
+   * Full Architecture with Router & Filter Patches Applied
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -720,7 +720,6 @@
   window.addEventListener('DOMContentLoaded', () => {
     console.log("[Demonlist] DOM mounted. Initializing application data vectors...");
     initApp();
-    bindActionButtonsAndNav();
   });
 
   async function initApp() {
@@ -773,60 +772,27 @@
     return Array.isArray(allLevels) && allLevels.length > 0;
   }
 
-  // --- FIXED LAYOUT ENGINE & EXPLICIT ROUTER NAVIGATION ---
-  function bindActionButtonsAndNav() {
-    console.log("[UI Linker] Binding listeners to explicit layout nodes...");
-
-    // Refactored Hamburger Interceptor
-    const navToggles = document.querySelectorAll('.nav-toggle, .menu-btn, .hamburger, #menuBtn, #menuIcon');
-    navToggles.forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const navMenu = document.querySelector('.nav-links, .nav-menu, #navLinks');
-        if (navMenu) {
-          if (navMenu.style.display === 'block' || navMenu.style.maxHeight === '500px') {
-            navMenu.style.display = 'none';
-            navMenu.style.maxHeight = '0px';
-          } else {
-            navMenu.style.display = 'block';
-            navMenu.style.maxHeight = '500px';
-            navMenu.style.opacity = '1';
-          }
-        }
-      };
-    });
-
-    // Precise Text-to-Element Router Hooks
-    document.querySelectorAll('button, a, .btn, .nav-item').forEach(el => {
-      const txt = el.textContent.trim().toLowerCase();
-      
-      if (txt.includes('submit record') || txt.includes('submit a record')) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          switchPage('submitPage');
-        };
-      }
-      if (txt.includes('view the list') || txt.includes('view list') || txt.includes('demon list')) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          switchPage('listPage');
-        };
-      }
-      if (txt.includes('stats viewer') || txt.includes('leaderboard')) {
-        el.onclick = (e) => {
-          e.preventDefault();
-          switchPage('statsPage');
-        };
-      }
-    });
+  // --- FIXED NAVIGATION ROUTERS & TOGGLES ---
+  function toggleNavMenu() {
+    const menu = document.getElementById("navMenu");
+    if (menu) {
+      menu.classList.toggle("open");
+    }
   }
 
-  function switchPage(activePageId) {
-    console.log(`[Router] Switching view plane to targeting ID: #${activePageId}`);
+  function closeNavMenu() {
+    const menu = document.getElementById("navMenu");
+    if (menu) {
+      menu.classList.remove("open");
+    }
+  }
+
+  function switchPage(pageId) {
+    console.log(`[Router] Switching view plane to targeting ID: #${pageId}Page`);
+    closeNavMenu();
     
-    // Explicit Core Framework Section Wrappers
-    const corePages = ['listPage', 'submitPage', 'statsPage', 'detailPage', 'playerVideoPage'];
+    // Explicit Core Framework Section Wrappers mapping exact IDs
+    const corePages = ['landingPage', 'levelsPage', 'statsPage', 'detailPage', 'playerVideoPage'];
     
     corePages.forEach(id => {
       const pageEl = document.getElementById(id);
@@ -836,18 +802,49 @@
       }
     });
 
-    const targetPage = document.getElementById(activePageId);
+    const targetId = pageId + 'Page';
+    const targetPage = document.getElementById(targetId);
+    
     if (targetPage) {
       targetPage.style.display = 'block';
       targetPage.classList.add('active-page');
       window.scrollTo({ top: 0, behavior: 'instant' });
     } else {
-      // Direct emergency structural fallback
-      if (activePageId === 'listPage') {
-        const listEl = document.getElementById('list');
-        if (listEl && listEl.parentElement) listEl.parentElement.style.display = 'block';
-      }
+      console.warn(`[Router Error] Target structural view wrapper not found: #${targetId}`);
     }
+  }
+
+  function goToLevelsDashboard() {
+    switchPage('levels');
+    const sBox = document.getElementById('submissionBox');
+    if (sBox) sBox.style.display = 'block';
+    renderLevelsDashboard();
+  }
+
+  function goToSubmissionBox() {
+    switchPage('levels');
+    setTimeout(() => {
+      const sBox = document.getElementById('submissionBox');
+      if (sBox) {
+        sBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 80);
+  }
+
+  function openGuidelinesModal() {
+    closeNavMenu();
+    const modal = document.getElementById("guidelinesModal");
+    if (modal) modal.style.display = "flex";
+  }
+
+  function closeGuidelinesModal() {
+    const modal = document.getElementById("guidelinesModal");
+    if (modal) modal.style.display = "none";
+  }
+
+  function toggleThemeMode() {
+    document.body.classList.toggle('light-theme');
+    closeNavMenu();
   }
 
   // --- DYNAMIC LIVE UPDATES & PLACEMENT SHIFT FILTER ---
@@ -1084,7 +1081,7 @@
   }
 
   function showLevelDetailPage(lvl, forceRank) {
-    switchPage('detailPage');
+    switchPage('detail');
     const finalRank = forceRank || lvl.rank || 999;
     const records = getRecordList(lvl);
 
@@ -1206,7 +1203,11 @@
 
   function displayPlayerProfile(player, activeIdx) {
     const canvas = document.getElementById('profileContent');
+    const startPrompt = document.getElementById('startPrompt');
     if (!canvas) return;
+    
+    if (startPrompt) startPrompt.style.display = 'none';
+    canvas.style.display = 'block';
 
     let main = [], extended = [], legacy = [];
     player.completions.filter(c => c.category === currentStatsTab).forEach(c => {
@@ -1235,7 +1236,7 @@
   }
 
   function viewPlayerVideo(lvlName, link) {
-    switchPage('playerVideoPage');
+    switchPage('playerVideo');
     const title = document.getElementById('pvTitle');
     const targetFrame = document.getElementById('pvVideo');
     if (title) title.textContent = `Record Run: ${lvlName}`;
