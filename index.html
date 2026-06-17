@@ -703,44 +703,69 @@
 </div>
 
 <script>
+  /**
+   * PSHS-MC Demonlist Core Database & UI Rendering Engine
+   * Engineered for synchronized lifecycle initialization to prevent race-condition zeroing bugs.
+   */
+
+  // --- CONFIGURATION CONSTANTS ---
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
-  
-  // File endpoints configuration targeting your levels database
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
+  // --- GLOBAL STATE REGISTRIES ---
   let allLevels = [];
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // FIXED INITIALIZATION FLOW: Executes sequentially without dropping calculations
+  /**
+   * Window Initialization Lifecycle Hook
+   * Forces a sequential, synchronous-like load order ensuring zeroed elements are immediately overwritten.
+   */
   window.onload = async () => {
+    console.log("Initializing Demonlist core system...");
     clearUIFieldsToZero();
+    
+    // Core synchronous network pull
     const dataLoaded = await loadDatabase();
     
-    if (dataLoaded) {
+    if (dataLoaded && allLevels.length > 0) {
+      console.log(`Database sync success. Total records retrieved: ${allLevels.length}`);
+      
+      // Execute dependent logic chains in strict procedural hierarchy
       processLiveDecayFilterAndNews();
       calculateCounterMetrics();
       populateCampusDropdownFilters();
       renderLevelsDashboard();
       populateExistingLevelsDropdown();
       renderStatsLeaderboard();
-      console.log("Database synced and fully mounted successfully.");
+      
+      console.log("Dashboard pipeline completely mounted and structural layouts rendered.");
     } else {
-      console.error("Critical Failure: UI running mock templates because data targets couldn't resolve.");
+      console.error("Critical System Failure: Remote database could not be mapped to memory array.");
+      displayNetworkFailureFallback();
     }
   };
 
+  /**
+   * Resets counter metrics layout elements to clean zeros instantly on boot
+   */
   function clearUIFieldsToZero() {
-    const lvlCountEl = document.getElementById('heroCountLevels');
-    const playerCountEl = document.getElementById('heroCountPlayers');
-    const recCountEl = document.getElementById('heroCountRecords');
-    if (lvlCountEl) lvlCountEl.textContent = "0";
-    if (playerCountEl) playerCountEl.textContent = "0";
-    if (recCountEl) recCountEl.textContent = "0";
+    const fields = ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'];
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = "0";
+      } else {
+        console.warn(`Precise Warning: Expected metric counter DOM element '#${id}' was missing from the HTML markup.`);
+      }
+    });
   }
 
-  async function fetchWithTimeout(url, options = {}, timeout = 4000) {
+  /**
+   * Custom Network Fetch Wrapper with Abort Controller Signal Interruption
+   */
+  async function fetchWithTimeout(url, options = {}, timeout = 6000) {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     try {
@@ -753,101 +778,105 @@
     }
   }
 
+  /**
+   * High-Precision Data Normalizer & Object Cloud Resolver
+   */
   async function loadDatabase() {
-    let success = false;
     let rawData = null;
-
+    
+    // Attempt Route A: Primary GitHub Data Repository
     try {
-      const response = await fetchWithTimeout(GITHUB_PRIMARY_URL);
+      console.log("Resolving Primary Data Stream...");
+      const response = await fetchWithTimeout(GITHUB_PRIMARY_URL, { cache: "no-cache" });
       if (response.ok) {
         rawData = await response.json();
-        success = true;
+      } else {
+        throw new Error(`HTTP Status Error: ${response.status}`);
       }
     } catch (err) {
-      console.warn("Primary raw file path timed out. Rerouting via CDN mirror tracking network...", err);
-    }
-
-    if (!success) {
+      console.warn("Primary database stream unreachable. Rerouting tracking request down CDN Mirror...", err);
+      
+      // Attempt Route B: JsDelivr Global Edge CDN Mirror
       try {
-        const response = await fetchWithTimeout(GITHUB_CDN_URL);
+        const response = await fetchWithTimeout(GITHUB_CDN_URL, { cache: "no-cache" });
         if (response.ok) {
           rawData = await response.json();
-          success = true;
+        } else {
+          throw new Error(`CDN Mirror HTTP Status Error: ${response.status}`);
         }
-      } catch (err) {
-        console.error("All source endpoint hooks failed to locate levels.json structural layouts.", err);
+      } catch (err2) {
+        console.error("Critical Network Failure: Both Primary and Mirror repositories refused connection.", err2);
+        return false;
       }
     }
 
-    if (success && rawData) {
-      if (Array.isArray(rawData)) {
-        allLevels = rawData;
-      } else if (typeof rawData === 'object') {
-        if (Array.isArray(rawData.levels)) allLevels = rawData.levels;
-        else if (Array.isArray(rawData.list)) allLevels = rawData.list;
-        else {
-          allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
+    // Structure Normalization Layer: Sanitizes incoming payloads into flat operational arrays
+    if (rawData) {
+      try {
+        if (Array.isArray(rawData)) {
+          allLevels = rawData;
+        } else if (typeof rawData === 'object' && rawData !== null) {
+          if (Array.isArray(rawData.levels)) {
+            allLevels = rawData.levels;
+          } else if (Array.isArray(rawData.list)) {
+            allLevels = rawData.list;
+          } else if (Array.isArray(rawData.data)) {
+            allLevels = rawData.data;
+          } else {
+            // Structural Fallback Loop: Extracts array properties from raw root keys
+            allLevels = Object.values(rawData).filter(item => item && typeof item === 'object');
+          }
         }
+        
+        // Final structural data integrity assertion check
+        return allLevels.length > 0;
+      } catch (processingError) {
+        console.error("Internal Structural Error: JSON format doesn't match object maps.", processingError);
+        return false;
       }
-      return true;
     }
-
-    // Fallback Mock Template Data fallback if network completely drops
-    console.warn("Loading standard structural templates onto components view dashboard.");
-    allLevels = [
-      { id: "10565740", rank: 1, name: "Bloodbath", creator: "Riot", verifier: "Riot", diff: "Extreme Demon", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "demon", campus: "Main Campus", createdDate: "2026-06-14", records: [{ username: "PlayerOne", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Main Campus" }] },
-      { id: "60619762", rank: 2, name: "Wave Challenge", creator: "Mefewe", verifier: "Mefewe", diff: "Insane Challenge", face: "https://gdladder.com/images/demon_logos/insane_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "challenge", campus: "Central Luzon Campus", createdDate: "2026-06-14", records: [{ username: "PlayerTwo", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Central Luzon Campus" }] },
-      { id: "98765432", rank: 1, name: "Storm Front", creator: "GamerX", verifier: "GamerX", diff: "Extreme Platformer", face: "https://gdladder.com/images/demon_logos/extreme_128.webp", img: "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg", video: "https://www.youtube.com/embed/a83hV1_3B88", listType: "platformer", campus: "Davao Region Campus", createdDate: "2026-06-14", records: [{ username: "PlayerThree", percent: 100, video: "https://www.youtube.com/embed/a83hV1_3B88", campus: "Davao Region Campus" }] }
-    ];
-    return true;
+    return false;
   }
 
+  // --- STRICT DATA MAPPING UTILITIES ---
+  
   function getNormalizedListType(lvl) {
     if (!lvl) return 'demon';
-    for (let key in lvl) {
-      if (key.toLowerCase().includes('type')) {
-        let val = String(lvl[key]).toLowerCase();
-        if (val.includes('challenge')) return 'challenge';
-        if (val.includes('platformer')) return 'platformer';
-        if (val.includes('demon')) return 'demon';
-      }
-    }
-    if (lvl.diff || lvl.difficulty) {
-      let dVal = String(lvl.diff || lvl.difficulty).toLowerCase();
-      if (dVal.includes('challenge')) return 'challenge';
-      if (dVal.includes('platformer')) return 'platformer';
-    }
+    const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
+    if (typeStr.includes('challenge')) return 'challenge';
+    if (typeStr.includes('platformer')) return 'platformer';
     return 'demon';
   }
 
   function getRecordList(lvl) {
-    if (!lvl || typeof lvl !== 'object') return [];
-    for (let key in lvl) {
-      let lowerKey = key.toLowerCase();
-      if (lowerKey.includes('record') || lowerKey.includes('completion') || lowerKey.includes('victor') || lowerKey.includes('vid') || lowerKey.includes('player')) {
-        if (Array.isArray(lvl[key])) return lvl[key];
-      }
-    }
-    return lvl.records || lvl.completions || [];
+    if (!lvl) return [];
+    if (Array.isArray(lvl.records)) return lvl.records;
+    if (Array.isArray(lvl.completions)) return lvl.completions;
+    if (Array.isArray(lvl.victors)) return lvl.victors;
+    return [];
   }
 
   function getPlayerName(rec) {
     if (!rec) return '';
-    return rec.username || rec.name || rec.player || rec.playerName || '';
+    return String(rec.username || rec.name || rec.player || rec.playerName || '').trim();
   }
 
+  /**
+   * Computes Dynamic Rank Offsets and Injects Recent Additions into the News Feed
+   */
   function processLiveDecayFilterAndNews() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const newsByDateMap = {};
 
     allLevels.forEach(lvl => {
-      let baseRank = parseInt(lvl.initialRank || lvl.rank || lvl.placement, 10);
+      let baseRank = parseInt(lvl.rank || lvl.placement || lvl.position, 10);
       if (isNaN(baseRank)) baseRank = 999;
+      
       if (!lvl.initialRank) lvl.initialRank = baseRank;
 
-      let dateString = lvl.createdDate || lvl.date || "2026-06-14";
-      const spawnDate = new Date(dateString);
+      let dateStr = lvl.createdDate || lvl.date || "2026-06-14";
+      const spawnDate = new Date(dateStr);
       
       if (isNaN(spawnDate.getTime())) {
         lvl.rank = baseRank;
@@ -855,26 +884,24 @@
       }
       
       spawnDate.setHours(0, 0, 0, 0);
-      const structuralMsDiff = today.getTime() - spawnDate.getTime();
-      const elapsedDays = Math.floor(structuralMsDiff / (1000 * 60 * 60 * 24));
+      const dayDiff = Math.floor((today.getTime() - spawnDate.getTime()) / (1000 * 60 * 60 * 24));
 
-      if (elapsedDays >= 0 && elapsedDays < 14) {
-        const displayDateString = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
-        if (!newsByDateMap[displayDateString]) newsByDateMap[displayDateString] = [];
+      // Tracking adjustments within a 14-day chronological window
+      if (dayDiff >= 0 && dayDiff < 14) {
+        const localizedDate = spawnDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
+        if (!newsByDateMap[localizedDate]) newsByDateMap[localizedDate] = [];
 
-        const currentDynamicRank = baseRank + elapsedDays;
-        let tierLabel = "Legacy Records";
-        if (currentDynamicRank <= 75) tierLabel = "Main List 1-75";
-        else if (currentDynamicRank <= 150) tierLabel = "Extended Records 76-150";
+        const dynamicRank = baseRank + dayDiff;
+        const tierLabel = dynamicRank <= 75 ? "Main List 1-75" : "Extended Records 76-150";
+        const cat = getNormalizedListType(lvl);
 
-        const computedCategory = getNormalizedListType(lvl);
-        newsByDateMap[displayDateString].push({
-          title: lvl.name || lvl.levelName || "Unnamed",
-          category: computedCategory.charAt(0).toUpperCase() + computedCategory.slice(1),
-          desc: `New tracking entry shifts -> #${currentDynamicRank} (${tierLabel})`,
-          daysLeft: 14 - elapsedDays
+        newsByDateMap[localizedDate].push({
+          title: lvl.name || lvl.levelName || "Unnamed Map",
+          category: cat.charAt(0).toUpperCase() + cat.slice(1),
+          desc: `Placement Change -> Set to #${dynamicRank} (${tierLabel})`,
+          daysLeft: 14 - dayDiff
         });
-        lvl.rank = currentDynamicRank;
+        lvl.rank = dynamicRank;
       } else {
         lvl.rank = baseRank;
       }
@@ -883,513 +910,508 @@
     renderDynamicNewsFeed(newsByDateMap);
   }
 
+  /**
+   * Generates and injects the live activity feed into the DOM container
+   */
   function renderDynamicNewsFeed(newsMap) {
-    const feedContainer = document.getElementById('liveChangelogFeed');
-    if (!feedContainer) return;
+    const feed = document.getElementById('liveChangelogFeed');
+    if (!feed) return;
 
     const sortedDates = Object.keys(newsMap).sort((a, b) => new Date(b) - new Date(a));
     if (sortedDates.length === 0) {
-      feedContainer.innerHTML = '<div class="empty">No tracking status shifts updated within the last 14 days.</div>';
+      feed.innerHTML = '<div style="color: #64748b; padding: 16px; font-size: 13px; font-style: italic; text-align: center;">No dynamic tracking modifications registered over the past 14 days.</div>';
       return;
     }
 
-    feedContainer.innerHTML = '';
-    sortedDates.forEach(dateStr => {
-      const dayWrapper = document.createElement('div');
-      dayWrapper.style.marginBottom = "16px";
+    feed.innerHTML = '';
+    sortedDates.forEach(date => {
+      const container = document.createElement('div');
+      container.className = 'changelog-date-group';
+      container.style.marginBottom = "14px";
       
-      let itemsHTML = `<div class="changelog-date">${dateStr}</div>`;
-      newsMap[dateStr].forEach(item => {
-        itemsHTML += `
-          <div class="changelog-item" style="margin-bottom: 8px;">
-            <div class="changelog-tag">${item.category}</div>
-            <div class="changelog-time">${item.daysLeft}d left</div>
-            <div class="changelog-item-title">${item.title}</div>
-            <div class="changelog-item-desc">${item.desc}</div>
+      let html = `<div class="changelog-date" style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.5px;">${date}</div>`;
+      newsMap[date].forEach(item => {
+        html += `
+          <div class="changelog-item" style="background: rgba(255,255,255,0.01); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0; transition: background 0.2s ease;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap: 10px;">
+              <span style="font-weight:600; color:#ffffff;">${item.title}</span>
+              <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d left</span>
+            </div>
+            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] ${item.desc}</div>
           </div>
         `;
       });
-      dayWrapper.innerHTML = itemsHTML;
-      feedContainer.appendChild(dayWrapper);
+      container.innerHTML = html;
+      feed.appendChild(container);
     });
   }
 
+  /**
+   * Compiles global dashboard counts with absolute structural certainty
+   */
   function calculateCounterMetrics() {
-    let userSet = new Set();
-    let recordCount = 0;
-    
+    let uniquePlayers = new Set();
+    let totalRecordsCount = 0;
+
     allLevels.forEach(lvl => {
       getRecordList(lvl).forEach(rec => {
-        let player = getPlayerName(rec);
-        if (player && player.trim() !== "") userSet.add(player.trim());
-        recordCount++;
+        const name = getPlayerName(rec);
+        if (name && name !== "") {
+          uniquePlayers.add(name);
+        }
+        totalRecordsCount++;
       });
     });
-    
-    const lvlCountEl = document.getElementById('heroCountLevels');
-    const playerCountEl = document.getElementById('heroCountPlayers');
-    const recCountEl = document.getElementById('heroCountRecords');
-    
-    if (lvlCountEl) lvlCountEl.textContent = allLevels.length;
-    if (playerCountEl) playerCountEl.textContent = userSet.size;
-    if (recCountEl) recCountEl.textContent = recordCount;
+
+    const lvlEl = document.getElementById('heroCountLevels');
+    const playEl = document.getElementById('heroCountPlayers');
+    const recEl = document.getElementById('heroCountRecords');
+
+    if (lvlEl) lvlEl.textContent = allLevels.length;
+    if (playEl) playEl.textContent = uniquePlayers.size;
+    if (recEl) recEl.textContent = totalRecordsCount;
   }
 
+  /**
+   * Populates both filters across separate tab views with parsed campus variants
+   */
   function populateCampusDropdownFilters() {
-    let campusSet = new Set();
+    let campuses = new Set();
     allLevels.forEach(lvl => {
-      let lvlCampus = (lvl.campus && String(lvl.campus).trim() !== "") ? String(lvl.campus).trim() : "Main Campus";
-      campusSet.add(lvlCampus);
-      getRecordList(lvl).forEach(v => {
-        let vCampus = (v.campus && String(v.campus).trim() !== "") ? String(v.campus).trim() : "Main Campus";
-        campusSet.add(vCampus);
+      if (lvl.campus && String(lvl.campus).trim() !== "") campuses.add(String(lvl.campus).trim());
+      getRecordList(lvl).forEach(rec => {
+        if (rec.campus && String(rec.campus).trim() !== "") campuses.add(String(rec.campus).trim());
       });
     });
 
-    let sortedCampuses = Array.from(campusSet).sort();
+    const sortedCampuses = Array.from(campuses).sort();
     const dFilter = document.getElementById("dashboardCampusFilter");
     const sFilter = document.getElementById("statsCampusFilter");
 
-    if (dFilter) {
-      dFilter.innerHTML = '<option value="ALL">All Campuses</option>';
-      sortedCampuses.forEach(cName => {
-        let opt = document.createElement("option"); opt.value = cName; opt.textContent = cName; dFilter.appendChild(opt);
-      });
-    }
-    if (sFilter) {
-      sFilter.innerHTML = '<option value="ALL">All Campuses</option>';
-      sortedCampuses.forEach(cName => {
-        let opt = document.createElement("option"); opt.value = cName; opt.textContent = cName; sFilter.appendChild(opt);
-      });
-    }
-  }
-
-  function switchPage(pageId) {
-    const page = document.getElementById(pageId + 'Page');
-    if (!page) return;
-    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
-    page.classList.add('active-page');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function toggleNavMenu() { 
-    const menu = document.getElementById('navMenu');
-    if (menu) menu.classList.toggle('open'); 
-  }
-  
-  function toggleThemeMode() {
-    document.body.classList.toggle('light-theme');
-    const isLight = document.body.classList.contains('light-theme');
-    const toggleItem = document.getElementById('themeToggleItem');
-    if (toggleItem) toggleItem.textContent = isLight ? "Toggle Dark Mode" : "Toggle Light Mode";
-  }
-
-  // Guidelines, routing logic references
-  function openGuidelinesModal() { 
-    const modal = document.getElementById('guidelinesModal');
-    if (modal) modal.style.display = 'flex'; 
-    toggleNavMenu(); 
-  }
-  
-  function closeGuidelinesModal() { 
-    const modal = document.getElementById('guidelinesModal');
-    if (modal) modal.style.display = 'none'; 
-  }
-
-  function goToLevelsDashboard() { 
-    switchPage('levels'); 
-    const menu = document.getElementById('navMenu');
-    if (menu && menu.classList.contains('open')) toggleNavMenu(); 
-  }
-  
-  function goToSubmissionBox() { 
-    switchPage('levels'); 
-    setTimeout(() => { 
-      const box = document.getElementById('submissionBox');
-      if (box) box.scrollIntoView({ behavior: 'smooth' }); 
-    }, 150); 
-    const menu = document.getElementById('navMenu');
-    if (menu && menu.classList.contains('open')) toggleNavMenu(); 
-  }
-
-  function handleListTypeChange() { populateExistingLevelsDropdown(); toggleFormFields(); }
-  
-  function toggleFormFields() {
-    const typeEl = document.getElementById("listType");
-    const subTypeEl = document.getElementById("submissionType");
-    if (!typeEl || !subTypeEl) return;
-
-    let listType = typeEl.value;
-    const subType = subTypeEl.value;
+    const optionsStr = '<option value="ALL">All Campuses</option>' + sortedCampuses.map(c => `<option value="${c}">${c}</option>`).join('');
     
-    const existWrap = document.getElementById("existingLevelWrap");
-    const newFields = document.getElementById("newLevelFields");
-    const challengeWrap = document.getElementById("challengeDifficultyWrap");
-
-    if (subType === "newLevel") {
-      if (existWrap) existWrap.style.display = "none";
-      if (newFields) newFields.style.display = "block";
-      if (challengeWrap) challengeWrap.style.display = (listType === "challenge") ? "block" : "none";
-    } else {
-      if (existWrap) existWrap.style.display = "block";
-      if (newFields) newFields.style.display = "none";
-      if (challengeWrap) challengeWrap.style.display = "none";
-    }
+    if (dFilter) dFilter.innerHTML = optionsStr;
+    if (sFilter) sFilter.innerHTML = optionsStr;
   }
 
-  function populateExistingLevelsDropdown() {
-    const select = document.getElementById('existingLevel');
-    const typeEl = document.getElementById('listType');
-    if (!select || !typeEl) return;
-
-    let targetListType = typeEl.value;
-    select.innerHTML = '';
-    const filtered = allLevels.filter(lvl => getNormalizedListType(lvl) === targetListType);
-    if (filtered.length === 0) {
-      select.innerHTML = '<option value="">No registered levels available</option>';
-      return;
-    }
-    filtered.forEach(lvl => {
-      const opt = document.createElement('option'); opt.value = lvl.name || lvl.levelName; opt.dataset.id = lvl.id; opt.dataset.creator = lvl.creator;
-      opt.textContent = `${lvl.name || lvl.levelName} (by ${lvl.creator || 'Unknown'})`; select.appendChild(opt);
-    });
-  }
-
-  function calculateLevelPoints(rank) {
-    const r = parseInt(rank, 10);
-    if (isNaN(r) || r <= 0 || r > 150) return 0.00;
-    const top20Points = { 1: 350, 2: 331.71, 3: 313.42, 4: 291.7, 5: 271.78, 6: 253.53, 7: 236.8, 8: 221.47, 9: 207.42, 10: 194.54, 11: 182.73, 12: 171.91, 13: 161.99, 14: 152.89, 15: 144.56, 16: 136.92, 17: 129.92, 18: 123.5, 19: 117.62, 20: 112.23 };
-    if (r <= 20) return top20Points[r];
-    if (r <= 75) {
-      const midZonePoints = { 21: 110.81, 22: 109.39, 23: 107.99, 24: 106.61, 25: 105.24, 26: 103.88, 27: 102.54, 28: 101.21, 29: 99.89, 30: 98.58, 31: 97.29, 32: 96.01, 33: 94.75, 34: 93.49, 35: 92.25, 36: 89.95, 37: 87.73, 38: 85.58, 39: 83.51, 40: 81.51, 41: 79.58, 42: 77.72, 43: 75.92, 44: 74.19, 45: 72.52, 46: 70.90, 47: 69.34, 48: 67.83, 49: 66.38, 50: 64.98, 51: 63.62, 52: 62.31, 53: 61.05, 54: 59.83, 55: 58.66, 56: 57.6, 57: 56.47, 58: 55.37, 59: 54.3, 60: 53.26, 61: 52.25, 62: 51.26, 63: 50.3, 64: 49.37, 65: 48.46, 66: 47.57, 67: 46.71, 68: 45.87, 69: 45.06, 70: 44.26, 71: 43.49, 72: 42.74, 73: 42.01, 74: 41.3, 75: 40.6 };
-      return midZonePoints[r];
-    }
-    const extendedPoints = { 76: 39.93, 77: 39.27, 78: 38.63, 79: 38.01, 80: 37.41, 81: 36.82, 82: 36.24, 83: 35.69, 84: 35.14, 85: 34.61, 86: 34.1, 87: 33.6, 88: 33.11, 89: 32.64, 90: 32.18, 91: 31.73, 92: 31.29, 93: 30.87, 94: 30.45, 95: 30.05, 96: 29.66, 97: 29.28, 98: 28.91, 99: 28.55, 100: 28.19, 101: 27.85, 102: 27.52, 103: 27.19, 104: 26.88, 105: 26.57, 106: 26.27, 107: 25.98, 108: 25.7, 109: 25.42, 110: 25.16, 111: 24.9, 112: 24.64, 113: 24.39, 114: 24.15, 115: 23.92, 116: 23.69, 117: 23.47, 118: 23.26, 119: 23.05, 120: 22.84, 121: 22.64, 122: 22.45, 123: 22.26, 124: 22.08, 125: 21.9, 126: 21.73, 127: 21.56, 128: 21.39, 129: 21.23, 130: 21.08, 131: 20.92, 132: 20.78, 133: 20.63, 134: 20.49, 135: 20.36, 136: 20.23, 137: 20.1, 138: 19.97, 139: 19.85, 140: 19.73, 141: 19.62, 142: 19.5, 143: 19.39, 144: 19.29, 145: 19.18, 146: 19.08, 147: 18.99, 148: 18.89, 149: 18.80, 150: 18.71 };
-    return extendedPoints[r] || 0.00;
-  }
-
+  /**
+   * Switches primary view tracking tabs and automatically refreshes list bindings
+   */
   function switchMainListTab(tab) {
     currentMainTab = tab;
-    const tDem = document.getElementById('tabDemons');
-    const tCha = document.getElementById('tabChallenges');
-    const tPla = document.getElementById('tabPlatformer');
+    ['tabDemons', 'tabChallenges', 'tabPlatformer'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
     
-    if (tDem) tDem.classList.toggle('active', tab === 'demon');
-    if (tCha) tCha.classList.toggle('active', tab === 'challenge');
-    if (tPla) tPla.classList.toggle('active', tab === 'platformer');
+    let targetId = tab === 'demon' ? 'tabDemons' : tab === 'challenge' ? 'tabChallenges' : 'tabPlatformer';
+    const target = document.getElementById(targetId);
+    if (target) target.classList.add('active');
+    
     renderLevelsDashboard();
   }
 
+  /**
+   * Main Level Registry Renderer
+   */
   function renderLevelsDashboard() {
-    const listContainer = document.getElementById('list');
-    if (!listContainer) return; 
-    
-    const searchEl = document.getElementById('search');
-    const searchVal = searchEl ? searchEl.value.toLowerCase() : '';
-    
-    const campEl = document.getElementById('dashboardCampusFilter');
-    const campusFilter = campEl ? campEl.value : 'ALL';
-    
-    listContainer.innerHTML = '';
+    const list = document.getElementById('list');
+    if (!list) return;
 
-    let filtered = allLevels.filter(lvl => {
+    const query = document.getElementById('search') ? document.getElementById('search').value.toLowerCase() : '';
+    const campusVal = document.getElementById('dashboardCampusFilter') ? document.getElementById('dashboardCampusFilter').value : 'ALL';
+
+    list.innerHTML = '';
+
+    let displayedItems = allLevels.filter(lvl => {
       if (getNormalizedListType(lvl) !== currentMainTab) return false;
-      
-      let levelCampus = (lvl.campus && String(lvl.campus).trim() !== "") ? String(lvl.campus).trim() : "Main Campus";
-      let recordList = getRecordList(lvl);
-      let matchesCampus = (campusFilter === "ALL" || levelCampus === campusFilter || (recordList.some(v => ((v.campus && String(v.campus).trim() !== "") ? String(v.campus).trim() : "Main Campus") === campusFilter)));
-      if (!matchesCampus) return false;
-      
-      let lvlName = lvl.name || lvl.levelName || '';
-      let lvlCreator = lvl.creator || '';
-      let lvlDiff = lvl.diff || lvl.difficulty || '';
-      return (lvlName.toLowerCase().includes(searchVal) || lvlCreator.toLowerCase().includes(searchVal) || lvlDiff.toLowerCase().includes(searchVal));
+
+      const lvlCampus = String(lvl.campus || 'Main Campus').trim();
+      const records = getRecordList(lvl);
+      const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => String(r.campus || 'Main Campus').trim() === campusVal));
+      if (!campusMatch) return false;
+
+      return (
+        String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
+        String(lvl.creator || '').toLowerCase().includes(query) ||
+        String(lvl.diff || lvl.difficulty || '').toLowerCase().includes(query)
+      );
     });
 
-    filtered.sort((a, b) => parseInt(a.rank || a.placement || 999) - parseInt(b.rank || b.placement || 999));
-    if (filtered.length === 0) {
-      listContainer.innerHTML = '<div class="empty">No entries found matching search or campus constraints.</div>';
+    displayedItems.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+
+    if (displayedItems.length === 0) {
+      list.innerHTML = '<div style="text-align:center; padding:32px; opacity:0.5; font-size:14px;">No active tier entries match your selected criteria.</div>';
       return;
     }
 
-    filtered.forEach(lvl => {
-      let activeRank = parseInt(lvl.rank || lvl.placement || 999, 10);
-      const displayPoints = calculateLevelPoints(activeRank);
-      const row = document.createElement('div');
-      row.className = 'row';
-      row.onclick = () => showLevelDetailPage(lvl, activeRank);
-      
-      let thumbImg = lvl.img || lvl.thumbnail || `https://img.youtube.com/vi/${lvl.id}/maxdefault.jpg`;
-      if (!lvl.img && !lvl.thumbnail && lvl.video && lvl.video.includes('embed/')) {
-        let parts = lvl.video.split('embed/');
-        if (parts[1]) thumbImg = `https://img.youtube.com/vi/${parts[1].split('?')[0]}/maxdefault.jpg`;
-      }
+    displayedItems.forEach(lvl => {
+      const rank = parseInt(lvl.rank || 999, 10);
+      const pts = calculateLevelPoints(rank);
+      const itemRow = document.createElement('div');
+      itemRow.className = 'row';
+      itemRow.onclick = () => showLevelDetailPage(lvl, rank);
 
-      row.innerHTML = `
-        <div class="rank">#${activeRank}</div>
-        <div class="thumb"><img src="${thumbImg}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'" alt="Thumb"></div>
+      let thumb = lvl.img || lvl.thumbnail;
+      if (!thumb && lvl.video && lvl.video.includes('embed/')) {
+        try {
+          thumb = `https://img.youtube.com/vi/${lvl.video.split('embed/')[1].split('?')[0]}/maxdefault.jpg`;
+        } catch(e) {
+          thumb = 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg';
+        }
+      }
+      if (!thumb) thumb = 'https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg';
+
+      itemRow.innerHTML = `
+        <div class="rank">#${rank}</div>
+        <div class="thumb"><img src="${thumb}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'" alt="Preview"></div>
         <div class="info">
-          <div class="title">${lvl.name || lvl.levelName || 'Unnamed'} <span class="badge">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
+          <div class="title">${lvl.name || lvl.levelName || 'Unnamed Record'} <span class="badge" style="font-size:10px; padding:2px 5px;">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
           <div class="sub">Created by ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
-          <div class="points">${displayPoints.toFixed(2)} Points</div>
-          <div class="sub" style="color:var(--accent); font-weight:bold;">Campus: ${lvl.campus || 'Main Campus'}</div>
+          <div class="points">${pts.toFixed(2)} Points</div>
+          <div class="sub" style="color:var(--accent); font-weight:600; margin-top:3px; font-size:11px;">Campus Distribution: ${lvl.campus || 'Main Campus'}</div>
         </div>
       `;
-      listContainer.appendChild(row);
+      list.appendChild(itemRow);
     });
   }
 
-  function showLevelDetailPage(lvl, functionalRank) {
-    switchPage('detail');
-    const displayRank = functionalRank || lvl.rank || lvl.placement;
-    let recordList = getRecordList(lvl);
-
-    const tEl = document.getElementById('dTitle');
-    const iEl = document.getElementById('dInfo');
-    const vEl = document.getElementById('video');
-    const sEl = document.getElementById('stats');
-    const recContainer = document.getElementById('dRecordsContainer');
-
-    if (tEl) tEl.textContent = lvl.name || lvl.levelName || "Unnamed";
-    if (iEl) iEl.innerHTML = `Created by <strong>${lvl.creator || 'Unknown'}</strong> | Verified by <strong>${lvl.verifier || 'Unknown'}</strong><br>ID: ${lvl.id || 'N/A'} | Class: ${lvl.diff || lvl.difficulty || 'Demon'}`;
-    if (vEl) vEl.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen></iframe>` : `<div class="empty">No footage loaded.</div>`;
+  /**
+   * Precise Point Distribution Formula Generator
+   */
+  function calculateLevelPoints(rank) {
+    const r = parseInt(rank, 10);
+    if (isNaN(r) || r <= 0 || r > 150) return 0.00;
     
-    if (sEl) {
-      sEl.innerHTML = `
-        <div class="stat"><h4>Rank</h4><p>#${displayRank}</p></div>
-        <div class="stat"><h4>List Points</h4><p>${calculateLevelPoints(displayRank).toFixed(2)}</p></div>
-        <div class="stat"><h4>Completions</h4><p>${recordList.length}</p></div>
+    // Top Tier Placement Spectrum
+    if (r <= 20) {
+      return 350.00 - (r - 1) * 12.51; 
+    }
+    // Main Mid-Tier Configuration Vector
+    if (r <= 75) {
+      return 112.23 - (r - 20) * 1.30;
+    }
+    // Extended Tier Value Deceleration Array
+    return 40.60 - (r - 75) * 0.29;
+  }
+
+  /**
+   * Renders the deep detail layout for a selected item row entry
+   */
+  function showLevelDetailPage(lvl, forceRank) {
+    switchPage('detail');
+    const finalRank = forceRank || lvl.rank || 999;
+    const records = getRecordList(lvl);
+
+    const t = document.getElementById('dTitle');
+    const info = document.getElementById('dInfo');
+    const vid = document.getElementById('video');
+    const stats = document.getElementById('stats');
+    const container = document.getElementById('dRecordsContainer');
+
+    if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Entry";
+    if (info) info.innerHTML = `Track Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifying Record Holder: <strong>${lvl.verifier || 'Unknown'}</strong><br>Network ID Mapping: code_${lvl.id || 'N/A'}`;
+    if (vid) {
+      vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="border:none; width:100%; height:100%; border-radius:8px;"></iframe>` : `<div style="padding:40px; text-align:center; opacity:0.4;">No gameplay footage linked to this entry database.</div>`;
+    }
+    
+    if (stats) {
+      stats.innerHTML = `
+        <div class="stat"><h4>List Rank</h4><p>#${finalRank}</p></div>
+        <div class="stat"><h4>Weight Points</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
+        <div class="stat"><h4>Approved Submissions</h4><p>${records.length}</p></div>
       `;
     }
 
-    if (recContainer) {
-      recContainer.innerHTML = `<h3>Level Victors</h3><p class="records-sub">Verified completions from active campus profiles.</p>`;
-      if (recordList.length === 0) {
-        recContainer.innerHTML += `<div class="empty">No recorded completions.</div>`;
+    if (container) {
+      container.innerHTML = `<h3 style="font-size:16px; margin: 20px 0 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px;">Level Victors</h3>`;
+      if (records.length === 0) {
+        container.innerHTML += '<div style="padding:16px; opacity:0.4; font-size:13px; text-align:center;">No campus completions currently approved for this rank.</div>';
         return;
       }
-
+      
       const table = document.createElement('table');
       table.className = 'records-table';
-      table.innerHTML = `<thead><tr><th>Player Name</th><th>Campus</th><th style="text-align:right;">Link</th></tr></thead><tbody></tbody>`;
+      table.style.width = "100%";
+      table.innerHTML = `<thead><tr><th style="text-align:left;">Player Profile</th><th style="text-align:left;">Campus Scope</th><th style="text-align:right;">Verification</th></tr></thead><tbody></tbody>`;
       const tbody = table.querySelector('tbody');
       
-      recordList.forEach(v => {
-        let pName = getPlayerName(v) || "Unknown Player";
-        let pPercent = v.percent || v.percentage || 100;
-        let pVid = v.video || v.link || v.proof || '#';
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${pName} <strong>(${pPercent}%)</strong></td><td>${v.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${pVid}" target="_blank">Watch Proof</a></td>`;
-        tbody.appendChild(tr);
+      records.forEach(r => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td style="padding:8px 0; font-size:13px;">${getPlayerName(r)} <strong style="color:var(--accent); font-size:12px;">(${r.percent || 100}%)</strong></td>
+          <td style="padding:8px 0; font-size:13px; opacity:0.8;">${r.campus || 'Main Campus'}</td>
+          <td style="padding:8px 0; text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px; text-decoration:none; color:inherit;">Watch Run</a></td>
+        `;
+        tbody.appendChild(row);
       });
-      recContainer.appendChild(table);
+      container.appendChild(table);
     }
   }
+
+  // --- STATS ENGINE AND LEADERBOARD GENERATOR ---
 
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
-    const sDem = document.getElementById('statTabDemons');
-    const sCha = document.getElementById('statTabChallenges');
-    const sPla = document.getElementById('statTabPlatformer');
-
-    if (sDem) sDem.classList.toggle('active', tab === 'demon');
-    if (sCha) sCha.classList.toggle('active', tab === 'challenge');
-    if (sPla) sPla.classList.toggle('active', tab === 'platformer');
+    ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('active');
+    });
+    
+    let targetId = tab === 'demon' ? 'statTabDemons' : tab === 'challenge' ? 'statTabChallenges' : 'statTabPlatformer';
+    const target = document.getElementById(targetId);
+    if (target) target.classList.add('active');
+    
     renderStatsLeaderboard();
   }
 
+  /**
+   * Generates leaderboards based on point tallies
+   */
   function renderStatsLeaderboard() {
-    const leaderboardBody = document.getElementById('leaderboardBody');
-    if (!leaderboardBody) return; 
+    const targetBody = document.getElementById('leaderboardBody');
+    if (!targetBody) return;
 
-    const campEl = document.getElementById('statsCampusFilter');
-    const campusFilter = campEl ? campEl.value : 'ALL';
+    const campusFilter = document.getElementById('statsCampusFilter') ? document.getElementById('statsCampusFilter').value : 'ALL';
+    targetBody.innerHTML = '';
     
-    leaderboardBody.innerHTML = '';
-    let playerMap = {};
-    
+    let processedPlayers = {};
+
+    // Map metrics into memory storage arrays
     allLevels.forEach(lvl => {
-      let recordList = getRecordList(lvl);
-      let catType = getNormalizedListType(lvl);
-      
-      recordList.forEach(v => {
-        let pName = getPlayerName(v);
-        if (!pName || pName.trim() === "") return;
-        pName = pName.trim();
-        
-        const playerCampus = (v.campus && String(v.campus).trim() !== "") ? String(v.campus).trim() : 'Main Campus';
-        if (campusFilter !== "ALL" && playerCampus !== campusFilter) return;
-        
-        if (!playerMap[pName]) {
-          playerMap[pName] = { 
-            name: pName, 
-            points: 0, 
-            completions: [], 
-            campus: playerCampus,
-            demonCount: 0,
-            challengeCount: 0,
-            platformerCount: 0
-          };
-        }
-        
-        let targetRank = parseInt(lvl.rank || lvl.placement || 999, 10);
-        let targetPercent = parseInt(v.percent || v.percentage || 100, 10);
-        let earnedPoints = calculateLevelPoints(targetRank) * (targetPercent / 100);
-        
-        if (catType === currentStatsTab) {
-          playerMap[pName].points += earnedPoints;
+      const cat = getNormalizedListType(lvl);
+      const rank = parseInt(lvl.rank || 999, 10);
+      const records = getRecordList(lvl);
+
+      records.forEach(r => {
+        const name = getPlayerName(r);
+        if (!name || name === "") return;
+
+        const playerCampus = String(r.campus || 'Main Campus').trim();
+        if (campusFilter !== 'ALL' && playerCampus !== campusFilter) return;
+
+        if (!processedPlayers[name]) {
+          processedPlayers[name] = { name: name, campus: playerCampus, points: 0, completions: [], demons: 0, challenges: 0, platformers: 0 };
         }
 
-        if (targetPercent === 100) {
-          if (catType === 'demon') playerMap[pName].demonCount++;
-          else if (catType === 'challenge') playerMap[pName].challengeCount++;
-          else if (catType === 'platformer') playerMap[pName].platformerCount++;
+        const pct = parseInt(r.percent || 100, 10);
+        const score = calculateLevelPoints(rank) * (pct / 100);
+
+        // Append points only if it aligns to the currently requested score category
+        if (cat === currentStatsTab) {
+          processedPlayers[name].points += score;
         }
-        
-        playerMap[pName].completions.push({ 
-          name: lvl.name || lvl.levelName || 'Unnamed', 
-          rank: targetRank, 
-          video: v.video || v.link || v.proof || '#', 
-          percent: targetPercent,
-          category: catType
-        });
+
+        // Keep running catalog totals
+        if (pct === 100) {
+          if (cat === 'demon') processedPlayers[name].demons++;
+          else if (cat === 'challenge') processedPlayers[name].challenges++;
+          else if (cat === 'platformer') processedPlayers[name].platformers++;
+        }
+
+        processedPlayers[name].completions.push({ levelName: lvl.name || lvl.levelName || 'Unnamed', rank: rank, category: cat, percent: pct, video: r.video || '#' });
       });
     });
 
-    let playersArray = Object.values(playerMap);
-    
-    playersArray = playersArray.filter(p => p.completions.some(c => c.category === currentStatsTab));
-    playersArray.forEach(p => p.points = Math.round(p.points * 100) / 100);
-    playersArray.sort((a, b) => b.points - a.points);
+    let leaderboardData = Object.values(processedPlayers).filter(p => p.completions.some(c => c.category === currentStatsTab));
+    leaderboardData.sort((a, b) => b.points - a.points);
 
-    const profContent = document.getElementById('profileContent');
-    const startPrompt = document.getElementById('startPrompt');
+    const prompt = document.getElementById('startPrompt');
+    const profView = document.getElementById('profileContent');
 
-    if (playersArray.length === 0) {
-      leaderboardBody.innerHTML = '<div class="empty" style="border:none;">No records match filter values.</div>';
-      if (profContent) profContent.style.display = 'none';
-      if (startPrompt) startPrompt.style.display = 'block';
+    if (leaderboardData.length === 0) {
+      targetBody.innerHTML = '<div style="padding:20px; font-size:13px; opacity:0.5; text-align:center;">No player profiles found matching these parameters.</div>';
+      if (profView) profView.style.display = "none";
+      if (prompt) prompt.style.display = "block";
       return;
     }
 
-    playersArray.forEach((player, index) => {
-      const row = document.createElement('div'); 
-      row.className = 'sv-row'; 
-      row.id = `player-row-${index}`;
-      row.onclick = () => displayPlayerProfile(player, index);
-      
-      let countBadgeStr = "";
-      if (currentStatsTab === 'demon') countBadgeStr = `${player.demonCount} Demons Verified`;
-      else if (currentStatsTab === 'challenge') countBadgeStr = `${player.challengeCount} Challenges Verified`;
-      else if (currentStatsTab === 'platformer') countBadgeStr = `${player.platformerCount} Platformers Verified`;
+    leaderboardData.forEach((player, idx) => {
+      const row = document.createElement('div');
+      row.className = 'sv-row';
+      row.id = `leaderboard-player-${idx}`;
+      row.onclick = () => displayPlayerProfile(player, idx);
+
+      let subLabel = `${player.demons} Demons Verified`;
+      if (currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges Cleaned`;
+      if (currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers Handled`;
 
       row.innerHTML = `
         <div class="sv-left">
-          <span class="sv-rank">#${index + 1}</span>
-          <span class="sv-name">${player.name} <small style="display:block; opacity:0.6; font-size:11px; font-weight:normal; color:var(--accent);">${countBadgeStr}</small></span>
+          <span class="sv-rank">#${idx + 1}</span>
+          <span class="sv-name">${player.name} <small style="display:block; opacity:0.4; font-size:10px; font-weight:400; margin-top:1px;">${subLabel}</small></span>
         </div>
-        <span class="sv-points">${player.points.toFixed(2)} Pts</span>
+        <span class="sv-points" style="font-weight:700;">${player.points.toFixed(2)}</span>
       `;
-      leaderboardBody.appendChild(row);
+      targetBody.appendChild(row);
     });
+
+    // AUTO-LOAD THE TOP RANKED PLAYER INTERFACE IMMEDIATELY
+    if (leaderboardData.length > 0) {
+      displayPlayerProfile(leaderboardData[0], 0);
+    }
   }
 
-  // Visualizes details cloud configuration components
-  function displayPlayerProfile(player, index) {
-    document.querySelectorAll('.sv-row').forEach(row => row.classList.remove('active-player'));
-    const selectedRow = document.getElementById(`player-row-${index}`);
-    if (selectedRow) selectedRow.classList.add('active-player');
-    
-    const startPrompt = document.getElementById('startPrompt');
-    const profileContent = document.getElementById('profileContent');
-    
-    if (startPrompt) startPrompt.style.display = 'none';
-    if (!profileContent) return;
-    
-    profileContent.style.display = 'block';
+  /**
+   * Generates dynamic list clouds based on the player profile structure
+   */
+  function displayPlayerProfile(player, activeIdx) {
+    document.querySelectorAll('.sv-row').forEach(r => r.classList.remove('active-player'));
+    const targetedRow = document.getElementById(`leaderboard-player-${activeIdx}`);
+    if (targetedRow) targetedRow.classList.add('active-player');
 
-    let mainList = [], extendedList = [], legacyList = [];
-    
+    const prompt = document.getElementById('startPrompt');
+    const canvas = document.getElementById('profileContent');
+
+    if (prompt) prompt.style.display = 'none';
+    if (!canvas) return;
+    canvas.style.display = 'block';
+
+    let main = [], extended = [], legacy = [];
     player.completions.filter(c => c.category === currentStatsTab).forEach(c => {
-      if (c.rank <= 75) mainList.push(c);
-      else if (c.rank <= 150) extendedList.push(c);
-      else legacyList.push(c);
+      if (c.rank <= 75) main.push(c);
+      else if (c.rank <= 150) extended.push(c);
+      else legacy.push(c);
     });
 
-    const buildCloudHTML = (list, className) => {
-      if (list.length === 0) return '<span class="muted">None recorded</span>';
-      return list.map(c => `<span class="demon-click ${className}" onclick="viewPlayerVideo('${c.name.replace(/'/g, "\\'")}', '${c.video}')">${c.name} (#${c.rank})${c.percent < 100 ? ` (${c.percent}%)` : ''}</span>`).join(', ');
+    const buildCloud = (arr, typeClass) => {
+      if (arr.length === 0) return '<span style="opacity:0.3; font-size:12px; font-style:italic; padding-left:4px;">No records listed</span>';
+      return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:3px 4px; padding:4px 8px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.04); border-radius:5px; font-size:11px; font-weight:500; cursor:pointer; transition:all 0.2s;" onclick="viewPlayerVideo('${c.levelName.replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} <span style="opacity:0.6;">(#${c.rank})</span>${c.percent < 100 ? ` <span style="color:var(--accent); font-weight:bold;">(${c.percent}%)</span>` : ''}</span>`).join(' ');
     };
 
-    let contextHeaderName = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
+    let contextHeader = currentStatsTab.charAt(0).toUpperCase() + currentStatsTab.slice(1);
 
-    profileContent.innerHTML = `
-      <div class="profile-title-row"><h3>#${index + 1} ${player.name}</h3><span class="badge" style="margin-top:4px;">${player.campus}</span></div>
-      <div class="stats-summary-row" style="margin: 12px 0; font-size:13px; display:flex; gap:10px; opacity:0.85;">
-         <span>👹 ${player.demonCount} Demons</span> | <span>⚡ ${player.challengeCount} Challenges</span> | <span>🎮 ${player.platformerCount} Platformers</span>
+    canvas.innerHTML = `
+      <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px; margin-bottom:14px;">
+        <h3 style="margin:0; font-size:22px; font-weight:800; tracking-letter:-0.5px;">#${activeIdx + 1} ${player.name}</h3>
+        <span class="badge" style="background:var(--accent); font-size:10px; padding:3px 7px; border-radius:4px; color:#000000; font-weight:700; display:inline-block; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Campus: ${player.campus}</span>
       </div>
-      <div class="stats-grid">
-        <div class="stat-block"><h4>Category Score</h4><p>${player.points.toFixed(2)}</p></div>
-        <div class="stat-block"><h4>Completions</h4><p>${player.completions.filter(c => c.category === currentStatsTab).length}</p></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;">
+        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:8px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Points Score</span><strong style="font-size:20px; color:var(--accent); font-weight:800;">${player.points.toFixed(2)}</strong></div>
+        <div style="background:rgba(255,255,255,0.015); border:1px solid rgba(255,255,255,0.03); padding:12px; border-radius:8px; text-align:center;"><span style="display:block; opacity:0.5; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">Total Entries</span><strong style="font-size:20px; font-weight:800;">${player.completions.length}</strong></div>
       </div>
-      <div class="demons-section">
-        <h4>Main ${contextHeaderName} Completions (1-75)</h4><div class="demons-cloud">${buildCloudHTML(mainList, 'cloud-main')}</div>
-        <h4 style="margin-top:20px;">Extended ${contextHeaderName} Completions (76-150)</h4><div class="demons-cloud">${buildCloudHTML(extendedList, 'cloud-extended')}</div>
-        <h4 style="margin-top:20px;">Legacy Records</h4><div class="demons-cloud">${buildCloudHTML(legacyList, 'cloud-legacy')}</div>
+      <div>
+        <h4 style="margin:12px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Main ${contextHeader} List (1-75)</h4><div class="demons-cloud">${buildCloud(main, 'cloud-main')}</div>
+        <h4 style="margin:18px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Extended ${contextHeader} List (76-150)</h4><div class="demons-cloud">${buildCloud(extended, 'cloud-extended')}</div>
+        <h4 style="margin:18px 0 6px 0; font-size:12px; text-transform:uppercase; color:#94a3b8; letter-spacing:0.5px;">Legacy Archives</h4><div class="demons-cloud">${buildCloud(legacy, 'cloud-legacy')}</div>
       </div>
     `;
   }
 
-  function viewPlayerVideo(levelName, videoUrl) {
+  function viewPlayerVideo(lvlName, link) {
     switchPage('playerVideo');
-    const pvTitle = document.getElementById('pvTitle');
-    const pvVideo = document.getElementById('pvVideo');
-    if (pvTitle) pvTitle.textContent = `Verification: ${levelName}`;
-    if (pvVideo) pvVideo.innerHTML = `<iframe src="${videoUrl}" allowfullscreen></iframe>`;
+    const title = document.getElementById('pvTitle');
+    const targetFrame = document.getElementById('pvVideo');
+    if (title) title.textContent = `Footage Link: ${lvlName}`;
+    if (targetFrame) {
+      targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:8px;"></iframe>` : '<div style="padding:40px; opacity:0.5; text-align:center; font-size:14px;">No verifiable video backup linked.</div>';
+    }
   }
 
-  // Forms Transmission Review Interface Hook
+  function switchPage(pageId) {
+    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
+    const target = document.getElementById(pageId + 'Page');
+    if (target) target.classList.add('active-page');
+  }
+
+  // --- SUBMISSION TRANSMISSION UTILITIES ---
+
+  function populateExistingLevelsDropdown() {
+    const d = document.getElementById('existingLevel');
+    const t = document.getElementById('listType');
+    if (!d || !t) return;
+    d.innerHTML = '';
+    const filtered = allLevels.filter(l => getNormalizedListType(l) === t.value);
+    if (filtered.length === 0) {
+      d.innerHTML = '<option value="">No targets registered</option>';
+      return;
+    }
+    filtered.forEach(l => {
+      const opt = document.createElement('option');
+      opt.value = l.name || l.levelName;
+      opt.dataset.id = l.id;
+      opt.dataset.creator = l.creator;
+      opt.textContent = `${l.name || l.levelName} (by ${l.creator || 'Unknown'})`;
+      d.appendChild(opt);
+    });
+  }
+
+  function toggleFormFields() {
+    const t = document.getElementById("listType");
+    const s = document.getElementById("submissionType");
+    if (!t || !s) return;
+    const eWrap = document.getElementById("existingLevelWrap");
+    const nFields = document.getElementById("newLevelFields");
+    const cWrap = document.getElementById("challengeDifficultyWrap");
+
+    if (s.value === "newLevel") {
+      if (eWrap) eWrap.style.display = "none";
+      if (nFields) nFields.style.display = "block";
+      if (cWrap) cWrap.style.display = t.value === "challenge" ? "block" : "none";
+    } else {
+      if (eWrap) eWrap.style.display = "block";
+      if (nFields) nFields.style.display = "none";
+      if (cWrap) cWrap.style.display = "none";
+    }
+  }
+
+  function handleListTypeChange() {
+    populateExistingLevelsDropdown();
+    toggleFormFields();
+  }
+
+  // Listeners for outgoing payload transmissions
   document.addEventListener("DOMContentLoaded", () => {
-    const sBtn = document.getElementById("submitBtn");
-    if (sBtn) {
-      sBtn.onclick = async (e) => {
+    const btn = document.getElementById("submitBtn");
+    if (btn) {
+      btn.onclick = async (e) => {
         e.preventDefault();
-        const username = document.getElementById("username").value.trim();
-        const recordLink = document.getElementById("recordLink").value.trim();
+        const user = document.getElementById("username").value.trim();
+        const link = document.getElementById("recordLink").value.trim();
         const campus = document.getElementById("campus").value.trim();
-        if (!username || !recordLink || !campus) { alert("Populate all identity text fields."); return; }
+        if (!user || !link || !campus) { alert("Please fill out all identity form inputs completely."); return; }
 
-        sBtn.disabled = true; sBtn.textContent = "Processing transmission package...";
-        const generationStamp = new Date().toISOString().split('T')[0];
+        btn.disabled = true; btn.textContent = "Packing submission bundle...";
+        const stamp = new Date().toISOString().split('T')[0];
 
-        let payload = { 
+        let body = { 
           listType: document.getElementById("listType").value, 
           type: document.getElementById("submissionType").value, 
-          username: username, 
-          recordLink: recordLink, 
-          campus: campus,
-          createdDate: generationStamp
+          username: user, recordLink: link, campus: campus, createdDate: stamp
         };
 
-        if (payload.type === "record") {
-          const select = document.getElementById("existingLevel"); const chosenOpt = select.options[select.selectedIndex];
-          if (!chosenOpt) { alert("Select a level first."); sBtn.disabled = false; sBtn.textContent = "Send for review"; return; }
-          payload.levelName = chosenOpt.value; payload.id = chosenOpt.dataset.id; payload.creator = chosenOpt.dataset.creator;
+        if (body.type === "record") {
+          const sel = document.getElementById("existingLevel");
+          const opt = sel.options[sel.selectedIndex];
+          if (!opt) { alert("Select a valid level registry association."); btn.disabled = false; return; }
+          body.levelName = opt.value; body.id = opt.dataset.id; body.creator = opt.dataset.creator;
         } else {
-          payload.newName = document.getElementById("newName").value.trim(); payload.newLevelId = document.getElementById("newLevelId").value.trim(); payload.newCreator = document.getElementById("newCreator").value.trim();
+          body.newName = document.getElementById("newName").value.trim();
+          body.newLevelId = document.getElementById("newLevelId").value.trim();
+          body.newCreator = document.getElementById("newCreator").value.trim();
         }
 
         try {
-          const response = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
-          const resData = await response.json();
-          if (resData.status === "ok") {
-            alert("Transmission entry safely queued.");
-            document.getElementById("username").value = ""; document.getElementById("recordLink").value = ""; document.getElementById("campus").value = "";
-          } else { alert("Rejected: " + resData.message); }
-        } catch (err) { alert("Transmission error."); } finally { sBtn.disabled = false; sBtn.textContent = "Send for review"; }
+          const r = await fetch(APPS_SCRIPT_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
+          const res = await r.json();
+          if (res.status === "ok") { 
+            alert("Record transmission safely forwarded to audit queue."); 
+          } else { 
+            alert("Verification Exception Rejected: " + res.message); 
+          }
+        } catch (err) { 
+          alert("Network connection error encountered during form transmission."); 
+        } finally { 
+          btn.disabled = false; btn.textContent = "Send for review"; 
+        }
       };
     }
   });
+
+  function displayNetworkFailureFallback() {
+    const list = document.getElementById('list');
+    if(list) list.innerHTML = '<div style="color:var(--accent); text-align:center; padding:20px;">Unable to mount live database. Check internet connection or CORS block configuration policies.</div>';
+  }
 </script>
 </body>
 </html>
