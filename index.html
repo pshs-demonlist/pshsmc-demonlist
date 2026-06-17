@@ -335,6 +335,7 @@
   .btn-primary { background: var(--accent); color: white; }
   .btn-outline { background: transparent; border: 1px solid var(--line); color: var(--text); }
   .btn-outline:hover { background: var(--line); color: var(--text); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
   
   .badge { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; color: var(--text); display: inline-block; font-size: 12px; margin-top: 8px; padding: 4px 8px; }
   .muted { color: var(--muted); font-size: 13px; }
@@ -705,7 +706,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Full Architecture with Router & Filter Patches Applied
+   * Fixed Bugs: XSS Security, Ghost Audio, LocalStorage Theme, Missing Submit Handler, Error loops.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -716,10 +717,25 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
+  // --- HTML SANITIZER ---
+  function escapeHTML(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>'"]/g, match => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+    }[match]));
+  }
+
   // --- AUTOMATED INITIALIZATION ---
   window.addEventListener('DOMContentLoaded', () => {
     console.log("[Demonlist] DOM mounted. Initializing application data vectors...");
+    
+    // Load persisted theme
+    if (localStorage.getItem('pshsmc_theme') === 'light') {
+      document.body.classList.add('light-theme');
+    }
+
     initApp();
+    bindSubmitHandler();
   });
 
   async function initApp() {
@@ -791,7 +807,12 @@
     console.log(`[Router] Switching view plane to targeting ID: #${pageId}Page`);
     closeNavMenu();
     
-    // Explicit Core Framework Section Wrappers mapping exact IDs
+    // Fix: Clean out iframes to prevent ghost audio
+    const mainVid = document.getElementById('video');
+    const playerVid = document.getElementById('pvVideo');
+    if (mainVid) mainVid.innerHTML = '';
+    if (playerVid) playerVid.innerHTML = '';
+
     const corePages = ['landingPage', 'levelsPage', 'statsPage', 'detailPage', 'playerVideoPage'];
     
     corePages.forEach(id => {
@@ -844,6 +865,8 @@
 
   function toggleThemeMode() {
     document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    localStorage.setItem('pshsmc_theme', isLight ? 'light' : 'dark'); // Fix: Persistence
     closeNavMenu();
   }
 
@@ -855,7 +878,6 @@
     const trackingBaseline = new Date("2026-06-17T00:00:00");
     const newsByDateMap = {};
 
-    // Sort global list copies chronologically by placement to compute relative context safely
     const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
     allLevels.forEach(lvl => {
@@ -870,40 +892,37 @@
       const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
       const daysRemaining = 14 - daysPassed;
 
-      // Retain tracking data if it falls within the 2-week active validation cycle
       if (daysRemaining > 0 && daysRemaining <= 14) {
         const localizedKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[localizedKey]) newsByDateMap[localizedKey] = [];
 
-        // Determine context nodes immediately adjacent to the current tier entry
         const indexInSorted = baseSortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
         let belowLevel = "None";
         let aboveLevel = "None";
 
         if (indexInSorted > 0) {
-          belowLevel = baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName;
+          belowLevel = escapeHTML(baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName);
         }
         if (indexInSorted !== -1 && indexInSorted < baseSortedLevels.length - 1) {
-          aboveLevel = baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName;
+          aboveLevel = escapeHTML(baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName);
         }
 
-        // Calculate cascading threshold displacements
         let displacementNotice = "";
         if (currentRank <= 75) {
           const bumpedFromMain = baseSortedLevels.find(item => parseInt(item.rank) === 76);
           if (bumpedFromMain) {
-            displacementNotice = `<span style="color:#f43f5e; font-weight:600;">Pushed ${bumpedFromMain.name || bumpedFromMain.levelName} out of the Main List.</span>`;
+            displacementNotice = `<span style="color:#f43f5e; font-weight:600;">Pushed ${escapeHTML(bumpedFromMain.name || bumpedFromMain.levelName)} out of the Main List.</span>`;
           }
         } else if (currentRank <= 150) {
           const bumpedToLegacy = baseSortedLevels.find(item => parseInt(item.rank) === 151);
           if (bumpedToLegacy) {
-            displacementNotice = `<span style="color:#ef4444; font-weight:600;">Pushed ${bumpedToLegacy.name || bumpedToLegacy.levelName} into the Legacy List.</span>`;
+            displacementNotice = `<span style="color:#ef4444; font-weight:600;">Pushed ${escapeHTML(bumpedToLegacy.name || bumpedToLegacy.levelName)} into the Legacy List.</span>`;
           }
         }
 
         const cat = getNormalizedListType(lvl);
         newsByDateMap[localizedKey].push({
-          title: lvl.name || lvl.levelName || "Unnamed Level",
+          title: escapeHTML(lvl.name || lvl.levelName || "Unnamed Level"),
           category: cat.charAt(0).toUpperCase() + cat.slice(1),
           rank: currentRank,
           below: belowLevel,
@@ -960,7 +979,7 @@
 
   function getPlayerName(rec) {
     if (!rec) return '';
-    return String(rec.username || rec.name || rec.player || '').trim();
+    return escapeHTML(String(rec.username || rec.name || rec.player || '').trim());
   }
 
   function clearUIFieldsToZero() {
@@ -991,8 +1010,8 @@
   function populateCampusDropdownFilters() {
     let campuses = new Set();
     allLevels.forEach(lvl => {
-      if (lvl.campus) campuses.add(String(lvl.campus).trim());
-      getRecordList(lvl).forEach(rec => { if (rec.campus) campuses.add(String(rec.campus).trim()); });
+      if (lvl.campus) campuses.add(escapeHTML(String(lvl.campus).trim()));
+      getRecordList(lvl).forEach(rec => { if (rec.campus) campuses.add(escapeHTML(String(rec.campus).trim())); });
     });
     const sorted = Array.from(campuses).sort();
     const optionsStr = '<option value="ALL">All Campuses</option>' + sorted.map(c => `<option value="${c}">${c}</option>`).join('');
@@ -1019,7 +1038,7 @@
     if (!list) return;
 
     const queryEl = document.getElementById('search');
-    const query = queryEl ? queryEl.value.toLowerCase() : '';
+    const query = queryEl ? escapeHTML(queryEl.value).toLowerCase() : '';
     const campusEl = document.getElementById('dashboardCampusFilter');
     const campusVal = campusEl ? campusEl.value : 'ALL';
 
@@ -1027,9 +1046,9 @@
 
     let displayedItems = allLevels.filter(lvl => {
       if (getNormalizedListType(lvl) !== currentMainTab) return false;
-      const lvlCampus = String(lvl.campus || 'Main Campus').trim();
+      const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus').trim());
       const records = getRecordList(lvl);
-      const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => String(r.campus || 'Main Campus').trim() === campusVal));
+      const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => escapeHTML(String(r.campus || 'Main Campus').trim()) === campusVal));
       if (!campusMatch) return false;
 
       return (
@@ -1061,12 +1080,12 @@
 
       itemRow.innerHTML = `
         <div class="rank">#${rank}</div>
-        <div class="thumb"><img src="${thumb}" onerror="this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'"></div>
+        <div class="thumb"><img src="${escapeHTML(thumb)}" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg'"></div>
         <div class="info">
-          <div class="title">${lvl.name || lvl.levelName || 'Unnamed'} <span class="badge" style="font-size:10px;">${lvl.diff || lvl.difficulty || 'Demon'}</span></div>
-          <div class="sub">By ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}</div>
+          <div class="title">${escapeHTML(lvl.name || lvl.levelName || 'Unnamed')} <span class="badge" style="font-size:10px;">${escapeHTML(lvl.diff || lvl.difficulty || 'Demon')}</span></div>
+          <div class="sub">By ${escapeHTML(lvl.creator || 'Unknown')} | Verified by ${escapeHTML(lvl.verifier || 'Unknown')}</div>
           <div class="points">${pts.toFixed(2)} Points</div>
-          <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:2px; font-size:11px;">Campus: ${lvl.campus || 'Main Campus'}</div>
+          <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:2px; font-size:11px;">Campus: ${escapeHTML(lvl.campus || 'Main Campus')}</div>
         </div>
       `;
       list.appendChild(itemRow);
@@ -1092,8 +1111,8 @@
     const container = document.getElementById('dRecordsContainer');
 
     if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-    if (info) info.innerHTML = `Creator: <strong>${lvl.creator || 'Unknown'}</strong> | Verifier: <strong>${lvl.verifier || 'Unknown'}</strong><br>ID Reference: ${lvl.id || 'N/A'}`;
-    if (vid) vid.innerHTML = lvl.video ? `<iframe src="${lvl.video}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No linked video data.</div>';
+    if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || 'N/A')}`;
+    if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No linked video data.</div>';
     
     if (stats) {
       stats.innerHTML = `
@@ -1116,7 +1135,7 @@
       const tbody = table.querySelector('tbody');
       records.forEach(r => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${getPlayerName(r)} <strong>(${r.percent || 100}%)</strong></td><td>${r.campus || 'Main Campus'}</td><td style="text-align:right;"><a class="proof-btn" href="${r.video || '#'}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
+        row.innerHTML = `<td>${getPlayerName(r)} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
         tbody.appendChild(row);
       });
       container.appendChild(table);
@@ -1154,7 +1173,7 @@
         const name = getPlayerName(r);
         if (!name) return;
 
-        const playerCampus = String(r.campus || 'Main Campus').trim();
+        const playerCampus = escapeHTML(String(r.campus || 'Main Campus').trim());
         if (campusFilter !== 'ALL' && playerCampus !== campusFilter) return;
 
         if (!processedPlayers[name]) {
@@ -1170,7 +1189,7 @@
           else if (cat === 'challenge') processedPlayers[name].challenges++;
           else if (cat === 'platformer') processedPlayers[name].platformers++;
         }
-        processedPlayers[name].completions.push({ levelName: lvl.name || lvl.levelName || 'Unnamed', rank: rank, category: cat, percent: pct, video: r.video || '#' });
+        processedPlayers[name].completions.push({ levelName: escapeHTML(lvl.name || lvl.levelName || 'Unnamed'), rank: rank, category: cat, percent: pct, video: escapeHTML(r.video || '#') });
       });
     });
 
@@ -1250,7 +1269,7 @@
     if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
   }
 
-  // --- SUBMISSION PACKET DROPDOWNS ---
+  // --- SUBMISSION PACKET DROPDOWNS & HANDLER ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
@@ -1259,10 +1278,10 @@
     const filtered = allLevels.filter(l => getNormalizedListType(l) === t.value);
     filtered.forEach(l => {
       const opt = document.createElement('option');
-      opt.value = l.name || l.levelName;
-      opt.dataset.id = l.id;
-      opt.dataset.creator = l.creator;
-      opt.textContent = `${l.name || l.levelName} (by ${l.creator || 'Unknown'})`;
+      opt.value = escapeHTML(l.name || l.levelName);
+      opt.dataset.id = escapeHTML(String(l.id || ''));
+      opt.dataset.creator = escapeHTML(l.creator || '');
+      opt.textContent = `${escapeHTML(l.name || l.levelName)} (by ${escapeHTML(l.creator || 'Unknown')})`;
       d.appendChild(opt);
     });
   }
@@ -1287,6 +1306,70 @@
   function handleListTypeChange() {
     populateExistingLevelsDropdown();
     toggleFormFields();
+  }
+
+  // FIXED: Actually handles the submission sending mechanism
+  function bindSubmitHandler() {
+    const btn = document.getElementById('submitBtn');
+    if(!btn) return;
+
+    btn.addEventListener('click', async () => {
+      const ogText = btn.textContent;
+      try {
+        const user = document.getElementById('username').value.trim();
+        const link = document.getElementById('recordLink').value.trim();
+        const campus = document.getElementById('campus').value.trim();
+        const subType = document.getElementById('submissionType').value;
+        const listType = document.getElementById('listType').value;
+
+        if (!user || !link || !campus) {
+          throw new Error("Please fill in Username, Record Link, and Campus to submit.");
+        }
+
+        btn.textContent = "Submitting...";
+        btn.disabled = true;
+
+        // Since we don't have exact JSON format for your App Script, sending standard fetch parameters.
+        const payload = new URLSearchParams({
+          username: user,
+          video: link,
+          campus: campus,
+          submissionType: subType,
+          listType: listType
+        });
+
+        if (subType === 'record') {
+          payload.append('levelName', document.getElementById('existingLevel').value);
+        } else {
+          payload.append('levelName', document.getElementById('newName').value);
+          payload.append('creator', document.getElementById('newCreator').value);
+          payload.append('levelId', document.getElementById('newLevelId').value);
+        }
+
+        // Send to Google App Script endpoint 
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: payload.toString()
+        });
+
+        // Mock delay for UI UX
+        await new Promise(r => setTimeout(r, 600));
+
+        alert("Success! Your submission has been sent for staff review.");
+        
+        // Clear fields out after
+        document.getElementById('username').value = '';
+        document.getElementById('recordLink').value = '';
+        
+      } catch (err) {
+        alert("Submission Error: " + err.message);
+      } finally {
+        btn.textContent = ogText;
+        btn.disabled = false;
+      }
+    });
   }
 </script>
 </body>
