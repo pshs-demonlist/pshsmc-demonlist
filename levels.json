@@ -362,7 +362,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "KrMaL",
-    "date": "2026-06-17T01:42:23.658Z",
+    "date": "2026-06-10T17:49:08.548Z",
     "diff": "Insane Demon",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "14145098",
@@ -377,6 +377,13 @@
       {
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/OtThYkW_LGg"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-10T17:49:08.548Z",
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/OtThYkW_LGg"
