@@ -946,9 +946,13 @@
     return 'demon'; 
   }
 
+  // ADDED FIX: Checks for victorList, records, and completions properly
   function getRecordList(lvl) {
     if (!lvl) return [];
-    return Array.isArray(lvl.records) ? lvl.records : Array.isArray(lvl.completions) ? lvl.completions : [];
+    if (Array.isArray(lvl.victorList)) return lvl.victorList;
+    if (Array.isArray(lvl.records)) return lvl.records;
+    if (Array.isArray(lvl.completions)) return lvl.completions;
+    return [];
   }
 
   function clearUIFieldsToZero() {
@@ -963,7 +967,7 @@
     let totalRecordsCount = 0;
     allLevels.forEach(lvl => {
       getRecordList(lvl).forEach(rec => {
-        const name = escapeHTML(String(rec.username || rec.player || rec.name || '').trim());
+        const name = escapeHTML(String(rec.username || rec.name || rec.player || '').trim());
         if (name) uniquePlayers.add(name);
         totalRecordsCount++;
       });
@@ -1104,7 +1108,7 @@
       const tbody = table.querySelector('tbody');
       records.forEach(r => {
         const row = document.createElement('tr');
-        const name = escapeHTML(String(r.username || r.player || r.name || '').trim());
+        const name = escapeHTML(String(r.username || r.name || r.player || '').trim());
         row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
         tbody.appendChild(row);
       });
@@ -1141,7 +1145,7 @@
 
       records.forEach(r => {
         // Strict mapping based on username requirement
-        const name = escapeHTML(String(r.username || r.player || r.name || '').trim());
+        const name = escapeHTML(String(r.username || r.name || r.player || '').trim());
         if (!name) return;
 
         const playerCampus = escapeHTML(String(r.campus || 'Main Campus').trim());
