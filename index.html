@@ -705,7 +705,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Chronological Date Filter Version: Active Reference Date June 17, 2026
+   * Complete Interactive Binding Edition — Built June 17, 2026
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -716,10 +716,11 @@
   let currentMainTab = 'demon';
   let currentStatsTab = 'demon';
 
-  // --- AUTOMATED INITIALIZATION ---
+  // --- AUTOMATED INITIALIZATION & HARDWARE UI COUPLING ---
   window.addEventListener('DOMContentLoaded', () => {
     console.log("[Demonlist] DOM mounted. Initializing application data vectors...");
     initApp();
+    bindActionButtonsAndNav();
   });
 
   async function initApp() {
@@ -747,6 +748,58 @@
     } catch (err) {
       console.error(`[Runtime Guard] Error during execution of ${context}:`, err);
     }
+  }
+
+  // --- HARD CORRECTION: BUTTON & NAV INTERACTION BINDINGS ---
+  function bindActionButtonsAndNav() {
+    console.log("[UI Linker] Binding listeners to interactive interface elements...");
+
+    // 1. Bind Mobile Nav Menu (3 lines in top right)
+    // Matches common layouts: class names like .menu-btn, .nav-toggle, #menuIcon, or an icon element
+    const navToggles = document.querySelectorAll('.nav-toggle, .menu-btn, .hamburger, #menuBtn, #menuIcon');
+    navToggles.forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        const navMenu = document.querySelector('.nav-links, .nav-menu, #navLinks');
+        if (navMenu) {
+          navMenu.classList.toggle('active-menu');
+          // Fallback toggle style if CSS class rules are missing
+          if (navMenu.style.display === 'flex') {
+            navMenu.style.display = 'none';
+          } else {
+            navMenu.style.display = 'flex';
+          }
+        }
+      };
+    });
+
+    // 2. Scan and Bind all variants of "Submit Record" buttons
+    document.querySelectorAll('button, a, .btn').forEach(el => {
+      const txt = el.textContent.trim().toLowerCase();
+      
+      if (txt.includes('submit record')) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          console.log("[UI Linker] Redirecting to Submit Form view state.");
+          // Swaps view directly to your form container or page
+          switchPage('submit'); 
+          // If your form is inside a shared element block, ensure it scrolls into view gracefully
+          const formSec = document.getElementById('submitPage') || document.querySelector('.submission-form-container');
+          if (formSec) formSec.scrollIntoView({ behavior: 'smooth' });
+        };
+      }
+
+      // 3. Scan and Bind all variants of "View the List" buttons
+      if (txt.includes('view the list') || txt.includes('view list')) {
+        el.onclick = (e) => {
+          e.preventDefault();
+          console.log("[UI Linker] Redirecting to Dashboard List view state.");
+          switchPage('main');
+          const listSec = document.getElementById('listPage') || document.getElementById('list') || document.querySelector('.list-container');
+          if (listSec) listSec.scrollIntoView({ behavior: 'smooth' });
+        };
+      }
+    });
   }
 
   function clearUIFieldsToZero() {
@@ -823,7 +876,7 @@
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    // Fixed Reference Timeline: June 17, 2026 @ 12:00 AM
+    // Fixed Reference Timeline Tracker: June 17, 2026 @ 12:00 AM
     const trackingBaseline = new Date("2026-06-17T00:00:00");
     const newsByDateMap = {};
 
@@ -832,7 +885,6 @@
       if (isNaN(baseRank)) baseRank = 999;
       if (!lvl.initialRank) lvl.initialRank = baseRank;
 
-      // Extract the entry verification date
       let dateStr = lvl.createdDate || lvl.date;
       if (!dateStr) {
         lvl.rank = baseRank;
@@ -845,13 +897,13 @@
         return;
       }
 
-      // Filter Vector: Must be on or after June 17, 2026 @ 12:00 AM
+      // Filter Vector: Must be on or forward from June 17, 2026 @ 12:00 AM
       if (entryDate >= trackingBaseline) {
         const msDifference = trackingBaseline.getTime() - entryDate.getTime();
         const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
         const daysRemaining = 14 - daysPassed;
 
-        // Automatically delete from feed after 14 days expiration
+        // Auto-deleted from rendering loop if past the 2-week threshold
         if (daysRemaining > 0 && daysRemaining <= 14) {
           const localizedGroupKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
           if (!newsByDateMap[localizedGroupKey]) newsByDateMap[localizedGroupKey] = [];
@@ -866,7 +918,7 @@
         }
       }
       
-      lvl.rank = baseRank; // Protect placement tiers from artificial layout degradation
+      lvl.rank = baseRank;
     });
 
     const sortedDates = Object.keys(newsByDateMap).sort((a, b) => new Date(b) - new Date(a));
@@ -880,14 +932,14 @@
       const container = document.createElement('div');
       container.style.marginBottom = "14px";
       let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${date}</div>`;
-      newsMap[date].forEach(item => {
+      newsByDateMap[date].forEach(item => {
         html += `
           <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
             <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap: 10px;">
               <span style="font-weight:600; color:#ffffff;">${item.title}</span>
               <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d remaining</span>
             </div>
-            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] Level registered onto official charts at position #${item.rank}.</div>
+            <div style="font-size:11px; opacity:0.75; line-height: 1.3;">[${item.category}] Level registered onto charts at position #${item.rank}.</div>
           </div>
         `;
       });
@@ -896,7 +948,7 @@
     });
   }
 
-  // --- STAT COUNTER METRICS ---
+  // --- METRIC COUNTERS ENGINE ---
   function calculateCounterMetrics() {
     let uniquePlayers = new Set();
     let totalRecordsCount = 0;
@@ -948,9 +1000,8 @@
     renderLevelsDashboard();
   }
 
-  // --- MAIN LEVELS BOARD CONTROLLER ---
+  // --- RENDERING DASHBOARD CONTROLLER ---
   function renderLevelsDashboard() {
-    // Structural Guard: Resolves fallback searches if element configurations lack explicit identifiers
     let list = document.getElementById('list');
     if (!list) {
       const fallbacks = document.querySelectorAll('div');
@@ -1071,7 +1122,7 @@
     }
   }
 
-  // --- STATS VISUALIZATION CONTROLLERS ---
+  // --- STATS LEADERBOARD MODULES ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
     ['statTabDemons', 'statTabChallenges', 'statTabPlatformer'].forEach(id => {
@@ -1216,9 +1267,18 @@
   }
 
   function switchPage(pageId) {
-    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active-page'));
-    const target = document.getElementById(pageId + 'Page');
-    if (target) target.classList.add('active-page');
+    // Dynamic Fallback Safety Override to map pages seamlessly
+    document.querySelectorAll('.app-page, [id$="Page"], .page-view').forEach(p => {
+      p.classList.remove('active-page');
+      p.style.display = 'none'; // absolute override toggle
+    });
+    
+    // Find matching container target
+    const exactTarget = document.getElementById(pageId + 'Page') || document.getElementById(pageId) || document.querySelector('.' + pageId + '-page');
+    if (exactTarget) {
+      exactTarget.classList.add('active-page');
+      exactTarget.style.display = 'block';
+    }
   }
 
   function displayFallbackUIMessage(elementId, message) {
@@ -1226,7 +1286,7 @@
     if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
   }
 
-  // --- SUBMISSION PACKET UTILITIES ---
+  // --- SUBMISSION REPOSITORIES UTILITIES ---
   function populateExistingLevelsDropdown() {
     const d = document.getElementById('existingLevel');
     const t = document.getElementById('listType');
