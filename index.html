@@ -767,7 +767,7 @@
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 6000);
       const res = await fetch(url, { cache: "no-cache", signal: controller.signal });
-      clearTimeout(timeoutId);
+      const opacity = setTimeout(() => controller.abort(), 6000);
       if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
       return await res.json();
     };
@@ -944,10 +944,10 @@
     if (!lvl) return 'demon';
     const typeStr = String(lvl.listType || lvl.type || lvl.category || lvl.diff || lvl.difficulty || '').toLowerCase();
     if (typeStr.includes('challenge')) return 'challenge';
+    if (typeStr.includes('platformer')) return 'platformer';
     return 'demon'; 
   }
 
-  // ADDED FIX: Checks for victorList, records, and completions properly
   function getRecordList(lvl) {
     if (!lvl) return [];
     if (Array.isArray(lvl.victorList)) return lvl.victorList;
@@ -1145,7 +1145,6 @@
       const records = getRecordList(lvl);
 
       records.forEach(r => {
-        // Strict mapping based on username requirement
         const name = escapeHTML(String(r.username || r.name || r.player || '').trim());
         if (!name) return;
 
@@ -1306,6 +1305,7 @@
     toggleFormFields();
   }
 
+  // --- FIXED SUBMIT HANDLER MAPPER ---
   function bindSubmitHandler() {
     const btn = document.getElementById('submitBtn');
     if(!btn) return;
@@ -1326,27 +1326,38 @@
         btn.textContent = "Submitting...";
         btn.disabled = true;
 
-        const payload = new URLSearchParams({
+        // Construct blueprint matrix payload perfectly mapping directly to backend properties
+        let payload = {
           username: user,
-          video: link,
+          recordLink: link,
           campus: campus,
-          submissionType: subType,
-          listType: listType
-        });
+          type: subType,     // Maps directly to data.type
+          listType: listType // Maps directly to data.listType
+        };
 
         if (subType === 'record') {
-          payload.append('levelName', document.getElementById('existingLevel').value);
+          const selectEl = document.getElementById('existingLevel');
+          if (!selectEl) throw new Error("Existing level element registry missing.");
+          const activeOpt = selectEl.options[selectEl.selectedIndex];
+
+          payload.levelName = selectEl.value;
+          payload.id = activeOpt ? (activeOpt.dataset.id || '') : '';
+          payload.creator = activeOpt ? (activeOpt.dataset.creator || '') : '';
         } else {
-          payload.append('levelName', document.getElementById('newName').value);
-          payload.append('creator', document.getElementById('newCreator').value);
-          payload.append('levelId', document.getElementById('newLevelId').value);
+          payload.newName = document.getElementById('newName').value.trim();
+          payload.newCreator = document.getElementById('newCreator').value.trim();
+          payload.newLevelId = document.getElementById('newLevelId').value.trim();
+          
+          const diffEl = document.getElementById('newDifficulty');
+          if (diffEl) payload.difficulty = diffEl.value;
         }
 
+        // Transmit raw JSON plain text string to completely bypass CORS preflight blocking parameters
         const res = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: payload.toString()
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
         });
 
         await new Promise(r => setTimeout(r, 600));
