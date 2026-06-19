@@ -636,6 +636,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "heatherhayes",
+    "date": "2026-06-19T22:03:31.051Z",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "63075323",
+    "img": "https://img.youtube.com/vi/0g1Tgigi6Lg/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "white women",
+    "platPosition": null,
+    "rank": 23,
+    "rawTier": 11,
+    "verifier": "daBlooKat121",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-19T22:03:31.051Z",
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/0g1Tgigi6Lg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/0g1Tgigi6Lg"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "pocke",
     "date": "2026-06-17T01:42:23.658Z",
@@ -646,7 +672,7 @@
     "listType": "demon",
     "name": "tower descent",
     "platPosition": null,
-    "rank": 23,
+    "rank": 24,
     "rawTier": 10,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -672,7 +698,7 @@
     "listType": "demon",
     "name": "Troll Madness",
     "platPosition": null,
-    "rank": 24,
+    "rank": 25,
     "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -698,7 +724,7 @@
     "listType": "demon",
     "name": "Thermal Madness",
     "platPosition": null,
-    "rank": 25,
+    "rank": 26,
     "rawTier": 8,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -724,7 +750,7 @@
     "listType": "demon",
     "name": "Liberation",
     "platPosition": null,
-    "rank": 26,
+    "rank": 27,
     "rawTier": 7,
     "verifier": "LightBlu",
     "victorList": [
@@ -757,7 +783,7 @@
     "listType": "demon",
     "name": "Sakupen Egg",
     "platPosition": null,
-    "rank": 27,
+    "rank": 28,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -790,7 +816,7 @@
     "listType": "demon",
     "name": "amethyst",
     "platPosition": null,
-    "rank": 28,
+    "rank": 29,
     "rawTier": 7,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -816,7 +842,7 @@
     "listType": "demon",
     "name": "FINAL DESTINATION",
     "platPosition": null,
-    "rank": 29,
+    "rank": 30,
     "rawTier": 7,
     "verifier": "eelektrance",
     "victorList": [
@@ -842,7 +868,7 @@
     "listType": "demon",
     "name": "CELESTIA",
     "platPosition": null,
-    "rank": 30,
+    "rank": 31,
     "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -868,7 +894,7 @@
     "listType": "demon",
     "name": "Skeletal Shenanigans",
     "platPosition": null,
-    "rank": 31,
+    "rank": 32,
     "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -894,7 +920,7 @@
     "listType": "demon",
     "name": "Solar Circles",
     "platPosition": null,
-    "rank": 32,
+    "rank": 33,
     "rawTier": 6,
     "verifier": "daBlooKat121",
     "victorList": [
@@ -927,7 +953,7 @@
     "listType": "demon",
     "name": "B",
     "platPosition": null,
-    "rank": 33,
+    "rank": 34,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -960,7 +986,7 @@
     "listType": "demon",
     "name": "potal",
     "platPosition": null,
-    "rank": 34,
+    "rank": 35,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -986,7 +1012,7 @@
     "listType": "demon",
     "name": "Living Open",
     "platPosition": null,
-    "rank": 35,
+    "rank": 36,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1012,7 +1038,7 @@
     "listType": "demon",
     "name": "SemiCircles",
     "platPosition": null,
-    "rank": 36,
+    "rank": 37,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1038,7 +1064,7 @@
     "listType": "demon",
     "name": "Deadlocked",
     "platPosition": null,
-    "rank": 37,
+    "rank": 38,
     "rawTier": 4,
     "verifier": "RobTop",
     "victorList": [
@@ -1064,7 +1090,7 @@
     "listType": "demon",
     "name": "it really circles",
     "platPosition": null,
-    "rank": 38,
+    "rank": 39,
     "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1090,7 +1116,7 @@
     "listType": "demon",
     "name": "Theory of Everything 2",
     "platPosition": null,
-    "rank": 39,
+    "rank": 40,
     "rawTier": 3,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1116,7 +1142,7 @@
     "listType": "demon",
     "name": "Clubstep",
     "platPosition": null,
-    "rank": 40,
+    "rank": 41,
     "rawTier": 3,
     "verifier": "Akoay",
     "victorList": [
@@ -1156,7 +1182,7 @@
     "listType": "demon",
     "name": "Clutterfunk v2",
     "platPosition": null,
-    "rank": 41,
+    "rank": 42,
     "rawTier": 3,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1182,7 +1208,7 @@
     "listType": "demon",
     "name": "Invisible Clubstep",
     "platPosition": null,
-    "rank": 42,
+    "rank": 43,
     "rawTier": 3,
     "verifier": "Akoay",
     "victorList": [
@@ -1215,7 +1241,7 @@
     "listType": "demon",
     "name": "Depressure",
     "platPosition": null,
-    "rank": 43,
+    "rank": 44,
     "rawTier": 2,
     "verifier": "aldawg123",
     "victorList": [
@@ -1241,7 +1267,7 @@
     "listType": "demon",
     "name": "Ultra Paracosm",
     "platPosition": null,
-    "rank": 44,
+    "rank": 45,
     "rawTier": 2,
     "verifier": "sadboi202",
     "victorList": [
@@ -1281,7 +1307,7 @@
     "listType": "demon",
     "name": "ISpyWithMyLittleEye",
     "platPosition": null,
-    "rank": 45,
+    "rank": 46,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1307,7 +1333,7 @@
     "listType": "demon",
     "name": "Ratio Circles",
     "platPosition": null,
-    "rank": 46,
+    "rank": 47,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1333,7 +1359,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 47,
+    "rank": 48,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1366,7 +1392,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 48,
+    "rank": 49,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1413,7 +1439,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 49,
+    "rank": 50,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1453,7 +1479,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 50,
+    "rank": 51,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
