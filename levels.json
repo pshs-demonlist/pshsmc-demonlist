@@ -1408,6 +1408,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "IIINePtunEIII",
+    "date": "2026-06-21T08:11:06.889Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "369294",
+    "img": "https://img.youtube.com/vi/cBtcrq80TOM/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Theory of every v2",
+    "platPosition": null,
+    "rank": 50,
+    "rawTier": 2,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T08:11:06.889Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/cBtcrq80TOM"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/cBtcrq80TOM"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SpKale",
     "date": "2026-06-21T08:06:57.927Z",
@@ -1418,7 +1444,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 50,
+    "rank": 51,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1458,7 +1484,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 51,
+    "rank": 52,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1505,7 +1531,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 52,
+    "rank": 53,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1545,7 +1571,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 53,
+    "rank": 54,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1578,7 +1604,7 @@
     "listType": "demon",
     "name": "iS",
     "platPosition": null,
-    "rank": 54,
+    "rank": 55,
     "rawTier": 1,
     "verifier": "dibless",
     "victorList": [
