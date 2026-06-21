@@ -704,12 +704,12 @@
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
-   * strict daily changelog tracking, category filtering, dynamic placement text, and strict name matching.
+   * timezone-resilient calendar day tracking, category filtering, and strict name matching.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
   
-  // CORRECTED ROUTING PATHS (Points directly to your active repository asset)
+  // CORRECTED ROUTING PATHS
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
@@ -742,7 +742,6 @@
     
     const dataLoaded = await loadDatabase();
     
-    // Fallback display handling if the data layer encounters issues
     if (!dataLoaded || allLevels.length === 0) {
       console.error("[Critical] Master database array is completely empty or failed to load.");
       displayFallbackUIMessage("list", "Failed to sync remote data. Verify your GitHub levels.json structure.");
@@ -771,7 +770,6 @@
   async function loadDatabase() {
     let rawData = null;
     const fetchPayload = async (url) => {
-      // Bypasses local caching and prevents preflight blocks on raw content delivery networks
       const cacheBusterUrl = url + (url.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000); 
@@ -800,7 +798,6 @@
 
     if (!rawData) return false;
 
-    // Direct object traversal to isolate targeted nested object collections
     if (Array.isArray(rawData)) { 
       allLevels = rawData; 
     } else if (typeof rawData === 'object') { 
@@ -887,47 +884,46 @@
     closeNavMenu();
   }
 
-  // --- DYNAMIC LIVE UPDATES (STRICT MATCH, CATEGORY FILTERED, DYNAMIC TEXT) ---
+  // --- TIMEZONE-RESILIENT LIVE UPDATES ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    // Lock onto today's exact date boundaries
     const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth();
-    const currentDate = now.getDate();
+    // Normalize target local day string to standard YYYY-MM-DD format
+    const targetTodayStr = now.getFullYear() + '-' + 
+                           String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                           String(now.getDate()).padStart(2, '0');
 
     let validNews = [];
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
-      
       const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp; 
       if (!dateStr) return;
 
-      const entryDate = new Date(dateStr);
-      if (isNaN(entryDate.getTime())) return;
+      // Extract just the calendar component (YYYY-MM-DD) to bypass timestamp/preflight skewing
+      const parsedDate = new Date(dateStr);
+      if (isNaN(parsedDate.getTime())) return;
+      
+      const itemDayStr = parsedDate.getFullYear() + '-' + 
+                         String(parsedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                         String(parsedDate.getDate()).padStart(2, '0');
 
-      // EXACT MATCH: Year, Month, and Date must equal Today
-      if (entryDate.getFullYear() === currentYear &&
-          entryDate.getMonth() === currentMonth &&
-          entryDate.getDate() === currentDate) {
-          
+      if (itemDayStr === targetTodayStr) {
           const listCategory = getNormalizedListType(lvl);
           
           const categorySortedLevels = allLevels
             .filter(l => getNormalizedListType(l) === listCategory)
             .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-          // THE FIX: Compare explicit string names to stop the `undefined === undefined` bug
           const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
           const indexInSorted = categorySortedLevels.findIndex(item => 
             String(item.name || item.levelName || "Unnamed Level").trim() === targetName
           );
           
-          let textHarder = "None"; // The level with a better (lower) rank number
-          let textEasier = "None"; // The level with a worse (higher) rank number
+          let textHarder = "None"; 
+          let textEasier = "None"; 
 
           if (indexInSorted > 0) {
             const harderLevel = categorySortedLevels[indexInSorted - 1];
@@ -957,13 +953,11 @@
     });
 
     if (validNews.length === 0) {
-      const todayStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
-      feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${todayStr}).</div>`;
+      feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${targetTodayStr}).</div>`;
       return;
     }
 
     feed.innerHTML = '';
-    
     const container = document.createElement('div');
     container.style.marginBottom = "14px";
     
@@ -1057,7 +1051,6 @@
     renderLevelsDashboard();
   }
 
-  // --- RENDERING MAIN DASHBOARD ---
   function renderLevelsDashboard() {
     let list = document.getElementById('list');
     if (!list) return;
@@ -1168,7 +1161,6 @@
     }
   }
 
-  // --- STATS VIEWER MODULE ---
   function switchStatsPageListTab(tab) {
     currentStatsTab = tab;
     ['statTabDemons', 'statTabChallenges'].forEach(id => {
