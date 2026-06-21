@@ -1877,6 +1877,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-21T21:07:20.576Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "143193238",
+    "img": "https://img.youtube.com/vi/Xuk8aOYwlu4/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Yes Machine end",
+    "platPosition": null,
+    "rank": 4,
+    "rawTier": 9,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T21:07:20.576Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "date": "2026-06-17T01:42:23.658Z",
@@ -1887,7 +1913,7 @@
     "listType": "challenge",
     "name": "Nasr City",
     "platPosition": null,
-    "rank": 4,
+    "rank": 5,
     "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1913,7 +1939,7 @@
     "listType": "challenge",
     "name": "Sakupen End 49-53",
     "platPosition": null,
-    "rank": 5,
+    "rank": 6,
     "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1939,7 +1965,7 @@
     "listType": "challenge",
     "name": "the tourist",
     "platPosition": null,
-    "rank": 6,
+    "rank": 7,
     "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1965,7 +1991,7 @@
     "listType": "challenge",
     "name": "Margarinepotato",
     "platPosition": null,
-    "rank": 7,
+    "rank": 8,
     "rawTier": 7,
     "verifier": "eelektrance",
     "victorList": [
@@ -1998,7 +2024,7 @@
     "listType": "challenge",
     "name": "Abbasiya",
     "platPosition": null,
-    "rank": 8,
+    "rank": 9,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2024,7 +2050,7 @@
     "listType": "challenge",
     "name": "Ramses",
     "platPosition": null,
-    "rank": 9,
+    "rank": 10,
     "rawTier": 6,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2050,7 +2076,7 @@
     "listType": "challenge",
     "name": "Maadi",
     "platPosition": null,
-    "rank": 10,
+    "rank": 11,
     "rawTier": 5,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2083,7 +2109,7 @@
     "listType": "challenge",
     "name": "Shubra",
     "platPosition": null,
-    "rank": 11,
+    "rank": 12,
     "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
