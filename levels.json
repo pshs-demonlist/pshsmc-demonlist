@@ -1526,6 +1526,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "wetols",
+    "date": "2026-06-21T18:36:34.655Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "122299385",
+    "img": "https://img.youtube.com/vi/Nz0e-6KbewY/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "GGEZ",
+    "platPosition": null,
+    "rank": 54,
+    "rawTier": 2,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T18:36:34.655Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Nz0e-6KbewY"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Nz0e-6KbewY"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SpKale",
     "date": "2026-06-21T08:06:57.927Z",
@@ -1536,7 +1562,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 54,
+    "rank": 55,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1576,7 +1602,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 55,
+    "rank": 56,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1623,7 +1649,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 56,
+    "rank": 57,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1670,7 +1696,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 57,
+    "rank": 58,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1703,7 +1729,7 @@
     "listType": "demon",
     "name": "iS",
     "platPosition": null,
-    "rank": 58,
+    "rank": 59,
     "rawTier": 1,
     "verifier": "dibless",
     "victorList": [
@@ -1736,7 +1762,7 @@
     "listType": "demon",
     "name": "red alert",
     "platPosition": null,
-    "rank": 59,
+    "rank": 60,
     "rawTier": 1,
     "verifier": "dibless",
     "victorList": [
