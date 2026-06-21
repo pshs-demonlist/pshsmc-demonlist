@@ -1,6 +1,6 @@
 [
   {
-    "aredlPlacement": 107,
+    "aredlPlacement": 109,
     "campus": "Davao Region Campus",
     "creator": "Swib",
     "date": "2026-06-17T01:42:23.658Z",
@@ -26,7 +26,7 @@
     "video": "https://www.youtube.com/embed/L6mt9WoCbWI"
   },
   {
-    "aredlPlacement": 145,
+    "aredlPlacement": 147,
     "campus": "Davao Region Campus",
     "creator": "Bianox",
     "date": "2026-06-17T01:42:23.658Z",
@@ -52,7 +52,7 @@
     "video": "https://www.youtube.com/embed/k0x_RwvjJNQ"
   },
   {
-    "aredlPlacement": 188,
+    "aredlPlacement": 190,
     "campus": "Davao Region Campus",
     "creator": "Neigefeu",
     "date": "2026-06-17T01:42:23.658Z",
@@ -78,7 +78,7 @@
     "video": "https://www.youtube.com/embed/S8T7Xl-pBEk"
   },
   {
-    "aredlPlacement": 201,
+    "aredlPlacement": 203,
     "campus": "Davao Region Campus",
     "creator": "ItzKiba",
     "date": "2026-06-17T01:42:23.658Z",
@@ -104,7 +104,7 @@
     "video": "https://www.youtube.com/embed/kFyAg9u666o"
   },
   {
-    "aredlPlacement": 227,
+    "aredlPlacement": 229,
     "campus": "Davao Region Campus",
     "creator": "Waterbound",
     "date": "2026-06-17T01:42:23.658Z",
@@ -130,7 +130,7 @@
     "video": "https://www.youtube.com/embed/jmNfq4EqOh0"
   },
   {
-    "aredlPlacement": 348,
+    "aredlPlacement": 350,
     "campus": "Davao Region Campus",
     "creator": "lSunix",
     "date": "2026-06-17T01:42:23.658Z",
@@ -156,7 +156,7 @@
     "video": "https://www.youtube.com/embed/2PdD07iM3kU"
   },
   {
-    "aredlPlacement": 373,
+    "aredlPlacement": 375,
     "campus": "Davao Region Campus",
     "creator": "alkali",
     "date": "2026-06-17T01:42:23.658Z",
@@ -182,7 +182,7 @@
     "video": "https://www.youtube.com/embed/Har8lkc3VMU"
   },
   {
-    "aredlPlacement": 693,
+    "aredlPlacement": 695,
     "campus": "Davao Region Campus",
     "creator": "Manix648",
     "date": "2026-06-17T01:42:23.658Z",
@@ -208,7 +208,7 @@
     "video": "https://www.youtube.com/embed/SWJ28ivLm0Y"
   },
   {
-    "aredlPlacement": 771,
+    "aredlPlacement": 773,
     "campus": "Davao Region Campus",
     "creator": "lexycat",
     "date": "2026-06-17T01:42:23.658Z",
@@ -234,7 +234,7 @@
     "video": "https://www.youtube.com/embed/O0qVfqo1pPg"
   },
   {
-    "aredlPlacement": 780,
+    "aredlPlacement": 782,
     "campus": "",
     "creator": "Riot",
     "date": "2026-06-17T01:42:23.658Z",
@@ -281,7 +281,7 @@
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
-    "aredlPlacement": 1263,
+    "aredlPlacement": 1265,
     "campus": "Central Luzon Campus",
     "creator": "nikroplays",
     "date": "2026-06-17T01:42:23.658Z",
@@ -307,7 +307,7 @@
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0"
   },
   {
-    "aredlPlacement": 1383,
+    "aredlPlacement": 1385,
     "campus": "",
     "creator": "GGboy",
     "date": "2026-06-17T01:42:23.658Z",
@@ -333,7 +333,7 @@
     "video": "https://www.youtube.com/embed/8x0gpGutHUE"
   },
   {
-    "aredlPlacement": 1471,
+    "aredlPlacement": 1473,
     "campus": "Davao Region Campus",
     "creator": "neigefeu",
     "date": "2026-06-17T01:42:23.658Z",
@@ -1471,7 +1471,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "Jax",
-    "date": "2026-06-17T01:42:23.658Z",
+    "date": "2026-06-21T07:54:30.564Z",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "13519",
@@ -1489,6 +1489,13 @@
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/_NevWh9u9W0"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T07:54:30.564Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/duTBwO4eCgA"
       }
     ],
     "video": "https://www.youtube.com/embed/_NevWh9u9W0"
