@@ -703,12 +703,14 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Includes CORS bypass, aggressive data parsing, and fault-tolerant rendering.
+   * Fixed repository routing paths, corrected CORS bypass vectors, and robust rendering.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
-  const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
-  const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
+  
+  // CORRECTED ROUTING PATHS (Points directly to your active repository asset)
+  const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/discoveredattack/pshs-demonlist/main/levels.json";
+  const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/discoveredattack/pshs-demonlist@main/levels.json";
 
   let allLevels = [];
   let currentMainTab = 'demon';
@@ -739,7 +741,7 @@
     
     const dataLoaded = await loadDatabase();
     
-    // If data load fails, update ALL stuck UI components so they don't spin forever
+    // Fallback display handling if the data layer encounters issues
     if (!dataLoaded || allLevels.length === 0) {
       console.error("[Critical] Master database array is completely empty or failed to load.");
       displayFallbackUIMessage("list", "Failed to sync remote data. Verify your GitHub levels.json structure.");
@@ -768,10 +770,10 @@
   async function loadDatabase() {
     let rawData = null;
     const fetchPayload = async (url) => {
-      // Use query string cache-busting instead of 'cache: no-cache' to avoid CORS preflight blocks
+      // Bypasses local caching and prevents preflight blocks on raw content delivery networks
       const cacheBusterUrl = url + (url.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000); // Increased to 8s
+      const timeoutId = setTimeout(() => controller.abort(), 8000); 
       
       try {
         const res = await fetch(cacheBusterUrl, { signal: controller.signal });
@@ -784,16 +786,20 @@
       }
     };
 
-    try { rawData = await fetchPayload(GITHUB_PRIMARY_URL); } 
-    catch (err) {
-      console.warn("Primary fetch failed. Falling back to CDN...");
-      try { rawData = await fetchPayload(GITHUB_CDN_URL); } 
-      catch (e) { return false; }
+    try { 
+      rawData = await fetchPayload(GITHUB_PRIMARY_URL); 
+    } catch (err) {
+      console.warn("Primary fetch failed. Falling back to CDN channel target...");
+      try { 
+        rawData = await fetchPayload(GITHUB_CDN_URL); 
+      } catch (e) { 
+        return false; 
+      }
     }
 
     if (!rawData) return false;
 
-    // Aggressively hunt for the array in the JSON, no matter what it is named
+    // Direct object traversal to isolate targeted nested object collections
     if (Array.isArray(rawData)) { 
       allLevels = rawData; 
     } else if (typeof rawData === 'object') { 
@@ -808,7 +814,6 @@
       }
     }
     
-    // Ensure the array only contains valid objects
     allLevels = allLevels.filter(item => typeof item === 'object' && item !== null);
     return allLevels.length > 0;
   }
@@ -881,7 +886,7 @@
     closeNavMenu();
   }
 
-  // --- DYNAMIC LIVE UPDATES ---
+  // --- DYNAMIC 14-DAY CALENDAR MIDNIGHT ROLLING LIVE UPDATES ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
@@ -894,8 +899,6 @@
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
-      
-      // Added extra fallbacks for dates
       const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added; 
       if (!dateStr) return;
 
@@ -983,7 +986,6 @@
 
   function getRecordList(lvl) {
     if (!lvl) return [];
-    // Added more data structure aliases to ensure records are always grabbed
     if (Array.isArray(lvl.victorList)) return lvl.victorList;
     if (Array.isArray(lvl.records)) return lvl.records;
     if (Array.isArray(lvl.completions)) return lvl.completions;
@@ -1341,7 +1343,7 @@
     toggleFormFields();
   }
 
-  // --- FIXED SUBMIT HANDLER MAPPER ---
+  // --- FORM DATA ROUTING DISPATCHER ---
   function bindSubmitHandler() {
     const btn = document.getElementById('submitBtn');
     if(!btn) return;
