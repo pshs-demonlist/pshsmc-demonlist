@@ -1617,7 +1617,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "Grenate",
-    "date": "2026-06-21T08:21:37.369Z",
+    "date": "2026-06-21T15:10:01.448Z",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "65765662",
@@ -1635,6 +1635,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/2fSjv3jmnjk"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T15:10:01.448Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/meT7xQ_MBdg"
       }
     ],
     "video": "https://www.youtube.com/embed/2fSjv3jmnjk"
