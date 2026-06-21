@@ -1271,6 +1271,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "Nacho21",
+    "date": "2026-06-21T16:07:54.353Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "14000484",
+    "img": "https://img.youtube.com/vi/6cWIuVMzcDY/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Retro Circles",
+    "platPosition": null,
+    "rank": 45,
+    "rawTier": 3,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T16:07:54.353Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/6cWIuVMzcDY"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/6cWIuVMzcDY"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Serponge",
     "date": "2026-06-17T01:42:23.658Z",
@@ -1281,7 +1307,7 @@
     "listType": "demon",
     "name": "Depressure",
     "platPosition": null,
-    "rank": 45,
+    "rank": 46,
     "rawTier": 2,
     "verifier": "aldawg123",
     "victorList": [
@@ -1307,7 +1333,7 @@
     "listType": "demon",
     "name": "Ultra Paracosm",
     "platPosition": null,
-    "rank": 46,
+    "rank": 47,
     "rawTier": 2,
     "verifier": "sadboi202",
     "victorList": [
@@ -1347,7 +1373,7 @@
     "listType": "demon",
     "name": "ISpyWithMyLittleEye",
     "platPosition": null,
-    "rank": 47,
+    "rank": 48,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1373,7 +1399,7 @@
     "listType": "demon",
     "name": "Ratio Circles",
     "platPosition": null,
-    "rank": 48,
+    "rank": 49,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1399,7 +1425,7 @@
     "listType": "demon",
     "name": "Speed Racer",
     "platPosition": null,
-    "rank": 49,
+    "rank": 50,
     "rawTier": 2,
     "verifier": "dibless",
     "victorList": [
@@ -1432,7 +1458,7 @@
     "listType": "demon",
     "name": "Theory of every v2",
     "platPosition": null,
-    "rank": 50,
+    "rank": 51,
     "rawTier": 2,
     "verifier": "dibless",
     "victorList": [
@@ -1458,7 +1484,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 51,
+    "rank": 52,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1498,7 +1524,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 52,
+    "rank": 53,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1545,7 +1571,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 53,
+    "rank": 54,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1592,7 +1618,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 54,
+    "rank": 55,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1625,7 +1651,7 @@
     "listType": "demon",
     "name": "iS",
     "platPosition": null,
-    "rank": 55,
+    "rank": 56,
     "rawTier": 1,
     "verifier": "dibless",
     "victorList": [
