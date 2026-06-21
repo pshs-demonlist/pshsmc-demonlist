@@ -704,7 +704,7 @@
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
-   * strict daily changelog tracking, category filtering, and dynamic placement text.
+   * strict daily changelog tracking, category filtering, dynamic placement text, and strict name matching.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -920,33 +920,36 @@
             .filter(l => getNormalizedListType(l) === listCategory)
             .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-          const indexInSorted = categorySortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
+          // THE FIX: Compare explicit string names to stop the `undefined === undefined` bug
+          const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
+          const indexInSorted = categorySortedLevels.findIndex(item => 
+            String(item.name || item.levelName || "Unnamed Level").trim() === targetName
+          );
           
-          let placedBelow = "None"; // The better rank 
-          let placedAbove = "None"; // The worse rank 
+          let textHarder = "None"; // The level with a better (lower) rank number
+          let textEasier = "None"; // The level with a worse (higher) rank number
 
           if (indexInSorted > 0) {
-            const betterLevel = categorySortedLevels[indexInSorted - 1];
-            placedBelow = escapeHTML(betterLevel.name || betterLevel.levelName);
+            const harderLevel = categorySortedLevels[indexInSorted - 1];
+            textHarder = escapeHTML(harderLevel.name || harderLevel.levelName || "Unnamed");
           }
           if (indexInSorted !== -1 && indexInSorted < categorySortedLevels.length - 1) {
-            const worseLevel = categorySortedLevels[indexInSorted + 1];
-            placedAbove = escapeHTML(worseLevel.name || worseLevel.levelName);
+            const easierLevel = categorySortedLevels[indexInSorted + 1];
+            textEasier = escapeHTML(easierLevel.name || easierLevel.levelName || "Unnamed");
           }
 
-          // Generate smart sentence structure based on placement
-          let placementText = `below <strong>${placedBelow}</strong> and above <strong>${placedAbove}</strong>`;
+          let placementText = `below <strong>${textHarder}</strong> and above <strong>${textEasier}</strong>`;
           
-          if (placedBelow === "None" && placedAbove === "None") {
+          if (textHarder === "None" && textEasier === "None") {
             placementText = `as the only level in this category`;
-          } else if (placedBelow === "None") {
-            placementText = `at the very top of the list, above <strong>${placedAbove}</strong>`;
-          } else if (placedAbove === "None") {
-            placementText = `below <strong>${placedBelow}</strong>, at the bottom of the list`;
+          } else if (textHarder === "None") {
+            placementText = `at the very top of the list, above <strong>${textEasier}</strong>`;
+          } else if (textEasier === "None") {
+            placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
           }
 
           validNews.push({
-            title: escapeHTML(lvl.name || lvl.levelName || "Unnamed Level"),
+            title: escapeHTML(targetName),
             rank: currentRank,
             placementText: placementText
           });
