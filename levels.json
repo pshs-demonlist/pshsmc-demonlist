@@ -1238,6 +1238,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "TriAxis",
+    "date": "2026-06-21T08:03:33.090Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "18735780",
+    "img": "https://img.youtube.com/vi/RKPfJMrcRHo/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Dear Nostalgists",
+    "platPosition": null,
+    "rank": 44,
+    "rawTier": 3,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T08:03:33.090Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/RKPfJMrcRHo"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/RKPfJMrcRHo"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Serponge",
     "date": "2026-06-17T01:42:23.658Z",
@@ -1248,7 +1274,7 @@
     "listType": "demon",
     "name": "Depressure",
     "platPosition": null,
-    "rank": 44,
+    "rank": 45,
     "rawTier": 2,
     "verifier": "aldawg123",
     "victorList": [
@@ -1274,7 +1300,7 @@
     "listType": "demon",
     "name": "Ultra Paracosm",
     "platPosition": null,
-    "rank": 45,
+    "rank": 46,
     "rawTier": 2,
     "verifier": "sadboi202",
     "victorList": [
@@ -1314,7 +1340,7 @@
     "listType": "demon",
     "name": "ISpyWithMyLittleEye",
     "platPosition": null,
-    "rank": 46,
+    "rank": 47,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1340,7 +1366,7 @@
     "listType": "demon",
     "name": "Ratio Circles",
     "platPosition": null,
-    "rank": 47,
+    "rank": 48,
     "rawTier": 2,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1366,7 +1392,7 @@
     "listType": "demon",
     "name": "Speed Racer",
     "platPosition": null,
-    "rank": 48,
+    "rank": 49,
     "rawTier": 2,
     "verifier": "dibless",
     "victorList": [
@@ -1392,7 +1418,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 49,
+    "rank": 50,
     "rawTier": 1,
     "verifier": "eelektrance",
     "victorList": [
@@ -1425,7 +1451,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 50,
+    "rank": 51,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1472,7 +1498,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 51,
+    "rank": 52,
     "rawTier": 1,
     "verifier": "Akoay",
     "victorList": [
@@ -1512,7 +1538,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 52,
+    "rank": 53,
     "rawTier": 1,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1545,7 +1571,7 @@
     "listType": "demon",
     "name": "iS",
     "platPosition": null,
-    "rank": 53,
+    "rank": 54,
     "rawTier": 1,
     "verifier": "dibless",
     "victorList": [
