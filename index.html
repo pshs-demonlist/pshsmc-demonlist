@@ -704,7 +704,7 @@
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
-   * REGEX timezone-resilient day tracking, category filtering, and strict name matching.
+   * REGEX timezone-resilient day tracking, NEWEST-FIRST sorting, category filtering, and strict name matching.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -883,7 +883,7 @@
     closeNavMenu();
   }
 
-  // --- REGEX TIMEZONE-RESILIENT LIVE UPDATES ---
+  // --- REGEX TIMEZONE-RESILIENT LIVE UPDATES (SORTED BY NEWEST) ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
@@ -902,15 +902,13 @@
 
       let itemDayStr = "";
       
-      // EXTREME FIX: Use Regex to aggressively rip out the YYYY-MM-DD pattern
-      // This completely ignores garbage text like "16:12 PST" that crashes the date parser
       const strMatch = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
       
       if (strMatch) {
         itemDayStr = strMatch[1];
       } else {
         const parsedDate = new Date(dateStr);
-        if (isNaN(parsedDate.getTime())) return; // Only skip if it truly has no readable date
+        if (isNaN(parsedDate.getTime())) return; 
         itemDayStr = parsedDate.getFullYear() + '-' + 
                      String(parsedDate.getMonth() + 1).padStart(2, '0') + '-' + 
                      String(parsedDate.getDate()).padStart(2, '0');
@@ -950,13 +948,22 @@
             placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
           }
 
+          // CLEAN UP TIMESTAMP FOR SORTING
+          const cleanDateStr = dateStr.replace(/[A-Za-z]+$/, '').trim();
+          const sortDateObj = new Date(cleanDateStr);
+          const sortTimestamp = isNaN(sortDateObj.getTime()) ? 0 : sortDateObj.getTime();
+
           validNews.push({
             title: escapeHTML(targetName),
             rank: currentRank,
-            placementText: placementText
+            placementText: placementText,
+            sortTime: sortTimestamp 
           });
       }
     });
+
+    // Sort by sortTime, highest (newest) first
+    validNews.sort((a, b) => b.sortTime - a.sortTime);
 
     if (validNews.length === 0) {
       feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${targetTodayStr}).</div>`;
