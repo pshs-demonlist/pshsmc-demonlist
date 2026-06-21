@@ -421,7 +421,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "Zobros",
-    "date": "2026-06-19T16:33:22.735Z",
+    "date": "2026-06-21T12:10:30.924Z",
     "diff": "Insane Demon",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "5155022",
@@ -439,6 +439,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/quPd5eRGMEY"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T12:10:30.924Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/QZW7gTkbayY"
       }
     ],
     "video": "https://www.youtube.com/embed/quPd5eRGMEY"
