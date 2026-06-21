@@ -704,12 +704,11 @@
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
-   * timezone-resilient calendar day tracking, category filtering, and strict name matching.
+   * REGEX timezone-resilient day tracking, category filtering, and strict name matching.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
   
-  // CORRECTED ROUTING PATHS
   const GITHUB_PRIMARY_URL = "https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/levels.json";
   const GITHUB_CDN_URL = "https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/levels.json";
 
@@ -884,13 +883,12 @@
     closeNavMenu();
   }
 
-  // --- TIMEZONE-RESILIENT LIVE UPDATES ---
+  // --- REGEX TIMEZONE-RESILIENT LIVE UPDATES ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
     const now = new Date();
-    // Normalize target local day string to standard YYYY-MM-DD format
     const targetTodayStr = now.getFullYear() + '-' + 
                            String(now.getMonth() + 1).padStart(2, '0') + '-' + 
                            String(now.getDate()).padStart(2, '0');
@@ -899,16 +897,24 @@
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
-      const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp; 
+      const dateStr = String(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp || ''); 
       if (!dateStr) return;
 
-      // Extract just the calendar component (YYYY-MM-DD) to bypass timestamp/preflight skewing
-      const parsedDate = new Date(dateStr);
-      if (isNaN(parsedDate.getTime())) return;
+      let itemDayStr = "";
       
-      const itemDayStr = parsedDate.getFullYear() + '-' + 
-                         String(parsedDate.getMonth() + 1).padStart(2, '0') + '-' + 
-                         String(parsedDate.getDate()).padStart(2, '0');
+      // EXTREME FIX: Use Regex to aggressively rip out the YYYY-MM-DD pattern
+      // This completely ignores garbage text like "16:12 PST" that crashes the date parser
+      const strMatch = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
+      
+      if (strMatch) {
+        itemDayStr = strMatch[1];
+      } else {
+        const parsedDate = new Date(dateStr);
+        if (isNaN(parsedDate.getTime())) return; // Only skip if it truly has no readable date
+        itemDayStr = parsedDate.getFullYear() + '-' + 
+                     String(parsedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                     String(parsedDate.getDate()).padStart(2, '0');
+      }
 
       if (itemDayStr === targetTodayStr) {
           const listCategory = getNormalizedListType(lvl);
