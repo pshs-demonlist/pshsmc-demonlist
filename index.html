@@ -703,7 +703,7 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Focuses purely on Demon and Challenge streams with strict username indexing.
+   * Includes CORS bypass, aggressive data parsing, and fault-tolerant rendering.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -738,9 +738,13 @@
     clearUIFieldsToZero();
     
     const dataLoaded = await loadDatabase();
+    
+    // If data load fails, update ALL stuck UI components so they don't spin forever
     if (!dataLoaded || allLevels.length === 0) {
-      console.error("[Critical] Empty master database array.");
-      displayFallbackUIMessage("list", "Failed to sync remote data. Please verify your data stream connection.");
+      console.error("[Critical] Master database array is completely empty or failed to load.");
+      displayFallbackUIMessage("list", "Failed to sync remote data. Verify your GitHub levels.json structure.");
+      displayFallbackUIMessage("liveChangelogFeed", "Offline. Could not fetch recent changes.");
+      displayFallbackUIMessage("leaderboardBody", "Offline. No stats available.");
       return;
     }
     
@@ -764,10 +768,13 @@
   async function loadDatabase() {
     let rawData = null;
     const fetchPayload = async (url) => {
+      // Use query string cache-busting instead of 'cache: no-cache' to avoid CORS preflight blocks
+      const cacheBusterUrl = url + (url.includes('?') ? '&' : '?') + 't=' + new Date().getTime();
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6000);
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // Increased to 8s
+      
       try {
-        const res = await fetch(url, { cache: "no-cache", signal: controller.signal });
+        const res = await fetch(cacheBusterUrl, { signal: controller.signal });
         clearTimeout(timeoutId);
         if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
         return await res.json();
@@ -777,16 +784,33 @@
       }
     };
 
-    try {
-      rawData = await fetchPayload(GITHUB_PRIMARY_URL);
-    } catch (err) {
-      try { rawData = await fetchPayload(GITHUB_CDN_URL); } catch (e) { return false; }
+    try { rawData = await fetchPayload(GITHUB_PRIMARY_URL); } 
+    catch (err) {
+      console.warn("Primary fetch failed. Falling back to CDN...");
+      try { rawData = await fetchPayload(GITHUB_CDN_URL); } 
+      catch (e) { return false; }
     }
 
     if (!rawData) return false;
-    if (Array.isArray(rawData)) { allLevels = rawData; } 
-    else if (typeof rawData === 'object') { allLevels = rawData.levels || rawData.list || []; }
-    return Array.isArray(allLevels) && allLevels.length > 0;
+
+    // Aggressively hunt for the array in the JSON, no matter what it is named
+    if (Array.isArray(rawData)) { 
+      allLevels = rawData; 
+    } else if (typeof rawData === 'object') { 
+      allLevels = rawData.levels || rawData.list || rawData.data || rawData.records || [];
+      if (allLevels.length === 0) {
+        for (let key in rawData) {
+          if (Array.isArray(rawData[key])) {
+            allLevels = rawData[key];
+            break;
+          }
+        }
+      }
+    }
+    
+    // Ensure the array only contains valid objects
+    allLevels = allLevels.filter(item => typeof item === 'object' && item !== null);
+    return allLevels.length > 0;
   }
 
   // --- NAVIGATION ---
@@ -802,14 +826,12 @@
 
   function switchPage(pageId) {
     closeNavMenu();
-    
     const mainVid = document.getElementById('video');
     const playerVid = document.getElementById('pvVideo');
     if (mainVid) mainVid.innerHTML = '';
     if (playerVid) playerVid.innerHTML = '';
 
     const corePages = ['landingPage', 'levelsPage', 'statsPage', 'detailPage', 'playerVideoPage'];
-    
     corePages.forEach(id => {
       const pageEl = document.getElementById(id);
       if (pageEl) {
@@ -818,9 +840,7 @@
       }
     });
 
-    const targetId = pageId + 'Page';
-    const targetPage = document.getElementById(targetId);
-    
+    const targetPage = document.getElementById(pageId + 'Page');
     if (targetPage) {
       targetPage.style.display = 'block';
       targetPage.classList.add('active-page');
@@ -869,31 +889,25 @@
     const newsByDateMap = {};
     const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-    // Get current time and immediately clamp it to exactly midnight (00:00:00) of today
     const now = new Date();
     const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
-      const dateStr = lvl.createdDate || lvl.date;
+      
+      // Added extra fallbacks for dates
+      const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added; 
       if (!dateStr) return;
 
       const entryDate = new Date(dateStr);
       if (isNaN(entryDate.getTime())) return;
 
-      // Clamp the level's entry date to midnight of its specific day
       const entryMidnight = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate());
-
-      // Calculate the difference purely in exact days, totally ignoring hours/minutes
       const msDifference = nowMidnight.getTime() - entryMidnight.getTime();
       const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
-      
       const daysRemaining = 14 - daysPassed;
 
-      // Condition: Show if it was added today or in the last 14 days
       if (daysPassed >= 0 && daysRemaining > 0 && daysRemaining <= 14) {
-        
-        // Format the date header (e.g., "21 June 2026")
         const localizedKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[localizedKey]) newsByDateMap[localizedKey] = [];
 
@@ -925,18 +939,15 @@
       }
     });
 
-    // Sort by dates descending (newest entries at the top)
     const sortedDates = Object.keys(newsByDateMap).sort((a, b) => {
       return new Date(b).getTime() - new Date(a).getTime();
     });
 
-    // If no levels fall inside the 14-day rolling window
     if (sortedDates.length === 0) {
       feed.innerHTML = '<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No new tracking adjustments in the last 14 days.</div>';
       return;
     }
 
-    // Render the active feed
     feed.innerHTML = '';
     sortedDates.forEach(date => {
       const container = document.createElement('div');
@@ -972,9 +983,12 @@
 
   function getRecordList(lvl) {
     if (!lvl) return [];
+    // Added more data structure aliases to ensure records are always grabbed
     if (Array.isArray(lvl.victorList)) return lvl.victorList;
     if (Array.isArray(lvl.records)) return lvl.records;
     if (Array.isArray(lvl.completions)) return lvl.completions;
+    if (Array.isArray(lvl.victors)) return lvl.victors;
+    if (Array.isArray(lvl.players)) return lvl.players;
     return [];
   }
 
@@ -990,7 +1004,7 @@
     let totalRecordsCount = 0;
     allLevels.forEach(lvl => {
       getRecordList(lvl).forEach(rec => {
-        const name = escapeHTML(String(rec.username || rec.name || rec.player || '').trim());
+        const name = escapeHTML(String(rec.username || rec.name || rec.player || rec.user || '').trim());
         if (name) uniquePlayers.add(name);
         totalRecordsCount++;
       });
@@ -1131,7 +1145,7 @@
       const tbody = table.querySelector('tbody');
       records.forEach(r => {
         const row = document.createElement('tr');
-        const name = escapeHTML(String(r.username || r.name || r.player || '').trim());
+        const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
         row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
         tbody.appendChild(row);
       });
@@ -1167,7 +1181,7 @@
       const records = getRecordList(lvl);
 
       records.forEach(r => {
-        const name = escapeHTML(String(r.username || r.name || r.player || '').trim());
+        const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
         if (!name) return;
 
         const playerCampus = escapeHTML(String(r.campus || 'Main Campus').trim());
@@ -1348,13 +1362,12 @@
         btn.textContent = "Submitting...";
         btn.disabled = true;
 
-        // Construct blueprint matrix payload perfectly mapping directly to backend properties
         let payload = {
           username: user,
           recordLink: link,
           campus: campus,
-          type: subType,     // Maps directly to data.type
-          listType: listType // Maps directly to data.listType
+          type: subType,     
+          listType: listType 
         };
 
         if (subType === 'record') {
@@ -1374,7 +1387,6 @@
           if (diffEl) payload.difficulty = diffEl.value;
         }
 
-        // Transmit raw JSON plain text string to completely bypass CORS preflight blocking parameters
         const res = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
