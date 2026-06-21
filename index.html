@@ -766,10 +766,15 @@
     const fetchPayload = async (url) => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 6000);
-      const res = await fetch(url, { cache: "no-cache", signal: controller.signal });
-      const opacity = setTimeout(() => controller.abort(), 6000);
-      if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
-      return await res.json();
+      try {
+        const res = await fetch(url, { cache: "no-cache", signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!res.ok) throw new Error(`HTTP Status ${res.status}`);
+        return await res.json();
+      } catch (e) {
+        clearTimeout(timeoutId);
+        throw e;
+      }
     };
 
     try {
@@ -861,9 +866,12 @@
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    const trackingBaseline = new Date("2026-06-17T00:00:00+08:00");
     const newsByDateMap = {};
     const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+
+    // Get current time and immediately clamp it to exactly midnight (00:00:00) of today
+    const now = new Date();
+    const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
@@ -871,13 +879,21 @@
       if (!dateStr) return;
 
       const entryDate = new Date(dateStr);
-      if (isNaN(entryDate.getTime()) || entryDate < trackingBaseline) return;
+      if (isNaN(entryDate.getTime())) return;
 
-      const msDifference = Date.now() - entryDate.getTime();
+      // Clamp the level's entry date to midnight of its specific day
+      const entryMidnight = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate());
+
+      // Calculate the difference purely in exact days, totally ignoring hours/minutes
+      const msDifference = nowMidnight.getTime() - entryMidnight.getTime();
       const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
+      
       const daysRemaining = 14 - daysPassed;
 
-      if (daysRemaining > 0 && daysRemaining <= 14) {
+      // Condition: Show if it was added today or in the last 14 days
+      if (daysPassed >= 0 && daysRemaining > 0 && daysRemaining <= 14) {
+        
+        // Format the date header (e.g., "21 June 2026")
         const localizedKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
         if (!newsByDateMap[localizedKey]) newsByDateMap[localizedKey] = [];
 
@@ -909,12 +925,18 @@
       }
     });
 
-    const sortedDates = Object.keys(newsByDateMap).sort((a, b) => new Date(b) - new Date(a));
+    // Sort by dates descending (newest entries at the top)
+    const sortedDates = Object.keys(newsByDateMap).sort((a, b) => {
+      return new Date(b).getTime() - new Date(a).getTime();
+    });
+
+    // If no levels fall inside the 14-day rolling window
     if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No recent tier tracking adjustments since 17/06/2026.</div>';
+      feed.innerHTML = '<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No new tracking adjustments in the last 14 days.</div>';
       return;
     }
 
+    // Render the active feed
     feed.innerHTML = '';
     sortedDates.forEach(date => {
       const container = document.createElement('div');
