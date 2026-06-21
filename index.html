@@ -703,7 +703,8 @@
 <script>
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
-   * Fixed repository routing paths, corrected CORS bypass vectors, and robust rendering.
+   * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
+   * and strict daily changelog tracking.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -886,93 +887,83 @@
     closeNavMenu();
   }
 
-  // --- DYNAMIC 14-DAY CALENDAR MIDNIGHT ROLLING LIVE UPDATES ---
+  // --- DYNAMIC LIVE UPDATES (STRICT TODAY-ONLY MATCH) ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
 
-    const newsByDateMap = {};
     const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
+    // Lock onto today's exact date boundaries
     const now = new Date();
-    const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const currentDate = now.getDate();
+
+    let validNews = [];
 
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
-      const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added; 
+      
+      // Grab whatever date key you are using in your JSON
+      const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp; 
       if (!dateStr) return;
 
       const entryDate = new Date(dateStr);
       if (isNaN(entryDate.getTime())) return;
 
-      const entryMidnight = new Date(entryDate.getFullYear(), entryDate.getMonth(), entryDate.getDate());
-      const msDifference = nowMidnight.getTime() - entryMidnight.getTime();
-      const daysPassed = Math.floor(msDifference / (1000 * 60 * 60 * 24));
-      const daysRemaining = 14 - daysPassed;
+      // EXACT MATCH: Year, Month, and Date must equal Today
+      if (entryDate.getFullYear() === currentYear &&
+          entryDate.getMonth() === currentMonth &&
+          entryDate.getDate() === currentDate) {
+          
+          const indexInSorted = baseSortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
+          let belowLevel = "None", aboveLevel = "None";
 
-      if (daysPassed >= 0 && daysRemaining > 0 && daysRemaining <= 14) {
-        const localizedKey = entryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'Long', year: 'numeric' });
-        if (!newsByDateMap[localizedKey]) newsByDateMap[localizedKey] = [];
+          if (indexInSorted > 0) belowLevel = escapeHTML(baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName);
+          if (indexInSorted !== -1 && indexInSorted < baseSortedLevels.length - 1) aboveLevel = escapeHTML(baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName);
 
-        const indexInSorted = baseSortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
-        let belowLevel = "None", aboveLevel = "None";
-
-        if (indexInSorted > 0) belowLevel = escapeHTML(baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName);
-        if (indexInSorted !== -1 && indexInSorted < baseSortedLevels.length - 1) aboveLevel = escapeHTML(baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName);
-
-        let displacementNotice = "";
-        if (currentRank <= 75) {
-          const bumpedFromMain = baseSortedLevels.find(item => parseInt(item.rank) === 76);
-          if (bumpedFromMain) displacementNotice = `<span style="color:#f43f5e; font-weight:600;">Pushed ${escapeHTML(bumpedFromMain.name || bumpedFromMain.levelName)} out of the Main List.</span>`;
-        } else if (currentRank <= 150) {
-          const bumpedToLegacy = baseSortedLevels.find(item => parseInt(item.rank) === 151);
-          if (bumpedToLegacy) displacementNotice = `<span style="color:#ef4444; font-weight:600;">Pushed ${escapeHTML(bumpedToLegacy.name || bumpedToLegacy.levelName)} into the Legacy List.</span>`;
-        }
-
-        const cat = getNormalizedListType(lvl);
-        newsByDateMap[localizedKey].push({
-          title: escapeHTML(lvl.name || lvl.levelName || "Unnamed Level"),
-          category: cat.charAt(0).toUpperCase() + cat.slice(1),
-          rank: currentRank,
-          below: belowLevel,
-          above: aboveLevel,
-          displacement: displacementNotice,
-          daysLeft: daysRemaining
-        });
+          validNews.push({
+            title: escapeHTML(lvl.name || lvl.levelName || "Unnamed Level"),
+            rank: currentRank,
+            below: belowLevel,
+            above: aboveLevel
+          });
       }
     });
 
-    const sortedDates = Object.keys(newsByDateMap).sort((a, b) => {
-      return new Date(b).getTime() - new Date(a).getTime();
-    });
-
-    if (sortedDates.length === 0) {
-      feed.innerHTML = '<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No new tracking adjustments in the last 14 days.</div>';
+    if (validNews.length === 0) {
+      // Formats fallback to show you exactly what date it searched for
+      const todayStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+      feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${todayStr}).</div>`;
       return;
     }
 
     feed.innerHTML = '';
-    sortedDates.forEach(date => {
-      const container = document.createElement('div');
-      container.style.marginBottom = "14px";
-      let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${date}</div>`;
-      newsByDateMap[date].forEach(item => {
-        html += `
-          <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
-            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
-              <span style="font-weight:600; color:#ffffff;">${item.title}</span>
-              <span style="opacity:0.5; font-size:11px; white-space:nowrap;">${item.daysLeft}d remaining</span>
-            </div>
-            <div style="font-size:11px; opacity:0.85; line-height: 1.4; color:#cbd5e1;">
-              Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, below <strong>${item.below}</strong> and above <strong>${item.above}</strong>.
-            </div>
-            ${item.displacement ? `<div style="font-size:10px; margin-top:4px; line-height:1.2;">${item.displacement}</div>` : ''}
+    
+    const container = document.createElement('div');
+    container.style.marginBottom = "14px";
+    
+    // FIXED: Changed 'Long' to 'long'
+    const displayDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+    let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
+    
+    validNews.forEach(item => {
+      html += `
+        <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
+          <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
+            <span style="font-weight:600; color:#ffffff;">${item.title}</span>
+            <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
           </div>
-        `;
-      });
-      container.innerHTML = html;
-      feed.appendChild(container);
+          <div style="font-size:11px; opacity:0.85; line-height: 1.4; color:#cbd5e1;">
+            Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, below <strong>${item.below}</strong> and above <strong>${item.above}</strong>.
+          </div>
+        </div>
+      `;
     });
+    
+    container.innerHTML = html;
+    feed.appendChild(container);
   }
 
   // --- HELPERS ---
