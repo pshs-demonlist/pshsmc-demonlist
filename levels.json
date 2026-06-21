@@ -1384,7 +1384,7 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "Jerry4",
-    "date": "2026-06-21T07:55:04.952Z",
+    "date": "2026-06-17T01:42:23.658Z",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "5904109",
@@ -1423,13 +1423,6 @@
         "name": "wavical",
         "percent": 100,
         "video": "https://www.youtube.com/embed/qcWPTvB8ls0"
-      },
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-21T07:55:04.952Z",
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/koESiseAw_Y"
       }
     ],
     "video": "https://www.youtube.com/embed/WceyniFxqh4"
@@ -1478,7 +1471,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "Jax",
-    "date": "2026-06-17T01:42:23.658Z",
+    "date": "2026-06-21T07:54:30.564Z",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "13519",
@@ -1496,9 +1489,42 @@
         "name": "sSeanyboii",
         "percent": 100,
         "video": "https://www.youtube.com/embed/_NevWh9u9W0"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T07:54:30.564Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/duTBwO4eCgA"
       }
     ],
     "video": "https://www.youtube.com/embed/_NevWh9u9W0"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "Grenate",
+    "date": "2026-06-21T08:21:37.369Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "65765662",
+    "img": "https://img.youtube.com/vi/2fSjv3jmnjk/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "iS",
+    "platPosition": null,
+    "rank": 52,
+    "rawTier": 1,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T08:21:37.369Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/2fSjv3jmnjk"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/2fSjv3jmnjk"
   },
   {
     "aredlPlacement": null,
