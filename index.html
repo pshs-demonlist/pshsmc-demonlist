@@ -704,7 +704,7 @@
   /**
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
-   * and strict daily changelog tracking.
+   * strict daily changelog tracking, category filtering, and dynamic placement text.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -887,12 +887,10 @@
     closeNavMenu();
   }
 
-  // --- DYNAMIC LIVE UPDATES (STRICT TODAY-ONLY MATCH) ---
+  // --- DYNAMIC LIVE UPDATES (STRICT MATCH, CATEGORY FILTERED, DYNAMIC TEXT) ---
   function processLiveDecayFilterAndNews() {
     const feed = document.getElementById('liveChangelogFeed');
     if (!feed) return;
-
-    const baseSortedLevels = [...allLevels].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
     // Lock onto today's exact date boundaries
     const now = new Date();
@@ -905,7 +903,6 @@
     allLevels.forEach(lvl => {
       const currentRank = parseInt(lvl.rank || 999, 10);
       
-      // Grab whatever date key you are using in your JSON
       const dateStr = lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp; 
       if (!dateStr) return;
 
@@ -917,23 +914,46 @@
           entryDate.getMonth() === currentMonth &&
           entryDate.getDate() === currentDate) {
           
-          const indexInSorted = baseSortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
-          let belowLevel = "None", aboveLevel = "None";
+          const listCategory = getNormalizedListType(lvl);
+          
+          const categorySortedLevels = allLevels
+            .filter(l => getNormalizedListType(l) === listCategory)
+            .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-          if (indexInSorted > 0) belowLevel = escapeHTML(baseSortedLevels[indexInSorted - 1].name || baseSortedLevels[indexInSorted - 1].levelName);
-          if (indexInSorted !== -1 && indexInSorted < baseSortedLevels.length - 1) aboveLevel = escapeHTML(baseSortedLevels[indexInSorted + 1].name || baseSortedLevels[indexInSorted + 1].levelName);
+          const indexInSorted = categorySortedLevels.findIndex(item => (item.name === lvl.name || item.levelName === lvl.levelName));
+          
+          let placedBelow = "None"; // The better rank 
+          let placedAbove = "None"; // The worse rank 
+
+          if (indexInSorted > 0) {
+            const betterLevel = categorySortedLevels[indexInSorted - 1];
+            placedBelow = escapeHTML(betterLevel.name || betterLevel.levelName);
+          }
+          if (indexInSorted !== -1 && indexInSorted < categorySortedLevels.length - 1) {
+            const worseLevel = categorySortedLevels[indexInSorted + 1];
+            placedAbove = escapeHTML(worseLevel.name || worseLevel.levelName);
+          }
+
+          // Generate smart sentence structure based on placement
+          let placementText = `below <strong>${placedBelow}</strong> and above <strong>${placedAbove}</strong>`;
+          
+          if (placedBelow === "None" && placedAbove === "None") {
+            placementText = `as the only level in this category`;
+          } else if (placedBelow === "None") {
+            placementText = `at the very top of the list, above <strong>${placedAbove}</strong>`;
+          } else if (placedAbove === "None") {
+            placementText = `below <strong>${placedBelow}</strong>, at the bottom of the list`;
+          }
 
           validNews.push({
             title: escapeHTML(lvl.name || lvl.levelName || "Unnamed Level"),
             rank: currentRank,
-            below: belowLevel,
-            above: aboveLevel
+            placementText: placementText
           });
       }
     });
 
     if (validNews.length === 0) {
-      // Formats fallback to show you exactly what date it searched for
       const todayStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
       feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${todayStr}).</div>`;
       return;
@@ -944,7 +964,6 @@
     const container = document.createElement('div');
     container.style.marginBottom = "14px";
     
-    // FIXED: Changed 'Long' to 'long'
     const displayDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
     let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
     
@@ -956,7 +975,7 @@
             <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
           </div>
           <div style="font-size:11px; opacity:0.85; line-height: 1.4; color:#cbd5e1;">
-            Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, below <strong>${item.below}</strong> and above <strong>${item.above}</strong>.
+            Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, ${item.placementText}.
           </div>
         </div>
       `;
