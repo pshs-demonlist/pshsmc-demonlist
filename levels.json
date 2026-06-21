@@ -1700,6 +1700,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "ratliffigd",
+    "date": "2026-06-21T18:26:55.114Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "128665322",
+    "img": "https://img.youtube.com/vi/YJYI5mZX8LQ/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "red alert",
+    "platPosition": null,
+    "rank": 58,
+    "rawTier": 1,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T18:26:55.114Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/YJYI5mZX8LQ"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/YJYI5mZX8LQ"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Cyclic/Nayloren/Nranger55226",
     "date": "2026-06-17T01:42:23.658Z",
