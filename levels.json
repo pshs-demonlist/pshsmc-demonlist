@@ -2084,7 +2084,7 @@
     "name": "Shubra",
     "platPosition": null,
     "rank": 11,
-    "rawTier": 1,
+    "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2103,31 +2103,5 @@
       }
     ],
     "video": "https://www.youtube.com/embed/RClLJRtHjGY"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Main Campus",
-    "creator": "dibless",
-    "date": "2026-06-21T21:07:20.576Z",
-    "diff": "Easy Challenge",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "id": "143193238",
-    "img": "https://img.youtube.com/vi/Xuk8aOYwlu4/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Yes Machine end",
-    "platPosition": null,
-    "rank": 12,
-    "rawTier": 1,
-    "verifier": "dibless",
-    "victorList": [
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-21T21:07:20.576Z",
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
   }
 ]
