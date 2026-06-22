@@ -1004,7 +1004,7 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "motleyorc",
-    "date": "2026-06-17T01:42:23.658Z",
+    "date": "2026-06-22T20:41:45.942Z",
     "diff": "Medium Demon",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "34085027",
@@ -1029,6 +1029,13 @@
         "name": "MDPJ2026",
         "percent": 100,
         "video": "https://www.youtube.com/embed/fjEWMMuX0M8"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-22T20:41:45.942Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/UeDHuSeKrJ8"
       }
     ],
     "video": "https://www.youtube.com/embed/msYWaxlIazs"
