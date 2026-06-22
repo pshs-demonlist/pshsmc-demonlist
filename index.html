@@ -705,6 +705,7 @@
    * PSHS-MC Demonlist Production-Grade Application Engine
    * Fixed repository routing paths, corrected CORS bypass vectors, robust rendering,
    * REGEX timezone-resilient day tracking, NEWEST-FIRST sorting, category filtering, and strict name matching.
+   * NEW: Submission response validation and robust error reporting.
    */
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyq373Puku6D14WhdN0lL7Z7_CdBJ8pycTgIGEUEJFBAzsnpNbQ17Nx6hOtfPHJRd5ASA/exec"; 
@@ -1375,8 +1376,14 @@
         const subType = document.getElementById('submissionType').value;
         const listType = document.getElementById('listType').value;
 
+        // --- 1. PRE-FLIGHT VALIDATION ---
         if (!user || !link || !campus) {
-          throw new Error("Please fill in Username, Record Link, and Campus to submit.");
+          throw new Error("Missing required fields. Please fill in Username, Record Link, and Campus.");
+        }
+
+        const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        if (!urlRegex.test(link)) {
+          throw new Error("Invalid Record Link format. Please provide a valid URL.");
         }
 
         btn.textContent = "Submitting...";
@@ -1393,8 +1400,9 @@
         if (subType === 'record') {
           const selectEl = document.getElementById('existingLevel');
           if (!selectEl) throw new Error("Existing level element registry missing.");
+          if (!selectEl.value) throw new Error("Please select an existing level from the dropdown.");
+          
           const activeOpt = selectEl.options[selectEl.selectedIndex];
-
           payload.levelName = selectEl.value;
           payload.id = activeOpt ? (activeOpt.dataset.id || '') : '';
           payload.creator = activeOpt ? (activeOpt.dataset.creator || '') : '';
@@ -1403,24 +1411,53 @@
           payload.newCreator = document.getElementById('newCreator').value.trim();
           payload.newLevelId = document.getElementById('newLevelId').value.trim();
           
+          if (!payload.newName || !payload.newCreator) {
+            throw new Error("Name and Creator are required when submitting a new level.");
+          }
+          
           const diffEl = document.getElementById('newDifficulty');
           if (diffEl) payload.difficulty = diffEl.value;
         }
 
+        // --- 2. RESPONSE VALIDATION & ERROR CHECKING ---
+        // Removed mode: 'no-cors' so we can actually read the server's response code/body.
         const res = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
+
+        // Check if the HTTP status is a hard error (e.g., 404, 500)
+        if (!res.ok && res.type !== 'opaque') {
+           throw new Error(`Server connection failed (HTTP ${res.status}). Please try again later.`);
+        }
+
+        // Try to parse JSON response from the server (if it provides one)
+        if (res.type !== 'opaque') {
+          try {
+            const data = await res.json();
+            if (data && data.status === 'error') {
+              throw new Error(data.message || "The server rejected your submission.");
+            }
+          } catch (jsonErr) {
+             // If the server just returns plain text instead of JSON, we ignore the parse error
+             console.warn("[Submission] Non-JSON response received. Assuming success based on HTTP status.", jsonErr);
+          }
+        }
 
         await new Promise(r => setTimeout(r, 600));
         alert("Success! Your submission has been sent for staff review.");
         
+        // Clean up fields
         document.getElementById('username').value = '';
         document.getElementById('recordLink').value = '';
+        if(document.getElementById('newName')) document.getElementById('newName').value = '';
+        if(document.getElementById('newCreator')) document.getElementById('newCreator').value = '';
+        if(document.getElementById('newLevelId')) document.getElementById('newLevelId').value = '';
         
       } catch (err) {
+        // Detailed error pushed to console for the mod, clean alert shown to the user.
+        console.error("[Submission Error Detail]:", err);
         alert("Submission Error: " + err.message);
       } finally {
         btn.textContent = ogText;
