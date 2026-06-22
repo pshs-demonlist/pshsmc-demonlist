@@ -1862,7 +1862,7 @@
     "name": "Sonic Wave 65p",
     "platPosition": null,
     "rank": 1,
-    "rawTier": 14.0,
+    "rawTier": 14,
     "verifier": "sadboi202",
     "victorList": [
       {
@@ -1888,7 +1888,7 @@
     "name": "Eurorave Challenge",
     "platPosition": null,
     "rank": 2,
-    "rawTier": 12.3,
+    "rawTier": 12,
     "verifier": "dibless",
     "victorList": [
       {
@@ -1914,7 +1914,7 @@
     "name": "Nasr City",
     "platPosition": null,
     "rank": 3,
-    "rawTier": 11.8,
+    "rawTier": 12,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -1940,7 +1940,7 @@
     "name": "Abbasiya",
     "platPosition": null,
     "rank": 4,
-    "rawTier": 10.2,
+    "rawTier": 10,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -1966,7 +1966,7 @@
     "name": "Eon 96 100",
     "platPosition": null,
     "rank": 5,
-    "rawTier": 9.1,
+    "rawTier": 9,
     "verifier": "Akoay",
     "victorList": [
       {
@@ -1999,7 +1999,7 @@
     "name": "Maadi",
     "platPosition": null,
     "rank": 6,
-    "rawTier": 8.9,
+    "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2032,7 +2032,7 @@
     "name": "Ramses",
     "platPosition": null,
     "rank": 7,
-    "rawTier": 8.0,
+    "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2058,7 +2058,7 @@
     "name": "Shubra",
     "platPosition": null,
     "rank": 8,
-    "rawTier": 7.4,
+    "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2098,7 +2098,7 @@
     "name": "the tourist",
     "platPosition": null,
     "rank": 9,
-    "rawTier": 7.1,
+    "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2124,7 +2124,7 @@
     "name": "Yes Machine end",
     "platPosition": null,
     "rank": 10,
-    "rawTier": 6.8,
+    "rawTier": 7,
     "verifier": "dibless",
     "victorList": [
       {
@@ -2139,6 +2139,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-22T14:08:55.176Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "143250512",
+    "img": "https://img.youtube.com/vi/Amtp4ahERek/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "ws",
+    "platPosition": null,
+    "rank": 11,
+    "rawTier": 6,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-22T14:08:55.176Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Amtp4ahERek"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Amtp4ahERek"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "eelektrance",
     "date": "2026-06-17T01:42:23.658Z",
@@ -2149,8 +2175,8 @@
     "listType": "challenge",
     "name": "Margarinepotato",
     "platPosition": null,
-    "rank": 11,
-    "rawTier": 5.2,
+    "rank": 12,
+    "rawTier": 5,
     "verifier": "eelektrance",
     "victorList": [
       {
@@ -2182,8 +2208,8 @@
     "listType": "challenge",
     "name": "Sakupen End 49-53",
     "platPosition": null,
-    "rank": 12,
-    "rawTier": 4.0,
+    "rank": 13,
+    "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
       {
