@@ -544,7 +544,7 @@ export function bindSubmitHandler() {
         throw new Error("Missing required fields. Please fill in Username, Record Link, and Campus.");
       }
 
-      const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      const urlRegex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,63}(\/[^\s]*)?$/i;
       if (!urlRegex.test(link)) {
         throw new Error("Invalid Record Link format. Please provide a valid URL.");
       }
