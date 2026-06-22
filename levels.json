@@ -2141,6 +2141,32 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "dibless",
+    "date": "2026-06-22T14:29:38.485Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "140148900",
+    "img": "https://img.youtube.com/vi/4zjNOylnb3c/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Padwurk",
+    "platPosition": null,
+    "rank": 11,
+    "rawTier": 7,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-22T14:29:38.485Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/4zjNOylnb3c"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/4zjNOylnb3c"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
     "date": "2026-06-22T14:08:55.176Z",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
@@ -2149,7 +2175,7 @@
     "listType": "challenge",
     "name": "ws",
     "platPosition": null,
-    "rank": 11,
+    "rank": 12,
     "rawTier": 6,
     "verifier": "dibless",
     "victorList": [
@@ -2175,7 +2201,7 @@
     "listType": "challenge",
     "name": "Margarinepotato",
     "platPosition": null,
-    "rank": 12,
+    "rank": 13,
     "rawTier": 5,
     "verifier": "eelektrance",
     "victorList": [
@@ -2208,7 +2234,7 @@
     "listType": "challenge",
     "name": "Sakupen End 49-53",
     "platPosition": null,
-    "rank": 13,
+    "rank": 14,
     "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2241,7 +2267,7 @@
     "listType": "challenge",
     "name": "ws 2",
     "platPosition": null,
-    "rank": 14,
+    "rank": 15,
     "rawTier": 4,
     "verifier": "dibless",
     "victorList": [
