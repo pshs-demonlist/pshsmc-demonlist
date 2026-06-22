@@ -1862,7 +1862,7 @@
     "name": "Sonic Wave 65p",
     "platPosition": null,
     "rank": 1,
-    "rawTier": 14,
+    "rawTier": 14.0,
     "verifier": "sadboi202",
     "victorList": [
       {
@@ -1877,6 +1877,84 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-21T21:00:36.595Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "137699339",
+    "img": "https://img.youtube.com/vi/Ic_trLA22oA/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Eurorave Challenge",
+    "platPosition": null,
+    "rank": 2,
+    "rawTier": 12.3,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T21:00:36.595Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Ic_trLA22oA"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Ic_trLA22oA"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "sSeanyboii",
+    "date": "2026-06-17T01:42:23.658Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "140202797",
+    "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Nasr City",
+    "platPosition": null,
+    "rank": 3,
+    "rawTier": 11.8,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "sSeanyboii",
+    "date": "2026-06-17T01:42:23.658Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141277411",
+    "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Abbasiya",
+    "platPosition": null,
+    "rank": 4,
+    "rawTier": 10.2,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Byokki",
     "date": "2026-06-21T21:53:53.259Z",
@@ -1887,8 +1965,8 @@
     "listType": "challenge",
     "name": "Eon 96 100",
     "platPosition": null,
-    "rank": 2,
-    "rawTier": 11,
+    "rank": 5,
+    "rawTier": 9.1,
     "verifier": "Akoay",
     "victorList": [
       {
@@ -1910,228 +1988,6 @@
   },
   {
     "aredlPlacement": null,
-    "campus": "Main Campus",
-    "creator": "dibless",
-    "date": "2026-06-21T21:00:36.595Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "137699339",
-    "img": "https://img.youtube.com/vi/Ic_trLA22oA/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Eurorave Challenge",
-    "platPosition": null,
-    "rank": 3,
-    "rawTier": 10,
-    "verifier": "dibless",
-    "victorList": [
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-21T21:00:36.595Z",
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/Ic_trLA22oA"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/Ic_trLA22oA"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Main Campus",
-    "creator": "dibless",
-    "date": "2026-06-21T21:07:20.576Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "143193238",
-    "img": "https://img.youtube.com/vi/Xuk8aOYwlu4/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Yes Machine end",
-    "platPosition": null,
-    "rank": 4,
-    "rawTier": 9,
-    "verifier": "dibless",
-    "victorList": [
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-21T21:07:20.576Z",
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "sSeanyboii",
-    "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "140202797",
-    "img": "https://img.youtube.com/vi/oS_yfgys6Bg/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Nasr City",
-    "platPosition": null,
-    "rank": 5,
-    "rawTier": 8,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/oS_yfgys6Bg"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "Nick240",
-    "date": "2026-06-22T08:24:09.420Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141753444",
-    "img": "https://img.youtube.com/vi/gKbRmuWfpRM/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Sakupen End 49-53",
-    "platPosition": null,
-    "rank": 6,
-    "rawTier": 8,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
-      },
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-22T08:24:09.420Z",
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/lfN2a94sOXg"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Main Campus",
-    "creator": "wavical",
-    "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "142055246",
-    "img": "https://img.youtube.com/vi/8LArrvVaf9g/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "the tourist",
-    "platPosition": null,
-    "rank": 7,
-    "rawTier": 8,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "Main Campus",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/8LArrvVaf9g"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/8LArrvVaf9g"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "eelektrance",
-    "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141063347",
-    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Margarinepotato",
-    "platPosition": null,
-    "rank": 8,
-    "rawTier": 7,
-    "verifier": "eelektrance",
-    "victorList": [
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "eelektrance",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/w5uRX0poI50"
-      },
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/RmhwZdJd9mM"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/w5uRX0poI50"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "sSeanyboii",
-    "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141277411",
-    "img": "https://img.youtube.com/vi/ZjCCCRgCo74/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Abbasiya",
-    "platPosition": null,
-    "rank": 9,
-    "rawTier": 6,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/ZjCCCRgCo74"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "",
-    "creator": "sSeanyboii",
-    "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "id": "141442369",
-    "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
-    "listType": "challenge",
-    "name": "Ramses",
-    "platPosition": null,
-    "rank": 10,
-    "rawTier": 6,
-    "verifier": "sSeanyboii",
-    "victorList": [
-      {
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z",
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
-      }
-    ],
-    "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
-  },
-  {
-    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "date": "2026-06-17T01:42:23.658Z",
@@ -2142,8 +1998,8 @@
     "listType": "challenge",
     "name": "Maadi",
     "platPosition": null,
-    "rank": 11,
-    "rawTier": 5,
+    "rank": 6,
+    "rawTier": 8.9,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2167,6 +2023,32 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
+    "date": "2026-06-17T01:42:23.658Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141442369",
+    "img": "https://img.youtube.com/vi/aBOtNq4iEO4/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Ramses",
+    "platPosition": null,
+    "rank": 7,
+    "rawTier": 8.0,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/aBOtNq4iEO4"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "sSeanyboii",
     "date": "2026-06-22T08:13:47.830Z",
     "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
@@ -2175,8 +2057,8 @@
     "listType": "challenge",
     "name": "Shubra",
     "platPosition": null,
-    "rank": 12,
-    "rawTier": 4,
+    "rank": 8,
+    "rawTier": 7.4,
     "verifier": "sSeanyboii",
     "victorList": [
       {
@@ -2202,5 +2084,123 @@
       }
     ],
     "video": "https://www.youtube.com/embed/RClLJRtHjGY"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "wavical",
+    "date": "2026-06-17T01:42:23.658Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "142055246",
+    "img": "https://img.youtube.com/vi/8LArrvVaf9g/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "the tourist",
+    "platPosition": null,
+    "rank": 9,
+    "rawTier": 7.1,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/8LArrvVaf9g"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/8LArrvVaf9g"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-21T21:07:20.576Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "143193238",
+    "img": "https://img.youtube.com/vi/Xuk8aOYwlu4/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Yes Machine end",
+    "platPosition": null,
+    "rank": 10,
+    "rawTier": 6.8,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T21:07:20.576Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Xuk8aOYwlu4"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "eelektrance",
+    "date": "2026-06-17T01:42:23.658Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141063347",
+    "img": "https://img.youtube.com/vi/w5uRX0poI50/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Margarinepotato",
+    "platPosition": null,
+    "rank": 11,
+    "rawTier": 5.2,
+    "verifier": "eelektrance",
+    "victorList": [
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "eelektrance",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/w5uRX0poI50"
+      },
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/RmhwZdJd9mM"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/w5uRX0poI50"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "",
+    "creator": "Nick240",
+    "date": "2026-06-22T08:24:09.420Z",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "id": "141753444",
+    "img": "https://img.youtube.com/vi/gKbRmuWfpRM/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Sakupen End 49-53",
+    "platPosition": null,
+    "rank": 12,
+    "rawTier": 4.0,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-22T08:24:09.420Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/lfN2a94sOXg"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
   }
 ]
