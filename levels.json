@@ -2228,5 +2228,31 @@
       }
     ],
     "video": "https://www.youtube.com/embed/gKbRmuWfpRM"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-22T14:17:20.926Z",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "143250790",
+    "img": "https://img.youtube.com/vi/XQPZm7Zh4wc/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "ws 2",
+    "platPosition": null,
+    "rank": 14,
+    "rawTier": 4,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-22T14:17:20.926Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/XQPZm7Zh4wc"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/XQPZm7Zh4wc"
   }
 ]
