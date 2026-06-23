@@ -452,10 +452,24 @@ export function displayPlayerProfile(player, activeIdx) {
 
   let main = [], extended = [], legacy = [];
   
-  player.completions.filter(c => c.category === uiState.currentStatsTab).forEach(c => {
-    if (c.rank <= 75) main.push(c);
-    else if (c.rank <= 150) extended.push(c);
-    else legacy.push(c);
+  player.completions
+  .filter(c => c.category === uiState.currentStatsTab)
+  .forEach(c => {
+
+    // Progress records should always appear in Legacy & Progress
+    if (c.percent < 100) {
+      legacy.push(c);
+      return;
+    }
+
+    // Only true completions are sorted by tier
+    if (c.rank <= 75) {
+      main.push(c);
+    } else if (c.rank <= 150) {
+      extended.push(c);
+    } else {
+      legacy.push(c);
+    }
   });
 
   const buildCloud = (arr, typeClass) => {
