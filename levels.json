@@ -388,7 +388,7 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "SYNACTIVE GD",
-    "date": "2026-06-17T01:42:23.658Z",
+    "date": "2026-06-22T23:54:32.516Z",
     "diff": "Insane Demon",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "60619762",
@@ -413,6 +413,13 @@
         "name": "JapanGD",
         "percent": 100,
         "video": "https://www.youtube.com/embed/LLtcF0Mhv8E"
+      },
+      {
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-22T23:54:32.516Z",
+        "name": "fortenrique",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/dwDkgzrYL4E"
       }
     ],
     "video": "https://www.youtube.com/embed/jESMjFcXTv8"
