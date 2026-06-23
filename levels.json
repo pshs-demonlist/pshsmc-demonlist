@@ -461,7 +461,7 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "AndromedaGMD",
-    "date": "2026-06-23T14:05:39.167Z",
+    "date": "2026-06-17T01:42:23.658Z",
     "diff": "Insane Demon",
     "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "7054561",
@@ -479,13 +479,6 @@
         "name": "sadboi202",
         "percent": 100,
         "video": "https://www.youtube.com/embed/N05ijX3vz9U"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:05:39.167Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
       }
     ],
     "video": "https://www.youtube.com/embed/N05ijX3vz9U"
@@ -631,7 +624,7 @@
     "aredlPlacement": null,
     "campus": "",
     "creator": "Zobros",
-    "date": "2026-06-23T10:33:18.849Z",
+    "date": "2026-06-23T14:06:11.955Z",
     "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
     "id": "4284013",
@@ -670,6 +663,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/uX-cp2Kv8rA"
+      },
+      {
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-23T14:06:11.955Z",
+        "name": "MigzGMD",
+        "percent": 100,
+        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
       }
     ],
     "video": "https://www.youtube.com/embed/DO36t7DV0ec"
