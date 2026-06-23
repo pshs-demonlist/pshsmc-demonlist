@@ -1995,6 +1995,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "dibless",
+    "date": "2026-06-21T20:37:38.789Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "137699339",
+    "img": "https://img.youtube.com/vi/Ic_trLA22oA/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Eurorave Challenge",
+    "platPosition": null,
+    "rank": 68,
+    "rawTier": 1,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-21T20:37:38.789Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Ic_trLA22oA"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Ic_trLA22oA"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Cyclic/Nayloren/Nranger55226",
     "date": "2026-06-17T01:42:23.658Z",
