@@ -36,7 +36,20 @@
     --tier-extended: #777777;  
     --tier-legacy: #cccccc;    
     --sv-row-hover: rgba(0, 0, 0, 0.04);
-  }
+
+    
+body.light-theme .changelog-item-title {
+  color: var(--text); /* Changes level name to #1f2937 */
+}
+
+body.light-theme .changelog-item-desc {
+  color: var(--muted); /* Changes the italicized description to #6b7280 */
+}
+
+body.light-theme .changelog-date {
+  color: var(--muted); /* Fixes the date headers in the feed */
+  border-bottom-color: var(--line);
+}
   
   * { box-sizing: border-box; }
   body { 
