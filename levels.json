@@ -456,33 +456,7 @@
       }
     ],
     "video": "https://www.youtube.com/embed/quPd5eRGMEY"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Western Visayas Campus",
-    "creator": "Hinds",
-    "date": "2026-06-23T14:13:27.846Z",
-    "diff": "Insane Demon",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "id": "13437081",
-    "img": "https://img.youtube.com/vi/Hnj99nvdzYk/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "Firewall",
-    "platPosition": null,
-    "rank": 17,
-    "rawTier": 17,
-    "verifier": "MigzGMD",
-    "victorList": [
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:13:27.846Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      }
-    ],
-    "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-  },
+  }, 
   {
     "aredlPlacement": null,
     "campus": "",
@@ -505,13 +479,6 @@
         "name": "sadboi202",
         "percent": 100,
         "video": "https://www.youtube.com/embed/N05ijX3vz9U"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:05:39.167Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
       }
     ],
     "video": "https://www.youtube.com/embed/N05ijX3vz9U"
@@ -541,32 +508,6 @@
       }
     ],
     "video": "https://www.youtube.com/embed/gdhhyQ-eBI8"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Western Visayas Campus",
-    "creator": "MaJackO",
-    "date": "2026-06-23T14:18:51.134Z",
-    "diff": "Insane Demon",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "id": "260693",
-    "img": "https://img.youtube.com/vi/Hnj99nvdzYk/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "Stereo Demoness",
-    "platPosition": null,
-    "rank": 20,
-    "rawTier": 16,
-    "verifier": "MigzGMD",
-    "victorList": [
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:18:51.134Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      }
-    ],
-    "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
   },
   {
     "aredlPlacement": null,
@@ -615,21 +556,7 @@
         "date": "2026-06-17T01:42:23.658Z",
         "name": "aldawg123",
         "percent": 100,
-        "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:05:59.429Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:05:59.429Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
+        "video": "https://www.youtube.com/embed/VzyvIOn7PBc", 
       }
     ],
     "video": "https://www.youtube.com/embed/VzyvIOn7PBc"
@@ -666,66 +593,7 @@
       }
     ],
     "video": "https://www.youtube.com/embed/Dl3X3v5qTcQ"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Western Visayas Campus",
-    "creator": "DavJT",
-    "date": "2026-06-23T14:16:50.529Z",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "40945673",
-    "img": "https://img.youtube.com/vi/Hnj99nvdzYk/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "CraZy",
-    "platPosition": null,
-    "rank": 24,
-    "rawTier": 13,
-    "verifier": "MigzGMD",
-    "victorList": [
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:16:50.529Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:16:50.529Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      }
-    ],
-    "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Western Visayas Campus",
-    "creator": "Michigun",
-    "date": "2026-06-23T14:15:29.848Z",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "2891681",
-    "img": "https://img.youtube.com/vi/Hnj99nvdzYk/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "Shadow Temple",
-    "platPosition": null,
-    "rank": 25,
-    "rawTier": 12,
-    "verifier": "MigzGMD",
-    "victorList": [
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:15:29.848Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      }
-    ],
-    "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-  },
+  }, 
   {
     "aredlPlacement": null,
     "campus": "",
@@ -795,13 +663,6 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/uX-cp2Kv8rA"
-      },
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:06:11.955Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
       }
     ],
     "video": "https://www.youtube.com/embed/DO36t7DV0ec"
@@ -871,32 +732,6 @@
       }
     ],
     "video": "https://www.youtube.com/embed/0g1Tgigi6Lg"
-  },
-  {
-    "aredlPlacement": null,
-    "campus": "Western Visayas Campus",
-    "creator": "weoweoteo",
-    "date": "2026-06-23T14:17:52.737Z",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "id": "2456909",
-    "img": "https://img.youtube.com/vi/Hnj99nvdzYk/maxresdefault.jpg",
-    "listType": "demon",
-    "name": "Lake of Fire",
-    "platPosition": null,
-    "rank": 30,
-    "rawTier": 11,
-    "verifier": "MigzGMD",
-    "victorList": [
-      {
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-23T14:17:52.737Z",
-        "name": "MigzGMD",
-        "percent": 100,
-        "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
-      }
-    ],
-    "video": "https://m.youtube.com/embed/Hnj99nvdzYk"
   },
   {
     "aredlPlacement": null,
