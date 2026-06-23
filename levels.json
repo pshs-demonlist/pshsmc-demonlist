@@ -1969,6 +1969,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "EVILF",
+    "date": "2026-06-23T10:02:01.107Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "142685157",
+    "img": "https://img.youtube.com/vi/9eoxZAtT0BY/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "GTA Z",
+    "platPosition": null,
+    "rank": 67,
+    "rawTier": 1,
+    "verifier": "dibless",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-23T10:02:01.107Z",
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/9eoxZAtT0BY"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/9eoxZAtT0BY"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "Cyclic/Nayloren/Nranger55226",
     "date": "2026-06-17T01:42:23.658Z",
