@@ -2490,5 +2490,31 @@
       }
     ],
     "video": "https://www.youtube.com/embed/XQPZm7Zh4wc"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "sSeanyboii",
+    "date": "2026-06-24T11:53:29.399Z",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "143385344",
+    "img": "https://img.youtube.com/vi/Q5rdNAb_YSI/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "consisSONcy",
+    "platPosition": null,
+    "rank": 16,
+    "rawTier": 4,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-24T11:53:29.399Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Q5rdNAb_YSI"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Q5rdNAb_YSI"
   }
 ]
