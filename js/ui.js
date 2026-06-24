@@ -70,10 +70,25 @@ export function closeGuidelinesModal() {
   if (modal) modal.style.display = "none";
 }
 
+export function updateThemeToggleText() {
+  const toggleButton = document.getElementById('themeToggle');
+  if (!toggleButton) return;
+
+  toggleButton.textContent =
+    document.body.classList.contains('light-theme')
+      ? 'Toggle Dark Mode'
+      : 'Toggle Light Mode';
+}
+
 export function toggleThemeMode() {
   document.body.classList.toggle('light-theme');
+
   const isLight = document.body.classList.contains('light-theme');
+
   localStorage.setItem('pshsmc_theme', isLight ? 'light' : 'dark');
+
+  updateThemeToggleText();
+
   closeNavMenu();
 }
 
