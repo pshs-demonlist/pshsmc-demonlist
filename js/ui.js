@@ -227,18 +227,18 @@ export function processLiveDecayFilterAndNews() {
   let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
   
   validNews.forEach(item => {
-    html += `
-      <div style="background: rgba(255,255,255,0.02); border-left: 3px solid var(--accent); padding: 10px 14px; margin-bottom: 6px; border-radius: 0 8px 8px 0;">
-        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
-          <span style="font-weight:600; color:#ffffff;">${item.title}</span>
-          <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
-        </div>
-        <div style="font-size:11px; opacity:0.85; line-height: 1.4; color:#cbd5e1;">
-          Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, ${item.placementText}.
-        </div>
+  html += `
+    <div class="changelog-item">
+      <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
+        <span class="changelog-item-title">${item.title}</span>
+        <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
       </div>
-    `;
-  });
+      <div class="changelog-item-desc">
+        Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, ${item.placementText}.
+      </div>
+    </div>
+  `;
+});
   
   container.innerHTML = html;
   feed.appendChild(container);
