@@ -39,8 +39,10 @@ window.addEventListener('DOMContentLoaded', () => {
   console.log("[Demonlist] DOM mounted. Initializing modular application engine...");
   
   if (localStorage.getItem('pshsmc_theme') === 'light') {
-    document.body.classList.add('light-theme');
+  document.body.classList.add('light-theme');
   }
+
+  UI.updateThemeToggleText();
 
   initApp();
   UI.bindSubmitHandler();
