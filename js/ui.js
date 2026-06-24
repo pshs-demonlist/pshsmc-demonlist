@@ -234,7 +234,7 @@ export function processLiveDecayFilterAndNews() {
         <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
       </div>
       <div class="changelog-item-desc">
-        Placed at <strong style="color:var(--accent);">#${item.rank}</strong>, ${item.placementText}.
+        Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.
       </div>
     </div>
   `;
