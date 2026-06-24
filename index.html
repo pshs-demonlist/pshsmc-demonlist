@@ -108,6 +108,12 @@
     text-decoration: none;
     transition: background 0.2s, color 0.2s;
   }
+
+  .theme-toggle-item {
+    border-top: 1px solid var(--line); 
+    color: var(--accent) !important; 
+  }
+  
   .nav-item:hover {
     background: rgba(27, 34, 56, 0.4);
     color: var(--accent);
@@ -312,6 +318,10 @@
     font-size: 12px;
     font-style: italic;
   }
+  strong.news-rank {
+    color: var(--accent);
+    font-weight: 700;
+  }
   .changelog-time {
     color: var(--muted);
     font-size: 11px;
@@ -489,7 +499,13 @@
   <span class="nav-item" onclick="goToLevelsDashboard()">View the Lists</span>
   <span class="nav-item" onclick="switchPage('stats')">Stats Viewer</span>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
-  <span id="themeToggle" class="nav-item" onclick="toggleThemeMode() style="border-top: 1px solid var(--line); color: var(--accent);">Toggle Light Mode</span>
+  <span
+    id="themeToggle"
+    class="nav-item theme-toggle-item"
+    onclick="toggleThemeMode()"
+  >
+    Toggle Light Mode
+  </span>
 </nav>
 
 <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
