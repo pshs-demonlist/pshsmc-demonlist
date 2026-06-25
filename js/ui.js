@@ -82,13 +82,9 @@ export function updateThemeToggleText() {
 
 export function toggleThemeMode() {
   document.body.classList.toggle('light-theme');
-
   const isLight = document.body.classList.contains('light-theme');
-
   localStorage.setItem('pshsmc_theme', isLight ? 'light' : 'dark');
-
   updateThemeToggleText();
-
   closeNavMenu();
 }
 
@@ -151,6 +147,8 @@ export function processLiveDecayFilterAndNews() {
 
   uiState.allLevels.forEach(lvl => {
     const currentRank = parseInt(lvl.rank || 999, 10);
+    
+    // GUARANTEED SAFE: Explicitly extracts date from the root level object context only
     const dateStr = String(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp || ''); 
     if (!dateStr) return;
 
@@ -228,21 +226,17 @@ export function processLiveDecayFilterAndNews() {
   let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
   
   validNews.forEach(item => {
-    const isChallenge = item.listType === 'challenge';
+    let badgeText = 'DEMON LIST';
+    let badgeColor = 'var(--accent)';
+    if (item.listType === 'challenge') { badgeText = 'CHALLENGE LIST'; badgeColor = '#f59e0b'; }
+    else if (item.listType === 'platformer') { badgeText = 'PLATFORMER LIST'; badgeColor = '#3b82f6'; }
 
     html += `
       <div class="changelog-item">
         <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
           <span class="changelog-item-title">${item.title}</span>
-          <span
-            style="
-              font-size:11px;
-              white-space:nowrap;
-              font-weight:700;
-              color:${isChallenge ? '#f59e0b' : 'var(--accent)'};
-            "
-          >
-            ${isChallenge ? 'CHALLENGE LIST' : 'DEMON LIST'}
+          <span style="font-size:11px; white-space:nowrap; font-weight:700; color:${badgeColor};">
+            ${badgeText}
           </span>
         </div>
         <div class="changelog-item-desc">
@@ -259,11 +253,16 @@ export function processLiveDecayFilterAndNews() {
 // --- LEVEL DASHBOARD & TABS ---
 export function switchMainListTab(tab) {
   uiState.currentMainTab = tab;
-  ['tabDemons', 'tabChallenges'].forEach(id => {
+  ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  const target = document.getElementById(tab === 'demon' ? 'tabDemons' : 'tabChallenges');
+  
+  let activeId = 'tabDemons';
+  if (tab === 'challenge') activeId = 'tabChallenges';
+  if (tab === 'platformer') activeId = 'tabPlatformers';
+  
+  const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
   renderLevelsDashboard();
 }
@@ -313,6 +312,7 @@ export function renderLevelsDashboard() {
     }
     if (!thumb) thumb = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
 
+    list.appendChild(itemRow);
     itemRow.innerHTML = `
       <div class="rank">#${rank}</div>
       <div class="thumb"><img src="${escapeHTML(thumb)}" onerror="this.onerror=null; this.src='${CONFIG.IMAGES.FALLBACK_THUMBNAIL}'"></div>
@@ -323,7 +323,6 @@ export function renderLevelsDashboard() {
         <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:2px; font-size:11px;">Campus: ${escapeHTML(lvl.campus || 'Main Campus')}</div>
       </div>
     `;
-    list.appendChild(itemRow);
   });
 }
 
@@ -374,11 +373,16 @@ export function showLevelDetailPage(lvl, forceRank) {
 // --- STATS & LEADERBOARD ---
 export function switchStatsPageListTab(tab) {
   uiState.currentStatsTab = tab;
-  ['statTabDemons', 'statTabChallenges'].forEach(id => {
+  ['statTabDemons', 'statTabChallenges', 'statTabPlatformers'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  const target = document.getElementById(tab === 'demon' ? 'statTabDemons' : 'statTabChallenges');
+  
+  let activeId = 'statTabDemons';
+  if (tab === 'challenge') activeId = 'statTabChallenges';
+  if (tab === 'platformer') activeId = 'statTabPlatformers';
+  
+  const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
   renderStatsLeaderboard();
 }
@@ -412,7 +416,8 @@ export function renderStatsLeaderboard() {
           points: 0, 
           completions: [], 
           demons: 0, 
-          challenges: 0 
+          challenges: 0,
+          platformers: 0
         };
       }
 
@@ -426,6 +431,7 @@ export function renderStatsLeaderboard() {
       if (pct === 100) {
         if (cat === 'demon') processedPlayers[name].demons++;
         else if (cat === 'challenge') processedPlayers[name].challenges++;
+        else if (cat === 'platformer') processedPlayers[name].platformers++;
       }
       
       processedPlayers[name].completions.push({ 
@@ -454,7 +460,9 @@ export function renderStatsLeaderboard() {
     row.className = 'sv-row';
     row.onclick = () => displayPlayerProfile(player, idx);
     
-    let subLabel = uiState.currentStatsTab === 'demon' ? `${player.demons} Demons` : `${player.challenges} Challenges`;
+    let subLabel = `${player.demons} Demons`;
+    if (uiState.currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges`;
+    if (uiState.currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers`;
 
     row.innerHTML = `
       <div class="sv-left">
@@ -482,14 +490,10 @@ export function displayPlayerProfile(player, activeIdx) {
   player.completions
   .filter(c => c.category === uiState.currentStatsTab)
   .forEach(c => {
-
-    // Progress records should always appear in Legacy & Progress
     if (c.percent < 100) {
       legacy.push(c);
       return;
     }
-
-    // Only true completions are sorted by tier
     if (c.rank <= 75) {
       main.push(c);
     } else if (c.rank <= 150) {
