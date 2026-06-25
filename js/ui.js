@@ -206,6 +206,7 @@ export function processLiveDecayFilterAndNews() {
         validNews.push({
           title: escapeHTML(targetName),
           rank: currentRank,
+          listType: listCategory,
           placementText: placementText,
           sortTime: sortTimestamp 
         });
@@ -227,18 +228,29 @@ export function processLiveDecayFilterAndNews() {
   let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
   
   validNews.forEach(item => {
-  html += `
-    <div class="changelog-item">
-      <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
-        <span class="changelog-item-title">${item.title}</span>
-        <span style="opacity:0.5; font-size:11px; white-space:nowrap;">NEW</span>
+    const isChallenge = item.listType === 'challenge';
+
+    html += `
+      <div class="changelog-item">
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
+          <span class="changelog-item-title">${item.title}</span>
+          <span
+            style="
+              font-size:11px;
+              white-space:nowrap;
+              font-weight:700;
+              color:${isChallenge ? '#f59e0b' : 'var(--accent)'};
+            "
+          >
+            ${isChallenge ? 'CHALLENGE LIST' : 'DEMON LIST'}
+          </span>
+        </div>
+        <div class="changelog-item-desc">
+          Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.
+        </div>
       </div>
-      <div class="changelog-item-desc">
-        Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.
-      </div>
-    </div>
-  `;
-});
+    `;
+  });
   
   container.innerHTML = html;
   feed.appendChild(container);
