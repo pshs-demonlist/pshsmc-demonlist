@@ -2537,5 +2537,31 @@
       }
     ],
     "video": "https://www.youtube.com/embed/Q5rdNAb_YSI"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Western Visayas Campus",
+    "creator": "Papetah",
+    "date": "2026-06-25T08:41:49.772Z",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "117454090",
+    "img": "https://img.youtube.com/vi/k4Q9HIKwInw/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Tidal wave 95",
+    "platPosition": null,
+    "rank": 17,
+    "rawTier": 1,
+    "verifier": "IceRig",
+    "victorList": [
+      {
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-25T08:41:49.772Z",
+        "name": "IceRig",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/k4Q9HIKwInw"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/k4Q9HIKwInw"
   }
 ]
