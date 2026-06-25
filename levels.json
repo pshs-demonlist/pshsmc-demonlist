@@ -2372,7 +2372,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "dibless",
-    "date": "2026-06-22T14:29:38.485Z",
+    "date": "2026-06-25T16:13:12.230Z",
     "diff": "Medium Challenge",
     "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "140148900",
@@ -2390,6 +2390,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/4zjNOylnb3c"
+      },
+      {
+        "campus": "Northern Mindanao Campus",
+        "date": "2026-06-25T16:13:12.230Z",
+        "name": "saulgoodman4",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Femxe1oxLPY"
       }
     ],
     "video": "https://www.youtube.com/embed/4zjNOylnb3c"
