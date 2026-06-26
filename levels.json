@@ -281,7 +281,7 @@
     "video": "https://www.youtube.com/embed/vBBZvXb0HrA"
   },
   {
-    "aredlPlacement": 1272,
+    "aredlPlacement": 1273,
     "campus": "Central Luzon Campus",
     "creator": "nikroplays",
     "date": "2026-06-17T01:42:23.658Z",
@@ -307,7 +307,7 @@
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0"
   },
   {
-    "aredlPlacement": 1392,
+    "aredlPlacement": 1393,
     "campus": "",
     "creator": "GGboy",
     "date": "2026-06-23T20:14:22.845Z",
@@ -1966,7 +1966,7 @@
     "aredlPlacement": null,
     "campus": "Main Campus",
     "creator": "Jax",
-    "date": "2026-06-21T07:54:30.564Z",
+    "date": "2026-06-26T15:05:57.518Z",
     "diff": "Easy Demon",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "13519",
@@ -1991,6 +1991,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/duTBwO4eCgA"
+      },
+      {
+        "campus": "Northern Mindanao Campus",
+        "date": "2026-06-26T15:05:57.518Z",
+        "name": "saulgoodman4",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/hDevR0yPJW8"
       }
     ],
     "video": "https://www.youtube.com/embed/_NevWh9u9W0"
