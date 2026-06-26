@@ -22,12 +22,14 @@ export async function loadDatabase() {
   try { 
     rawData = await fetchPayload(CONFIG.API.GITHUB_PRIMARY_URL); 
   } catch (err) {
-    console.warn("Primary fetch failed. Falling back to CDN channel target...");
+    console.warn("Primary fetch failed. Falling back to CDN...");
+    
     try { 
-      rawData = await fetchPayload(CONFIG.API.GITHUB_CDN_URL); 
-    } catch (e) { 
-      return false; 
-    }
+        rawData = await fetchPayload(CONFIG.API.GITHUB_CDN_URL); 
+      } catch (e) { 
+        console.error("CDN fetch also failed.", e);
+        return false; 
+      }
   }
 
   if (!rawData) return false;
