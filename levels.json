@@ -2631,7 +2631,7 @@
     "aredlPlacement": null,
     "campus": "Western Visayas Campus",
     "creator": "Papetah",
-    "date": "2026-06-25T08:41:49.772Z",
+    "date": "2026-06-26T20:16:53.522Z",
     "diff": "Easy Challenge",
     "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
     "id": "117454090",
@@ -2649,6 +2649,13 @@
         "name": "IceRig",
         "percent": 100,
         "video": "https://www.youtube.com/embed/k4Q9HIKwInw"
+      },
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-26T20:16:53.522Z",
+        "name": "eelektrance",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/evXuARzea7U"
       }
     ],
     "video": "https://www.youtube.com/embed/k4Q9HIKwInw"
