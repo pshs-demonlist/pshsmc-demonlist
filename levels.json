@@ -2167,6 +2167,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "sSeanyboii",
+    "date": "2026-06-26T19:24:04.615Z",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "id": "143536349",
+    "img": "https://img.youtube.com/vi/lcE6XT93KFo/maxresdefault.jpg",
+    "listType": "challenge",
+    "name": "Deadlocked 1p5x",
+    "platPosition": null,
+    "rank": 4,
+    "rawTier": 12,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-26T19:24:04.615Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/lcE6XT93KFo"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/lcE6XT93KFo"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "sSeanyboii",
     "date": "2026-06-25T18:34:32.731Z",
@@ -2177,7 +2203,7 @@
     "listType": "challenge",
     "name": "Abbasiya",
     "platPosition": null,
-    "rank": 4,
+    "rank": 5,
     "rawTier": 10,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2210,7 +2236,7 @@
     "listType": "challenge",
     "name": "Eon 96 100",
     "platPosition": null,
-    "rank": 5,
+    "rank": 6,
     "rawTier": 9,
     "verifier": "Akoay",
     "victorList": [
@@ -2243,7 +2269,7 @@
     "listType": "challenge",
     "name": "Maadi",
     "platPosition": null,
-    "rank": 6,
+    "rank": 7,
     "rawTier": 9,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2276,7 +2302,7 @@
     "listType": "challenge",
     "name": "Ramses",
     "platPosition": null,
-    "rank": 7,
+    "rank": 8,
     "rawTier": 8,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2302,7 +2328,7 @@
     "listType": "challenge",
     "name": "Shubra",
     "platPosition": null,
-    "rank": 8,
+    "rank": 9,
     "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2342,7 +2368,7 @@
     "listType": "challenge",
     "name": "the tourist",
     "platPosition": null,
-    "rank": 9,
+    "rank": 10,
     "rawTier": 7,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2368,7 +2394,7 @@
     "listType": "challenge",
     "name": "Yes Machine end",
     "platPosition": null,
-    "rank": 10,
+    "rank": 11,
     "rawTier": 7,
     "verifier": "dibless",
     "victorList": [
@@ -2394,7 +2420,7 @@
     "listType": "challenge",
     "name": "Padwurk",
     "platPosition": null,
-    "rank": 11,
+    "rank": 12,
     "rawTier": 7,
     "verifier": "dibless",
     "victorList": [
@@ -2427,7 +2453,7 @@
     "listType": "challenge",
     "name": "ws",
     "platPosition": null,
-    "rank": 12,
+    "rank": 13,
     "rawTier": 6,
     "verifier": "dibless",
     "victorList": [
@@ -2453,7 +2479,7 @@
     "listType": "challenge",
     "name": "Margarinepotato",
     "platPosition": null,
-    "rank": 13,
+    "rank": 14,
     "rawTier": 5,
     "verifier": "eelektrance",
     "victorList": [
@@ -2486,7 +2512,7 @@
     "listType": "challenge",
     "name": "Sakupen End 49-53",
     "platPosition": null,
-    "rank": 14,
+    "rank": 15,
     "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2519,7 +2545,7 @@
     "listType": "challenge",
     "name": "ws 2",
     "platPosition": null,
-    "rank": 15,
+    "rank": 16,
     "rawTier": 4,
     "verifier": "dibless",
     "victorList": [
@@ -2545,7 +2571,7 @@
     "listType": "challenge",
     "name": "consisSONcy",
     "platPosition": null,
-    "rank": 16,
+    "rank": 17,
     "rawTier": 4,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2571,7 +2597,7 @@
     "listType": "challenge",
     "name": "Tidal wave 95",
     "platPosition": null,
-    "rank": 17,
+    "rank": 18,
     "rawTier": 1,
     "verifier": "IceRig",
     "victorList": [
