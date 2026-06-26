@@ -40,7 +40,10 @@ export function switchPage(pageId) {
   if (targetPage) {
     targetPage.style.display = 'block';
     targetPage.classList.add('active-page');
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({
+      top: 0, 
+      behavior: "auto" 
+    });
   }
 }
 
