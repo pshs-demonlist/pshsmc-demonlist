@@ -319,7 +319,7 @@
     "name": "Cataclysm",
     "platPosition": null,
     "rank": 12,
-    "rawTier": 20.9128630705394,
+    "rawTier": 24,
     "verifier": "sadboi202",
     "victorList": [
       {
@@ -352,7 +352,7 @@
     "name": "Acu",
     "platPosition": null,
     "rank": 13,
-    "rawTier": 20.2517525144773,
+    "rawTier": 24,
     "verifier": "voxigmd",
     "victorList": [
       {
@@ -573,8 +573,8 @@
     "campus": "Western Visayas Campus",
     "creator": "DavJT",
     "date": "2026-06-26T21:50:43.952Z",
-    "diff": "Hard Demon",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "diff": "Insane Demon",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
     "id": "47620786",
     "img": "https://img.youtube.com/vi/rsih2CrkekY/maxresdefault.jpg",
     "listType": "demon",
@@ -818,8 +818,8 @@
     "campus": "",
     "creator": "pocke",
     "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Medium Demon",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "diff": "Hard Demon",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
     "id": "92742742",
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "listType": "demon",
@@ -1276,8 +1276,8 @@
     "campus": "",
     "creator": "MaFFaKa",
     "date": "2026-06-17T01:42:23.658Z",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
     "id": "96716452",
     "img": "https://img.youtube.com/vi/XvxEkXLayHU/maxresdefault.jpg",
     "listType": "demon",
@@ -1536,6 +1536,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/fzfJhwa-4SY"
+      },
+      {
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-27T12:04:36.292Z",
+        "name": "fortenrique",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/HOpqdFZS8fw"
       }
     ],
     "video": "https://www.youtube.com/embed/7RI0yNMjT2U"
