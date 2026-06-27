@@ -6,6 +6,7 @@ import { submitRecordData } from './api.js';
 export const uiState = {
   allLevels: [],
   currentMainTab: 'demon',
+  currentSubTab: 'main', // Added for Main/Extended/Legacy tracking
   currentStatsTab: 'demon'
 };
 
@@ -148,7 +149,6 @@ export function processLiveDecayFilterAndNews() {
 
   let validNews = [];
 
-  // Helper: Checks if a date string matches today and grabs a timestamp for sorting
   const checkIsToday = (dateStr) => {
     if (!dateStr) return { isToday: false, sortTime: 0 };
     let itemDayStr = "";
@@ -176,12 +176,10 @@ export function processLiveDecayFilterAndNews() {
     const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
     const listCategory = getNormalizedListType(lvl);
     
-    // Sort the current category so we know what levels sit at #76 and #151
     const categorySortedLevels = uiState.allLevels
       .filter(l => getNormalizedListType(l) === listCategory)
       .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
 
-    // 1. CHECK FOR NEW LEVEL PLACEMENTS
     const levelDateData = checkIsToday(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp);
     
     if (levelDateData.isToday) {
@@ -210,7 +208,6 @@ export function processLiveDecayFilterAndNews() {
           placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
         }
 
-        // List Pushing Logic (0-indexed array, so index 75 is rank #76)
         if (currentRank <= 75 && categorySortedLevels.length > 75) {
             const pushedExtended = escapeHTML(categorySortedLevels[75].name || categorySortedLevels[75].levelName || "Unnamed");
             placementText += `, this pushes <strong>${pushedExtended}</strong> into the <strong>Extended List</strong>`;
@@ -229,10 +226,8 @@ export function processLiveDecayFilterAndNews() {
         });
     }
 
-    // 2. CHECK FOR NEW VICTORS TODAY
     const records = getRecordList(lvl);
     records.forEach(rec => {
-        // Look for a date property on the individual record
         const recDateData = checkIsToday(rec.date || rec.timestamp || rec.achieved);
         if (recDateData.isToday) {
             const username = escapeHTML(String(rec.username || rec.name || rec.player || rec.user || "Someone").trim());
@@ -267,7 +262,6 @@ export function processLiveDecayFilterAndNews() {
     if (item.listType === 'challenge') { badgeText = 'CHALLENGE LIST'; badgeColor = '#f59e0b'; }
     else if (item.listType === 'platformer') { badgeText = 'PLATFORMER LIST'; badgeColor = '#3b82f6'; }
 
-    // Differentiate between a New Level Placement vs a New Victor
     let itemDescriptionHtml = '';
     if (item.type === 'placement') {
         itemDescriptionHtml = `Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.`;
@@ -308,6 +302,40 @@ export function switchMainListTab(tab) {
   
   const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
+  
+  // Reset sub-tab back to 'main' when changing list types
+  switchListSubTab('main');
+}
+
+export function switchListSubTab(tab) {
+  uiState.currentSubTab = tab;
+  
+  // Update UI active state for sub-tabs
+  ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  
+  const tabMap = {
+    'main': 'subTabMain',
+    'extended': 'subTabExtended',
+    'legacy': 'subTabLegacy'
+  };
+  const target = document.getElementById(tabMap[tab]);
+  if (target) target.classList.add('active');
+  
+  // Update description
+  const descEl = document.getElementById('listDescriptionText');
+  if (descEl) {
+    if (tab === 'main') {
+        descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points!";
+    } else if (tab === 'extended') {
+        descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
+    } else if (tab === 'legacy') {
+        descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
+    }
+  }
+  
   renderLevelsDashboard();
 }
 
@@ -323,12 +351,22 @@ export function renderLevelsDashboard() {
   list.innerHTML = '';
 
   let displayedItems = uiState.allLevels.filter(lvl => {
+    // 1. Filter by Main Category (Demon, Challenge, Platformer)
     if (getNormalizedListType(lvl) !== uiState.currentMainTab) return false;
+    
+    // 2. Filter by Sub-tab Rank Limits
+    const rank = parseInt(lvl.rank || 999, 10);
+    if (uiState.currentSubTab === 'main' && rank > 75) return false;
+    if (uiState.currentSubTab === 'extended' && (rank <= 75 || rank > 150)) return false;
+    if (uiState.currentSubTab === 'legacy' && rank <= 150) return false;
+
+    // 3. Filter by Campus
     const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus').trim());
     const records = getRecordList(lvl);
     const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => escapeHTML(String(r.campus || 'Main Campus').trim()) === campusVal));
     if (!campusMatch) return false;
 
+    // 4. Filter by Search Query
     return (
       String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
       String(lvl.creator || '').toLowerCase().includes(query) ||
