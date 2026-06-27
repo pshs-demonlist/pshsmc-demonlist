@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSHS Demonlist</title>
-<link rel="icon" href="./assets/pngkey.com-highschool-of-the-dead-5897105.ico" type="image/x-icon">
 <style>
   :root {
     --bg: #0b0d12;
@@ -335,10 +334,10 @@
     border: 1px solid var(--line); 
     border-radius: 12px; 
     margin-bottom: 20px; 
-    padding: 16px; 
+    padding: 24px; 
     transition: background 0.3s, border-color 0.3s; 
   }
-  .section h3 { font-size: 16px; margin: 0 0 12px; }
+  .section h3 { font-size: 18px; margin: 0 0 16px; }
   
   .btn { 
     background: var(--line); border: none; border-radius: 8px; 
@@ -362,20 +361,105 @@
   #search::placeholder, .input::placeholder { color: var(--muted); }
   
   .grid { align-items: start; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
-  .list { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
   
-  .row { background: var(--panel); border-bottom: 1px solid var(--line); cursor: pointer; display: flex; gap: 14px; padding: 14px; transition: background 0.15s; }
-  .row:hover { background: rgba(120, 120, 120, 0.1); }
-  .row:last-child { border-bottom: none; }
+  /* --- POINTERCRATE LIST STYLING --- */
   
-  .rank { color: var(--accent); flex-shrink: 0; font-size: 18px; font-weight: 700; width: 50px; }
-  .thumb { background: #222; border-radius: 6px; flex-shrink: 0; height: 80px; overflow: hidden; width: 140px; }
+  .list { 
+    background: transparent; 
+    border: none; 
+    border-radius: 0; 
+    overflow: visible; 
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Adds space between the individual cards */
+  }
+  
+  .row { 
+    background: var(--panel); 
+    border: 1px dashed rgba(150, 150, 150, 0.3); /* The subtle dashed border from the image */
+    border-radius: 4px;
+    cursor: pointer; 
+    display: flex; 
+    gap: 20px; 
+    padding: 16px; 
+    transition: background 0.15s, border-color 0.15s; 
+    align-items: center;
+  }
+  .row:hover { 
+    background: var(--sv-row-hover); 
+    border-color: rgba(150, 150, 150, 0.5);
+  }
+  
+  .thumb { 
+    background: #000; 
+    border-radius: 4px; 
+    flex-shrink: 0; 
+    height: 90px; 
+    overflow: hidden; 
+    width: 160px; /* Slightly wider 16:9 ratio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .thumb img { display: block; height: 100%; object-fit: cover; width: 100%; }
-  .info { flex: 1; min-width: 0; }
-  .title { font-size: 17px; font-weight: 700; }
-  .sub { color: var(--muted); font-size: 13px; margin-top: 4px; word-break: break-word; }
-  .points { color: var(--text); font-size: 13px; margin-top: 6px; opacity: 0.9; }
   
+  .info { flex: 1; min-width: 0; }
+  
+  .title { 
+    font-size: 20px; 
+    font-weight: 800; 
+    margin-bottom: 4px; 
+    color: var(--text);
+  }
+  .sub { 
+    color: var(--text); 
+    font-size: 14px; 
+    font-weight: 600;
+    margin-bottom: 2px; 
+    word-break: break-word; 
+  }
+  .points { 
+    color: var(--muted); 
+    font-size: 12px; 
+  }
+
+  /* --- POINTERCRATE SUB-TABS STYLING --- */
+  .pc-tabs {
+      display: flex;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      margin-bottom: 15px;
+      overflow: hidden;
+  }
+  .pc-tab {
+      flex: 1;
+      padding: 14px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--line);
+      color: var(--text);
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+  }
+  .pc-tab:last-child { border-right: none; }
+  .pc-tab.active {
+      background: rgba(120, 120, 120, 0.12); /* Light background to mark it active */
+      color: var(--accent);
+  }
+  .list-description {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 25px;
+      line-height: 1.5;
+      padding: 0 20px;
+  }
+  /* ---------------------------------- */
+
   .app-page { display: none; }
   .app-page.active-page { animation: fadeIn 0.3s; display: block; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -389,7 +473,7 @@
   .stat { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; text-align: center; }
   .stat h4 { color: var(--muted); font-size: 11px; margin: 0 0 4px 0; text-transform: uppercase; }
   .stat p { color: var(--text); font-size: 16px; font-weight: bold; margin: 0; }
-  .empty { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--muted); padding: 16px; text-align: center; }
+  .empty { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--muted); padding: 24px; text-align: center; font-style: italic; }
   
   .records-container { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-top: 24px; padding: 24px 16px; text-align: center; }
   .records-container h3 { color: var(--text); font-size: 26px; font-weight: bold; margin: 0 0 6px 0; }
@@ -471,13 +555,15 @@
     .sv-wrapper .sv-list-panel { border-bottom: 1px solid var(--line); border-right: none; max-height: 260px; }
   }
   @media (max-width: 640px) {
-    .row { flex-direction: column; }
+    .row { flex-direction: column; text-align: center; align-items: center; }
     .thumb { aspect-ratio: 16/9; height: auto; width: 100%; }
     .stats { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
     .stat-cards-grid { grid-template-columns: 1fr; }
     .infra-grid { grid-template-columns: 1fr; }
     .filter-container-grid { grid-template-columns: 1fr; }
+    .pc-tabs { flex-direction: column; }
+    .pc-tab { border-right: none; border-bottom: 1px solid var(--line); }
     .nav-menu { max-width: 100%; }
     footer { flex-direction: column; text-align: center; }
   }
@@ -589,12 +675,24 @@
       </div>
     </div>
 
-    <div class="section">
-      <h3>Levels <span class="muted" style="font-weight:normal; font-size:12px;">(List Requirement: 50%)</span></h3>
-      <div class="list" id="list"><div class="empty">Loading list records from database...</div></div>
+    <div class="section" style="background: transparent; border: none; padding: 0;">
+      
+      <div class="pc-tabs" id="pcTabsContainer">
+          <button class="pc-tab active" id="subTabMain" onclick="window.switchListSubTab('main')">Main List</button>
+          <button class="pc-tab" id="subTabExtended" onclick="window.switchListSubTab('extended')">Extended List</button>
+          <button class="pc-tab" id="subTabLegacy" onclick="window.switchListSubTab('legacy')">Legacy List</button>
+      </div>
+      
+      <div class="list-description" id="listDescriptionText">
+          The main section of the Demonlist. These demons are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points!
+      </div>
+
+      <div class="list" id="list">
+          <div class="empty">Loading list records from database...</div>
+      </div>
     </div>
 
-    <div class="section" id="submissionBox">
+    <div class="section" id="submissionBox" style="margin-top: 40px;">
       <h3>Submit a record or propose a new level</h3>
       
       <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
