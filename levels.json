@@ -572,7 +572,7 @@
     "aredlPlacement": null,
     "campus": "Western Visayas Campus",
     "creator": "DavJT",
-    "date": "2026-06-22T22:38:57.711Z",
+    "date": "2026-06-26T21:50:43.952Z",
     "diff": "Hard Demon",
     "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
     "id": "47620786",
@@ -590,6 +590,13 @@
         "name": "IceRig",
         "percent": 100,
         "video": "https://www.youtube.com/embed/rsih2CrkekY"
+      },
+      {
+        "campus": "Northern Mindanao Campus",
+        "date": "2026-06-26T21:50:43.952Z",
+        "name": "saulgoodman4",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/vSS05QbOUdA"
       }
     ],
     "video": "https://www.youtube.com/embed/rsih2CrkekY"
