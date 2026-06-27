@@ -1936,6 +1936,32 @@
   },
   {
     "aredlPlacement": null,
+    "campus": "Main Campus",
+    "creator": "sink",
+    "date": "2026-06-27T16:21:19.203Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "126502545",
+    "img": "https://img.youtube.com/vi/Dp3wSlUGpdc/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "MachinA DeluXXe",
+    "platPosition": null,
+    "rank": 66,
+    "rawTier": 1.16314779270633,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-27T16:21:19.203Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Dp3wSlUGpdc"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/Dp3wSlUGpdc"
+  },
+  {
+    "aredlPlacement": null,
     "campus": "",
     "creator": "SpKale",
     "date": "2026-06-26T15:07:20.340Z",
@@ -1946,7 +1972,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 66,
+    "rank": 67,
     "rawTier": 1.15694282380397,
     "verifier": "eelektrance",
     "victorList": [
@@ -1993,7 +2019,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 67,
+    "rank": 68,
     "rawTier": 1.13258831328724,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2047,7 +2073,7 @@
     "listType": "demon",
     "name": "GTA Z",
     "platPosition": null,
-    "rank": 68,
+    "rank": 69,
     "rawTier": 1.13091922005571,
     "verifier": "dibless",
     "victorList": [
@@ -2073,7 +2099,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 69,
+    "rank": 70,
     "rawTier": 1.05129302962836,
     "verifier": "Akoay",
     "victorList": [
@@ -2127,7 +2153,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 70,
+    "rank": 71,
     "rawTier": 1.03854344122658,
     "verifier": "sSeanyboii",
     "victorList": [
