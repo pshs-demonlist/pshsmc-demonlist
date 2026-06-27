@@ -6,7 +6,7 @@ import { submitRecordData } from './api.js';
 export const uiState = {
   allLevels: [],
   currentMainTab: 'demon',
-  currentSubTab: 'main', // Added for Main/Extended/Legacy tracking
+  currentSubTab: 'main', 
   currentStatsTab: 'demon'
 };
 
@@ -226,16 +226,23 @@ export function processLiveDecayFilterAndNews() {
         });
     }
 
+    // 2. CHECK FOR NEW VICTORS TODAY (Excluding the verifier)
     const records = getRecordList(lvl);
+    const verifierName = String(lvl.verifier || "Unknown").trim().toLowerCase();
+
     records.forEach(rec => {
+        const rawUsername = String(rec.username || rec.name || rec.player || rec.user || "Someone").trim();
+        
+        // Skip this record for the news feed if the player is the level's verifier
+        if (rawUsername.toLowerCase() === verifierName) return;
+
         const recDateData = checkIsToday(rec.date || rec.timestamp || rec.achieved);
         if (recDateData.isToday) {
-            const username = escapeHTML(String(rec.username || rec.name || rec.player || rec.user || "Someone").trim());
             validNews.push({
                 type: 'victor',
                 title: escapeHTML(targetName),
                 listType: listCategory,
-                username: username,
+                username: escapeHTML(rawUsername),
                 sortTime: recDateData.sortTime
             });
         }
@@ -269,8 +276,9 @@ export function processLiveDecayFilterAndNews() {
         itemDescriptionHtml = `Congratulations to <strong>${item.username}</strong> for beating <strong>${item.title}</strong> today! Huge GGS!`;
     }
 
+    const safeTitle = escapeHTML(item.title).replace(/'/g, "\\'");
     html += `
-      <div class="changelog-item">
+      <div class="changelog-item" onclick="openLevelFromNews('${safeTitle}')" style="cursor:pointer;" title="Click to view level">
         <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
           <span class="changelog-item-title">${item.title}</span>
           <span style="font-size:11px; white-space:nowrap; font-weight:700; color:${badgeColor};">
@@ -288,6 +296,22 @@ export function processLiveDecayFilterAndNews() {
   feed.appendChild(container);
 }
 
+// Global click handler for news feed items
+export function openLevelFromNews(lvlName) {
+  const lvl = uiState.allLevels.find(l => String(l.name || l.levelName).trim() === lvlName);
+  if (!lvl) return;
+  
+  const cat = getNormalizedListType(lvl);
+  switchMainListTab(cat); // Switch to Demon/Platformer/Challenge
+  
+  const rank = parseInt(lvl.rank || 999, 10);
+  if (rank <= 75) switchListSubTab('main');
+  else if (rank <= 150) switchListSubTab('extended');
+  else switchListSubTab('legacy');
+  
+  showLevelDetailPage(lvl, rank);
+}
+
 // --- LEVEL DASHBOARD & TABS ---
 export function switchMainListTab(tab) {
   uiState.currentMainTab = tab;
@@ -303,14 +327,12 @@ export function switchMainListTab(tab) {
   const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
   
-  // Reset sub-tab back to 'main' when changing list types
   switchListSubTab('main');
 }
 
 export function switchListSubTab(tab) {
   uiState.currentSubTab = tab;
   
-  // Update UI active state for sub-tabs
   ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
@@ -324,7 +346,6 @@ export function switchListSubTab(tab) {
   const target = document.getElementById(tabMap[tab]);
   if (target) target.classList.add('active');
   
-  // Update description
   const descEl = document.getElementById('listDescriptionText');
   if (descEl) {
     if (tab === 'main') {
@@ -351,22 +372,18 @@ export function renderLevelsDashboard() {
   list.innerHTML = '';
 
   let displayedItems = uiState.allLevels.filter(lvl => {
-    // 1. Filter by Main Category (Demon, Challenge, Platformer)
     if (getNormalizedListType(lvl) !== uiState.currentMainTab) return false;
     
-    // 2. Filter by Sub-tab Rank Limits
     const rank = parseInt(lvl.rank || 999, 10);
     if (uiState.currentSubTab === 'main' && rank > 75) return false;
     if (uiState.currentSubTab === 'extended' && (rank <= 75 || rank > 150)) return false;
     if (uiState.currentSubTab === 'legacy' && rank <= 150) return false;
 
-    // 3. Filter by Campus
     const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus').trim());
     const records = getRecordList(lvl);
     const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => escapeHTML(String(r.campus || 'Main Campus').trim()) === campusVal));
     if (!campusMatch) return false;
 
-    // 4. Filter by Search Query
     return (
       String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
       String(lvl.creator || '').toLowerCase().includes(query) ||
@@ -729,3 +746,22 @@ export function bindSubmitHandler() {
     }
   });
 }
+
+// =========================================================
+// GLOBAL EXPORTS FOR INLINE HTML ONCLICK HANDLERS
+// =========================================================
+// ES6 modules wall off your functions. If your HTML buttons
+// use `onclick="switchListSubTab('main')"`, they need these:
+window.switchPage = switchPage;
+window.goToLevelsDashboard = goToLevelsDashboard;
+window.goToSubmissionBox = goToSubmissionBox;
+window.toggleNavMenu = toggleNavMenu;
+window.closeNavMenu = closeNavMenu;
+window.openGuidelinesModal = openGuidelinesModal;
+window.closeGuidelinesModal = closeGuidelinesModal;
+window.toggleThemeMode = toggleThemeMode;
+window.switchMainListTab = switchMainListTab;
+window.switchListSubTab = switchListSubTab;
+window.switchStatsPageListTab = switchStatsPageListTab;
+window.viewPlayerVideo = viewPlayerVideo;
+window.openLevelFromNews = openLevelFromNews;
