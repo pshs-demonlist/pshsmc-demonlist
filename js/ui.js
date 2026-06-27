@@ -148,33 +148,43 @@ export function processLiveDecayFilterAndNews() {
 
   let validNews = [];
 
-  uiState.allLevels.forEach(lvl => {
-    const currentRank = parseInt(lvl.rank || 999, 10);
-    
-    // GUARANTEED SAFE: Explicitly extracts date from the root level object context only
-    const dateStr = String(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp || ''); 
-    if (!dateStr) return;
-
+  // Helper: Checks if a date string matches today and grabs a timestamp for sorting
+  const checkIsToday = (dateStr) => {
+    if (!dateStr) return { isToday: false, sortTime: 0 };
     let itemDayStr = "";
-    const strMatch = dateStr.match(/(\d{4}-\d{2}-\d{2})/);
+    const strMatch = String(dateStr).match(/(\d{4}-\d{2}-\d{2})/);
     
     if (strMatch) {
       itemDayStr = strMatch[1];
     } else {
       const parsedDate = new Date(dateStr);
-      if (isNaN(parsedDate.getTime())) return; 
+      if (isNaN(parsedDate.getTime())) return { isToday: false, sortTime: 0 };
       itemDayStr = parsedDate.getFullYear() + '-' + 
                    String(parsedDate.getMonth() + 1).padStart(2, '0') + '-' + 
                    String(parsedDate.getDate()).padStart(2, '0');
     }
+    
+    const cleanDateStr = String(dateStr).replace(/[A-Za-z]+$/, '').trim();
+    const sortDateObj = new Date(cleanDateStr);
+    const sortTimestamp = isNaN(sortDateObj.getTime()) ? Date.now() : sortDateObj.getTime();
 
-    if (itemDayStr === targetTodayStr) {
-        const listCategory = getNormalizedListType(lvl);
-        const categorySortedLevels = uiState.allLevels
-          .filter(l => getNormalizedListType(l) === listCategory)
-          .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+    return { isToday: (itemDayStr === targetTodayStr), sortTime: sortTimestamp };
+  };
 
-        const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
+  uiState.allLevels.forEach(lvl => {
+    const currentRank = parseInt(lvl.rank || 999, 10);
+    const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
+    const listCategory = getNormalizedListType(lvl);
+    
+    // Sort the current category so we know what levels sit at #76 and #151
+    const categorySortedLevels = uiState.allLevels
+      .filter(l => getNormalizedListType(l) === listCategory)
+      .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+
+    // 1. CHECK FOR NEW LEVEL PLACEMENTS
+    const levelDateData = checkIsToday(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp);
+    
+    if (levelDateData.isToday) {
         const indexInSorted = categorySortedLevels.findIndex(item => 
           String(item.name || item.levelName || "Unnamed Level").trim() === targetName
         );
@@ -200,18 +210,41 @@ export function processLiveDecayFilterAndNews() {
           placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
         }
 
-        const cleanDateStr = dateStr.replace(/[A-Za-z]+$/, '').trim();
-        const sortDateObj = new Date(cleanDateStr);
-        const sortTimestamp = isNaN(sortDateObj.getTime()) ? 0 : sortDateObj.getTime();
+        // List Pushing Logic (0-indexed array, so index 75 is rank #76)
+        if (currentRank <= 75 && categorySortedLevels.length > 75) {
+            const pushedExtended = escapeHTML(categorySortedLevels[75].name || categorySortedLevels[75].levelName || "Unnamed");
+            placementText += `, this pushes <strong>${pushedExtended}</strong> into the <strong>Extended List</strong>`;
+        } else if (currentRank > 75 && currentRank <= 150 && categorySortedLevels.length > 150) {
+            const pushedLegacy = escapeHTML(categorySortedLevels[150].name || categorySortedLevels[150].levelName || "Unnamed");
+            placementText += `, this pushes <strong>${pushedLegacy}</strong> into the <strong>Legacy List</strong>`;
+        }
 
         validNews.push({
+          type: 'placement',
           title: escapeHTML(targetName),
           rank: currentRank,
           listType: listCategory,
           placementText: placementText,
-          sortTime: sortTimestamp 
+          sortTime: levelDateData.sortTime 
         });
     }
+
+    // 2. CHECK FOR NEW VICTORS TODAY
+    const records = getRecordList(lvl);
+    records.forEach(rec => {
+        // Look for a date property on the individual record
+        const recDateData = checkIsToday(rec.date || rec.timestamp || rec.achieved);
+        if (recDateData.isToday) {
+            const username = escapeHTML(String(rec.username || rec.name || rec.player || rec.user || "Someone").trim());
+            validNews.push({
+                type: 'victor',
+                title: escapeHTML(targetName),
+                listType: listCategory,
+                username: username,
+                sortTime: recDateData.sortTime
+            });
+        }
+    });
   });
 
   validNews.sort((a, b) => b.sortTime - a.sortTime);
@@ -234,6 +267,14 @@ export function processLiveDecayFilterAndNews() {
     if (item.listType === 'challenge') { badgeText = 'CHALLENGE LIST'; badgeColor = '#f59e0b'; }
     else if (item.listType === 'platformer') { badgeText = 'PLATFORMER LIST'; badgeColor = '#3b82f6'; }
 
+    // Differentiate between a New Level Placement vs a New Victor
+    let itemDescriptionHtml = '';
+    if (item.type === 'placement') {
+        itemDescriptionHtml = `Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.`;
+    } else if (item.type === 'victor') {
+        itemDescriptionHtml = `Congratulations to <strong>${item.username}</strong> for beating <strong>${item.title}</strong> today! Huge GGS!`;
+    }
+
     html += `
       <div class="changelog-item">
         <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
@@ -243,7 +284,7 @@ export function processLiveDecayFilterAndNews() {
           </span>
         </div>
         <div class="changelog-item-desc">
-          Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.
+          ${itemDescriptionHtml}
         </div>
       </div>
     `;
