@@ -1,6 +1,6 @@
 // js/api.js
 import { CONFIG } from './config.js';
-import * as UI from './ui.js';
+import * as UI from './ui/index.js';
 
 const DATABASE_CACHE_KEY = "pshs-demonlist-cache";
 
