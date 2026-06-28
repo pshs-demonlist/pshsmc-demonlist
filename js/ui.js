@@ -284,7 +284,7 @@ export function processLiveDecayFilterAndNews() {
         itemDescriptionHtml = `Congratulations to <strong>${item.username}</strong> for beating <strong>${item.title}</strong> today! Huge GGS!`;
     }
 
-    const safeTitle = escapeHTML(item.title).replace(/'/g, "\\'");
+    const safeTitle = escapeHTML(item.title).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
     html += `
       <div class="changelog-item" onclick="openLevelFromNews('${safeTitle}')" style="cursor:pointer;" title="Click to view level">
         <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
