@@ -1,5 +1,6 @@
 // js/api.js
 import { CONFIG } from './config.js';
+import * as UI from './ui.js';
 
 const DATABASE_CACHE_KEY = "pshs-demonlist-cache";
 
@@ -35,11 +36,28 @@ export async function loadDatabase() {
           if (cached) {
               const parsed = JSON.parse(cached);
 
+              let cachedLevels = [];
+
+              if (Array.isArray(parsed.data)) {
+                cachedLevels = parsed.data;
+              } else if (parsed.data && typeof parsed.data === 'object') {
+                cachedLevels =
+                  parsed.data.levels ??
+                  parsed.data.list ??
+                  parsed.data.data ??
+                  parsed.data.records ??
+                  [];
+              }
+
               console.warn("Using cached database.");
 
               return {
                 success: true,
-                levels: parsed.data,
+                levels: cachedLevels.filter(
+                  item =>
+                    item &&
+                    typeof item === "object"
+                ),
                 fromCache: true
               };
           }
@@ -112,8 +130,10 @@ export async function submitRecordData(payload) {
       if (data && data.status === 'error') {
         throw new Error(data.message || "The server rejected your submission.");
       }
-    } catch (jsonErr) {
+    } catch {
       UI.showOfflineBanner("Offline (using cached data)");
+    }
   }
+
   return true;
 }
