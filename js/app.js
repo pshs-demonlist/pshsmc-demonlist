@@ -1,6 +1,6 @@
 // js/app.js
 import { loadDatabase } from './api.js';
-import * as UI from './ui.js';
+import * as UI from './ui/index.js';
 
 function safeExecute(fn, context) {
   try {
