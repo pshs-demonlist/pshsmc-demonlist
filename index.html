@@ -63,6 +63,17 @@
     align-items: center;
     transition: background 0.3s, border-color 0.3s;
   }
+  .offline-banner {
+    background: #f5c542;
+    color: #222;
+    font-weight: 600;
+    padding: 10px 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  body.light-theme .offline-banner {
+    color: #222;
+  }
   .menu-trigger {
     background: none;
     border: none;
@@ -581,6 +592,8 @@
   </button>
 </header>
 
+<div id="offlineBanner" class="offline-banner" hidden></div>
+
 <nav class="nav-menu" id="navMenu">
   <span class="nav-item" onclick="switchPage('landing')">Home Dashboard</span>
   <span class="nav-item" onclick="goToLevelsDashboard()">View the Lists</span>
@@ -816,6 +829,18 @@
   </footer>
 
 </div>
+
+<script>
+window.PSHS_CONFIG = {
+    // Example overrides.
+
+    // API: {
+    //     APPS_SCRIPT_URL: "...",
+    //     GITHUB_PRIMARY_URL: "...",
+    //     GITHUB_CDN_URL: "..."
+    // }
+};
+</script>
 
 <script type="module" src="js/app.js"></script>
 
