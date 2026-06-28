@@ -1746,6 +1746,32 @@
   {
     "aredlPlacement": null,
     "campus": "Main Campus",
+    "creator": "Bluepper",
+    "date": "2026-06-28T15:38:21.687Z",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "id": "131475001",
+    "img": "https://img.youtube.com/vi/dUfBatyk3vA/maxresdefault.jpg",
+    "listType": "demon",
+    "name": "Hyper Techno",
+    "platPosition": null,
+    "rank": 60,
+    "rawTier": 2.09798270893372,
+    "verifier": "sSeanyboii",
+    "victorList": [
+      {
+        "campus": "Main Campus",
+        "date": "2026-06-28T15:38:21.687Z",
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/dUfBatyk3vA"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/dUfBatyk3vA"
+  },
+  {
+    "aredlPlacement": null,
+    "campus": "Main Campus",
     "creator": "TheRealSalad",
     "date": "2026-06-21T17:21:55.661Z",
     "diff": "Easy Demon",
@@ -1755,7 +1781,7 @@
     "listType": "demon",
     "name": "Speed of Light",
     "platPosition": null,
-    "rank": 60,
+    "rank": 61,
     "rawTier": 2.09656218402427,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1781,7 +1807,7 @@
     "listType": "demon",
     "name": "Ultra Paracosm",
     "platPosition": null,
-    "rank": 61,
+    "rank": 62,
     "rawTier": 2.04198312236287,
     "verifier": "sadboi202",
     "victorList": [
@@ -1821,7 +1847,7 @@
     "listType": "demon",
     "name": "Theory of every v2",
     "platPosition": null,
-    "rank": 62,
+    "rank": 63,
     "rawTier": 2.02350501209817,
     "verifier": "dibless",
     "victorList": [
@@ -1847,7 +1873,7 @@
     "listType": "demon",
     "name": "GGEZ",
     "platPosition": null,
-    "rank": 63,
+    "rank": 64,
     "rawTier": 1.90697674418605,
     "verifier": "dibless",
     "victorList": [
@@ -1873,7 +1899,7 @@
     "listType": "demon",
     "name": "ISpyWithMyLittleEye",
     "platPosition": null,
-    "rank": 64,
+    "rank": 65,
     "rawTier": 1.86917775665399,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -1906,7 +1932,7 @@
     "listType": "demon",
     "name": "Speed Racer",
     "platPosition": null,
-    "rank": 65,
+    "rank": 66,
     "rawTier": 1.86287697982209,
     "verifier": "dibless",
     "victorList": [
@@ -1939,7 +1965,7 @@
     "listType": "demon",
     "name": "iS",
     "platPosition": null,
-    "rank": 66,
+    "rank": 67,
     "rawTier": 1.24988662131519,
     "verifier": "dibless",
     "victorList": [
@@ -1972,7 +1998,7 @@
     "listType": "demon",
     "name": "red alert",
     "platPosition": null,
-    "rank": 67,
+    "rank": 68,
     "rawTier": 1.17682663207955,
     "verifier": "dibless",
     "victorList": [
@@ -1998,7 +2024,7 @@
     "listType": "demon",
     "name": "MachinA DeluXXe",
     "platPosition": null,
-    "rank": 68,
+    "rank": 69,
     "rawTier": 1.16314779270633,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2024,7 +2050,7 @@
     "listType": "demon",
     "name": "Shiver",
     "platPosition": null,
-    "rank": 69,
+    "rank": 70,
     "rawTier": 1.15694282380397,
     "verifier": "eelektrance",
     "victorList": [
@@ -2071,7 +2097,7 @@
     "listType": "demon",
     "name": "Platinum Adventure",
     "platPosition": null,
-    "rank": 70,
+    "rank": 71,
     "rawTier": 1.13258831328724,
     "verifier": "sSeanyboii",
     "victorList": [
@@ -2125,7 +2151,7 @@
     "listType": "demon",
     "name": "GTA Z",
     "platPosition": null,
-    "rank": 71,
+    "rank": 72,
     "rawTier": 1.13091922005571,
     "verifier": "dibless",
     "victorList": [
@@ -2151,7 +2177,7 @@
     "listType": "demon",
     "name": "THE LIGHTNING ROAD",
     "platPosition": null,
-    "rank": 72,
+    "rank": 73,
     "rawTier": 1.05129302962836,
     "verifier": "Akoay",
     "victorList": [
@@ -2205,7 +2231,7 @@
     "listType": "demon",
     "name": "The Nightmare",
     "platPosition": null,
-    "rank": 73,
+    "rank": 74,
     "rawTier": 1.03854344122658,
     "verifier": "sSeanyboii",
     "victorList": [
