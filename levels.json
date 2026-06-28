@@ -2178,7 +2178,7 @@
     "name": "GTA Z",
     "platPosition": null,
     "rank": 73,
-    "rawTier": 1.13091922005571,
+    "rawTier": 1.13060686015831,
     "verifier": "dibless",
     "victorList": [
       {
@@ -2187,6 +2187,13 @@
         "name": "dibless",
         "percent": 100,
         "video": "https://www.youtube.com/embed/9eoxZAtT0BY"
+      },
+      {
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-28T18:09:41.053Z",
+        "name": "IceRig",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/YR4O8guwu88"
       }
     ],
     "video": "https://www.youtube.com/embed/9eoxZAtT0BY"
