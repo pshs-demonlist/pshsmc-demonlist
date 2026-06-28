@@ -13,7 +13,12 @@ function safeExecute(fn, context) {
 async function initApp() {
   UI.clearUIFieldsToZero();
   
-  const fetchedLevels = await loadDatabase();
+  const result = await loadDatabase();
+  const fetchedLevels = result.levels;
+  
+  if (result.fromCache) {
+  console.warn("[Offline] Using cached database.");
+  }
   
   if (!fetchedLevels || fetchedLevels.length === 0) {
     console.error("[Critical] Master database array is completely empty or failed to load.");

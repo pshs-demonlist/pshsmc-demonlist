@@ -1,6 +1,8 @@
 // js/api.js
 import { CONFIG } from './config.js';
 
+const DATABASE_CACHE_KEY = "pshs-demonlist-cache";
+
 export async function loadDatabase() {
   let rawData = null;
   const fetchPayload = async (url) => {
@@ -26,7 +28,30 @@ export async function loadDatabase() {
       rawData = await fetchPayload(CONFIG.API.GITHUB_CDN_URL);
     } catch (e) {
       console.error("CDN fetch also failed.", e);
-      return false;
+
+      try {
+          const cached = localStorage.getItem(DATABASE_CACHE_KEY);
+
+          if (cached) {
+              const parsed = JSON.parse(cached);
+
+              console.warn("Using cached database.");
+
+              return {
+                success: true,
+                levels: parsed.data,
+                fromCache: true
+              };
+          }
+      } catch (cacheErr) {
+          console.error("Cached database is invalid.", cacheErr);
+      }
+
+      return {
+        success: false,
+        levels: [],
+        fromCache: false
+      };
     }
   }
 
@@ -47,8 +72,28 @@ export async function loadDatabase() {
     }
   }
   
-  return levels.filter(item => typeof item === 'object' && item !== null);
-}
+  const filteredLevels = levels.filter(
+  item => typeof item === "object" && item !== null
+  );
+
+  try {
+    localStorage.setItem(
+      DATABASE_CACHE_KEY,
+      JSON.stringify({
+        timestamp: Date.now(),
+        data: rawData
+      })
+    );
+  } catch (err) {
+    console.warn("Unable to cache database.", err);
+  }
+
+  return {
+    success: true,
+    levels: filteredLevels,
+    fromCache: false
+  };
+};
 
 export async function submitRecordData(payload) {
   const res = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
@@ -68,8 +113,7 @@ export async function submitRecordData(payload) {
         throw new Error(data.message || "The server rejected your submission.");
       }
     } catch (jsonErr) {
-      console.warn("[Submission] Non-JSON response received. Assuming success based on HTTP status.", jsonErr);
-    }
+      UI.showOfflineBanner("Offline (using cached data)");
   }
   return true;
 }

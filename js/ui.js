@@ -97,6 +97,14 @@ export function displayFallbackUIMessage(elementId, message) {
   if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
 }
 
+export function showOfflineBanner(message) {
+    const banner = document.getElementById("offlineBanner");
+    if (!banner) return;
+
+    banner.textContent = message;
+    banner.hidden = false;
+}
+
 // --- METRICS & FILTERS ---
 export function clearUIFieldsToZero() {
   ['heroCountLevels', 'heroCountPlayers', 'heroCountRecords'].forEach(id => {
@@ -765,3 +773,4 @@ window.switchListSubTab = switchListSubTab;
 window.switchStatsPageListTab = switchStatsPageListTab;
 window.viewPlayerVideo = viewPlayerVideo;
 window.openLevelFromNews = openLevelFromNews;
+window.showOfflineBanner = showOfflineBanner;
