@@ -40,35 +40,67 @@ export function processLiveDecayFilterAndNews() {
     return { isToday: (itemDayStr === targetTodayStr), sortTime: sortTimestamp };
   };
 
-  // --- 1. PRE-COMPUTE CATEGORIES & PUSH CASCADES BY RANK ---
+  // --- 1. SEPARATE AND SORT BY CATEGORY ---
   const categories = {};
   uiState.allLevels.forEach(lvl => {
     const cat = getNormalizedListType(lvl);
     if (!categories[cat]) categories[cat] = [];
-    categories[cat].push(lvl);
+    categories[cat].push({ ...lvl }); // Deep-ish copy to safely manipulate ranks in simulation
   });
 
-  // Ensure every category is perfectly sorted by rank
+  // Sort categories by current rank
   Object.keys(categories).forEach(cat => {
     categories[cat].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
   });
 
-  const todayMains = {};
-  const todayExts = {};
+  // --- 2. HISTORICAL SIMULATION (BACKWARD STEPPING) ---
+  // Maps to store the exact pushed levels tracked by target level name
+  const exactPushedExtendedMap = {};
+  const exactPushedLegacyMap = {};
 
-  // Find all levels added today and group them by their tier threshold natively sorted by rank
   Object.keys(categories).forEach(cat => {
-    todayMains[cat] = categories[cat].filter(l => {
-        const d = checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp);
-        return d.isToday && parseInt(l.rank || 999) <= 75;
+    let currentSimList = [...categories[cat]];
+
+    // Gather today's additions in this category and sort them NEWEST FIRST (reverse chronological)
+    let todaysAdditions = currentSimList.filter(l => {
+      return checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp).isToday;
+    }).sort((a, b) => {
+      const timeA = checkIsToday(a.createdDate || a.date || a.publishDate || a.added || a.timestamp).sortTime;
+      const timeB = checkIsToday(b.createdDate || b.date || b.publishDate || b.added || b.timestamp).sortTime;
+      return timeB - timeA; // Newest first for reverse simulation
     });
-    todayExts[cat] = categories[cat].filter(l => {
-        const d = checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp);
-        return d.isToday && parseInt(l.rank || 999) > 75 && parseInt(l.rank || 999) <= 150;
+
+    // Step backward through time, removing levels one by one
+    todaysAdditions.forEach(addition => {
+      const addName = String(addition.name || addition.levelName || "").trim().toLowerCase();
+      
+      // Find where it currently sits in our simulation list
+      const idx = currentSimList.findIndex(x => String(x.name || x.levelName || "").trim().toLowerCase() === addName);
+      if (idx === -1) return;
+
+      const placementRank = idx + 1; // 1-based index rank right before removal
+
+      // Capture what was pushed *right before* this level was added
+      if (placementRank <= 75 && currentSimList.length > 75) {
+        // The level currently at index 75 (rank 76) is the one being pushed out of the Main list
+        const pushedLvl = currentSimList[75]; 
+        if (pushedLvl) {
+          exactPushedExtendedMap[addName] = pushedLvl.name || pushedLvl.levelName || "Unnamed";
+        }
+      } else if (placementRank > 75 && placementRank <= 150 && currentSimList.length > 150) {
+        // The level currently at index 150 (rank 151) is the one being pushed out of the Extended list
+        const pushedLvl = currentSimList[150];
+        if (pushedLvl) {
+          exactPushedLegacyMap[addName] = pushedLvl.name || pushedLvl.levelName || "Unnamed";
+        }
+      }
+
+      // Reverse the push effect: Remove the added level, shifting everyone below it back UP
+      currentSimList.splice(idx, 1);
     });
   });
-  // ------------------------------------------------
 
+  // --- 3. BUILD THE NEWS FEED USING LIVE RESULTS ---
   uiState.allLevels.forEach(lvl => {
     const currentRank = parseInt(lvl.rank || 999, 10);
     const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
@@ -99,32 +131,12 @@ export function processLiveDecayFilterAndNews() {
           placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
         }
 
-        // Apply Offset Logic accurately by strictly utilizing Rank sorting arrays
-        if (currentRank <= 75 && categorySortedLevels.length > 75) {
-            const arr = todayMains[listCategory] || [];
-            const myIdx = arr.findIndex(x => String(x.name || x.levelName).trim().toLowerCase() === targetName.toLowerCase());
-            const validIdx = myIdx !== -1 ? myIdx : 0;
-            
-            // The highest ranked level (idx 0) pushes the deepest level out
-            const offset = (arr.length - 1) - validIdx;
-            const targetIndex = 75 + offset;
-
-            if (targetIndex < categorySortedLevels.length) {
-                const pushedExtended = escapeHTML(categorySortedLevels[targetIndex].name || categorySortedLevels[targetIndex].levelName || "Unnamed");
-                placementText += `, this pushes <strong>${pushedExtended}</strong> into the <strong>Extended List</strong>`;
-            }
-        } else if (currentRank > 75 && currentRank <= 150 && categorySortedLevels.length > 150) {
-            const arr = todayExts[listCategory] || [];
-            const myIdx = arr.findIndex(x => String(x.name || x.levelName).trim().toLowerCase() === targetName.toLowerCase());
-            const validIdx = myIdx !== -1 ? myIdx : 0;
-            
-            const offset = (arr.length - 1) - validIdx;
-            const targetIndex = 150 + offset;
-
-            if (targetIndex < categorySortedLevels.length) {
-                const pushedLegacy = escapeHTML(categorySortedLevels[targetIndex].name || categorySortedLevels[targetIndex].levelName || "Unnamed");
-                placementText += `, this pushes <strong>${pushedLegacy}</strong> into the <strong>Legacy List</strong>`;
-            }
+        // Check our simulated historical maps for the exact pushed items
+        const lookKey = targetName.toLowerCase();
+        if (exactPushedExtendedMap[lookKey]) {
+            placementText += `, this pushes <strong>${escapeHTML(exactPushedExtendedMap[lookKey])}</strong> into the <strong>Extended List</strong>`;
+        } else if (exactPushedLegacyMap[lookKey]) {
+            placementText += `, this pushes <strong>${escapeHTML(exactPushedLegacyMap[lookKey])}</strong> into the <strong>Legacy List</strong>`;
         }
 
         validNews.push({ type: 'placement', title: escapeHTML(targetName), rank: currentRank, listType: listCategory, placementText: placementText, sortTime: levelDateData.sortTime });
