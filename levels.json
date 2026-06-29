@@ -919,7 +919,7 @@
   },
   {
     "id": "63075323",
-    "rank": 33,
+    "rank": 32,
     "name": "white women",
     "creator": "heatherhayes",
     "verifier": "daBlooKat121",
@@ -945,7 +945,7 @@
   },
   {
     "id": "92742742",
-    "rank": 34,
+    "rank": 33,
     "name": "tower descent",
     "creator": "pocke",
     "verifier": "daBlooKat121",
@@ -971,7 +971,7 @@
   },
   {
     "id": "114532158",
-    "rank": 35,
+    "rank": 34,
     "name": "Troll Madness",
     "creator": "zyphur",
     "verifier": "sSeanyboii",
@@ -997,7 +997,7 @@
   },
   {
     "id": "111205474",
-    "rank": 36,
+    "rank": 35,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
     "verifier": "daBlooKat121",
@@ -1023,7 +1023,7 @@
   },
   {
     "id": "25706351",
-    "rank": 37,
+    "rank": 36,
     "name": "HeLL",
     "creator": "Serponge",
     "verifier": "dibless",
@@ -1049,7 +1049,7 @@
   },
   {
     "id": "16667379",
-    "rank": 38,
+    "rank": 37,
     "name": "Liberation",
     "creator": "Serponge",
     "verifier": "LightBlu",
@@ -1082,7 +1082,7 @@
   },
   {
     "id": "3264805",
-    "rank": 39,
+    "rank": 38,
     "name": "Theory of SkriLLex",
     "creator": "noobas",
     "verifier": "dibless",
@@ -1108,7 +1108,7 @@
   },
   {
     "id": "94716697",
-    "rank": 40,
+    "rank": 39,
     "name": "CELESTIA",
     "creator": "notxo",
     "verifier": "sSeanyboii",
@@ -1134,7 +1134,7 @@
   },
   {
     "id": "58002670",
-    "rank": 41,
+    "rank": 40,
     "name": "Sakupen Egg",
     "creator": "Sivlol",
     "verifier": "daBlooKat121",
@@ -1174,7 +1174,7 @@
   },
   {
     "id": "134645078",
-    "rank": 42,
+    "rank": 41,
     "name": "amethyst",
     "creator": "ZioGDVN",
     "verifier": "daBlooKat121",
@@ -1200,7 +1200,7 @@
   },
   {
     "id": "21337579",
-    "rank": 43,
+    "rank": 42,
     "name": "Gold Temple",
     "creator": "Serponge",
     "verifier": "dibless",
@@ -1226,7 +1226,7 @@
   },
   {
     "id": "91402",
-    "rank": 44,
+    "rank": 43,
     "name": "FINAL DESTINATION",
     "creator": "ZurkQyulox",
     "verifier": "eelektrance",
@@ -1252,7 +1252,7 @@
   },
   {
     "id": "118509879",
-    "rank": 45,
+    "rank": 44,
     "name": "Skeletal Shenanigans",
     "creator": "YoReid",
     "verifier": "sSeanyboii",
@@ -1278,7 +1278,7 @@
   },
   {
     "id": "61417747",
-    "rank": 46,
+    "rank": 45,
     "name": "potal",
     "creator": "Sillow",
     "verifier": "sSeanyboii",
@@ -1304,7 +1304,7 @@
   },
   {
     "id": "7016598",
-    "rank": 47,
+    "rank": 46,
     "name": "Speed of Light II",
     "creator": "TheRealSalad",
     "verifier": "sSeanyboii",
@@ -1330,7 +1330,7 @@
   },
   {
     "id": "10972106",
-    "rank": 48,
+    "rank": 47,
     "name": "Solar Circles",
     "creator": "D4rkGryf",
     "verifier": "daBlooKat121",
@@ -1363,7 +1363,7 @@
   },
   {
     "id": "34085027",
-    "rank": 49,
+    "rank": 48,
     "name": "B",
     "creator": "motleyorc",
     "verifier": "sSeanyboii",
@@ -1403,7 +1403,7 @@
   },
   {
     "id": "96716452",
-    "rank": 50,
+    "rank": 49,
     "name": "Living Open",
     "creator": "MaFFaKa",
     "verifier": "sSeanyboii",
@@ -1429,7 +1429,7 @@
   },
   {
     "id": "78964835",
-    "rank": 51,
+    "rank": 50,
     "name": "SemiCircles",
     "creator": "Abyssinia",
     "verifier": "sSeanyboii",
@@ -1455,7 +1455,7 @@
   },
   {
     "id": "20",
-    "rank": 52,
+    "rank": 51,
     "name": "Deadlocked",
     "creator": "RobTop",
     "verifier": "sSeanyboii",
@@ -1483,6 +1483,32 @@
         "video": "https://www.youtube.com/embed/kvye18-vHvw",
         "campus": "Main Campus",
         "date": "2026-06-21T20:26:59.582Z"
+      }
+    ]
+  },
+  {
+    "id": "2997354",
+    "rank": 52,
+    "name": "DeCode",
+    "creator": "Rek3dge",
+    "verifier": "dibless",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/CSHP8SMIWco/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/CSHP8SMIWco",
+    "listType": "demon",
+    "rawTier": 4.116297722168752,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-29T21:24:10.640Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/CSHP8SMIWco",
+        "campus": "Main Campus",
+        "date": "2026-06-29T21:24:10.640Z"
       }
     ]
   },
