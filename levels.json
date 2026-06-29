@@ -2909,8 +2909,34 @@
     ]
   },
   {
-    "id": "117454090",
+    "id": "139324232",
     "rank": 20,
+    "name": "mYsTeRy MaNsIoN",
+    "creator": "dibless3",
+    "verifier": "dibless",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/G3bF-xeik5Y/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/G3bF-xeik5Y",
+    "listType": "challenge",
+    "rawTier": 2.1,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-29T20:49:13.291Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/G3bF-xeik5Y",
+        "campus": "Main Campus",
+        "date": "2026-06-29T20:49:13.291Z"
+      }
+    ]
+  },
+  {
+    "id": "117454090",
+    "rank": 21,
     "name": "Tidal wave 95",
     "creator": "Papetah",
     "verifier": "IceRig",
