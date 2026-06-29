@@ -40,37 +40,40 @@ export function processLiveDecayFilterAndNews() {
     return { isToday: (itemDayStr === targetTodayStr), sortTime: sortTimestamp };
   };
 
-  // --- PRE-CALCULATE TODAY'S ADDITIONS ---
-  // We need to know how many levels were added today to calculate accurate historical push offsets
-  const addedTodayByCat = {};
-  
+  // --- 1. PRE-COMPUTE CATEGORIES & PUSH CASCADES BY RANK ---
+  const categories = {};
   uiState.allLevels.forEach(lvl => {
-    const dateData = checkIsToday(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp);
-    if (dateData.isToday) {
-      const cat = getNormalizedListType(lvl);
-      if (!addedTodayByCat[cat]) addedTodayByCat[cat] = [];
-      addedTodayByCat[cat].push({ lvl, sortTime: dateData.sortTime, rank: parseInt(lvl.rank || 999, 10) });
-    }
+    const cat = getNormalizedListType(lvl);
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(lvl);
   });
 
-  // Sort today's additions chronologically (or by rank if timestamps are identical)
-  Object.keys(addedTodayByCat).forEach(cat => {
-    addedTodayByCat[cat].sort((a, b) => {
-      if (a.sortTime !== b.sortTime) return a.sortTime - b.sortTime;
-      return a.rank - b.rank; // Higher placed levels (smaller rank) process as pushing deeper
+  // Ensure every category is perfectly sorted by rank
+  Object.keys(categories).forEach(cat => {
+    categories[cat].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+  });
+
+  const todayMains = {};
+  const todayExts = {};
+
+  // Find all levels added today and group them by their tier threshold natively sorted by rank
+  Object.keys(categories).forEach(cat => {
+    todayMains[cat] = categories[cat].filter(l => {
+        const d = checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp);
+        return d.isToday && parseInt(l.rank || 999) <= 75;
+    });
+    todayExts[cat] = categories[cat].filter(l => {
+        const d = checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp);
+        return d.isToday && parseInt(l.rank || 999) > 75 && parseInt(l.rank || 999) <= 150;
     });
   });
-  // ----------------------------------------
+  // ------------------------------------------------
 
   uiState.allLevels.forEach(lvl => {
     const currentRank = parseInt(lvl.rank || 999, 10);
     const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
     const listCategory = getNormalizedListType(lvl);
-    
-    const categorySortedLevels = uiState.allLevels
-      .filter(l => getNormalizedListType(l) === listCategory)
-      .sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
-
+    const categorySortedLevels = categories[listCategory];
     const levelDateData = checkIsToday(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp);
     
     if (levelDateData.isToday) {
@@ -96,24 +99,28 @@ export function processLiveDecayFilterAndNews() {
           placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
         }
 
-        // Apply Offset Logic for accurate push tracking
+        // Apply Offset Logic accurately by strictly utilizing Rank sorting arrays
         if (currentRank <= 75 && categorySortedLevels.length > 75) {
-            const newMains = addedTodayByCat[listCategory].filter(x => x.rank <= 75);
-            const myIndex = newMains.findIndex(x => x.lvl === lvl);
-            const offset = newMains.length - 1 - myIndex;
-            const targetIndex = 75 + offset;
+            const arr = todayMains[listCategory] || [];
+            const myIdx = arr.findIndex(x => String(x.name || x.levelName).trim().toLowerCase() === targetName.toLowerCase());
+            const validIdx = myIdx !== -1 ? myIdx : 0;
             
-            // Only claim it pushed something if the list was full enough at the time
+            // The highest ranked level (idx 0) pushes the deepest level out
+            const offset = (arr.length - 1) - validIdx;
+            const targetIndex = 75 + offset;
+
             if (targetIndex < categorySortedLevels.length) {
                 const pushedExtended = escapeHTML(categorySortedLevels[targetIndex].name || categorySortedLevels[targetIndex].levelName || "Unnamed");
                 placementText += `, this pushes <strong>${pushedExtended}</strong> into the <strong>Extended List</strong>`;
             }
         } else if (currentRank > 75 && currentRank <= 150 && categorySortedLevels.length > 150) {
-            const newExts = addedTodayByCat[listCategory].filter(x => x.rank <= 150);
-            const myIndex = newExts.findIndex(x => x.lvl === lvl);
-            const offset = newExts.length - 1 - myIndex;
-            const targetIndex = 150 + offset;
+            const arr = todayExts[listCategory] || [];
+            const myIdx = arr.findIndex(x => String(x.name || x.levelName).trim().toLowerCase() === targetName.toLowerCase());
+            const validIdx = myIdx !== -1 ? myIdx : 0;
             
+            const offset = (arr.length - 1) - validIdx;
+            const targetIndex = 150 + offset;
+
             if (targetIndex < categorySortedLevels.length) {
                 const pushedLegacy = escapeHTML(categorySortedLevels[targetIndex].name || categorySortedLevels[targetIndex].levelName || "Unnamed");
                 placementText += `, this pushes <strong>${pushedLegacy}</strong> into the <strong>Legacy List</strong>`;
