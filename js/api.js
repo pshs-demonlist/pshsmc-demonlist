@@ -120,20 +120,36 @@ export async function submitRecordData(payload) {
     body: JSON.stringify(payload)
   });
 
+  // If the server explicitly says something is wrong (like a 422, 400, or 500 status code)
   if (!res.ok && res.type !== 'opaque') {
-    throw new Error(`Server connection failed (HTTP ${res.status}). Please try again later.`);
+    let serverMessage = `HTTP Error ${res.status}`;
+    try {
+      const errData = await res.json();
+      if (errData && errData.message) serverMessage = errData.message;
+    } catch {
+      // If it's HTML or text, try reading it as text to catch the raw 422 message
+      try {
+        const textError = await res.text();
+        serverMessage = textError.substring(0, 200); // Grab the first 200 characters of the error page
+      } catch {}
+    }
+    throw new Error(`Submission failed: ${serverMessage}`);
   }
 
+  // Parse response if it's accessible
   if (res.type !== 'opaque') {
     try {
       const data = await res.json();
       if (data && data.status === 'error') {
         throw new Error(data.message || "The server rejected your submission.");
       }
-    } catch {
-      UI.showOfflineBanner("Offline (using cached data)");
+    } catch (jsonError) {
+      // If parsing fails but res.ok was true, the server didn't send valid JSON
+      console.error("Failed to parse server response:", jsonError);
+      throw new Error("Server responded with invalid data format.");
     }
   }
 
+  // Only return true if everything explicitly passed validation without throwing
   return true;
 }
