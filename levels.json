@@ -2065,8 +2065,34 @@
     ]
   },
   {
-    "id": "65765662",
+    "id": "131426183",
     "rank": 71,
+    "name": "DJ",
+    "creator": "Split72",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/E8YIWwjo_44/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/E8YIWwjo_44",
+    "listType": "demon",
+    "rawTier": 1.5392156862745099,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-30T10:37:08.149Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/E8YIWwjo_44",
+        "campus": "Main Campus",
+        "date": "2026-06-30T10:37:08.149Z"
+      }
+    ]
+  },
+  {
+    "id": "65765662",
+    "rank": 72,
     "name": "iS",
     "creator": "Grenate",
     "verifier": "dibless",
@@ -2099,7 +2125,7 @@
   },
   {
     "id": "128665322",
-    "rank": 72,
+    "rank": 73,
     "name": "red alert",
     "creator": "ratliffigd",
     "verifier": "dibless",
@@ -2125,7 +2151,7 @@
   },
   {
     "id": "126502545",
-    "rank": 73,
+    "rank": 74,
     "name": "MachinA DeluXXe",
     "creator": "sink",
     "verifier": "sSeanyboii",
@@ -2151,7 +2177,7 @@
   },
   {
     "id": "56210242",
-    "rank": 74,
+    "rank": 75,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "eelektrance",
@@ -2198,7 +2224,7 @@
   },
   {
     "id": "5904109",
-    "rank": 75,
+    "rank": 76,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
@@ -2252,7 +2278,7 @@
   },
   {
     "id": "142685157",
-    "rank": 76,
+    "rank": 77,
     "name": "GTA Z",
     "creator": "EVILF",
     "verifier": "dibless",
@@ -2285,7 +2311,7 @@
   },
   {
     "id": "55520",
-    "rank": 77,
+    "rank": 78,
     "name": "THE LIGHTNING ROAD",
     "creator": "Timeless Real",
     "verifier": "Akoay",
@@ -2339,7 +2365,7 @@
   },
   {
     "id": "13519",
-    "rank": 78,
+    "rank": 79,
     "name": "The Nightmare",
     "creator": "Jax",
     "verifier": "sSeanyboii",
