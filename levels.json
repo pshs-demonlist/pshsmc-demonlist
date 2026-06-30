@@ -1711,8 +1711,34 @@
     ]
   },
   {
-    "id": "358750",
+    "id": "143231051",
     "rank": 59,
+    "name": "Blackfire Backfire",
+    "creator": "kira9999",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/14rUKBL6u2c/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/14rUKBL6u2c",
+    "listType": "demon",
+    "rawTier": 2.7270501835985312,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-30T11:14:46.043Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/14rUKBL6u2c",
+        "campus": "Main Campus",
+        "date": "2026-06-30T11:14:46.043Z"
+      }
+    ]
+  },
+  {
+    "id": "358750",
+    "rank": 60,
     "name": "Clutterfunk v2",
     "creator": "IIINePtunEIII",
     "verifier": "sSeanyboii",
@@ -1745,7 +1771,7 @@
   },
   {
     "id": "1347537",
-    "rank": 60,
+    "rank": 61,
     "name": "Invisible Clubstep",
     "creator": "J4cKy",
     "verifier": "Akoay",
@@ -1778,7 +1804,7 @@
   },
   {
     "id": "77132030",
-    "rank": 61,
+    "rank": 62,
     "name": "Ratio Circles",
     "creator": "ch4rlie03",
     "verifier": "sSeanyboii",
@@ -1804,7 +1830,7 @@
   },
   {
     "id": "45622672",
-    "rank": 62,
+    "rank": 63,
     "name": "Depressure",
     "creator": "Serponge",
     "verifier": "aldawg123",
@@ -1830,7 +1856,7 @@
   },
   {
     "id": "131475001",
-    "rank": 63,
+    "rank": 64,
     "name": "Hyper Techno",
     "creator": "Bluepper",
     "verifier": "sSeanyboii",
@@ -1856,7 +1882,7 @@
   },
   {
     "id": "5098465",
-    "rank": 64,
+    "rank": 65,
     "name": "Speed of Light",
     "creator": "TheRealSalad",
     "verifier": "sSeanyboii",
@@ -1882,7 +1908,7 @@
   },
   {
     "id": "11588490",
-    "rank": 65,
+    "rank": 66,
     "name": "Ultra Paracosm",
     "creator": "iIiRulasiIi",
     "verifier": "sadboi202",
@@ -1922,7 +1948,7 @@
   },
   {
     "id": "369294",
-    "rank": 66,
+    "rank": 67,
     "name": "Theory of every v2",
     "creator": "IIINePtunEIII",
     "verifier": "dibless",
@@ -1948,7 +1974,7 @@
   },
   {
     "id": "122299385",
-    "rank": 67,
+    "rank": 68,
     "name": "GGEZ",
     "creator": "wetols",
     "verifier": "dibless",
@@ -1974,7 +2000,7 @@
   },
   {
     "id": "143308401",
-    "rank": 68,
+    "rank": 69,
     "name": "entropie",
     "creator": "empsea",
     "verifier": "dibless",
@@ -2000,7 +2026,7 @@
   },
   {
     "id": "89886591",
-    "rank": 69,
+    "rank": 70,
     "name": "ISpyWithMyLittleEye",
     "creator": "Voxicat",
     "verifier": "sSeanyboii",
@@ -2033,7 +2059,7 @@
   },
   {
     "id": "3543219",
-    "rank": 70,
+    "rank": 71,
     "name": "Speed Racer",
     "creator": "ZenthicAlpha",
     "verifier": "dibless",
@@ -2066,7 +2092,7 @@
   },
   {
     "id": "131426183",
-    "rank": 71,
+    "rank": 72,
     "name": "DJ",
     "creator": "Split72",
     "verifier": "sSeanyboii",
@@ -2092,7 +2118,7 @@
   },
   {
     "id": "65765662",
-    "rank": 72,
+    "rank": 73,
     "name": "iS",
     "creator": "Grenate",
     "verifier": "dibless",
@@ -2125,7 +2151,7 @@
   },
   {
     "id": "128665322",
-    "rank": 73,
+    "rank": 74,
     "name": "red alert",
     "creator": "ratliffigd",
     "verifier": "dibless",
@@ -2151,7 +2177,7 @@
   },
   {
     "id": "126502545",
-    "rank": 74,
+    "rank": 75,
     "name": "MachinA DeluXXe",
     "creator": "sink",
     "verifier": "sSeanyboii",
@@ -2177,7 +2203,7 @@
   },
   {
     "id": "56210242",
-    "rank": 75,
+    "rank": 76,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "eelektrance",
@@ -2224,7 +2250,7 @@
   },
   {
     "id": "5904109",
-    "rank": 76,
+    "rank": 77,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
@@ -2278,7 +2304,7 @@
   },
   {
     "id": "142685157",
-    "rank": 77,
+    "rank": 78,
     "name": "GTA Z",
     "creator": "EVILF",
     "verifier": "dibless",
@@ -2311,7 +2337,7 @@
   },
   {
     "id": "55520",
-    "rank": 78,
+    "rank": 79,
     "name": "THE LIGHTNING ROAD",
     "creator": "Timeless Real",
     "verifier": "Akoay",
@@ -2365,7 +2391,7 @@
   },
   {
     "id": "13519",
-    "rank": 79,
+    "rank": 80,
     "name": "The Nightmare",
     "creator": "Jax",
     "verifier": "sSeanyboii",
