@@ -2613,7 +2613,7 @@
   },
   {
     "id": "141277411",
-    "rank": 8,
+    "rank": 7,
     "name": "Abbasiya",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -2646,7 +2646,7 @@
   },
   {
     "id": "124000994",
-    "rank": 9,
+    "rank": 8,
     "name": "Eon 96 100",
     "creator": "Byokki",
     "verifier": "Akoay",
@@ -2679,7 +2679,7 @@
   },
   {
     "id": "140948744",
-    "rank": 10,
+    "rank": 9,
     "name": "Maadi",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -2712,7 +2712,7 @@
   },
   {
     "id": "141442369",
-    "rank": 11,
+    "rank": 10,
     "name": "Ramses",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -2738,7 +2738,7 @@
   },
   {
     "id": "141601536",
-    "rank": 12,
+    "rank": 11,
     "name": "Shubra",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -2778,7 +2778,7 @@
   },
   {
     "id": "142055246",
-    "rank": 13,
+    "rank": 12,
     "name": "the tourist",
     "creator": "wavical",
     "verifier": "sSeanyboii",
@@ -2804,7 +2804,7 @@
   },
   {
     "id": "143193238",
-    "rank": 14,
+    "rank": 13,
     "name": "Yes Machine end",
     "creator": "dibless",
     "verifier": "dibless",
@@ -2830,7 +2830,7 @@
   },
   {
     "id": "140148900",
-    "rank": 15,
+    "rank": 14,
     "name": "Padwurk",
     "creator": "dibless",
     "verifier": "dibless",
@@ -2863,7 +2863,7 @@
   },
   {
     "id": "143250512",
-    "rank": 16,
+    "rank": 15,
     "name": "ws",
     "creator": "dibless",
     "verifier": "dibless",
@@ -2889,7 +2889,7 @@
   },
   {
     "id": "141063347",
-    "rank": 17,
+    "rank": 16,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -2929,7 +2929,7 @@
   },
   {
     "id": "141753444",
-    "rank": 18,
+    "rank": 17,
     "name": "Sakupen End 49-53",
     "creator": "Nick240",
     "verifier": "sSeanyboii",
@@ -2969,7 +2969,7 @@
   },
   {
     "id": "143250790",
-    "rank": 19,
+    "rank": 18,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -2995,7 +2995,7 @@
   },
   {
     "id": "143385344",
-    "rank": 20,
+    "rank": 19,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3028,7 +3028,7 @@
   },
   {
     "id": "139324232",
-    "rank": 21,
+    "rank": 20,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -3049,6 +3049,32 @@
         "video": "https://www.youtube.com/embed/G3bF-xeik5Y",
         "campus": "Main Campus",
         "date": "2026-06-29T20:49:13.291Z"
+      }
+    ]
+  },
+  {
+    "id": "143967625",
+    "rank": 21,
+    "name": "1 cps",
+    "creator": "IceRig",
+    "verifier": "IceRig",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/u3XRqZUdwlM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/u3XRqZUdwlM",
+    "listType": "challenge",
+    "rawTier": 1.4,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-02T13:25:16.851Z",
+    "campus": "Western Visayas campus",
+    "victorList": [
+      {
+        "name": "IceRig",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/u3XRqZUdwlM",
+        "campus": "Western Visayas campus",
+        "date": "2026-07-02T13:25:16.851Z"
       }
     ]
   },
