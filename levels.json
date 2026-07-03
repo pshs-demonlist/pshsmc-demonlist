@@ -612,7 +612,7 @@
     "img": "https://img.youtube.com/vi/qAJQ8t2gvE0/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/qAJQ8t2gvE0",
     "listType": "demon",
-    "rawTier": 15.757525773195876,
+    "rawTier": 15.757239679605668,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-29T20:24:42.366Z",
@@ -624,6 +624,13 @@
         "video": "https://www.youtube.com/embed/qAJQ8t2gvE0",
         "campus": "Main Campus",
         "date": "2026-06-29T20:24:42.366Z"
+      },
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/3s0wfzm_Zrc",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-03T00:00:01.000Z"
       }
     ]
   },
