@@ -402,7 +402,7 @@
     "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
     "video": "https://www.youtube.com/embed/8x0gpGutHUE",
     "listType": "demon",
-    "rawTier": 24,
+    "rawTier": 20.912345679012347,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-23T20:14:22.845Z",
@@ -421,6 +421,13 @@
         "video": "https://www.youtube.com/embed/_CDVD0VECao",
         "campus": "Davao Region Campus",
         "date": "2026-06-23T20:14:22.845Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/TRxvJQzQ6OI",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-04T13:12:51.908Z"
       }
     ]
   },
