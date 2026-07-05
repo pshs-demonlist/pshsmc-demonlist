@@ -794,7 +794,7 @@
     "img": "https://img.youtube.com/vi/quPd5eRGMEY/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/quPd5eRGMEY",
     "listType": "demon",
-    "rawTier": 17.218414676358602,
+    "rawTier": 17.21448087431694,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-21T12:10:30.924Z",
@@ -820,6 +820,13 @@
         "video": "https://www.youtube.com/embed/qzsSthR-jrw",
         "campus": "Western Visayas Campus",
         "date": "2026-07-04T10:33:52.429Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gWOiE2HEkT0",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-05T17:43:55.126Z"
       }
     ]
   },
