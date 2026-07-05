@@ -1733,7 +1733,7 @@
     "img": "https://img.youtube.com/vi/msYWaxlIazs/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/msYWaxlIazs",
     "listType": "demon",
-    "rawTier": 5.80559070516508,
+    "rawTier": 5.805527354765934,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-22T20:41:45.942Z",
@@ -1759,6 +1759,13 @@
         "video": "https://www.youtube.com/embed/UeDHuSeKrJ8",
         "campus": "Main Campus",
         "date": "2026-06-22T20:41:45.942Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/uJHqwXGtY3s",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-05T21:21:41.000Z"
       }
     ]
   },
