@@ -2841,7 +2841,7 @@
     "img": "https://img.youtube.com/vi/UCBy-iEOk6U/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/0zzEc-ryz9s",
     "listType": "demon",
-    "rawTier": 1.15694282380397,
+    "rawTier": 1.1585337915234823,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-26T15:07:20.340Z",
@@ -2874,6 +2874,13 @@
         "video": "https://www.youtube.com/embed/Mr2BKQlMH_8",
         "campus": "Northern Mindanao Campus",
         "date": "2026-06-26T15:07:20.340Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gWOiE2HEkT0",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-05T17:41:56.523Z"
       }
     ]
   },
