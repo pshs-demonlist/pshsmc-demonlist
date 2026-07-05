@@ -470,292 +470,292 @@
     ]
   },
   {
-  "id": "93916671",
-  "rank": 18,
-  "name": "Shukufuku",
-  "creator": "joker179114",
-  "verifier": "sskazeye",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/2gw3fsdYfXc/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/2gw3fsdYfXc",
-  "listType": "demon",
-  "rawTier": 22.147435897435898,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-05T13:43:14.026Z",
-  "campus": "Ilocos Region Campus",
-  "victorList": [
-    {
-      "name": "sskazeye",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/2gw3fsdYfXc",
-      "campus": "Ilocos Region Campus",
-      "date": "2026-07-05T13:43:14.026Z"
-    }
-  ]
-},
-{
-  "id": "56089612",
-  "rank": 19,
-  "name": "Zettabyte",
-  "creator": "Jenkins",
-  "verifier": "AliceMargatr0id",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/QcLIcb4Rdtc/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/QcLIcb4Rdtc",
-  "listType": "demon",
-  "rawTier": 21.185185185185187,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-03T00:00:01.000Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "AliceMargatr0id",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/QcLIcb4Rdtc",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-03T00:00:01.000Z"
-    }
-  ]
-},
-{
-  "id": "69491632",
-  "rank": 20,
-  "name": "Crowd Control",
-  "creator": "zDeadlox",
-  "verifier": "cosmopopz",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/fmdCCzJArL0/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/fmdCCzJArL0",
-  "listType": "demon",
-  "rawTier": 21.700374531835205,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-05T13:30:14.136Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "cosmopopz",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/fmdCCzJArL0",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-05T13:30:14.136Z"
-    }
-  ]
-},
-{
-  "id": "54917442",
-  "rank": 21,
-  "name": "CYCLONE",
-  "creator": "BIANOX",
-  "verifier": "cosmopopz",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/g5gi4xzaSHM/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/g5gi4xzaSHM",
-  "listType": "demon",
-  "rawTier": 21.198675496688743,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-05T13:29:24.460Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "cosmopopz",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/g5gi4xzaSHM",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-05T13:29:24.460Z"
-    }
-  ]
-},
-{
-  "id": "20761188",
-  "rank": 22,
-  "name": "Allegiance",
-  "creator": "nikroplays",
-  "verifier": "JapanGD",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/lIYKaQ6tRn0/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
-  "listType": "demon",
-  "rawTier": 21.2136563876652,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-06-17T01:42:23.658Z",
-  "campus": "Central Luzon Campus",
-  "victorList": [
-    {
-      "name": "JapanGD",
-      "percent": 77,
-      "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
-      "campus": "Central Luzon Campus",
-      "date": "2026-06-17T01:42:23.658Z"
-    },
-    {
-      "name": "cosmopopz",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/lqfSDSOQRl4",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-05T13:28:07.963Z"
-    }
-   ]
+    "id": "93916671",
+    "rank": 18,
+    "name": "Shukufuku",
+    "creator": "joker179114",
+    "verifier": "sskazeye",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/2gw3fsdYfXc/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/2gw3fsdYfXc",
+    "listType": "demon",
+    "rawTier": 22.147435897435898,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-05T13:43:14.026Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "sskazeye",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/2gw3fsdYfXc",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-05T13:43:14.026Z"
+      }
+    ]
   },
   {
-  "id": "30219145",
-  "rank": 23,
-  "name": "HyperSonic",
-  "creator": "ViPriN",
-  "verifier": "cosmopopz",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/Q2mU9-tU4tw/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/Q2mU9-tU4tw",
-  "listType": "demon",
-  "rawTier": 20.989473684210527,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-05T13:27:17.355Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "cosmopopz",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/Q2mU9-tU4tw",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-05T13:27:17.355Z"
-    }
-  ]
-},
-{
-  "id": "3979721",
-  "rank": 24,
-  "name": "Cataclysm",
-  "creator": "GGboy",
-  "verifier": "sadboi202",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
-  "video": "https://www.youtube.com/embed/8x0gpGutHUE",
-  "listType": "demon",
-  "rawTier": 20.912345679012347,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-06-23T20:14:22.845Z",
-  "campus": "",
-  "victorList": [
-    {
-      "name": "sadboi202",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/8x0gpGutHUE",
-      "campus": "",
-      "date": "2026-06-17T01:42:23.658Z"
-    },
-    {
-      "name": "voxigmd",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/_CDVD0VECao",
-      "campus": "Davao Region Campus",
-      "date": "2026-06-23T20:14:22.845Z"
-    },
-    {
-      "name": "Fortnitekid420",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/TRxvJQzQ6OI",
-      "campus": "Zamboanga Peninsula Region Campus",
-      "date": "2026-07-04T13:12:51.908Z"
-    }
-  ]
-},
-{
-  "id": "81148582",
-  "rank": 25,
-  "name": "Sweater Weather",
-  "creator": "VelYT",
-  "verifier": "Fortnitekid420",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/qhwd9VZDmLM/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/qhwd9VZDmLM",
-  "listType": "demon",
-  "rawTier": 20.396024464831804,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-04T12:50:47.207Z",
-  "campus": "Zamboanga Peninsula Region Campus",
-  "victorList": [
-    {
-      "name": "Fortnitekid420",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/qhwd9VZDmLM",
-      "campus": "Zamboanga Peninsula Region Campus",
-      "date": "2026-07-04T12:50:47.207Z"
-    }
-  ]
-},
-{
-  "id": "61079355",
-  "rank": 26,
-  "name": "Acu",
-  "creator": "neigefeu",
-  "verifier": "voxigmd",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/5N0UqfDQ49c/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/5N0UqfDQ49c",
-  "listType": "demon",
-  "rawTier": 20.251887647236483,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-06-17T01:42:23.658Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "voxigmd",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/5N0UqfDQ49c",
-      "campus": "Davao Region Campus",
-      "date": "2026-06-17T01:42:23.658Z"
-    },
-    {
-      "name": "AliceMargatr0id",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/nTGBWyaWzyM",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-03T00:00:01.000Z"
-    }
-  ]
-},
-{
-  "id": "80575901",
-  "rank": 27,
-  "name": "in canon",
-  "creator": "cordeaux",
-  "verifier": "AliceMargatr0id",
-  "diff": "Extreme Demon",
-  "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-  "img": "https://img.youtube.com/vi/6srdG7Z2gdY/maxresdefault.jpg",
-  "video": "https://www.youtube.com/embed/6srdG7Z2gdY",
-  "listType": "demon",
-  "rawTier": 20.035714285714285,
-  "aredlPlacement": null,
-  "platPosition": null,
-  "date": "2026-07-03T00:00:01.000Z",
-  "campus": "Davao Region Campus",
-  "victorList": [
-    {
-      "name": "AliceMargatr0id",
-      "percent": 100,
-      "video": "https://www.youtube.com/embed/6srdG7Z2gdY",
-      "campus": "Davao Region Campus",
-      "date": "2026-07-03T00:00:01.000Z"
-    }
-   ]
+    "id": "56089612",
+    "rank": 19,
+    "name": "Zettabyte",
+    "creator": "Jenkins",
+    "verifier": "AliceMargatr0id",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/QcLIcb4Rdtc/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/QcLIcb4Rdtc",
+    "listType": "demon",
+    "rawTier": 21.185185185185187,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-03T00:00:01.000Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/QcLIcb4Rdtc",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-03T00:00:01.000Z"
+      }
+    ]
+  },
+  {
+    "id": "69491632",
+    "rank": 20,
+    "name": "Crowd Control",
+    "creator": "zDeadlox",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/fmdCCzJArL0/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/fmdCCzJArL0",
+    "listType": "demon",
+    "rawTier": 21.700374531835205,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-05T13:30:14.136Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/fmdCCzJArL0",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:30:14.136Z"
+      }
+    ]
+  },
+  {
+    "id": "54917442",
+    "rank": 21,
+    "name": "CYCLONE",
+    "creator": "BIANOX",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/g5gi4xzaSHM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/g5gi4xzaSHM",
+    "listType": "demon",
+    "rawTier": 21.198675496688743,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-05T13:29:24.460Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/g5gi4xzaSHM",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:29:24.460Z"
+      }
+    ]
+  },
+  {
+    "id": "20761188",
+    "rank": 22,
+    "name": "Allegiance",
+    "creator": "nikroplays",
+    "verifier": "JapanGD",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/lIYKaQ6tRn0/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
+    "listType": "demon",
+    "rawTier": 21.2136563876652,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "Central Luzon Campus",
+    "victorList": [
+      {
+        "name": "JapanGD",
+        "percent": 77,
+        "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
+        "campus": "Central Luzon Campus",
+        "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/lqfSDSOQRl4",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:28:07.963Z"
+      }
+    ]
+  },
+  {
+    "id": "30219145",
+    "rank": 23,
+    "name": "HyperSonic",
+    "creator": "ViPriN",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/Q2mU9-tU4tw/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Q2mU9-tU4tw",
+    "listType": "demon",
+    "rawTier": 20.989473684210527,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-05T13:27:17.355Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Q2mU9-tU4tw",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:27:17.355Z"
+      }
+    ]
+  },
+  {
+    "id": "3979721",
+    "rank": 24,
+    "name": "Cataclysm",
+    "creator": "GGboy",
+    "verifier": "sadboi202",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://preview.redd.it/thumbnail-cataclysm-by-itsangtheoz-me-v0-k4coxvz43o691.jpg?width=640&crop=smart&auto=webp&s=434ef18ba50830f3cea97639036a354405331ffe",
+    "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+    "listType": "demon",
+    "rawTier": 20.912345679012347,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-23T20:14:22.845Z",
+    "campus": "",
+    "victorList": [
+      {
+        "name": "sadboi202",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/8x0gpGutHUE",
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "voxigmd",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/_CDVD0VECao",
+        "campus": "Davao Region Campus",
+        "date": "2026-06-23T20:14:22.845Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/TRxvJQzQ6OI",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-04T13:12:51.908Z"
+      }
+    ]
+  },
+  {
+    "id": "81148582",
+    "rank": 25,
+    "name": "Sweater Weather",
+    "creator": "VelYT",
+    "verifier": "Fortnitekid420",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/qhwd9VZDmLM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/qhwd9VZDmLM",
+    "listType": "demon",
+    "rawTier": 20.396024464831804,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-04T12:50:47.207Z",
+    "campus": "Zamboanga Peninsula Region Campus",
+    "victorList": [
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/qhwd9VZDmLM",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-04T12:50:47.207Z"
+      }
+    ]
+  },
+  {
+    "id": "61079355",
+    "rank": 26,
+    "name": "Acu",
+    "creator": "neigefeu",
+    "verifier": "voxigmd",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/5N0UqfDQ49c/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5N0UqfDQ49c",
+    "listType": "demon",
+    "rawTier": 20.251887647236483,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "voxigmd",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/5N0UqfDQ49c",
+        "campus": "Davao Region Campus",
+        "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/nTGBWyaWzyM",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-03T00:00:01.000Z"
+      }
+    ]
+  },
+  {
+    "id": "80575901",
+    "rank": 27,
+    "name": "in canon",
+    "creator": "cordeaux",
+    "verifier": "AliceMargatr0id",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/6srdG7Z2gdY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/6srdG7Z2gdY",
+    "listType": "demon",
+    "rawTier": 20.035714285714285,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-03T00:00:01.000Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/6srdG7Z2gdY",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-03T00:00:01.000Z"
+      }
+    ]
   },
   {
     "id": "14145098",
@@ -1048,41 +1048,8 @@
     ]
   },
   {
-    "id": "47620786",
-    "rank": 37,
-    "name": "CraZy II",
-    "creator": "DavJT",
-    "verifier": "IceRig",
-    "diff": "Insane Demon",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "img": "https://img.youtube.com/vi/rsih2CrkekY/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/rsih2CrkekY",
-    "listType": "demon",
-    "rawTier": 15.3088215366548,
-    "aredlPlacement": null,
-    "platPosition": null,
-    "date": "2026-06-26T21:50:43.952Z",
-    "campus": "Western Visayas Campus",
-    "victorList": [
-      {
-        "name": "IceRig",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/rsih2CrkekY",
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-22T22:38:57.711Z"
-      },
-      {
-        "name": "saulgoodman4",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/vSS05QbOUdA",
-        "campus": "Northern Mindanao Campus",
-        "date": "2026-06-26T21:50:43.952Z"
-      }
-    ]
-  },
-  {
     "id": "58570720",
-    "rank": 38,
+    "rank": 37,
     "name": "1929",
     "creator": "Lfritz",
     "verifier": "cosmopopz",
@@ -1103,6 +1070,46 @@
         "video": "https://www.youtube.com/embed/i7Jnp11Yr9g",
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:32:53.897Z"
+      }
+    ]
+  },
+  {
+    "id": "47620786",
+    "rank": 38,
+    "name": "CraZy II",
+    "creator": "DavJT",
+    "verifier": "IceRig",
+    "diff": "Insane Demon",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "img": "https://img.youtube.com/vi/rsih2CrkekY/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/rsih2CrkekY",
+    "listType": "demon",
+    "rawTier": 15.305877684201242,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-06-26T21:50:43.952Z",
+    "campus": "Western Visayas Campus",
+    "victorList": [
+      {
+        "name": "IceRig",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/rsih2CrkekY",
+        "campus": "Western Visayas Campus",
+        "date": "2026-06-22T22:38:57.711Z"
+      },
+      {
+        "name": "saulgoodman4",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/vSS05QbOUdA",
+        "campus": "Northern Mindanao Campus",
+        "date": "2026-06-26T21:50:43.952Z"
+      },
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/0Nxcz8vdxWs",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:34:05.937Z"
       }
     ]
   },
