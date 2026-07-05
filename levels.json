@@ -2584,7 +2584,7 @@
     "img": "https://img.youtube.com/vi/qXlAS9IiJBE/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/qXlAS9IiJBE",
     "listType": "demon",
-    "rawTier": 1.8983050847457628,
+    "rawTier": 1.9004329004329004,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-29T08:58:44.904Z",
@@ -2596,6 +2596,13 @@
         "video": "https://www.youtube.com/embed/qXlAS9IiJBE",
         "campus": "Main Campus",
         "date": "2026-06-29T08:58:44.904Z"
+      },
+      {
+        "name": "IceRig",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/czAKom18v5g",
+        "campus": "Western Visayas Campus",
+        "date": "2026-07-05T13:53:53.108Z"
       }
     ]
   },
