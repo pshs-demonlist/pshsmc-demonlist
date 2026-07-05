@@ -506,7 +506,7 @@
     "img": "https://img.youtube.com/vi/lIYKaQ6tRn0/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
     "listType": "demon",
-    "rawTier": 21.2089887640449,
+    "rawTier": 21.2136563876652,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-17T01:42:23.658Z",
@@ -518,6 +518,13 @@
         "video": "https://www.youtube.com/embed/lIYKaQ6tRn0",
         "campus": "Central Luzon Campus",
         "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/lqfSDSOQRl4",
+        "campus": "Davao Region Campus",
+        "date": "2026-07-05T13:28:07.963Z"
       }
     ]
   },
