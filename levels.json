@@ -1301,7 +1301,7 @@
     "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
     "listType": "demon",
-    "rawTier": 11.1599608525446,
+    "rawTier": 11.160350165474538,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-23T14:06:11.955Z",
@@ -1334,6 +1334,13 @@
         "video": "https://www.youtube.com/embed/uX-cp2Kv8rA",
         "campus": "Main Campus",
         "date": "2026-06-23T10:33:18.849Z"
+      },
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gWOiE2HEkT0",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-07-05T17:43:20.590Z"
       }
     ]
   },
