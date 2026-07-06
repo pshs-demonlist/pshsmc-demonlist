@@ -794,7 +794,7 @@
     "img": "https://img.youtube.com/vi/OtThYkW_LGg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/OtThYkW_LGg",
     "listType": "demon",
-    "rawTier": 18.5760245116814,
+    "rawTier": 18.594554270794486,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-10T17:49:08.548Z",
@@ -806,6 +806,13 @@
         "video": "https://www.youtube.com/embed/OtThYkW_LGg",
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "sskazeye",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/_GqyUqPivkQ",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-06T20:53:25.265Z"
       }
     ]
   },
