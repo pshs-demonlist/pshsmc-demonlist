@@ -3651,8 +3651,34 @@
     ]
   },
   {
-    "id": "141442369",
+    "id": "91194999",
     "rank": 12,
+    "name": "LGBT",
+    "creator": "lexycat",
+    "verifier": "sskazeye",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "img": "https://img.youtube.com/vi/EOPUYrjDDDY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/EOPUYrjDDDY",
+    "listType": "challenge",
+    "rawTier": 8.25,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-06T21:02:43.767Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "sskazeye",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/EOPUYrjDDDY",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-06T21:02:43.767Z"
+      }
+    ]
+  },
+  {
+    "id": "141442369",
+    "rank": 13,
     "name": "Ramses",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3678,7 +3704,7 @@
   },
   {
     "id": "141601536",
-    "rank": 13,
+    "rank": 14,
     "name": "Shubra",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3718,7 +3744,7 @@
   },
   {
     "id": "142055246",
-    "rank": 14,
+    "rank": 15,
     "name": "the tourist",
     "creator": "wavical",
     "verifier": "sSeanyboii",
@@ -3744,7 +3770,7 @@
   },
   {
     "id": "143193238",
-    "rank": 15,
+    "rank": 16,
     "name": "Yes Machine end",
     "creator": "dibless",
     "verifier": "dibless",
@@ -3770,7 +3796,7 @@
   },
   {
     "id": "140148900",
-    "rank": 16,
+    "rank": 17,
     "name": "Padwurk",
     "creator": "dibless",
     "verifier": "dibless",
@@ -3803,7 +3829,7 @@
   },
   {
     "id": "143250512",
-    "rank": 17,
+    "rank": 18,
     "name": "ws",
     "creator": "dibless",
     "verifier": "dibless",
@@ -3836,7 +3862,7 @@
   },
   {
     "id": "141063347",
-    "rank": 18,
+    "rank": 19,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -3883,7 +3909,7 @@
   },
   {
     "id": "141753444",
-    "rank": 19,
+    "rank": 20,
     "name": "Sakupen End 49-53",
     "creator": "Nick240",
     "verifier": "sSeanyboii",
@@ -3930,7 +3956,7 @@
   },
   {
     "id": "143250790",
-    "rank": 20,
+    "rank": 21,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -3963,7 +3989,7 @@
   },
   {
     "id": "143385344",
-    "rank": 21,
+    "rank": 22,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4003,7 +4029,7 @@
   },
   {
     "id": "139324232",
-    "rank": 22,
+    "rank": 23,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -4036,7 +4062,7 @@
   },
   {
     "id": "143967625",
-    "rank": 23,
+    "rank": 24,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
@@ -4069,7 +4095,7 @@
   },
   {
     "id": "117454090",
-    "rank": 24,
+    "rank": 25,
     "name": "Tidal wave 95",
     "creator": "Papetah",
     "verifier": "IceRig",
