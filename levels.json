@@ -1478,7 +1478,7 @@
     "img": "https://img.youtube.com/vi/ZKT1_Mq7hD0/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/VzyvIOn7PBc",
     "listType": "demon",
-    "rawTier": 13.9637989778535,
+    "rawTier": 13.958989229494614,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-23T14:05:59.429Z",
@@ -1490,6 +1490,13 @@
         "video": "https://www.youtube.com/embed/VzyvIOn7PBc",
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
+      },
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/flXivb48z60",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-07T14:28:29.865Z"
       }
     ]
   },
