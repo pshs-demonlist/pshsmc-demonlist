@@ -1122,7 +1122,7 @@
     "img": "https://img.youtube.com/vi/-xPpxeT3jrk/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/-xPpxeT3jrk",
     "listType": "demon",
-    "rawTier": 16.8716216216216,
+    "rawTier": 16.872180451127818,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-23T20:16:29.873Z",
@@ -1134,6 +1134,13 @@
         "video": "https://www.youtube.com/embed/-xPpxeT3jrk",
         "campus": "Davao Region Campus",
         "date": "2026-06-23T20:16:29.873Z"
+      },
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/vHD1A3iK-Vk",
+        "campus": "Main Campus",
+        "date": "2026-07-07T12:45:21.187Z"
       }
     ]
   },
