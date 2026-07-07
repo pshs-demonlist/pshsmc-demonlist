@@ -1530,7 +1530,7 @@
     "img": "https://geometrygames.io/cache/data/image/geometry-dash-nine-circles-m192x108.webp",
     "video": "https://www.youtube.com/embed/DO36t7DV0ec",
     "listType": "demon",
-    "rawTier": 11.160350165474538,
+    "rawTier": 11.160681939264784,
     "aredlPlacement": null,
     "platPosition": null,
     "date": "2026-06-23T14:06:11.955Z",
@@ -1570,6 +1570,13 @@
         "video": "https://www.youtube.com/embed/gWOiE2HEkT0",
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:43:20.590Z"
+      },
+      {
+        "name": "sskazeye",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/4CuvV8Jscq0",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-06T21:00:31.185Z"
       }
     ]
   },
