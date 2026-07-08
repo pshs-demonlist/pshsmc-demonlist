@@ -3312,8 +3312,34 @@
     ]
   },
   {
-    "id": "5904109",
+    "id": "87257787",
     "rank": 109,
+    "name": "V01D",
+    "creator": "MinAY",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/zdcR9ZafefM/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+    "listType": "demon",
+    "rawTier": 1.1466372657111357,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-08T14:34:44.920Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+        "campus": "Main Campus",
+        "date": "2026-07-08T14:34:44.920Z"
+      }
+    ]
+  },
+  {
+    "id": "5904109",
+    "rank": 110,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
@@ -3374,7 +3400,7 @@
   },
   {
     "id": "142685157",
-    "rank": 110,
+    "rank": 111,
     "name": "GTA Z",
     "creator": "EVILF",
     "verifier": "dibless",
@@ -3407,7 +3433,7 @@
   },
   {
     "id": "55520",
-    "rank": 111,
+    "rank": 112,
     "name": "THE LIGHTNING ROAD",
     "creator": "Timeless Real",
     "verifier": "Akoay",
@@ -3468,7 +3494,7 @@
   },
   {
     "id": "13519",
-    "rank": 112,
+    "rank": 113,
     "name": "The Nightmare",
     "creator": "Jax",
     "verifier": "sSeanyboii",
