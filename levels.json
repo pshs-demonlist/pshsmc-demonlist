@@ -1,7 +1,33 @@
 [
   {
-    "id": "97086864",
+    "id": "134645078",
     "rank": 1,
+    "name": "amethyst",
+    "creator": "ZioGDVN",
+    "verifier": "daBlooKat121",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
+    "listType": "demon",
+    "rawTier": 24,
+    "aredlPlacement": 4,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "",
+    "victorList": [
+      {
+        "name": "daBlooKat121",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z"
+      }
+    ]
+  },
+  {
+    "id": "97086864",
+    "rank": 2,
     "name": "Levigo",
     "creator": "Swib",
     "verifier": "AliceMargatr0id",
@@ -23,12 +49,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 111
+    ]
   },
   {
     "id": "88203501",
-    "rank": 2,
+    "rank": 3,
     "name": "UNKNOWN",
     "creator": "NineDice",
     "verifier": "Fortnitekid420",
@@ -50,12 +75,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T12:37:38.666Z"
       }
-    ],
-    "aredlRank": 112
+    ]
   },
   {
     "id": "52374843",
-    "rank": 3,
+    "rank": 4,
     "name": "Zodiac",
     "creator": "Bianox",
     "verifier": "AliceMargatr0id",
@@ -77,12 +101,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 149
+    ]
   },
   {
     "id": "71912451",
-    "rank": 4,
+    "rank": 5,
     "name": "RUST",
     "creator": "Neigefeu",
     "verifier": "AliceMargatr0id",
@@ -104,12 +127,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 192
+    ]
   },
   {
     "id": "82172844",
-    "rank": 5,
+    "rank": 6,
     "name": "Cobwebs",
     "creator": "NineDice",
     "verifier": "Fortnitekid420",
@@ -131,12 +153,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T12:38:35.050Z"
       }
-    ],
-    "aredlRank": 198
+    ]
   },
   {
     "id": "79997992",
-    "rank": 6,
+    "rank": 7,
     "name": "Shardscapes",
     "creator": "ItzKiba",
     "verifier": "AliceMargatr0id",
@@ -158,12 +179,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 205
+    ]
   },
   {
     "id": "112351854",
-    "rank": 7,
+    "rank": 8,
     "name": "Sank",
     "creator": "Waterbound",
     "verifier": "AliceMargatr0id",
@@ -185,12 +205,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 232
+    ]
   },
   {
     "id": "46763581",
-    "rank": 8,
+    "rank": 9,
     "name": "Kowareta",
     "creator": "Gablor",
     "verifier": "wkwo1",
@@ -212,12 +231,11 @@
         "campus": "Main Campus",
         "date": "2026-06-27T22:25:55.036Z"
       }
-    ],
-    "aredlRank": 280
+    ]
   },
   {
     "id": "26681070",
-    "rank": 9,
+    "rank": 10,
     "name": "Sonic Wave",
     "creator": "lSunix",
     "verifier": "AliceMargatr0id",
@@ -239,12 +257,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 356
+    ]
   },
   {
     "id": "51584312",
-    "rank": 10,
+    "rank": 11,
     "name": "super probably level",
     "creator": "alkali",
     "verifier": "AliceMargatr0id",
@@ -266,12 +283,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 381
+    ]
   },
   {
     "id": "111797205",
-    "rank": 11,
+    "rank": 12,
     "name": "find the answer",
     "creator": "qalli",
     "verifier": "AliceMargatr0id",
@@ -293,12 +309,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-03T00:00:01.000Z"
       }
-    ],
-    "aredlRank": 490
+    ]
   },
   {
     "id": "60603962",
-    "rank": 12,
+    "rank": 13,
     "name": "Low Death",
     "creator": "KrmaL",
     "verifier": "AliceMargatr0id",
@@ -320,12 +335,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T12:02:43.088Z"
       }
-    ],
-    "aredlRank": 501
+    ]
   },
   {
     "id": "38235367",
-    "rank": 13,
+    "rank": 14,
     "name": "Quantum Processing",
     "creator": "Riot",
     "verifier": "AliceMargatr0id",
@@ -347,12 +361,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T11:56:21.031Z"
       }
-    ],
-    "aredlRank": 525
+    ]
   },
   {
     "id": "35448603",
-    "rank": 14,
+    "rank": 15,
     "name": "Blade of Justice",
     "creator": "Manix648",
     "verifier": "voxigmd",
@@ -381,12 +394,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-03T00:00:01.000Z"
       }
-    ],
-    "aredlRank": 704
+    ]
   },
   {
     "id": "129561693",
-    "rank": 15,
+    "rank": 16,
     "name": "Carbon Fiber",
     "creator": "xSlendy",
     "verifier": "ModeraGD",
@@ -408,12 +420,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T10:51:01.654Z"
       }
-    ],
-    "aredlRank": 755
+    ]
   },
   {
     "id": "68848817",
-    "rank": 16,
+    "rank": 17,
     "name": "moment",
     "creator": "lexycat",
     "verifier": "AliceMargatr0id",
@@ -435,12 +446,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 782
+    ]
   },
   {
     "id": "10565740",
-    "rank": 17,
+    "rank": 18,
     "name": "Bloodbath",
     "creator": "Riot",
     "verifier": "sadboi202",
@@ -483,12 +493,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 791
+    ]
   },
   {
     "id": "20159880",
-    "rank": 18,
+    "rank": 19,
     "name": "Plasma Pulse III",
     "creator": "xSmokes",
     "verifier": "AliceMargatr0id",
@@ -510,12 +519,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-06T21:03:34.840Z"
       }
-    ],
-    "aredlRank": 955
+    ]
   },
   {
     "id": "63377357",
-    "rank": 19,
+    "rank": 20,
     "name": "Halberd",
     "creator": "notlsa",
     "verifier": "AliceMargatr0id",
@@ -537,12 +545,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T11:58:00.997Z"
       }
-    ],
-    "aredlRank": 1005
+    ]
   },
   {
     "id": "95757926",
-    "rank": 20,
+    "rank": 21,
     "name": "Cupid",
     "creator": "Vyp & more",
     "verifier": "ModeraGD",
@@ -564,12 +571,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T01:42:56.723Z"
       }
-    ],
-    "aredlRank": 1080
+    ]
   },
   {
     "id": "93916671",
-    "rank": 21,
+    "rank": 22,
     "name": "Shukufuku",
     "creator": "joker179114",
     "verifier": "sskazeye",
@@ -591,12 +597,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-05T13:43:14.026Z"
       }
-    ],
-    "aredlRank": 1102
+    ]
   },
   {
     "id": "20077821",
-    "rank": 22,
+    "rank": 23,
     "name": "Red World Rebirth",
     "creator": "Riot",
     "verifier": "AliceMargatr0id",
@@ -618,12 +623,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-06T21:02:03.582Z"
       }
-    ],
-    "aredlRank": 1212
+    ]
   },
   {
     "id": "56089612",
-    "rank": 23,
+    "rank": 24,
     "name": "Zettabyte",
     "creator": "Jenkins",
     "verifier": "AliceMargatr0id",
@@ -645,12 +649,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-03T00:00:01.000Z"
       }
-    ],
-    "aredlRank": 1230
+    ]
   },
   {
     "id": "69491632",
-    "rank": 24,
+    "rank": 25,
     "name": "Crowd Control",
     "creator": "zDeadlox",
     "verifier": "cosmopopz",
@@ -672,12 +675,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:30:14.136Z"
       }
-    ],
-    "aredlRank": 1243
+    ]
   },
   {
     "id": "54917442",
-    "rank": 25,
+    "rank": 26,
     "name": "CYCLONE",
     "creator": "BIANOX",
     "verifier": "cosmopopz",
@@ -699,12 +701,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:29:24.460Z"
       }
-    ],
-    "aredlRank": 1250
+    ]
   },
   {
     "id": "20761188",
-    "rank": 26,
+    "rank": 27,
     "name": "Allegiance",
     "creator": "nikroplays",
     "verifier": "cosmopopz",
@@ -733,12 +734,11 @@
         "campus": "Central Luzon Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": 1282
+    ]
   },
   {
     "id": "30219145",
-    "rank": 27,
+    "rank": 28,
     "name": "HyperSonic",
     "creator": "ViPriN",
     "verifier": "cosmopopz",
@@ -760,12 +760,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:27:17.355Z"
       }
-    ],
-    "aredlRank": 1295
+    ]
   },
   {
     "id": "3979721",
-    "rank": 28,
+    "rank": 29,
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
@@ -808,12 +807,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T16:14:46.483Z"
       }
-    ],
-    "aredlRank": 1403
+    ]
   },
   {
     "id": "81148582",
-    "rank": 29,
+    "rank": 30,
     "name": "Sweater Weather",
     "creator": "VelYT",
     "verifier": "Fortnitekid420",
@@ -835,12 +833,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T12:50:47.207Z"
       }
-    ],
-    "aredlRank": 1487
+    ]
   },
   {
     "id": "61079355",
-    "rank": 30,
+    "rank": 31,
     "name": "Acu",
     "creator": "neigefeu",
     "verifier": "voxigmd",
@@ -869,17 +866,16 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-03T00:00:01.000Z"
       }
-    ],
-    "aredlRank": 1489
+    ]
   },
   {
     "id": "80575901",
-    "rank": 31,
+    "rank": 32,
     "name": "in canon",
     "creator": "cordeaux",
     "verifier": "AliceMargatr0id",
-    "diff": "Insane Demon",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
     "img": "https://img.youtube.com/vi/6srdG7Z2gdY/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/6srdG7Z2gdY",
     "listType": "demon",
@@ -896,12 +892,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-03T00:00:01.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "23298409",
-    "rank": 32,
+    "rank": 33,
     "name": "Duelo Maestro",
     "creator": "Nacho21",
     "verifier": "AliceMargatr0id",
@@ -923,12 +918,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-06T21:00:28.055Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "14145098",
-    "rank": 33,
+    "rank": 34,
     "name": "Invisible Deadlocked",
     "creator": "KrMaL",
     "verifier": "sSeanyboii",
@@ -957,12 +951,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-06T20:53:25.265Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "61137742",
-    "rank": 34,
+    "rank": 35,
     "name": "Leyak",
     "creator": "EnZore",
     "verifier": "sskazeye",
@@ -991,12 +984,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-06T20:59:02.852Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "102265892",
-    "rank": 35,
+    "rank": 36,
     "name": "Sonic Wave Unlimited",
     "creator": "zNotNinja",
     "verifier": "IceRig",
@@ -1018,12 +1010,11 @@
         "campus": "Western Visayas Campus",
         "date": "2026-06-23T19:25:27.519Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "5155022",
-    "rank": 36,
+    "rank": 37,
     "name": "Acropolis",
     "creator": "Zobros",
     "verifier": "dibless",
@@ -1073,12 +1064,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T10:54:39.414Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "82824219",
-    "rank": 37,
+    "rank": 38,
     "name": "MikuMikuMikuMiku",
     "creator": "OddMod",
     "verifier": "sskazeye",
@@ -1100,12 +1090,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-06T20:59:48.156Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "13437081",
-    "rank": 38,
+    "rank": 39,
     "name": "Firewall",
     "creator": "Hinds",
     "verifier": "AliceMargatr0id",
@@ -1127,12 +1116,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-06T20:57:09.762Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "4706930",
-    "rank": 39,
+    "rank": 40,
     "name": "Supersonic",
     "creator": "ZenthicAlpha",
     "verifier": "voxigmd",
@@ -1161,12 +1149,11 @@
         "campus": "Main Campus",
         "date": "2026-07-07T12:45:21.187Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "60619762",
-    "rank": 40,
+    "rank": 41,
     "name": "Denouement",
     "creator": "SYNACTIVE GD",
     "verifier": "aldawg123",
@@ -1209,12 +1196,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T12:48:33.490Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "27655282",
-    "rank": 41,
+    "rank": 42,
     "name": "Kuiper",
     "creator": "GD Quasar",
     "verifier": "LightBlu",
@@ -1243,12 +1229,11 @@
         "campus": "Main Campus",
         "date": "2026-07-06T19:47:54.372Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "7054561",
-    "rank": 42,
+    "rank": 43,
     "name": "Poltergeist",
     "creator": "AndromedaGMD",
     "verifier": "sadboi202",
@@ -1277,12 +1262,11 @@
         "campus": "Main Campus",
         "date": "2026-07-07T10:00:53.929Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "4957691",
-    "rank": 43,
+    "rank": 44,
     "name": "Windy Landscape",
     "creator": "WOOGI1411",
     "verifier": "daBlooKat121",
@@ -1318,12 +1302,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:43:44.890Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "56568010",
-    "rank": 44,
+    "rank": 45,
     "name": "Magma Bound",
     "creator": "ScorchVx",
     "verifier": "dibless",
@@ -1345,12 +1328,11 @@
         "campus": "Main Campus",
         "date": "2026-06-22T11:56:40.908Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "58570720",
-    "rank": 45,
+    "rank": 46,
     "name": "1929",
     "creator": "Lfritz",
     "verifier": "cosmopopz",
@@ -1372,12 +1354,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:32:53.897Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "47620786",
-    "rank": 46,
+    "rank": 47,
     "name": "CraZy II",
     "creator": "DavJT",
     "verifier": "IceRig",
@@ -1413,12 +1394,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:34:05.937Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "4545425",
-    "rank": 47,
+    "rank": 48,
     "name": "Stalemate",
     "creator": "Nox",
     "verifier": "IceRig",
@@ -1440,12 +1420,11 @@
         "campus": "Western Visayas Campus",
         "date": "2026-06-28T18:02:58.442Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "10312917",
-    "rank": 48,
+    "rank": 49,
     "name": "Sharp Minor",
     "creator": "Giron",
     "verifier": "AliceMargatr0id",
@@ -1467,12 +1446,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T12:20:04.599Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "19564763",
-    "rank": 49,
+    "rank": 50,
     "name": "The Furious",
     "creator": "Knobbelboy",
     "verifier": "AliceMargatr0id",
@@ -1494,12 +1472,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T12:06:26.171Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "11402965",
-    "rank": 50,
+    "rank": 51,
     "name": "Forest Temple",
     "creator": "Michigun",
     "verifier": "aldawg123",
@@ -1528,12 +1505,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T14:28:29.865Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "44062068",
-    "rank": 51,
+    "rank": 52,
     "name": "Future Funk",
     "creator": "JonathanGD",
     "verifier": "sSeanyboii",
@@ -1569,12 +1545,11 @@
         "campus": "Northern Mindanao Campus",
         "date": "2026-06-24T22:01:26.859Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "113554991",
-    "rank": 52,
+    "rank": 53,
     "name": "Glitter",
     "creator": "MonkeyInABowl",
     "verifier": "ModeraGD",
@@ -1596,12 +1571,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T11:34:14.773Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "67300705",
-    "rank": 53,
+    "rank": 54,
     "name": "Octagon Force",
     "creator": "JamAttack",
     "verifier": "daBlooKat121",
@@ -1630,12 +1604,11 @@
         "campus": "Northern Mindanao Campus",
         "date": "2026-06-24T18:35:15.059Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "4284013",
-    "rank": 54,
+    "rank": 55,
     "name": "Nine Circles",
     "creator": "Zobros",
     "verifier": "sadboi202",
@@ -1692,12 +1665,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-06T21:00:31.185Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "4192768",
-    "rank": 55,
+    "rank": 56,
     "name": "Ditched Machine",
     "creator": "Jeyzor",
     "verifier": "saulgoodman4",
@@ -1719,12 +1691,11 @@
         "campus": "Northern Mindanao Campus",
         "date": "2026-06-27T17:18:46.313Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "6939821",
-    "rank": 56,
+    "rank": 57,
     "name": "Jawbreaker",
     "creator": "ZenthicAlpha",
     "verifier": "daBlooKat121",
@@ -1767,12 +1738,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:43:32.345Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "63075323",
-    "rank": 57,
+    "rank": 58,
     "name": "white women",
     "creator": "heatherhayes",
     "verifier": "daBlooKat121",
@@ -1794,12 +1764,11 @@
         "campus": "Main Campus",
         "date": "2026-06-19T22:03:31.051Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "38398923",
-    "rank": 58,
+    "rank": 59,
     "name": "Nowise",
     "creator": "Darwin",
     "verifier": "ModeraGD",
@@ -1821,12 +1790,11 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-07T15:00:51.702Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "92742742",
-    "rank": 59,
+    "rank": 60,
     "name": "tower descent",
     "creator": "pocke",
     "verifier": "daBlooKat121",
@@ -1848,12 +1816,11 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "21761387",
-    "rank": 60,
+    "rank": 61,
     "name": "Bloodbath Z",
     "creator": "Zyzyx",
     "verifier": "Fortnitekid420",
@@ -1875,12 +1842,11 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:23:17.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "114532158",
-    "rank": 61,
+    "rank": 62,
     "name": "Troll Madness",
     "creator": "zyphur",
     "verifier": "sSeanyboii",
@@ -1909,12 +1875,11 @@
         "campus": "Davao Region Campus",
         "date": "2026-07-04T11:54:31.241Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "111205474",
-    "rank": 62,
+    "rank": 63,
     "name": "Thermal Madness",
     "creator": "ManiacDan",
     "verifier": "daBlooKat121",
@@ -1936,12 +1901,11 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "25706351",
-    "rank": 63,
+    "rank": 64,
     "name": "HeLL",
     "creator": "Serponge",
     "verifier": "dibless",
@@ -1963,12 +1927,11 @@
         "campus": "Main Campus",
         "date": "2026-06-22T21:08:35.635Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "16667379",
-    "rank": 64,
+    "rank": 65,
     "name": "Liberation",
     "creator": "Serponge",
     "verifier": "LightBlu",
@@ -1997,12 +1960,11 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "3264805",
-    "rank": 65,
+    "rank": 66,
     "name": "Theory of SkriLLex",
     "creator": "noobas",
     "verifier": "dibless",
@@ -2024,12 +1986,11 @@
         "campus": "Main Campus",
         "date": "2026-06-22T20:38:32.666Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "94716697",
-    "rank": 66,
+    "rank": 67,
     "name": "CELESTIA",
     "creator": "notxo",
     "verifier": "sSeanyboii",
@@ -2051,12 +2012,11 @@
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "58002670",
-    "rank": 67,
+    "rank": 68,
     "name": "Sakupen Egg",
     "creator": "Sivlol",
     "verifier": "daBlooKat121",
@@ -2092,35 +2052,7 @@
         "campus": "Northern Mindanao Campus",
         "date": "2026-06-25T14:31:09.693Z"
       }
-    ],
-    "aredlRank": null
-  },
-  {
-    "id": "134645078",
-    "rank": 68,
-    "name": "amethyst",
-    "creator": "ZioGDVN",
-    "verifier": "daBlooKat121",
-    "diff": "Medium Demon",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "img": "https://img.youtube.com/vi/gTJ_dWMgDp8/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
-    "listType": "demon",
-    "rawTier": 6.94,
-    "aredlPlacement": null,
-    "platPosition": null,
-    "date": "2026-06-17T01:42:23.658Z",
-    "campus": "",
-    "victorList": [
-      {
-        "name": "daBlooKat121",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gTJ_dWMgDp8",
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z"
-      }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "21337579",
@@ -2146,8 +2078,7 @@
         "campus": "Main Campus",
         "date": "2026-06-22T16:17:17.312Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "91402",
@@ -2173,8 +2104,7 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "118509879",
@@ -2200,8 +2130,7 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "61417747",
@@ -2227,8 +2156,7 @@
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "7016598",
@@ -2254,8 +2182,7 @@
         "campus": "Main Campus",
         "date": "2026-06-22T09:27:39.730Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "10972106",
@@ -2288,8 +2215,7 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "34085027",
@@ -2336,8 +2262,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:21:41.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "96716452",
@@ -2370,8 +2295,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:21:55.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "78964835",
@@ -2397,8 +2321,7 @@
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "85695827",
@@ -2424,8 +2347,7 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-07-06T20:56:46.525Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "20",
@@ -2465,8 +2387,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:21:32.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "99246761",
@@ -2492,8 +2413,7 @@
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:12.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "18735780",
@@ -2519,8 +2439,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T08:03:33.090Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "2997354",
@@ -2560,8 +2479,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:43:05.303Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "138060545",
@@ -2587,8 +2505,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T18:35:22.896Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "19",
@@ -2628,8 +2545,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:21:21.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "94088072",
@@ -2655,8 +2571,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:32:21.855Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "14000484",
@@ -2682,8 +2597,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T16:07:54.353Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "14",
@@ -2744,8 +2658,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T21:21:11.000Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "143231051",
@@ -2771,8 +2684,7 @@
         "campus": "Main Campus",
         "date": "2026-06-30T11:14:46.043Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "358750",
@@ -2805,8 +2717,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T08:15:18.483Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "61164979",
@@ -2832,8 +2743,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:33:54.290Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "1347537",
@@ -2866,8 +2776,7 @@
         "campus": "Central Luzon Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "86650731",
@@ -2893,8 +2802,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:33:00.541Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "77132030",
@@ -2920,8 +2828,7 @@
         "campus": "Main Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "45622672",
@@ -2947,8 +2854,7 @@
         "campus": "",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "131475001",
@@ -2974,8 +2880,7 @@
         "campus": "Main Campus",
         "date": "2026-06-28T15:38:21.687Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "5098465",
@@ -3001,8 +2906,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T17:21:55.661Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "11588490",
@@ -3042,8 +2946,7 @@
         "campus": "Central Luzon Campus",
         "date": "2026-06-17T01:42:23.658Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "369294",
@@ -3069,8 +2972,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T08:11:06.889Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "122299385",
@@ -3096,8 +2998,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T18:36:34.655Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "143308401",
@@ -3130,8 +3031,7 @@
         "campus": "Western Visayas Campus",
         "date": "2026-07-05T13:53:53.108Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "89886591",
@@ -3171,8 +3071,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T17:11:49.718Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "3543219",
@@ -3212,8 +3111,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T17:11:30.764Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "131426183",
@@ -3246,8 +3144,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-04T17:11:15.097Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "65765662",
@@ -3280,8 +3177,7 @@
         "campus": "Main Campus",
         "date": "2026-06-21T15:10:01.448Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "128665322",
@@ -3314,8 +3210,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:36:26.768Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "93530247",
@@ -3341,8 +3236,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:35:37.989Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "126502545",
@@ -3368,8 +3262,7 @@
         "campus": "Main Campus",
         "date": "2026-06-27T16:21:19.203Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "56302791",
@@ -3395,8 +3288,7 @@
         "campus": "Main Campus",
         "date": "2026-07-01T22:52:30.075Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "56210242",
@@ -3450,8 +3342,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:41:56.523Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "87257787",
@@ -3477,8 +3368,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:34:44.920Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "5904109",
@@ -3539,8 +3429,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:42:48.050Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "142685157",
@@ -3573,8 +3462,7 @@
         "campus": "Western Visayas Campus",
         "date": "2026-06-28T18:09:41.053Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "119124920",
@@ -3600,8 +3488,7 @@
         "campus": "Main Campus",
         "date": "2026-07-08T14:36:11.687Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "55520",
@@ -3662,8 +3549,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:42:11.519Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "13519",
@@ -3710,8 +3596,7 @@
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:42:26.424Z"
       }
-    ],
-    "aredlRank": null
+    ]
   },
   {
     "id": "112973149",
@@ -3957,8 +3842,34 @@
     ]
   },
   {
-    "id": "104369404",
+    "id": "117084975",
     "rank": 9,
+    "name": "Random Frame perfect",
+    "creator": "HONGJONGIN",
+    "verifier": "aldawg123",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "img": "https://img.youtube.com/vi/tWS5lm-Ar2Y/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/tWS5lm-Ar2Y",
+    "listType": "challenge",
+    "rawTier": 12,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-08T21:41:18.915Z",
+    "campus": "Main campus",
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/tWS5lm-Ar2Y",
+        "campus": "Main campus",
+        "date": "2026-07-08T21:41:18.915Z"
+      }
+    ]
+  },
+  {
+    "id": "104369404",
+    "rank": 10,
     "name": "MaybeWavy",
     "creator": "VRTZE",
     "verifier": "ModeraGD",
@@ -3991,7 +3902,7 @@
   },
   {
     "id": "141277411",
-    "rank": 10,
+    "rank": 11,
     "name": "Abbasiya",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4024,7 +3935,7 @@
   },
   {
     "id": "129931602",
-    "rank": 11,
+    "rank": 12,
     "name": "Weathrr grrl",
     "creator": "ModeraGD",
     "verifier": "ModeraGD",
@@ -4050,7 +3961,7 @@
   },
   {
     "id": "10887708",
-    "rank": 12,
+    "rank": 13,
     "name": "Sakupen Circles",
     "creator": "Nick24",
     "verifier": "fortenrique",
@@ -4076,7 +3987,7 @@
   },
   {
     "id": "124000994",
-    "rank": 13,
+    "rank": 14,
     "name": "Eon 96 100",
     "creator": "Byokki",
     "verifier": "Akoay",
@@ -4116,7 +4027,7 @@
   },
   {
     "id": "140948744",
-    "rank": 14,
+    "rank": 15,
     "name": "Maadi",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4149,7 +4060,7 @@
   },
   {
     "id": "91194999",
-    "rank": 15,
+    "rank": 16,
     "name": "LGBT",
     "creator": "lexycat",
     "verifier": "sskazeye",
@@ -4175,7 +4086,7 @@
   },
   {
     "id": "141442369",
-    "rank": 16,
+    "rank": 17,
     "name": "Ramses",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4201,7 +4112,7 @@
   },
   {
     "id": "141601536",
-    "rank": 17,
+    "rank": 18,
     "name": "Shubra",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4248,7 +4159,7 @@
   },
   {
     "id": "142055246",
-    "rank": 18,
+    "rank": 19,
     "name": "the tourist",
     "creator": "wavical",
     "verifier": "sSeanyboii",
@@ -4274,7 +4185,7 @@
   },
   {
     "id": "143193238",
-    "rank": 19,
+    "rank": 20,
     "name": "Yes Machine end",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4307,7 +4218,7 @@
   },
   {
     "id": "140148900",
-    "rank": 20,
+    "rank": 21,
     "name": "Padwurk",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4340,7 +4251,7 @@
   },
   {
     "id": "143250512",
-    "rank": 21,
+    "rank": 22,
     "name": "ws",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4373,7 +4284,7 @@
   },
   {
     "id": "141063347",
-    "rank": 22,
+    "rank": 23,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -4420,7 +4331,7 @@
   },
   {
     "id": "141753444",
-    "rank": 23,
+    "rank": 24,
     "name": "Sakupen End 49-53",
     "creator": "Nick240",
     "verifier": "sSeanyboii",
@@ -4467,7 +4378,7 @@
   },
   {
     "id": "143250790",
-    "rank": 24,
+    "rank": 25,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4500,7 +4411,7 @@
   },
   {
     "id": "143385344",
-    "rank": 25,
+    "rank": 26,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4540,7 +4451,7 @@
   },
   {
     "id": "139324232",
-    "rank": 26,
+    "rank": 27,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -4573,7 +4484,7 @@
   },
   {
     "id": "143967625",
-    "rank": 27,
+    "rank": 28,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
@@ -4606,7 +4517,7 @@
   },
   {
     "id": "117454090",
-    "rank": 28,
+    "rank": 29,
     "name": "Tidal wave 95",
     "creator": "Papetah",
     "verifier": "IceRig",
