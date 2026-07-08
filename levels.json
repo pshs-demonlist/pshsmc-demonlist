@@ -3679,8 +3679,34 @@
     ]
   },
   {
-    "id": "141277411",
+    "id": "104369404",
     "rank": 9,
+    "name": "MaybeWavy",
+    "creator": "VRTZE",
+    "verifier": "ModeraGD",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "img": "https://img.youtube.com/vi/KEtpca-ZYdk/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/KEtpca-ZYdk",
+    "listType": "challenge",
+    "rawTier": 11.2,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-08T00:02:02.058Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/KEtpca-ZYdk",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-07-08T00:02:02.058Z"
+      }
+    ]
+  },
+  {
+    "id": "141277411",
+    "rank": 10,
     "name": "Abbasiya",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3713,7 +3739,7 @@
   },
   {
     "id": "129931602",
-    "rank": 10,
+    "rank": 11,
     "name": "Weathrr grrl",
     "creator": "ModeraGD",
     "verifier": "ModeraGD",
@@ -3739,7 +3765,7 @@
   },
   {
     "id": "10887708",
-    "rank": 11,
+    "rank": 12,
     "name": "Sakupen Circles",
     "creator": "Nick24",
     "verifier": "fortenrique",
@@ -3765,7 +3791,7 @@
   },
   {
     "id": "124000994",
-    "rank": 12,
+    "rank": 13,
     "name": "Eon 96 100",
     "creator": "Byokki",
     "verifier": "Akoay",
@@ -3798,7 +3824,7 @@
   },
   {
     "id": "140948744",
-    "rank": 13,
+    "rank": 14,
     "name": "Maadi",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3831,7 +3857,7 @@
   },
   {
     "id": "91194999",
-    "rank": 14,
+    "rank": 15,
     "name": "LGBT",
     "creator": "lexycat",
     "verifier": "sskazeye",
@@ -3857,7 +3883,7 @@
   },
   {
     "id": "141442369",
-    "rank": 15,
+    "rank": 16,
     "name": "Ramses",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3883,7 +3909,7 @@
   },
   {
     "id": "141601536",
-    "rank": 16,
+    "rank": 17,
     "name": "Shubra",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -3930,7 +3956,7 @@
   },
   {
     "id": "142055246",
-    "rank": 17,
+    "rank": 18,
     "name": "the tourist",
     "creator": "wavical",
     "verifier": "sSeanyboii",
@@ -3956,7 +3982,7 @@
   },
   {
     "id": "143193238",
-    "rank": 18,
+    "rank": 19,
     "name": "Yes Machine end",
     "creator": "dibless",
     "verifier": "dibless",
@@ -3989,7 +4015,7 @@
   },
   {
     "id": "140148900",
-    "rank": 19,
+    "rank": 20,
     "name": "Padwurk",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4022,7 +4048,7 @@
   },
   {
     "id": "143250512",
-    "rank": 20,
+    "rank": 21,
     "name": "ws",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4055,7 +4081,7 @@
   },
   {
     "id": "141063347",
-    "rank": 21,
+    "rank": 22,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -4102,7 +4128,7 @@
   },
   {
     "id": "141753444",
-    "rank": 22,
+    "rank": 23,
     "name": "Sakupen End 49-53",
     "creator": "Nick240",
     "verifier": "sSeanyboii",
@@ -4149,7 +4175,7 @@
   },
   {
     "id": "143250790",
-    "rank": 23,
+    "rank": 24,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -4182,7 +4208,7 @@
   },
   {
     "id": "143385344",
-    "rank": 24,
+    "rank": 25,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -4222,7 +4248,7 @@
   },
   {
     "id": "139324232",
-    "rank": 25,
+    "rank": 26,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -4255,7 +4281,7 @@
   },
   {
     "id": "143967625",
-    "rank": 26,
+    "rank": 27,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
@@ -4288,7 +4314,7 @@
   },
   {
     "id": "117454090",
-    "rank": 27,
+    "rank": 28,
     "name": "Tidal wave 95",
     "creator": "Papetah",
     "verifier": "IceRig",
