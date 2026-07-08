@@ -3206,8 +3206,34 @@
     ]
   },
   {
-    "id": "126502545",
+    "id": "93530247",
     "rank": 106,
+    "name": "Weird world",
+    "creator": "Tinraz",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/zdcR9ZafefM/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+    "listType": "demon",
+    "rawTier": 1.1662591687041566,
+    "aredlPlacement": null,
+    "platPosition": null,
+    "date": "2026-07-08T14:35:37.989Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+        "campus": "Main Campus",
+        "date": "2026-07-08T14:35:37.989Z"
+      }
+    ]
+  },
+  {
+    "id": "126502545",
+    "rank": 107,
     "name": "MachinA DeluXXe",
     "creator": "sink",
     "verifier": "sSeanyboii",
@@ -3233,7 +3259,7 @@
   },
   {
     "id": "56302791",
-    "rank": 107,
+    "rank": 108,
     "name": "Rise",
     "creator": "Wintter",
     "verifier": "sSeanyboii",
@@ -3259,7 +3285,7 @@
   },
   {
     "id": "56210242",
-    "rank": 108,
+    "rank": 109,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "eelektrance",
@@ -3313,7 +3339,7 @@
   },
   {
     "id": "87257787",
-    "rank": 109,
+    "rank": 110,
     "name": "V01D",
     "creator": "MinAY",
     "verifier": "sSeanyboii",
@@ -3339,7 +3365,7 @@
   },
   {
     "id": "5904109",
-    "rank": 110,
+    "rank": 111,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
@@ -3400,7 +3426,7 @@
   },
   {
     "id": "142685157",
-    "rank": 111,
+    "rank": 112,
     "name": "GTA Z",
     "creator": "EVILF",
     "verifier": "dibless",
@@ -3433,7 +3459,7 @@
   },
   {
     "id": "55520",
-    "rank": 112,
+    "rank": 113,
     "name": "THE LIGHTNING ROAD",
     "creator": "Timeless Real",
     "verifier": "Akoay",
@@ -3494,7 +3520,7 @@
   },
   {
     "id": "13519",
-    "rank": 113,
+    "rank": 114,
     "name": "The Nightmare",
     "creator": "Jax",
     "verifier": "sSeanyboii",
