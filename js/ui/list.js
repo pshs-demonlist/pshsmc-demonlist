@@ -270,7 +270,7 @@ export function renderLevelsDashboard() {
     if (uiState.currentSubTab === 'extended' && (rank <= 75 || rank > 150)) return false;
     if (uiState.currentSubTab === 'legacy' && rank <= 150) return false;
 
-    const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus')).trim();
+    const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus').trim());
     const records = getRecordList(lvl);
 
     const campusMatch =
