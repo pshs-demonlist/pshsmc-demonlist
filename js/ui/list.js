@@ -10,6 +10,67 @@ export const uiState = {
   currentStatsTab: 'demon'
 };
 
+// --- URL ROUTING ENGINE ---
+export function syncURL(replace = false) {
+  // Use hash routing for GitHub Pages to prevent 404 errors on refresh
+  const basePath = window.location.pathname; 
+  let newHash = '';
+
+  if (uiState.currentMainTab === 'stats') {
+    newHash = '#/stats-viewer/';
+  } else {
+    newHash = `#/${uiState.currentMainTab}/${uiState.currentSubTab}/`;
+  }
+
+  const queryEl = document.getElementById('search');
+  if (queryEl && queryEl.value) {
+    newHash += `?search=${encodeURIComponent(queryEl.value)}`;
+  }
+
+  const fullUrl = basePath + newHash;
+
+  if (replace) {
+    window.history.replaceState({ main: uiState.currentMainTab, sub: uiState.currentSubTab }, '', fullUrl);
+  } else {
+    window.history.pushState({ main: uiState.currentMainTab, sub: uiState.currentSubTab }, '', fullUrl);
+  }
+}
+
+// Listen for Back/Forward buttons
+window.addEventListener('popstate', (event) => {
+  const hash = window.location.hash;
+  
+  if (hash.startsWith('#/stats-viewer/')) {
+    uiState.currentMainTab = 'stats';
+  } else {
+    const parts = hash.replace('#/', '').split('/');
+    if (parts[0]) uiState.currentMainTab = parts[0];
+    if (parts[1]) uiState.currentSubTab = parts[1];
+  }
+
+  // Restore Search if present in URL
+  const searchMatch = hash.match(/\?search=([^&]*)/);
+  const queryEl = document.getElementById('search');
+  if (queryEl) {
+    queryEl.value = searchMatch ? decodeURIComponent(searchMatch[1]) : '';
+  }
+
+  // Update tabs visually without pushing to URL again
+  const mainTabMap = { 'demon': 'tabDemons', 'challenge': 'tabChallenges', 'platformer': 'tabPlatformers' };
+  ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === mainTabMap[uiState.currentMainTab]);
+  });
+
+  const subTabMap = { 'main': 'subTabMain', 'extended': 'subTabExtended', 'legacy': 'subTabLegacy' };
+  ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === subTabMap[uiState.currentSubTab]);
+  });
+
+  renderLevelsDashboard();
+});
+
 // --- NEWS ENGINE ---
 export function processLiveDecayFilterAndNews() {
   const feed = document.getElementById('liveChangelogFeed');
@@ -40,67 +101,55 @@ export function processLiveDecayFilterAndNews() {
     return { isToday: (itemDayStr === targetTodayStr), sortTime: sortTimestamp };
   };
 
-  // --- 1. SEPARATE AND SORT BY CATEGORY ---
   const categories = {};
   uiState.allLevels.forEach(lvl => {
     const cat = getNormalizedListType(lvl);
     if (!categories[cat]) categories[cat] = [];
-    categories[cat].push({ ...lvl }); // Deep-ish copy to safely manipulate ranks in simulation
+    categories[cat].push({ ...lvl });
   });
 
-  // Sort categories by current rank
   Object.keys(categories).forEach(cat => {
     categories[cat].sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
   });
 
-  // --- 2. HISTORICAL SIMULATION (BACKWARD STEPPING) ---
-  // Maps to store the exact pushed levels tracked by target level name
   const exactPushedExtendedMap = {};
   const exactPushedLegacyMap = {};
 
   Object.keys(categories).forEach(cat => {
     let currentSimList = [...categories[cat]];
 
-    // Gather today's additions in this category and sort them NEWEST FIRST (reverse chronological)
     let todaysAdditions = currentSimList.filter(l => {
       return checkIsToday(l.createdDate || l.date || l.publishDate || l.added || l.timestamp).isToday;
     }).sort((a, b) => {
       const timeA = checkIsToday(a.createdDate || a.date || a.publishDate || a.added || a.timestamp).sortTime;
       const timeB = checkIsToday(b.createdDate || b.date || b.publishDate || b.added || b.timestamp).sortTime;
-      return timeB - timeA; // Newest first for reverse simulation
+      return timeB - timeA; 
     });
 
-    // Step backward through time, removing levels one by one
     todaysAdditions.forEach(addition => {
       const addName = String(addition.name || addition.levelName || "").trim().toLowerCase();
       
-      // Find where it currently sits in our simulation list
       const idx = currentSimList.findIndex(x => String(x.name || x.levelName || "").trim().toLowerCase() === addName);
       if (idx === -1) return;
 
-      const placementRank = idx + 1; // 1-based index rank right before removal
+      const placementRank = idx + 1; 
 
-      // Capture what was pushed *right before* this level was added
       if (placementRank <= 75 && currentSimList.length > 75) {
-        // The level currently at index 75 (rank 76) is the one being pushed out of the Main list
         const pushedLvl = currentSimList[75]; 
         if (pushedLvl) {
           exactPushedExtendedMap[addName] = pushedLvl.name || pushedLvl.levelName || "Unnamed";
         }
       } else if (placementRank > 75 && placementRank <= 150 && currentSimList.length > 150) {
-        // The level currently at index 150 (rank 151) is the one being pushed out of the Extended list
         const pushedLvl = currentSimList[150];
         if (pushedLvl) {
           exactPushedLegacyMap[addName] = pushedLvl.name || pushedLvl.levelName || "Unnamed";
         }
       }
 
-      // Reverse the push effect: Remove the added level, shifting everyone below it back UP
       currentSimList.splice(idx, 1);
     });
   });
 
-  // --- 3. BUILD THE NEWS FEED USING LIVE RESULTS ---
   uiState.allLevels.forEach(lvl => {
     const currentRank = parseInt(lvl.rank || 999, 10);
     const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
@@ -131,7 +180,6 @@ export function processLiveDecayFilterAndNews() {
           placementText = `below <strong>${textHarder}</strong>, at the bottom of the list`;
         }
 
-        // Check our simulated historical maps for the exact pushed items
         const lookKey = targetName.toLowerCase();
         if (exactPushedExtendedMap[lookKey]) {
             placementText += `, this pushes <strong>${escapeHTML(exactPushedExtendedMap[lookKey])}</strong> into the <strong>Extended List</strong>`;
@@ -215,7 +263,7 @@ export function openLevelFromNews(lvlName) {
 }
 
 // --- LEVEL DASHBOARD & TABS ---
-export function switchMainListTab(tab) {
+export function switchMainListTab(tab, bypassUrlSync = false) {
   uiState.currentMainTab = tab;
   ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
     const el = document.getElementById(id);
@@ -229,10 +277,12 @@ export function switchMainListTab(tab) {
   const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
   
-  switchListSubTab('main');
+  switchListSubTab('main', true); // Bypass the URL sync in sub-tab so we only push once
+  
+  if (!bypassUrlSync) syncURL();
 }
 
-export function switchListSubTab(tab) {
+export function switchListSubTab(tab, bypassUrlSync = false) {
   uiState.currentSubTab = tab;
   ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
     const el = document.getElementById(id);
@@ -251,6 +301,8 @@ export function switchListSubTab(tab) {
   }
   
   renderLevelsDashboard();
+  
+  if (!bypassUrlSync) syncURL();
 }
 
 export function renderLevelsDashboard() {
