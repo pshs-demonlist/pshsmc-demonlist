@@ -283,8 +283,8 @@ export function renderLevelsDashboard() {
     if (!campusMatch) return false;
 
     return (
-      String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) 
-      String(lvl.creator || '').toLowerCase().includes(query) 
+      String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
+      String(lvl.creator || '').toLowerCase().includes(query) ||
       String(lvl.diff || lvl.difficulty || '').toLowerCase().includes(query) 
     );
   });
