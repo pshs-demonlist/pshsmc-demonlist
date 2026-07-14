@@ -254,7 +254,7 @@ export function switchListSubTab(tab) {
 }
 
 export function renderLevelsDashboard() {
-  let list = document.getElementById('list');
+  const list = document.getElementById('list');
   if (!list) return;
 
   const queryEl = document.getElementById('search');
@@ -262,11 +262,9 @@ export function renderLevelsDashboard() {
   const campusEl = document.getElementById('dashboardCampusFilter');
   const campusVal = campusEl ? campusEl.value : 'ALL';
 
-  list.innerHTML = '';
-
   let displayedItems = uiState.allLevels.filter(lvl => {
     if (getNormalizedListType(lvl) !== uiState.currentMainTab) return false;
-    
+
     const rank = parseInt(lvl.rank || 999, 10);
     if (uiState.currentSubTab === 'main' && rank > 75) return false;
     if (uiState.currentSubTab === 'extended' && (rank <= 75 || rank > 150)) return false;
@@ -274,48 +272,116 @@ export function renderLevelsDashboard() {
 
     const lvlCampus = escapeHTML(String(lvl.campus || 'Main Campus').trim());
     const records = getRecordList(lvl);
-    const campusMatch = (campusVal === 'ALL' || lvlCampus === campusVal || records.some(r => escapeHTML(String(r.campus || 'Main Campus').trim()) === campusVal));
+
+    const campusMatch =
+      campusVal === 'ALL' ||
+      lvlCampus === campusVal ||
+      records.some(
+        r => escapeHTML(String(r.campus || 'Main Campus')).trim() === campusVal
+      );
+    
     if (!campusMatch) return false;
 
     return (
       String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
       String(lvl.creator || '').toLowerCase().includes(query) ||
-      String(lvl.diff || lvl.difficulty || '').toLowerCase().includes(query)
+      String(lvl.diff || lvl.difficulty || '').toLowerCase().includes(query) ||
     );
   });
 
-  displayedItems.sort((a, b) => parseInt(a.rank || 999) - parseInt(b.rank || 999));
+  displayedItems.sort(
+    (a, b) => parseInt(a.rank || 999, 10) - parseInt(b.rank || 999,10)
+  );
 
   if (displayedItems.length === 0) {
-    list.innerHTML = '<div style="text-align:center; padding:24px; opacity:0.5; font-size:13px;">No tier entries match these filtering criteria.</div>';
+    const empty = document.createElement('div');
+    empty.style.textAlign = 'center';
+    empty.style.padding = '24px';
+    empty.style.opacity = '0.5';
+    empty.style.fontSize = '13px';
+    empty.textContent = 'No tier entries match these filtering criteria.';
+    list.replaceChildren(empty);
     return;
   }
+
+  const fragment = document.createDocumentFragment();
 
   displayedItems.forEach(lvl => {
     const rank = parseInt(lvl.rank || 999, 10);
     const pts = calculateLevelPoints(rank);
-    const itemRow = document.createElement('div');
-    itemRow.className = 'row';
-    itemRow.onclick = () => showLevelDetailPage(lvl, rank);
 
     let thumb = lvl.img || lvl.thumbnail;
-    if (!thumb && lvl.video && lvl.video.includes('embed/')) {
-      try { thumb = `https://img.youtube.com/vi/${lvl.video.split('embed/')[1].split('?')[0]}/maxdefault.jpg`; } catch(e) {}
+    if (!thumb && lvl.video?.includes('embed/')) {
+      try {
+        thumb = `https://img.youtube.com/vi/${lvl.video
+          .split('embed/')[1]
+          .split('?')[0]}/maxdefault.jpg`;
+      } catch {}
     }
-    if (!thumb) thumb = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+    thumb ||= CONFIG.IMAGES.FALLBACK_THUMBNAIL;
 
-    list.appendChild(itemRow);
-    itemRow.innerHTML = `
-      <div class="rank">#${rank}</div>
-      <div class="thumb"><img src="${escapeHTML(thumb)}" onerror="this.onerror=null; this.src='${CONFIG.IMAGES.FALLBACK_THUMBNAIL}'"></div>
-      <div class="info">
-        <div class="title">${escapeHTML(lvl.name || lvl.levelName || 'Unnamed')} <span class="badge" style="font-size:10px;">${escapeHTML(lvl.diff || lvl.difficulty || 'Demon')}</span></div>
-        <div class="sub">By ${escapeHTML(lvl.creator || 'Unknown')} | Verified by ${escapeHTML(lvl.verifier || 'Unknown')}</div>
-        <div class="points">${pts.toFixed(2)} Points</div>
-        <div class="sub" style="color:var(--accent); font-weight:bold; margin-top:2px; font-size:11px;">Campus: ${escapeHTML(lvl.campus || 'Main Campus')}</div>
-      </div>
-    `;
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.addEventListener('click', () => showLevelDetailPage(lvl, rank));
+
+    // Rank
+    const rankDiv = document.createElement('div');
+    rankDiv.className = 'rank';
+    rankDiv.textContent = `#${rank}`;
+    
+    // Thumbnail
+    const thumbDiv = document.createElement('div');
+    thumbDiv.className = 'thumb';
+
+    const img = document.createElement('img');
+    img.src = thumb;
+    img.onerror = function () {
+      this.onerror = null;
+      this.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+    };
+    thumbDiv.appendChild(img);
+    
+    // Info
+    const info = document.createElement('div');
+    info.className = 'info';
+
+    const title = document.createElement('div');
+    title.className = 'title';
+
+    title.append(
+      document.createTextNode(lvl.name || lvl.levelName || 'Unnamed')
+    );
+
+    const badge = document.createElement('span');
+    badge.className = 'badge';
+    badge.style.fontSize = '10px';
+    badge.textContent = lvl.diff || lvl.difficulty || 'Demon';
+
+    title.append(' ', badge);
+
+    const creator = document.createElement('div');
+    creator.className = 'sub';
+    creator.textContent =
+      `By ${lvl.creator || 'Unknown'} | Verified by ${lvl.verifier || 'Unknown'}`;
+
+    const points = document.createElement('div');
+    points.className = 'points';
+    points.textContent = `${pts.toFixed(2)} Points`;
+
+    const campus = document.createElement('div');
+    campus.className = 'sub';
+    campus.style.color = 'var(--accent)';
+    campus.style.fontWeight = 'bold';
+    campus.style.marginTop = '2px';
+    campus.style.fontSize = '11px';
+    campus.textContent = `Campus: ${lvl.campus || 'Main Campus'}`;
+
+    info.append(title, creator, points, campus);
+    row.append(rankDiv, thumbDiv, info);
+    fragment.appendChild(row);
   });
+  
+  list.replaceChildren(fragment);
 }
 
 export function showLevelDetailPage(lvl, forceRank) {
