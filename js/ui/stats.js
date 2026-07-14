@@ -28,46 +28,98 @@ export function renderStatsLeaderboard() {
   const campusFilter = campusEl ? campusEl.value : 'ALL';
   targetBody.innerHTML = '';
   
-  let processedPlayers = {};
+  const players = new Map();
 
-  uiState.allLevels.forEach(lvl => {
-    const cat = getNormalizedListType(lvl); 
+  // Pass 1: Group all records by player
+  for (const lvl of uiState.allLevels) {
+    const cat = getNormalizedListType(lvl);
     const rank = parseInt(lvl.rank || 999, 10);
-    const records = getRecordList(lvl);
 
-    records.forEach(r => {
-      const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      if (!name) return;
+    for (const r of getRecordList(lvl)) {
+      const name = String(
+        r.username || r.name || r.player || r.user || ''
+      ).trim();
 
-      const playerCampus = escapeHTML(String(r.campus || 'Main Campus').trim());
-      if (campusFilter !== 'ALL' && playerCampus !== campusFilter) return;
+      if (!name) continue;
 
-      if (!processedPlayers[name]) {
-        processedPlayers[name] = { 
-          name: name, campus: playerCampus, points: 0, completions: [], demons: 0, challenges: 0, platformers: 0
+      const campus = String(r.campus || 'Main Campus').trim();
+
+      if (campusFilter !== 'ALL' && campus !== campusFilter) 
+        continue;
+
+      let player = players.get(name);
+
+      if (!player) {
+        player = {
+          name: escapeHTML(name),
+          campus: escapeHTML(campus),
+          records: []
         };
+        players.set(name, player);
       }
 
-      const pct = parseInt(r.percent || 100, 10);
-      const score = calculateLevelPoints(rank) * (pct / 100);
+      player.records.push({
+        level: lvl,
+        record: r,
+        category: cat,
+        rank,
+        levelPoints: calculateLevelPoints(rank)
+      });
+    }
+  }
 
-      if (cat === uiState.currentStatsTab) {
-        processedPlayers[name].points += score;
+  const processedPlayers = new Map();
+
+  for (const player of players.values()) {
+
+    const stats = {
+      name: player.name,
+      campus: player.campus,
+      points: 0,
+      completions: [],
+      demons: 0,
+      challenges: 0,
+      platformers: 0
+    };
+
+    for (const entry of player.records) {
+
+      const pct = parseInt(entry.record.percent || 100, 10);
+
+      if (entry.category === uiState.currentStatsTab) {
+        stats.points += entry.levelPoints * (pct / 100);
       }
 
       if (pct === 100) {
-        if (cat === 'demon') processedPlayers[name].demons++;
-        else if (cat === 'challenge') processedPlayers[name].challenges++;
-        else if (cat === 'platformer') processedPlayers[name].platformers++;
+        switch (entry.category) {
+          case 'demon':
+            stats.demons++;
+            break;
+          case 'challenge':
+            stats.challenges++;
+            break;
+          case 'platformer':
+            stats.platformers++;
+            break;
+        }
       }
-      
-      processedPlayers[name].completions.push({ 
-        levelName: escapeHTML(lvl.name || lvl.levelName || 'Unnamed'), rank: rank, category: cat, percent: pct, video: escapeHTML(r.video || '#') 
-      });
-    });
-  });
 
-  let leaderboardData = Object.values(processedPlayers).filter(p => p.completions.some(c => c.category === uiState.currentStatsTab));
+      stats.completions.push({
+        levelName: escapeHTML(
+          entry.level.name || entry.level.levelName || 'Unnamed'
+        ),
+        rank: entry.rank,
+        category: entry.category,
+        percent: pct,
+        video: escapeHTML(entry.record.video || '#')
+      });
+    }
+
+    processedPlayers.set(player.name, stats);
+  }
+
+  let leaderboardData = [...processedPlayers.values() ]
+    .filter(p => p.completions.some(c => c.category === uiState.currentStatsTab));
   leaderboardData.sort((a, b) => b.points - a.points);
 
   if (leaderboardData.length === 0) {
