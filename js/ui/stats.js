@@ -170,7 +170,7 @@ export function displayPlayerProfile(player, activeIdx) {
 
   const buildCloud = (arr, typeClass) => {
     if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
-    return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (${c.percent}%)</span>`).join(' ');
+    return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cur[...]`,
   };
 
   let contextHeader = uiState.currentStatsTab.charAt(0).toUpperCase() + uiState.currentStatsTab.slice(1);
@@ -194,10 +194,22 @@ export function viewPlayerVideo(lvlName, link) {
   const targetFrame = document.getElementById('pvVideo');
   if (title) title.textContent = `Record Run: ${lvlName}`;
   if (targetFrame) {
-    targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; opacity:0.5; text-align:center;">No video reference saved.</div>';
+    targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; text-align:center; opacity:0.6;">No video available</div>';
   }
 }
 
 // Global UI Attachments
 window.switchStatsPageListTab = switchStatsPageListTab;
 window.viewPlayerVideo = viewPlayerVideo;
+
+// Route hook for the player video page. Expects the embed URL under the `videoLink` query param.
+// Example: #playerVideo?level=PlayerName&videoLink=https%3A%2F%2Fwww.youtube.com%2Fembed%2Fabcd1234
+window.routeToPlayerVideo = function(levelParam, videoLink) {
+  const title = levelParam || 'Record';
+  const link = videoLink || '#';
+  try {
+    viewPlayerVideo(title, link);
+  } catch (err) {
+    console.error('routeToPlayerVideo failed', err);
+  }
+};
