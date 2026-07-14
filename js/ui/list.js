@@ -245,9 +245,9 @@ export function switchListSubTab(tab) {
   
   const descEl = document.getElementById('listDescriptionText');
   if (descEl) {
-    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points!";
-    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
-    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
+    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amo[...]
+    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points."[...]
+    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purpose[...]
   }
   
   renderLevelsDashboard();
@@ -396,8 +396,8 @@ export function showLevelDetailPage(lvl, forceRank) {
   const container = document.getElementById('dRecordsContainer');
 
   if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || 'N/A')}`;
-  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No linked video data.</div>';
+  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML[...]
+  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;">` : '<div style="padding:2[...]
   
   if (stats) {
     stats.innerHTML = `
@@ -421,7 +421,7 @@ export function showLevelDetailPage(lvl, forceRank) {
     records.forEach(r => {
       const row = document.createElement('tr');
       const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
+      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href[...]
       tbody.appendChild(row);
     });
     container.appendChild(table);
@@ -432,3 +432,4 @@ export function showLevelDetailPage(lvl, forceRank) {
 window.openLevelFromNews = openLevelFromNews;
 window.switchMainListTab = switchMainListTab;
 window.switchListSubTab = switchListSubTab;
+
