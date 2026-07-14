@@ -69,7 +69,7 @@ export function showPage(pageId, params = {}, push = true) {
     try { window.routeToDetail(params.level, params); } catch (err) { console.error(err); }
   }
   if (pageId === 'playerVideo' && typeof window.routeToPlayerVideo === 'function') {
-    try { window.routeToPlayerVideo(params.level || '', params.link || ''); } catch (err) { console.error(err); }
+    try { window.routeToPlayerVideo(params.level || '', params.videoLink || ''); } catch (err) { console.error(err); }
   }
 }
 
