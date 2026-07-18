@@ -245,9 +245,9 @@ export function switchListSubTab(tab) {
   
   const descEl = document.getElementById('listDescriptionText');
   if (descEl) {
-    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amo[...]
-    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points."[...]
-    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purpose[...]
+    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points!";
+    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
+    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
   }
   
   renderLevelsDashboard();

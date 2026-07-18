@@ -170,7 +170,7 @@ export function displayPlayerProfile(player, activeIdx) {
 
   const buildCloud = (arr, typeClass) => {
     if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
-    return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cur[...]`,
+    return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (${c.percent}%)</span>`).join(' ');
   };
 
   let contextHeader = uiState.currentStatsTab.charAt(0).toUpperCase() + uiState.currentStatsTab.slice(1);
