@@ -1,7 +1,6 @@
 // js/app.js
 import { loadDatabase } from './api.js';
 import * as UI from './ui/index.js';
-import { handleHashRouteOnLoad } from './ui/modal.js';
 
 function safeExecute(fn, context) {
   try {
@@ -38,6 +37,11 @@ async function initApp() {
   safeExecute(UI.renderLevelsDashboard, "Main Dashboard View");
   safeExecute(UI.populateExistingLevelsDropdown, "Form Dropdowns");
   safeExecute(UI.renderStatsLeaderboard, "Stats Viewer View");
+
+  // Initialize the hash router now that data is available so deep links resolve correctly
+  safeExecute(() => {
+    if (typeof UI.handleHashRouteOnLoad === 'function') UI.handleHashRouteOnLoad();
+  }, "Router Init");
 }
 
 // --- DOM INITIALIZATION ---
@@ -50,12 +54,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   UI.updateThemeToggleText();
 
-  // Initialize app and then bind handlers and handle any incoming hash route
-  initApp().then(() => {
-    UI.bindSubmitHandler();
-    // After data and UI are ready, let the hash router show the initial route if present
-    try { handleHashRouteOnLoad(); } catch (err) { console.error('Error during initial route handling', err); }
-  });
+  initApp();
+  UI.bindSubmitHandler();
 });
 
 // --- GLOBAL BINDINGS FOR HTML ONCLICK ATTRIBUTES ---
