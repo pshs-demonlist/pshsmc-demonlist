@@ -595,9 +595,9 @@
 <div id="offlineBanner" class="offline-banner" hidden></div>
 
 <nav class="nav-menu" id="navMenu">
-  <span class="nav-item" onclick="switchPage('landing')">Home Dashboard</span>
-  <span class="nav-item" onclick="goToLevelsDashboard()">View the Lists</span>
-  <span class="nav-item" onclick="switchPage('stats')">Stats Viewer</span>
+  <a class="nav-item" href="#landing">Home Dashboard</a>
+  <a class="nav-item" href="#levels" onclick="goToLevelsDashboard()">View the Lists</a>
+  <a class="nav-item" href="#stats">Stats Viewer</a>
   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
   <span
     id="themeToggle"
@@ -698,7 +698,7 @@
       </div>
       
       <div class="list-description" id="listDescriptionText">
-          The main section of the Demonlist. .These demons are the hardest rated levels in the game Records are accepted above 50% and award points, which count for your placement in the Stats Viewer!
+          The main section of the Demonlist. .These demons are the hardest rated levels in the game Records are accepted above 50% and award points, which count for your placement in the Stats Vi[...]
       </div>
 
       <div class="list" id="list">
@@ -805,7 +805,7 @@
   </div>
 
   <div class="app-page" id="detailPage">
-    <div class="back" onclick="switchPage('levels')">← Back to main dashboard list</div>
+    <a class="back" href="#levels">← Back to main dashboard list</a>
     <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
     <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
     <div class="video" id="video"></div>
@@ -814,7 +814,7 @@
   </div>
 
   <div class="app-page" id="playerVideoPage">
-    <div class="back" onclick="switchPage('stats')">← Back to Stats Viewer</div>
+    <a class="back" href="#stats">← Back to Stats Viewer</a>
     <h2 id="pvTitle" style="margin: 10px 0 16px 0;"></h2>
     <div class="video" id="pvVideo"></div>
   </div>

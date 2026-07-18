@@ -37,6 +37,11 @@ async function initApp() {
   safeExecute(UI.renderLevelsDashboard, "Main Dashboard View");
   safeExecute(UI.populateExistingLevelsDropdown, "Form Dropdowns");
   safeExecute(UI.renderStatsLeaderboard, "Stats Viewer View");
+
+  // Initialize the hash router now that data is available so deep links resolve correctly
+  safeExecute(() => {
+    if (typeof UI.handleHashRouteOnLoad === 'function') UI.handleHashRouteOnLoad();
+  }, "Router Init");
 }
 
 // --- DOM INITIALIZATION ---

@@ -448,8 +448,8 @@ export function showLevelDetailPage(lvl, forceRank) {
   const container = document.getElementById('dRecordsContainer');
 
   if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || 'N/A')}`;
-  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:20px; text-align:center; opacity:0.4;">No linked video data.</div>';
+  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || lvl.levelId || 'N/A')}`;
+  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:24px; text-align:center; opacity:0.6;">No video available</div>';
   
   if (stats) {
     stats.innerHTML = `
@@ -473,7 +473,7 @@ export function showLevelDetailPage(lvl, forceRank) {
     records.forEach(r => {
       const row = document.createElement('tr');
       const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank" style="font-size:11px; text-decoration:none; color:var(--accent);">Link</a></td>`;
+      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank">Proof</a></td>`;
       tbody.appendChild(row);
     });
     container.appendChild(table);
@@ -484,3 +484,25 @@ export function showLevelDetailPage(lvl, forceRank) {
 window.openLevelFromNews = openLevelFromNews;
 window.switchMainListTab = switchMainListTab;
 window.switchListSubTab = switchListSubTab;
+
+// Route hook used by the hash router to open a level detail by id, rank, or exact name:
+// Examples: #detail?level=12345   #detail?level=1   #detail?level=Example%20Name
+window.routeToDetail = function(levelParam, params) {
+  if (!levelParam) return;
+  const key = String(levelParam).trim();
+  // try numeric id/rank first
+  let lvl = uiState.allLevels.find(l => String(l.id) === key || String(l.rank) === key);
+  if (!lvl) {
+    // try exact name match (case sensitive trimmed) and also a decoded match
+    lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === key);
+    if (!lvl) {
+      const decoded = decodeURIComponent(key);
+      lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === decoded);
+    }
+  }
+  if (lvl) {
+    const rank = parseInt(lvl.rank || 999, 10);
+    // showLevelDetailPage is already defined in this module
+    showLevelDetailPage(lvl, rank);
+  }
+};
