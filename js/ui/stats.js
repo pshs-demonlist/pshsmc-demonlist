@@ -194,7 +194,38 @@ export function viewPlayerVideo(lvlName, link) {
   const targetFrame = document.getElementById('pvVideo');
   if (title) title.textContent = `Record Run: ${lvlName}`;
   if (targetFrame) {
-    targetFrame.innerHTML = (link && link !== '#') ? `<iframe src="${link}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:4px;"></iframe>` : '<div style="padding:24px; text-align:center; opacity:0.6;">No video available</div>';
+    targetFrame.innerHTML = '';
+
+    let safeUrl = null;
+    if (link && link !== '#') {
+      try {
+        const parsed = new URL(link, window.location.origin);
+        const isHttp = parsed.protocol === 'https:' || parsed.protocol === 'http:';
+        const allowedHosts = ['www.youtube.com', 'youtube.com', 'youtu.be', 'player.vimeo.com', 'vimeo.com'];
+        const isAllowedHost = allowedHosts.includes(parsed.hostname);
+        if (isHttp && isAllowedHost) safeUrl = parsed.href;
+      } catch (e) {
+        safeUrl = null;
+      }
+    }
+
+    if (safeUrl) {
+      const iframe = document.createElement('iframe');
+      iframe.src = safeUrl;
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      iframe.style.borderRadius = '4px';
+      targetFrame.appendChild(iframe);
+    } else {
+      const fallback = document.createElement('div');
+      fallback.style.padding = '24px';
+      fallback.style.textAlign = 'center';
+      fallback.style.opacity = '0.6';
+      fallback.textContent = 'No video available';
+      targetFrame.appendChild(fallback);
+    }
   }
 }
 
