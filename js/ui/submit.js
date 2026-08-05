@@ -1,4 +1,3 @@
-// js/ui/submit.js
 import { uiState } from './list.js';
 import { submitRecordData } from '../api.js';
 
@@ -60,23 +59,20 @@ export function bindSubmitHandler() {
   btn.addEventListener('click', async () => {
     const ogText = btn.textContent;
     try {
-      // Require sign-in only if the auth subsystem exists.
-      // If auth is not available, allow anonymous submission.
+      // If auth subsystem is available, require sign-in before submitting.
+      // If it's not available (e.g., removed/disabled), allow anonymous submission.
       if (window.pshsmcAuth && typeof window.pshsmcAuth.isAuthenticated === 'function') {
         if (!window.pshsmcAuth.isAuthenticated()) {
           try {
-            // Show auth modal and require success to proceed
-            await window.pshsmcAuth.openAuthModalAndWaitForSuccess({
-              message: "Sign in to submit a record. This will link the submission to your local account."
-            });
+            await window.pshsmcAuth.openAuthModalAndWaitForSuccess({ message: "Oops — you need to sign up/sign in first. Don't worry — we will only ask for your GD Username and ask you to set a password stored locally." });
           } catch (authErr) {
-            // User cancelled or sign-in failed — abort submission
+            // user cancelled or sign-in failed; abort submission
             console.warn('User did not authenticate or cancelled auth:', authErr);
             return;
           }
         }
       } else {
-        // Auth subsystem not present => anonymous submission allowed
+        // Auth not present: proceed but log so maintainers know anonymous submissions happened
         console.info('Auth subsystem not available; proceeding anonymously.');
       }
 
@@ -130,6 +126,7 @@ export function bindSubmitHandler() {
         if (diffEl) payload.difficulty = diffEl.value;
       }
 
+      // send to server
       await submitRecordData(payload);
       await new Promise(r => setTimeout(r, 600));
       alert('Success! Your submission has been sent for staff review.');
