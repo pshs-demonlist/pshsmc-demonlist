@@ -1,3 +1,4 @@
+// js/ui/list.js
 import { escapeHTML, calculateLevelPoints, getNormalizedListType, getRecordList } from '../utils.js';
 import { CONFIG } from '../config.js';
 import { switchPage } from './modal.js';
@@ -5,14 +6,14 @@ import { switchPage } from './modal.js';
 export const uiState = {
   allLevels: [],
   currentMainTab: 'demon',
-  currentSubTab: 'main',
+  currentSubTab: 'main', 
   currentStatsTab: 'demon'
 };
 
 // --- URL ROUTING ENGINE ---
 export function syncURL(replace = false) {
   // Use hash routing for GitHub Pages to prevent 404 errors on refresh
-  const basePath = window.location.pathname;
+  const basePath = window.location.pathname; 
   let newHash = '';
 
   if (uiState.currentMainTab === 'stats') {
@@ -153,8 +154,7 @@ export function processLiveDecayFilterAndNews() {
         }
       }
 
-      // remove the added element from the simulated list so indices reflect post-insert placement
-      currentSimList.splice(idx, 1);
+      ccurrentSimList.splice(idx, 1);
       indexMap.delete(addName);
 
       // Update indices after the removed element
@@ -173,7 +173,7 @@ export function processLiveDecayFilterAndNews() {
     const currentRank = parseInt(lvl.rank || 999, 10);
     const targetName = String(lvl.name || lvl.levelName || "Unnamed Level").trim();
     const listCategory = getNormalizedListType(lvl);
-    const categorySortedLevels = categories[listCategory] || [];
+    const categorySortedLevels = categories[listCategory];
     const levelDateData = checkIsToday(lvl.createdDate || lvl.date || lvl.publishDate || lvl.added || lvl.timestamp);
     
     if (levelDateData.isToday) {
@@ -204,20 +204,6 @@ export function processLiveDecayFilterAndNews() {
             placementText += `, this pushes <strong>${escapeHTML(exactPushedExtendedMap[lookKey])}</strong> into the <strong>Extended List</strong>`;
         } else if (exactPushedLegacyMap[lookKey]) {
             placementText += `, this pushes <strong>${escapeHTML(exactPushedLegacyMap[lookKey])}</strong> into the <strong>Legacy List</strong>`;
-
-            // Append the extended->legacy contextual message requested: include days on list, number of victors, and verifier acknowledgement
-            try {
-              const createdTs = levelDateData.sortTime || Date.now();
-              const ageDays = Math.floor((now.getTime() - createdTs) / (1000 * 60 * 60 * 24));
-              const records = getRecordList(lvl) || [];
-              const victors = records.length;
-              const verifier = escapeHTML(lvl.verifier || 'Unknown');
-
-              placementText += ` This level has stood an incredible ${ageDays} day${ageDays === 1 ? '' : 's'} on the PSHS-Demonlist and has gotten ${victors} victor${victors === 1 ? '' : 's'}. Thank you to ${verifier} for verifying this level.`;
-            } catch (e) {
-              // Guard against unexpected data shapes — don't break the news pipeline
-              console.error('Failed to append legacy context message', e);
-            }
         }
 
         validNews.push({ type: 'placement', title: escapeHTML(targetName), rank: currentRank, listType: listCategory, placementText: placementText, sortTime: levelDateData.sortTime });
@@ -328,9 +314,9 @@ export function switchListSubTab(tab, bypassUrlSync = false) {
   
   const descEl = document.getElementById('listDescriptionText');
   if (descEl) {
-    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award full points.";
-    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
-    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
+    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amo[...]";
+    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.[...]";
+    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purpose[...]";
   }
   
   renderLevelsDashboard();
@@ -398,10 +384,9 @@ export function renderLevelsDashboard() {
     let thumb = lvl.img || lvl.thumbnail;
     if (!thumb && lvl.video?.includes('embed/')) {
       try {
-        // Use the medium-quality YouTube thumbnail (mqdefault) as requested
-        thumb = `https://img.youtube.com/vi/${lvl.video
+        const thumb = `https://img.youtube.com/vi/${lvl.video
           .split('embed/')[1]
-          .split('?')[0]}/mqdefault.jpg`;
+          .split('?')[0]}/maxdefault.jpg`;
       } catch {}
     }
     thumb ||= CONFIG.IMAGES.FALLBACK_THUMBNAIL;
@@ -420,9 +405,6 @@ export function renderLevelsDashboard() {
     thumbDiv.className = 'thumb';
 
     const img = document.createElement('img');
-    // Prefer lazy loading and async decoding for performance
-    img.loading = 'lazy';
-    img.decoding = 'async';
     img.src = thumb;
     img.onerror = function () {
       this.onerror = null;
@@ -485,8 +467,8 @@ export function showLevelDetailPage(lvl, forceRank) {
   const container = document.getElementById('dRecordsContainer');
 
   if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || lvl.levelId || 'N/A')}`;
-  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:24px; opacity:0.6; text-align:center;">No video available</div>';
+  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML[...]`;
+  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:2[...]';
   
   if (stats) {
     stats.innerHTML = `
@@ -510,10 +492,7 @@ export function showLevelDetailPage(lvl, forceRank) {
     records.forEach(r => {
       const row = document.createElement('tr');
       const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      const percent = escapeHTML(String(r.percent || 100));
-      const campus = escapeHTML(r.campus || 'Main Campus');
-      const proofLink = escapeHTML(r.video || r.link || '#');
-      row.innerHTML = `<td>${name} <strong>(${percent}%)</strong></td><td>${campus}</td><td style="text-align:right;"><a class="proof-btn" href="${proofLink}" target="_blank" rel="noopener noreferrer">View Proof</a></td>`;
+      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href[...]`;
       tbody.appendChild(row);
     });
     container.appendChild(table);
@@ -536,8 +515,7 @@ window.routeToDetail = function(levelParam, params) {
     // try exact name match (case sensitive trimmed) and also a decoded match
     lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === key);
     if (!lvl) {
-      let decoded = null;
-      try { decoded = decodeURIComponent(key); } catch (e) { decoded = key; }
+      const decoded = decodeURIComponent(key);
       lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === decoded);
     }
   }
