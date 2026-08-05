@@ -1,40 +1,104 @@
-@@
-   <a class="nav-item" href="#stats">Stats Viewer</a>
-   <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
-+  <span id="pshsmc-auth-info" class="nav-item">Not signed in</span>
-+  <button id="pshsmc-auth-action" class="nav-item" style="background:none;border:none;padding:0;cursor:pointer;">Sign in / Sign up</button>
-   <span
-     id="themeToggle"
-     class="nav-item theme-toggle-item"
-     onclick="toggleThemeMode()"
-   >
-     Toggle Light Mode
-   </span>
- </nav>
-@@
- </div>
- 
- <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
-   <div class="modal" onclick="event.stopPropagation()">
-@@
- </div>
- </div>
-+
-+<!-- Auth Modal (client-side prototype only) -->
-+<div class="modal-overlay" id="authModal" onclick="document.getElementById('authModal').style.display='none'">
-+  <div class="modal" onclick="event.stopPropagation()">
-+    <button class="modal-close" onclick="document.getElementById('authModal').style.display='none'">&times;</button>
-+    <div class="modal-header">Sign in / Sign up</div>
-+    <div style="padding:12px; font-size:13px;" id="authModalMessage">Please sign in or sign up to continue.</div>
-+    <div style="display:flex;flex-direction:column;gap:8px;padding:12px;">
-+      <input id="authUsername" placeholder="GD Username" />
-+      <input id="authPassword" placeholder="Password" type="password" />
-+      <div style="display:flex;gap:8px;justify-content:flex-end;">
-+        <button id="authCancelBtn">Cancel</button>
-+        <button id="authSignInBtn">Sign in</button>
-+        <button id="authSignUpBtn">Sign up</button>
-+      </div>
-+      <div style="font-size:12px;color:#a33;margin-top:8px;">Prototype notice: credentials are stored locally in your browser (IndexedDB). Do not reuse passwords.</div>
-+    </div>
-+  </div>
-+</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PSHS Demonlist</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav style="display:flex;gap:12px;align-items:center;">
+        <a class="nav-item" href="#landing">Home</a>
+        <a class="nav-item" href="#stats">Stats Viewer</a>
+        <span class="nav-item" onclick="openGuidelinesModal()" style="cursor:pointer;">Submission Guidelines</span>
+        <span id="pshsmc-auth-info" class="nav-item">Not signed in</span>
+        <button id="pshsmc-auth-action" class="nav-item" style="background:none;border:none;padding:0;cursor:pointer;">Sign in / Sign up</button>
+        <span id="themeToggle" class="nav-item theme-toggle-item" onclick="toggleThemeMode()">Toggle Light Mode</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="section">
+      <div style="margin-bottom:8px;">
+        <input id="search" class="input" placeholder="Search levels..." />
+      </div>
+      <div id="liveChangelogFeed"></div>
+      <div id="list" class="list" style="margin-top:12px;"></div>
+    </section>
+
+    <section id="submissionBox" class="section">
+      <h3>Submit a record</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <input id="username" class="input" placeholder="Your GD username" />
+        <input id="recordLink" class="input" placeholder="Record link (URL)" />
+        <input id="campus" class="input" placeholder="Campus" />
+
+        <div>
+          <label for="submissionType">Submission type</label>
+          <select id="submissionType" class="select" onchange="handleListTypeChange()">
+            <option value="record">Record (existing level)</option>
+            <option value="newLevel">New Level</option>
+          </select>
+        </div>
+
+        <div id="existingLevelWrap">
+          <select id="existingLevel" class="select"></select>
+        </div>
+
+        <div id="newLevelFields" style="display:none;">
+          <input id="newName" class="input" placeholder="Level name" />
+          <input id="newCreator" class="input" placeholder="Creator" />
+          <input id="newLevelId" class="input" placeholder="Level ID (optional)" />
+          <select id="newDifficulty" class="select">
+            <option value="Demon">Demon</option>
+            <option value="Challenge">Challenge</option>
+            <option value="Platformer">Platformer</option>
+          </select>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:8px;">
+          <button id="submitBtn" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="leaderboardBody" class="section">
+      <h3>Leaderboard</h3>
+      <div id="profileContent"></div>
+    </section>
+  </main>
+
+  <!-- Guidelines Modal -->
+  <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()" style="display:none;">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:720px;margin:40px auto;background:var(--panel);padding:18px;border-radius:10px;">
+      <button class="modal-close" onclick="closeGuidelinesModal()" style="float:right;background:none;border:none;font-size:18px;color:var(--muted);">&times;</button>
+      <div class="modal-header">Submission Guidelines</div>
+      <div style="margin-top:12px;">Please follow the guidelines...</div>
+    </div>
+  </div>
+
+  <!-- Auth Modal (client-side prototype only) -->
+  <div class="modal-overlay" id="authModal" onclick="document.getElementById('authModal').style.display='none'" style="display:none;">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width:420px;margin:40px auto;background:var(--panel);padding:12px;border-radius:10px;">
+      <button class="modal-close" onclick="document.getElementById('authModal').style.display='none'" style="float:right;background:none;border:none;font-size:18px;color:var(--muted);">&times;</button>
+      <div class="modal-header">Sign in / Sign up</div>
+      <div style="padding:12px; font-size:13px;" id="authModalMessage">Please sign in or sign up to continue.</div>
+      <div style="display:flex;flex-direction:column;gap:8px;padding:12px;">
+        <input id="authUsername" placeholder="GD Username" class="input" />
+        <input id="authPassword" placeholder="Password" type="password" class="input" />
+        <div style="display:flex;gap:8px;justify-content:flex-end;">
+          <button id="authCancelBtn" class="btn">Cancel</button>
+          <button id="authSignInBtn" class="btn btn-primary">Sign in</button>
+          <button id="authSignUpBtn" class="btn">Sign up</button>
+        </div>
+        <div style="font-size:12px;color:#a33;margin-top:8px;">Prototype notice: credentials are stored locally in your browser (IndexedDB). Do not reuse passwords.</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
