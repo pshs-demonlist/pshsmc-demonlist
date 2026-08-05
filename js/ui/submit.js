@@ -1,3 +1,4 @@
+// js/ui/submit.js
 import { uiState } from './list.js';
 import { submitRecordData } from '../api.js';
 
@@ -64,12 +65,29 @@ export function bindSubmitHandler() {
       if (window.pshsmcAuth && typeof window.pshsmcAuth.isAuthenticated === 'function') {
         if (!window.pshsmcAuth.isAuthenticated()) {
           try {
-            await window.pshsmcAuth.openAuthModalAndWaitForSuccess({ message: "Oops — you need to sign up/sign in first. Don't worry — we will only ask for your GD Username and ask you to set a password stored locally." });
+            await window.pshsmcAuth.openAuthModalAndWaitForSuccess({ message: "Sign in to submit a record. This will link the submission to your local account." });
+            // Prefill username if sign-in succeeded
+            try {
+              const cur = window.pshsmcAuth.getCurrentUser ? window.pshsmcAuth.getCurrentUser() : null;
+              if (cur && cur.username) {
+                const userEl = document.getElementById('username');
+                if (userEl) userEl.value = cur.username;
+              }
+            } catch (e) { /* ignore */ }
           } catch (authErr) {
             // user cancelled or sign-in failed; abort submission
             console.warn('User did not authenticate or cancelled auth:', authErr);
             return;
           }
+        } else {
+          // already signed in: prefill username
+          try {
+            const cur = window.pshsmcAuth.getCurrentUser ? window.pshsmcAuth.getCurrentUser() : null;
+            if (cur && cur.username) {
+              const userEl = document.getElementById('username');
+              if (userEl) userEl.value = cur.username;
+            }
+          } catch (e) { /* ignore */ }
         }
       } else {
         // Auth not present: proceed but log so maintainers know anonymous submissions happened
@@ -92,7 +110,7 @@ export function bindSubmitHandler() {
         throw new Error('Missing required fields. Please fill in Username, Record Link, and Campus.');
       }
 
-      const urlRegex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,63}(\/[^\n\s]*)?$/i;
+      const urlRegex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,63}(\/[\S]*)?$/i;
       if (!urlRegex.test(link)) {
         throw new Error('Invalid Record Link format. Please provide a valid URL.');
       }
