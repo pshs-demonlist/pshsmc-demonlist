@@ -1,28 +1,3 @@
-// js/ui/submit.js
-import { escapeHTML, getNormalizedListType } from '../utils.js';
-import { submitRecordData } from '../api.js';
-import { uiState } from './list.js';
-
-// --- SUBMISSIONS & FORMS ---
-export function populateExistingLevelsDropdown() {
-  const d = document.getElementById('existingLevel');
-  const t = document.getElementById('listType');
-  if (!d || !t) return;
-  d.innerHTML = '';
-  const filtered = uiState.allLevels.filter(l => getNormalizedListType(l) === t.value);
-  filtered.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = escapeHTML(l.name || l.levelName);
-    opt.dataset.id = escapeHTML(String(l.id || ''));
-    opt.dataset.creator = escapeHTML(l.creator || '');
-    opt.textContent = `${escapeHTML(l.name || l.levelName)} (by ${escapeHTML(l.creator || 'Unknown')})`;
-    d.appendChild(opt);
-  });
-}
-
-export function toggleFormFields() {
-  const t = document.getElementById("listType");
-  const s = document.getElementById("submissionType");
   if (!t || !s) return;
   
   const eWrap = document.getElementById("existingLevelWrap");
@@ -49,6 +24,17 @@ export function bindSubmitHandler() {
   btn.addEventListener('click', async () => {
     const ogText = btn.textContent;
     try {
+      // If user is not authenticated, prompt them to sign in / sign up first
+      try {
+        if (!window.pshsmcAuth || !window.pshsmcAuth.isAuthenticated || !window.pshsmcAuth.isAuthenticated()) {
+          await window.pshsmcAuth.openAuthModalAndWaitForSuccess({ message: "Oops — you need to sign up/sign in first. Don't worry — we will only ask for your GD Username and ask you to set a password to help verify it's actually you." });
+        }
+      } catch (authErr) {
+        // user cancelled or auth not available
+        console.warn('User did not authenticate:', authErr);
+        return;
+      }
+
       const user = document.getElementById('username').value.trim();
       const link = document.getElementById('recordLink').value.trim();
       const campus = document.getElementById('campus').value.trim();
@@ -59,7 +45,7 @@ export function bindSubmitHandler() {
         throw new Error("Missing required fields. Please fill in Username, Record Link, and Campus.");
       }
 
-      const urlRegex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,63}(\/[^\s]*)?$/i;
+      const urlRegex = /^(https?:\/\/)?([a-z\d-]+\.)+[a-z]{2,63}(\/[^\n\s]*)?$/i;
       if (!urlRegex.test(link)) {
         throw new Error("Invalid Record Link format. Please provide a valid URL.");
       }
