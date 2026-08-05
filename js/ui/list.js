@@ -154,7 +154,8 @@ export function processLiveDecayFilterAndNews() {
         }
       }
 
-      ccurrentSimList.splice(idx, 1);
+      // remove the added element from the simulated list so indices reflect post-insert placement
+      currentSimList.splice(idx, 1);
       indexMap.delete(addName);
 
       // Update indices after the removed element
@@ -204,6 +205,20 @@ export function processLiveDecayFilterAndNews() {
             placementText += `, this pushes <strong>${escapeHTML(exactPushedExtendedMap[lookKey])}</strong> into the <strong>Extended List</strong>`;
         } else if (exactPushedLegacyMap[lookKey]) {
             placementText += `, this pushes <strong>${escapeHTML(exactPushedLegacyMap[lookKey])}</strong> into the <strong>Legacy List</strong>`;
+
+            // Append the extended->legacy contextual message requested: include days on list, number of victors, and verifier acknowledgement
+            try {
+              const createdTs = levelDateData.sortTime || Date.now();
+              const ageDays = Math.floor((now.getTime() - createdTs) / (1000 * 60 * 60 * 24));
+              const records = getRecordList(lvl) || [];
+              const victors = records.length;
+              const verifier = escapeHTML(lvl.verifier || 'Unknown');
+
+              placementText += ` This level has stood an incredible ${ageDays} day${ageDays === 1 ? '' : 's'} on the PSHS-Demonlist and has gotten ${victors} victors. Thank you for ${verifier} for taking their time verifying and uploading the level here.`;
+            } catch (e) {
+              // Guard against unexpected data shapes — don't break the news pipeline
+              console.error('Failed to append legacy context message', e);
+            }
         }
 
         validNews.push({ type: 'placement', title: escapeHTML(targetName), rank: currentRank, listType: listCategory, placementText: placementText, sortTime: levelDateData.sortTime });
@@ -314,9 +329,9 @@ export function switchListSubTab(tab, bypassUrlSync = false) {
   
   const descEl = document.getElementById('listDescriptionText');
   if (descEl) {
-    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points!";
-    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
-    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
+    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amo[...]";
+    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.[...]";
+    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purpose[...]";
   }
   
   renderLevelsDashboard();
@@ -384,9 +399,10 @@ export function renderLevelsDashboard() {
     let thumb = lvl.img || lvl.thumbnail;
     if (!thumb && lvl.video?.includes('embed/')) {
       try {
+        // Use the medium-quality YouTube thumbnail (mqdefault) as requested
         thumb = `https://img.youtube.com/vi/${lvl.video
           .split('embed/')[1]
-          .split('?')[0]}/maxdefault.jpg`;
+          .split('?')[0]}/mqdefault.jpg`;
       } catch {}
     }
     thumb ||= CONFIG.IMAGES.FALLBACK_THUMBNAIL;
@@ -405,6 +421,9 @@ export function renderLevelsDashboard() {
     thumbDiv.className = 'thumb';
 
     const img = document.createElement('img');
+    // Prefer lazy loading and async decoding for performance
+    img.loading = 'lazy';
+    img.decoding = 'async';
     img.src = thumb;
     img.onerror = function () {
       this.onerror = null;
@@ -467,8 +486,8 @@ export function showLevelDetailPage(lvl, forceRank) {
   const container = document.getElementById('dRecordsContainer');
 
   if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || lvl.levelId || 'N/A')}`;
-  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:24px; text-align:center; opacity:0.6;">No video available</div>';
+  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML[...]`;
+  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:2[...]';
   
   if (stats) {
     stats.innerHTML = `
@@ -492,7 +511,7 @@ export function showLevelDetailPage(lvl, forceRank) {
     records.forEach(r => {
       const row = document.createElement('tr');
       const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank">Proof</a></td>`;
+      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href[...]`;
       tbody.appendChild(row);
     });
     container.appendChild(table);

@@ -15,8 +15,9 @@ const DEFAULT_CONFIG = {
   },
 
   IMAGES: {
+    // Use a medium-quality YouTube thumbnail as the default fallback (mqdefault)
     FALLBACK_THUMBNAIL:
-      "https://img.youtube.com/vi/a83hV1_3B88/maxdefault.jpg"
+      "https://img.youtube.com/vi/a83hV1_3B88/mqdefault.jpg"
   }
 };
 
