@@ -1709,7 +1709,7 @@
     "img": "https://img.youtube.com/vi/rsih2CrkekY/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/rsih2CrkekY",
     "listType": "demon",
-    "rawTier": 15.3,
+    "rawTier": 15.31,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2849,7 +2849,7 @@
     "img": "https://img.youtube.com/vi/uTkTGnuiFIc/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/uTkTGnuiFIc",
     "listType": "demon",
-    "rawTier": 6.35,
+    "rawTier": 6.36,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3243,7 +3243,7 @@
     "img": "https://img.youtube.com/vi/Jj-Jj_vKTis/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/Jj-Jj_vKTis",
     "listType": "demon",
-    "rawTier": 3.77,
+    "rawTier": 3.78,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3644,7 +3644,7 @@
     "img": "https://img.youtube.com/vi/14rUKBL6u2c/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/14rUKBL6u2c",
     "listType": "demon",
-    "rawTier": 2.8,
+    "rawTier": 2.81,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3783,35 +3783,8 @@
     ]
   },
   {
-    "id": "146387767",
-    "rank": 117,
-    "name": "Faerie",
-    "creator": "nikver19",
-    "verifier": "ModeraGD",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/VRtkdJXRsJQ/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/VRtkdJXRsJQ",
-    "listType": "demon",
-    "rawTier": 2.33,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-09-10T22:35:50.270Z",
-    "campus": "Ilocos Region Campus",
-    "victorList": [
-      {
-        "name": "ModeraGD",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/VRtkdJXRsJQ",
-        "campus": "Ilocos Region Campus",
-        "date": "2026-09-10T22:35:50.270Z"
-      }
-    ]
-  },
-  {
     "id": "86650731",
-    "rank": 118,
+    "rank": 117,
     "name": "Broken Roulette",
     "creator": "NoFlix",
     "verifier": "sSeanyboii",
@@ -3833,6 +3806,33 @@
         "video": "https://www.youtube.com/embed/zdcR9ZafefM",
         "campus": "Main Campus",
         "date": "2026-07-08T14:33:00.541Z"
+      }
+    ]
+  },
+  {
+    "id": "146387767",
+    "rank": 118,
+    "name": "Faerie",
+    "creator": "nikver19",
+    "verifier": "ModeraGD",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/VRtkdJXRsJQ/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/VRtkdJXRsJQ",
+    "listType": "demon",
+    "rawTier": 2.32,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-09-10T22:35:50.270Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/VRtkdJXRsJQ",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-09-10T22:35:50.270Z"
       }
     ]
   },
