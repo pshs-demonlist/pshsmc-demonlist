@@ -31,7 +31,7 @@ export function showPage(pageId, params = {}, push = true) {
   // Reset media elements
   ['video', 'pvVideo'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.innerHTML = '';
+    if (el) el.replaceChildren();
   });
 
   // Hide all core page containers
@@ -143,7 +143,11 @@ export function toggleThemeMode() {
 
 export function displayFallbackUIMessage(elementId, message) {
   const el = document.getElementById(elementId);
-  if (el) el.innerHTML = `<div style="color:var(--accent); text-align:center; padding:20px; font-size:13px;">${message}</div>`;
+  if (!el) return;
+  const box = document.createElement('div');
+  box.style.cssText = 'color:var(--accent); text-align:center; padding:20px; font-size:13px;';
+  box.textContent = String(message ?? '');
+  el.replaceChildren(box);
 }
 
 export function showOfflineBanner(message) {

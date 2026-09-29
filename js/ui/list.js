@@ -1,11 +1,53 @@
 // js/ui/list.js
-import { escapeHTML, calculateLevelPoints, getNormalizedListType, getRecordList } from '../utils.js';
+import { calculateLevelPoints, getNormalizedListType, getRecordList } from '../utils.js';
 import { CONFIG } from '../config.js';
 import { switchPage } from './modal.js';
 
 let dashboardListEl = null;
 let dashboardSearchEl = null;
 let dashboardCampusFilterEl = null;
+
+function isAllowedHttpUrl(value, allowedHosts = null) {
+  if (!value || value === '#') return null;
+  try {
+    const parsed = new URL(String(value), window.location.origin);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return null;
+    if (allowedHosts && !allowedHosts.includes(parsed.hostname.toLowerCase())) return null;
+    return parsed.href;
+  } catch {
+    return null;
+  }
+}
+
+const VIDEO_HOSTS = [
+  'www.youtube.com',
+  'youtube.com',
+  'youtu.be',
+  'player.vimeo.com',
+  'vimeo.com'
+];
+
+function createSafeVideoFrame(url, borderRadius = '6px') {
+  const safeUrl = isAllowedHttpUrl(url, VIDEO_HOSTS);
+  if (!safeUrl) {
+    const fallback = document.createElement('div');
+    fallback.style.padding = '24px';
+    fallback.style.textAlign = 'center';
+    fallback.style.opacity = '0.5';
+    fallback.textContent = 'No video available';
+    return fallback;
+  }
+
+  const iframe = document.createElement('iframe');
+  iframe.src = safeUrl;
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = 'none';
+  iframe.style.borderRadius = borderRadius;
+  return iframe;
+}
 
 function getDashboardElements() {
   if (!dashboardListEl) {
@@ -201,11 +243,11 @@ export function processLiveDecayFilterAndNews() {
 
         if (indexInSorted > 0) {
           const harderLevel = categorySortedLevels[indexInSorted - 1];
-          textHarder = escapeHTML(harderLevel.name || harderLevel.levelName || "Unnamed");
+          textHarder = String(harderLevel.name || harderLevel.levelName || 'Unnamed');
         }
         if (indexInSorted !== -1 && indexInSorted < categorySortedLevels.length - 1) {
           const easierLevel = categorySortedLevels[indexInSorted + 1];
-          textEasier = escapeHTML(easierLevel.name || easierLevel.levelName || "Unnamed");
+          textEasier = String(easierLevel.name || easierLevel.levelName || 'Unnamed');
         }
 
         let placementText = `below <strong>${textHarder}</strong> and above <strong>${textEasier}</strong>`;
@@ -219,12 +261,12 @@ export function processLiveDecayFilterAndNews() {
 
         const lookKey = targetName.toLowerCase();
         if (exactPushedExtendedMap[lookKey]) {
-            placementText += `, this pushes <strong>${escapeHTML(exactPushedExtendedMap[lookKey])}</strong> into the <strong>Extended List</strong>`;
+            placementText += `, this pushes ${exactPushedExtendedMap[lookKey]} into the Extended List`; 
         } else if (exactPushedLegacyMap[lookKey]) {
-            placementText += `, this pushes <strong>${escapeHTML(exactPushedLegacyMap[lookKey])}</strong> into the <strong>Legacy List</strong>`;
+            placementText += `, this pushes ${exactPushedLegacyMap[lookKey]} into the Legacy List`; 
         }
 
-        validNews.push({ type: 'placement', title: escapeHTML(targetName), rank: currentRank, listType: listCategory, placementText: placementText, sortTime: levelDateData.sortTime });
+        validNews.push({ type: 'placement', title: targetName, rank: currentRank, listType: listCategory, placementText, sortTime: levelDateData.sortTime });
     }
 
     const records = getRecordList(lvl);
@@ -236,7 +278,7 @@ export function processLiveDecayFilterAndNews() {
 
         const recDateData = checkIsToday(rec.date || rec.timestamp || rec.achieved);
         if (recDateData.isToday) {
-            validNews.push({ type: 'victor', title: escapeHTML(targetName), listType: listCategory, username: escapeHTML(rawUsername), sortTime: recDateData.sortTime });
+            validNews.push({ type: 'victor', title: targetName, listType: listCategory, username: rawUsername, sortTime: recDateData.sortTime });
         }
     });
   });
@@ -244,45 +286,117 @@ export function processLiveDecayFilterAndNews() {
   validNews.sort((a, b) => b.sortTime - a.sortTime);
 
   if (validNews.length === 0) {
-    feed.innerHTML = `<div style="color:#64748b; padding:16px; font-size:12px; text-align:center; font-style:italic;">No changes detected for today (${targetTodayStr}).</div>`;
+    feed.replaceChildren();
+    const empty = document.createElement('div');
+    empty.style.color = '#64748b';
+    empty.style.padding = '16px';
+    empty.style.fontSize = '12px';
+    empty.style.textAlign = 'center';
+    empty.style.fontStyle = 'italic';
+    empty.textContent = `No changes detected for today (${targetTodayStr}).`;
+    feed.appendChild(empty);
     return;
   }
 
-  feed.innerHTML = '';
+  feed.replaceChildren();
   const container = document.createElement('div');
-  container.style.marginBottom = "14px";
+  container.style.marginBottom = '14px';
+
   const displayDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
-  let html = `<div style="font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">${displayDate}</div>`;
-  
+  const dateEl = document.createElement('div');
+  dateEl.style.cssText = 'font-size:11px; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;';
+  dateEl.textContent = displayDate;
+  container.appendChild(dateEl);
+
   validNews.forEach(item => {
     let badgeText = 'DEMON LIST';
     let badgeColor = 'var(--accent)';
     if (item.listType === 'challenge') { badgeText = 'CHALLENGE LIST'; badgeColor = '#f59e0b'; }
     else if (item.listType === 'platformer') { badgeText = 'PLATFORMER LIST'; badgeColor = '#3b82f6'; }
 
-    let itemDescriptionHtml = '';
+    const itemEl = document.createElement('div');
+    itemEl.className = 'changelog-item';
+    itemEl.style.cursor = 'pointer';
+    itemEl.title = 'Click to view level';
+    itemEl.addEventListener('click', () => openLevelFromNews(item.title));
+
+    const top = document.createElement('div');
+    top.style.cssText = 'display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;';
+
+    const titleEl = document.createElement('span');
+    titleEl.className = 'changelog-item-title';
+    titleEl.textContent = item.title;
+
+    const badge = document.createElement('span');
+    badge.style.cssText = `font-size:11px; white-space:nowrap; font-weight:700; color:${badgeColor};`;
+    badge.textContent = badgeText;
+    top.append(titleEl, badge);
+
+    const desc = document.createElement('div');
+    desc.className = 'changelog-item-desc';
+
     if (item.type === 'placement') {
-        itemDescriptionHtml = `Placed at <strong class="news-rank">#${item.rank}</strong>, ${item.placementText}.`;
+      desc.append(document.createTextNode('Placed at '));
+      const rank = document.createElement('strong');
+      rank.className = 'news-rank';
+      rank.textContent = `#${item.rank}`;
+      desc.append(rank, document.createTextNode(', '));
+      appendPlacementDescription(desc, item.placementText);
     } else if (item.type === 'victor') {
-        itemDescriptionHtml = `Congratulations to <strong>${item.username}</strong> for beating <strong>${item.title}</strong> today! Huge GGS!`;
+      desc.append(document.createTextNode('Congratulations to '));
+      const username = document.createElement('strong');
+      username.textContent = item.username;
+      const title = document.createElement('strong');
+      title.textContent = item.title;
+      desc.append(username, document.createTextNode(' for beating '), title, document.createTextNode(' today! Huge GGS!'));
     }
 
-    const safeTitle = escapeHTML(item.title).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-    html += `
-      <div class="changelog-item" onclick="openLevelFromNews('${safeTitle}')" style="cursor:pointer;" title="Click to view level">
-        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px; gap:10px;">
-          <span class="changelog-item-title">${item.title}</span>
-          <span style="font-size:11px; white-space:nowrap; font-weight:700; color:${badgeColor};">
-            ${badgeText}
-          </span>
-        </div>
-        <div class="changelog-item-desc">${itemDescriptionHtml}</div>
-      </div>
-    `;
+    itemEl.append(top, desc);
+    container.appendChild(itemEl);
   });
-  
-  container.innerHTML = html;
+
   feed.appendChild(container);
+}
+
+function appendPlacementDescription(parent, text) {
+  const value = String(text);
+  if (value === 'as the only level in this category') {
+    parent.textContent = value;
+    return;
+  }
+
+  const top = value.match(/^at the very top of the list, above (.+)$/);
+  if (top) {
+    const strong = document.createElement('strong');
+    strong.textContent = top[1];
+    parent.append(document.createTextNode('at the very top of the list, above '), strong);
+    return;
+  }
+
+  const bottom = value.match(/^below (.+), at the bottom of the list$/);
+  if (bottom) {
+    const strong = document.createElement('strong');
+    strong.textContent = bottom[1];
+    parent.append(document.createTextNode('below '), strong, document.createTextNode(', at the bottom of the list'));
+    return;
+  }
+
+  const normal = value.match(/^below (.+) and above (.+?)(?:, this pushes (.+) into the (Extended List|Legacy List))?$/);
+  if (normal) {
+    const harder = document.createElement('strong');
+    harder.textContent = normal[1];
+    const easier = document.createElement('strong');
+    easier.textContent = normal[2];
+    parent.append(document.createTextNode('below '), harder, document.createTextNode(' and above '), easier);
+    if (normal[3]) {
+      const pushed = document.createElement('strong');
+      pushed.textContent = normal[3];
+      parent.append(document.createTextNode(', this pushes '), pushed, document.createTextNode(` into the ${normal[4]}`));
+    }
+    return;
+  }
+
+  parent.textContent = value;
 }
 
 export function openLevelFromNews(lvlName) {
@@ -346,7 +460,7 @@ export function renderLevelsDashboard() {
   const { list, search, campusFilter } = getDashboardElements();
   if (!list) return;
 
-  const query = search ? escapeHTML(search.value).toLowerCase() : '';
+  const query = search ? search.value.toLowerCase() : '';
   const campusVal = campusFilter ? campusFilter.value : 'ALL';
   
   let displayedItems = uiState.allLevels.filter(lvl => {
@@ -421,7 +535,8 @@ export function renderLevelsDashboard() {
     thumbDiv.className = 'thumb';
 
     const img = document.createElement('img');
-    img.src = thumb;
+    const safeThumb = isAllowedHttpUrl(thumb);
+    img.src = safeThumb || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
     img.onerror = function () {
       this.onerror = null;
       this.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
@@ -492,35 +607,104 @@ export function showLevelDetailPage(lvl, forceRank) {
   const stats = document.getElementById('stats');
   const container = document.getElementById('dRecordsContainer');
 
-  if (t) t.textContent = lvl.name || lvl.levelName || "Unnamed Map";
-  if (info) info.innerHTML = `Creator: <strong>${escapeHTML(lvl.creator || 'Unknown')}</strong> | Verifier: <strong>${escapeHTML(lvl.verifier || 'Unknown')}</strong><br>ID Reference: ${escapeHTML(lvl.id || 'N/A')}`;
-  if (vid) vid.innerHTML = lvl.video ? `<iframe src="${escapeHTML(lvl.video)}" allowfullscreen style="width:100%; height:100%; border:none; border-radius:6px;"></iframe>` : '<div style="padding:24px; text-align:center; opacity:0.5;">No video available</div>';
-  
+  if (t) t.textContent = lvl.name || lvl.levelName || 'Unnamed Map';
+
+  if (info) {
+    info.replaceChildren();
+    info.append(document.createTextNode('Creator: '));
+    const creator = document.createElement('strong');
+    creator.textContent = lvl.creator || 'Unknown';
+    const verifier = document.createElement('strong');
+    verifier.textContent = lvl.verifier || 'Unknown';
+    info.append(creator, document.createTextNode(' | Verifier: '), verifier, document.createElement('br'), document.createTextNode('ID Reference: '), document.createTextNode(lvl.id || 'N/A'));
+  }
+
+  if (vid) {
+    vid.replaceChildren(createSafeVideoFrame(lvl.video));
+  }
+
   if (stats) {
-    stats.innerHTML = `
-      <div class="stat"><h4>Rank Spectrum</h4><p>#${finalRank}</p></div>
-      <div class="stat"><h4>Point Value</h4><p>${calculateLevelPoints(finalRank).toFixed(2)}</p></div>
-      <div class="stat"><h4>Total Records</h4><p>${records.length}</p></div>
-    `;
+    stats.replaceChildren();
+    [
+      ['Rank Spectrum', `#${finalRank}`],
+      ['Point Value', calculateLevelPoints(finalRank).toFixed(2)],
+      ['Total Records', String(records.length)]
+    ].forEach(([label, value]) => {
+      const stat = document.createElement('div');
+      stat.className = 'stat';
+      const h4 = document.createElement('h4');
+      h4.textContent = label;
+      const p = document.createElement('p');
+      p.textContent = value;
+      stat.append(h4, p);
+      stats.appendChild(stat);
+    });
   }
 
   if (container) {
-    container.innerHTML = `<h3 style="font-size:14px; margin-top:16px;">Verified Level Victors</h3>`;
+    container.replaceChildren();
+    const heading = document.createElement('h3');
+    heading.style.cssText = 'font-size:14px; margin-top:16px;';
+    heading.textContent = 'Verified Level Victors';
+    container.appendChild(heading);
+
     if (records.length === 0) {
-      container.innerHTML += '<div style="padding:12px; opacity:0.4; font-size:12px; text-align:center;">No campus data records approved.</div>';
+      const empty = document.createElement('div');
+      empty.style.cssText = 'padding:12px; opacity:0.4; font-size:12px; text-align:center;';
+      empty.textContent = 'No campus data records approved.';
+      container.appendChild(empty);
       return;
     }
+
     const table = document.createElement('table');
     table.className = 'records-table';
-    table.style.width = "100%";
-    table.innerHTML = `<thead><tr><th style="text-align:left;">Player</th><th style="text-align:left;">Campus</th><th style="text-align:right;">Proof</th></tr></thead><tbody></tbody>`;
-    const tbody = table.querySelector('tbody');
+    table.style.width = '100%';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    ['Player', 'Campus', 'Proof'].forEach((label, index) => {
+      const th = document.createElement('th');
+      th.style.textAlign = index === 2 ? 'right' : 'left';
+      th.textContent = label;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    const tbody = document.createElement('tbody');
     records.forEach(r => {
       const row = document.createElement('tr');
-      const name = escapeHTML(String(r.username || r.name || r.player || r.user || '').trim());
-      row.innerHTML = `<td>${name} <strong>(${escapeHTML(r.percent || 100)}%)</strong></td><td>${escapeHTML(r.campus || 'Main Campus')}</td><td style="text-align:right;"><a class="proof-btn" href="${escapeHTML(r.video || '#')}" target="_blank">Proof</a></td>`;
+      const playerCell = document.createElement('td');
+      playerCell.append(document.createTextNode(String(r.username || r.name || r.player || r.user || '').trim()), document.createTextNode(' '));
+      const percent = document.createElement('strong');
+      percent.textContent = `(${r.percent || 100}%)`;
+      playerCell.appendChild(percent);
+
+      const campusCell = document.createElement('td');
+      campusCell.textContent = r.campus || 'Main Campus';
+
+      const proofCell = document.createElement('td');
+      proofCell.style.textAlign = 'right';
+      const proof = document.createElement('a');
+      proof.className = 'proof-btn';
+      proof.target = '_blank';
+      proof.rel = 'noopener noreferrer';
+      const safeProofUrl = isAllowedHttpUrl(r.video);
+      if (safeProofUrl) {
+        proof.href = safeProofUrl;
+        proof.textContent = 'Proof';
+      } else {
+        proof.textContent = 'No proof';
+        proof.setAttribute('aria-disabled', 'true');
+        proof.style.opacity = '0.5';
+        proof.style.pointerEvents = 'none';
+      }
+
+      proofCell.appendChild(proof);
+      row.append(playerCell, campusCell, proofCell);
       tbody.appendChild(row);
     });
+
+    table.append(thead, tbody);
     container.appendChild(table);
   }
 }

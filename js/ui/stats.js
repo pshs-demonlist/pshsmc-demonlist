@@ -1,5 +1,5 @@
 // js/ui/stats.js
-import { escapeHTML, calculateLevelPoints, getNormalizedListType, getRecordList } from '../utils.js';
+import { calculateLevelPoints, getNormalizedListType, getRecordList } from '../utils.js';
 import { switchPage } from './modal.js';
 import { uiState } from './list.js';
 
@@ -26,7 +26,7 @@ export function renderStatsLeaderboard() {
 
   const campusEl = document.getElementById('statsCampusFilter');
   const campusFilter = campusEl ? campusEl.value : 'ALL';
-  targetBody.innerHTML = '';
+  targetBody.replaceChildren();
   
   const players = new Map();
 
@@ -51,8 +51,8 @@ export function renderStatsLeaderboard() {
 
       if (!player) {
         player = {
-          name: escapeHTML(name),
-          campus: escapeHTML(campus),
+          name,
+          campus,
           records: []
         };
         players.set(name, player);
@@ -105,11 +105,11 @@ export function renderStatsLeaderboard() {
       }
 
       stats.completions.push({
-        levelName: entry.level._escapedName,
+        levelName: String(entry.level.name || entry.level.levelName || 'Unnamed Level'),
         rank: entry.rank,
         category: entry.category,
         percent: pct,
-        video: entry.record._escapedVideo
+        video: String(entry.record.video || entry.record.recordLink || '')
       });
     }
 
@@ -121,7 +121,10 @@ export function renderStatsLeaderboard() {
   leaderboardData.sort((a, b) => b.points - a.points);
 
   if (leaderboardData.length === 0) {
-    targetBody.innerHTML = '<div style="padding:16px; font-size:12px; opacity:0.5; text-align:center;">No records match conditions.</div>';
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:16px; font-size:12px; opacity:0.5; text-align:center;';
+    empty.textContent = 'No records match conditions.';
+    targetBody.replaceChildren(empty);
     return;
   }
 
@@ -134,13 +137,29 @@ export function renderStatsLeaderboard() {
     if (uiState.currentStatsTab === 'challenge') subLabel = `${player.challenges} Challenges`;
     if (uiState.currentStatsTab === 'platformer') subLabel = `${player.platformers} Platformers`;
 
-    row.innerHTML = `
-      <div class="sv-left">
-        <span class="sv-rank">#${idx + 1}</span>
-        <span class="sv-name">${player.name} <small style="display:block; opacity:0.4; font-size:10px;">${subLabel}</small></span>
-      </div>
-      <span class="sv-points" style="font-weight:bold;">${player.points.toFixed(2)} pts</span>
-    `;
+    const left = document.createElement('div');
+    left.className = 'sv-left';
+
+    const rankEl = document.createElement('span');
+    rankEl.className = 'sv-rank';
+    rankEl.textContent = `#${idx + 1}`;
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'sv-name';
+    nameEl.textContent = player.name;
+
+    const sub = document.createElement('small');
+    sub.style.cssText = 'display:block; opacity:0.4; font-size:10px;';
+    sub.textContent = subLabel;
+    nameEl.appendChild(sub);
+    left.append(rankEl, nameEl);
+
+    const pointsEl = document.createElement('span');
+    pointsEl.className = 'sv-points';
+    pointsEl.style.fontWeight = 'bold';
+    pointsEl.textContent = `${player.points.toFixed(2)} pts`;
+
+    row.append(left, pointsEl);
     targetBody.appendChild(row);
   });
 
@@ -151,39 +170,75 @@ export function displayPlayerProfile(player, activeIdx) {
   const canvas = document.getElementById('profileContent');
   const startPrompt = document.getElementById('startPrompt');
   if (!canvas) return;
-  
+
   if (startPrompt) startPrompt.style.display = 'none';
   canvas.style.display = 'block';
 
-  let main = [], extended = [], legacy = [];
-  
+  const groups = { main: [], extended: [], legacy: [] };
+
   player.completions
-  .filter(c => c.category === uiState.currentStatsTab)
-  .forEach(c => {
-    if (c.percent < 100) legacy.push(c);
-    else if (c.rank <= 75) main.push(c);
-    else if (c.rank <= 150) extended.push(c);
-    else legacy.push(c);
-  });
+    .filter(c => c.category === uiState.currentStatsTab)
+    .forEach(c => {
+      if (c.percent < 100 || c.rank > 150) groups.legacy.push(c);
+      else if (c.rank <= 75) groups.main.push(c);
+      else groups.extended.push(c);
+    });
+
+  canvas.replaceChildren();
+
+  const header = document.createElement('div');
+  header.style.cssText = 'border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;';
+
+  const h3 = document.createElement('h3');
+  h3.style.cssText = 'margin:0; font-size:18px;';
+  h3.textContent = `#${activeIdx + 1} ${player.name}`;
+
+  const score = document.createElement('p');
+  score.style.cssText = 'margin:4px 0; font-size:14px; color:var(--accent); font-weight:bold;';
+  score.textContent = `Total Score: ${player.points.toFixed(2)} Points`;
+
+  const campus = document.createElement('span');
+  campus.className = 'badge';
+  campus.style.cssText = 'background:var(--line); font-size:10px; padding:2px 6px; color:var(--text); display:inline-block; margin-top:3px;';
+  campus.textContent = `Campus: ${player.campus}`;
+
+  header.append(h3, score, campus);
+  canvas.appendChild(header);
+
+  const contextHeader = uiState.currentStatsTab.charAt(0).toUpperCase() + uiState.currentStatsTab.slice(1);
 
   const buildCloud = (arr, typeClass) => {
-    if (arr.length === 0) return '<span style="opacity:0.3; font-size:11px; font-style:italic;">None verified</span>';
-    return arr.map(c => `<span class="demon-click ${typeClass}" style="display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;" onclick="viewPlayerVideo('${c.levelName.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}', '${c.video}')">${c.levelName} (${c.percent}%)</span>`).join(' ');
+    const wrapper = document.createElement('div');
+    if (arr.length === 0) {
+      const empty = document.createElement('span');
+      empty.style.cssText = 'opacity:0.3; font-size:11px; font-style:italic;';
+      empty.textContent = 'None verified';
+      wrapper.appendChild(empty);
+      return wrapper;
+    }
+
+    arr.forEach(c => {
+      const item = document.createElement('span');
+      item.className = `demon-click ${typeClass}`;
+      item.style.cssText = 'display:inline-block; margin:2px; padding:3px 6px; background:rgba(255,255,255,0.04); border-radius:4px; font-size:11px; cursor:pointer;';
+      item.textContent = `${c.levelName} (${c.percent}%)`;
+      item.addEventListener('click', () => viewPlayerVideo(c.levelName, c.video));
+      wrapper.appendChild(item);
+    });
+    return wrapper;
   };
 
-  let contextHeader = uiState.currentStatsTab.charAt(0).toUpperCase() + uiState.currentStatsTab.slice(1);
-  canvas.innerHTML = `
-    <div style="border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px; margin-bottom:10px;">
-      <h3 style="margin:0; font-size:18px;">#${activeIdx + 1} ${player.name}</h3>
-      <p style="margin:4px 0; font-size:14px; color:var(--accent); font-weight:bold;">Total Score: ${player.points.toFixed(2)} Points</p>
-      <span class="badge" style="background:var(--line); font-size:10px; padding:2px 6px; color:var(--text); display:inline-block; margin-top:3px;">Campus: ${player.campus}</span>
-    </div>
-    <div>
-      <h4 style="margin:8px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Main ${contextHeader} Completions</h4><div>${buildCloud(main, 'cloud-main')}</div>
-      <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Extended ${contextHeader} Completions</h4><div>${buildCloud(extended, 'cloud-extended')}</div>
-      <h4 style="margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;">Legacy & Progress</h4><div>${buildCloud(legacy, 'cloud-legacy')}</div>
-    </div>
-  `;
+  [
+    ['Main', groups.main, 'cloud-main'],
+    ['Extended', groups.extended, 'cloud-extended'],
+    ['Legacy & Progress', groups.legacy, 'cloud-legacy']
+  ].forEach(([label, entries, className]) => {
+    const h4 = document.createElement('h4');
+    h4.style.cssText = 'margin:12px 0 2px 0; font-size:11px; color:#94a3b8; text-transform:uppercase;';
+    h4.textContent = `${label} ${contextHeader} Completions`;
+    canvas.appendChild(h4);
+    canvas.appendChild(buildCloud(entries, className));
+  });
 }
 
 export function viewPlayerVideo(lvlName, link) {
@@ -192,7 +247,7 @@ export function viewPlayerVideo(lvlName, link) {
   const targetFrame = document.getElementById('pvVideo');
   if (title) title.textContent = `Record Run: ${lvlName}`;
   if (targetFrame) {
-    targetFrame.innerHTML = '';
+    targetFrame.replaceChildren();
 
     let safeUrl = null;
     if (link && link !== '#') {

@@ -1,5 +1,5 @@
 // js/ui/search.js
-import { escapeHTML, getRecordList } from '../utils.js';
+import { getRecordList } from '../utils.js';
 import { uiState } from './list.js';
 
 // --- METRICS & FILTERS ---
@@ -15,7 +15,7 @@ export function calculateCounterMetrics() {
   let totalRecordsCount = 0;
   uiState.allLevels.forEach(lvl => {
     getRecordList(lvl).forEach(rec => {
-      const name = escapeHTML(String(rec.username || rec.name || rec.player || rec.user || '').trim());
+      const name = String(rec.username || rec.name || rec.player || rec.user || '').trim();
       if (name) uniquePlayers.add(name);
       totalRecordsCount++;
     });
@@ -29,15 +29,32 @@ export function calculateCounterMetrics() {
 }
 
 export function populateCampusDropdownFilters() {
-  let campuses = new Set();
+  const campuses = new Set();
   uiState.allLevels.forEach(lvl => {
-    if (lvl.campus) campuses.add(escapeHTML(String(lvl.campus).trim()));
-    getRecordList(lvl).forEach(rec => { if (rec.campus) campuses.add(escapeHTML(String(rec.campus).trim())); });
+    if (lvl.campus) campuses.add(String(lvl.campus).trim());
+    getRecordList(lvl).forEach(rec => {
+      if (rec.campus) campuses.add(String(rec.campus).trim());
+    });
   });
+
   const sorted = Array.from(campuses).sort();
-  const optionsStr = '<option value="ALL">All Campuses</option>' + sorted.map(c => `<option value="${c}">${c}</option>`).join('');
-  const dFilter = document.getElementById("dashboardCampusFilter");
-  if (dFilter) dFilter.innerHTML = optionsStr;
-  const sFilter = document.getElementById("statsCampusFilter");
-  if (sFilter) sFilter.innerHTML = optionsStr;
+  const populate = (select) => {
+    if (!select) return;
+    select.replaceChildren();
+
+    const all = document.createElement('option');
+    all.value = 'ALL';
+    all.textContent = 'All Campuses';
+    select.appendChild(all);
+
+    sorted.forEach(campus => {
+      const option = document.createElement('option');
+      option.value = campus;
+      option.textContent = campus;
+      select.appendChild(option);
+    });
+  };
+
+  populate(document.getElementById('dashboardCampusFilter'));
+  populate(document.getElementById('statsCampusFilter'));
 }

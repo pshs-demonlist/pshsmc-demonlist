@@ -1,5 +1,5 @@
 // js/ui/submit.js
-import { escapeHTML, getNormalizedListType } from '../utils.js';
+import { getNormalizedListType } from '../utils.js';
 import { submitRecordData } from '../api.js';
 import { uiState } from './list.js';
 
@@ -8,14 +8,14 @@ export function populateExistingLevelsDropdown() {
   const d = document.getElementById('existingLevel');
   const t = document.getElementById('listType');
   if (!d || !t) return;
-  d.innerHTML = '';
+  d.replaceChildren();
   const filtered = uiState.allLevels.filter(l => getNormalizedListType(l) === t.value);
   filtered.forEach(l => {
     const opt = document.createElement('option');
-    opt.value = escapeHTML(l.name || l.levelName);
-    opt.dataset.id = escapeHTML(String(l.id || ''));
-    opt.dataset.creator = escapeHTML(l.creator || '');
-    opt.textContent = `${escapeHTML(l.name || l.levelName)} (by ${escapeHTML(l.creator || 'Unknown')})`;
+    opt.value = String(l.name || l.levelName || '');
+    opt.dataset.id = String(l.id || '');
+    opt.dataset.creator = String(l.creator || '');
+    opt.textContent = `${String(l.name || l.levelName || 'Unnamed')} (by ${String(l.creator || 'Unknown')})`;
     d.appendChild(opt);
   });
 }
