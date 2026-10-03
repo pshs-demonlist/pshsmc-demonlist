@@ -4985,42 +4985,8 @@
     ]
   },
   {
-    "id": "121969801",
-    "rank": 7,
-    "name": "Shitty TS2",
-    "creator": "Machu0624",
-    "verifier": "sSeanyboii",
-    "diff": "Extreme Challenge",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/wOVrO2F0L2Q/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/wOVrO2F0L2Q",
-    "listType": "challenge",
-    "rawTier": 20.8,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-09-12T19:00:54.784Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/wOVrO2F0L2Q",
-        "campus": "Main Campus",
-        "date": "2026-09-12T19:00:54.784Z"
-      },
-      {
-        "name": "Lobster999",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/KyTOUcHKyvk",
-        "campus": "Central Visayas Campus",
-        "date": "2026-09-20T11:40:43.482Z"
-      }
-    ]
-  },
-  {
     "id": "146508829",
-    "rank": 8,
+    "rank": 7,
     "name": "wave challenge 8",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -5049,6 +5015,40 @@
         "video": "https://www.youtube.com/embed/Xk3QE0kF-aM",
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-08-08T22:23:18.140Z"
+      }
+    ]
+  },
+  {
+    "id": "121969801",
+    "rank": 8,
+    "name": "Shitty TS2",
+    "creator": "Machu0624",
+    "verifier": "sSeanyboii",
+    "diff": "Insane Challenge",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "img": "https://img.youtube.com/vi/wOVrO2F0L2Q/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/wOVrO2F0L2Q",
+    "listType": "challenge",
+    "rawTier": 19.8,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-09-12T19:00:54.784Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/wOVrO2F0L2Q",
+        "campus": "Main Campus",
+        "date": "2026-09-12T19:00:54.784Z"
+      },
+      {
+        "name": "Lobster999",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/KyTOUcHKyvk",
+        "campus": "Central Visayas Campus",
+        "date": "2026-09-20T11:40:43.482Z"
       }
     ]
   },
