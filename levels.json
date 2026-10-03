@@ -594,18 +594,18 @@
         "date": "2026-09-14T09:39:49.664Z"
       },
       {
-        "name": "ModeraGD",
-        "percent": 95,
-        "video": "https://www.youtube.com/embed/l1W19Ju-UCU",
-        "campus": "Ilocos Region Campus",
-        "date": "2026-09-19T09:15:55.502Z"
-      },
-      {
         "name": "Lobster999",
         "percent": 100,
         "video": "https://www.youtube.com/embed/rNASmKNibA4",
         "campus": "Central Visayas Campus",
         "date": "2026-09-24T16:41:59.799Z"
+      },
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zxUoB7xWWXU",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-10-03T09:15:55.502Z"
       }
     ]
   },
