@@ -1927,7 +1927,7 @@
     "img": "https://img.youtube.com/vi/i7Jnp11Yr9g/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/i7Jnp11Yr9g",
     "listType": "demon",
-    "rawTier": 15.28,
+    "rawTier": 15.29,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2008,7 +2008,7 @@
     "img": "https://img.youtube.com/vi/G3jj9iCgDoQ/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/G3jj9iCgDoQ",
     "listType": "demon",
-    "rawTier": 15.14,
+    "rawTier": 15.13,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2313,7 +2313,7 @@
     "img": "https://img.youtube.com/vi/SnfMqwk-RAw/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/SnfMqwk-RAw",
     "listType": "demon",
-    "rawTier": 11.17,
+    "rawTier": 11.16,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2863,7 +2863,7 @@
     "img": "https://img.youtube.com/vi/uGuo5RFF45g/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/19Ct5w32jMk",
     "listType": "demon",
-    "rawTier": 6.96,
+    "rawTier": 6.97,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3406,7 +3406,7 @@
     "img": "https://img.youtube.com/vi/OHskMH6onUU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/OHskMH6onUU",
     "listType": "demon",
-    "rawTier": 4.53,
+    "rawTier": 4.52,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4180,7 +4180,7 @@
     "img": "https://img.youtube.com/vi/o7GUSgTW4N0/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/o7GUSgTW4N0",
     "listType": "demon",
-    "rawTier": 2.26,
+    "rawTier": 2.27,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4366,8 +4366,35 @@
     ]
   },
   {
-    "id": "143332913",
+    "id": "122299385",
     "rank": 136,
+    "name": "GGEZ",
+    "creator": "wetols",
+    "verifier": "dibless",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/Nz0e-6KbewY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Nz0e-6KbewY",
+    "listType": "demon",
+    "rawTier": 1.93,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-06-21T18:36:34.655Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "dibless",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Nz0e-6KbewY",
+        "campus": "Main Campus",
+        "date": "2026-06-21T18:36:34.655Z"
+      }
+    ]
+  },
+  {
+    "id": "143332913",
+    "rank": 137,
     "name": "Pain Engine",
     "creator": "Wapon77",
     "verifier": "IceRig",
@@ -4394,7 +4421,7 @@
   },
   {
     "id": "143308401",
-    "rank": 137,
+    "rank": 138,
     "name": "entropie",
     "creator": "empsea",
     "verifier": "dibless",
@@ -4423,33 +4450,6 @@
         "video": "https://www.youtube.com/embed/czAKom18v5g",
         "campus": "Western Visayas Campus",
         "date": "2026-07-05T13:53:53.108Z"
-      }
-    ]
-  },
-  {
-    "id": "122299385",
-    "rank": 138,
-    "name": "GGEZ",
-    "creator": "wetols",
-    "verifier": "dibless",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/Nz0e-6KbewY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/Nz0e-6KbewY",
-    "listType": "demon",
-    "rawTier": 1.92,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-21T18:36:34.655Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/Nz0e-6KbewY",
-        "campus": "Main Campus",
-        "date": "2026-06-21T18:36:34.655Z"
       }
     ]
   },
