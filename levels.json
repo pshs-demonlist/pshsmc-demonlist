@@ -6746,8 +6746,35 @@
     ]
   },
   {
-    "id": "141753444",
+    "id": "38259302",
     "rank": 47,
+    "name": "Decode Wave 10x",
+    "creator": "Tenechit",
+    "verifier": "fortenrique",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/bt-qy3AMJnE/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/bt-qy3AMJnE",
+    "listType": "challenge",
+    "rawTier": 5,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-10-24T20:34:36.950Z",
+    "campus": "Western Visayas Campus",
+    "victorList": [
+      {
+        "name": "fortenrique",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/bt-qy3AMJnE",
+        "campus": "Western Visayas Campus",
+        "date": "2026-10-24T20:34:36.950Z"
+      }
+    ]
+  },
+  {
+    "id": "141753444",
+    "rank": 48,
     "name": "Sakupen End 49-53",
     "creator": "Nick240",
     "verifier": "sSeanyboii",
@@ -6802,7 +6829,7 @@
   },
   {
     "id": "143250790",
-    "rank": 48,
+    "rank": 49,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -6843,7 +6870,7 @@
   },
   {
     "id": "143385344",
-    "rank": 49,
+    "rank": 50,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6891,7 +6918,7 @@
   },
   {
     "id": "139324232",
-    "rank": 50,
+    "rank": 51,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -6932,7 +6959,7 @@
   },
   {
     "id": "108062313",
-    "rank": 51,
+    "rank": 52,
     "name": "1 second hell",
     "creator": "FoldedZero",
     "verifier": "ModeraGD",
@@ -6959,7 +6986,7 @@
   },
   {
     "id": "143967625",
-    "rank": 52,
+    "rank": 53,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
