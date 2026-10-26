@@ -6938,8 +6938,35 @@
     ]
   },
   {
-    "id": "139324232",
+    "id": "151274929",
     "rank": 51,
+    "name": "Acu 0p000000002p",
+    "creator": "sSeanyboii",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Challenge",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/D2-slCTpKdo/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/D2-slCTpKdo",
+    "listType": "challenge",
+    "rawTier": 3.4,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-10-26T16:20:33.703Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/D2-slCTpKdo",
+        "campus": "Main Campus",
+        "date": "2026-10-26T16:20:33.703Z"
+      }
+    ]
+  },
+  {
+    "id": "139324232",
+    "rank": 52,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -6980,7 +7007,7 @@
   },
   {
     "id": "108062313",
-    "rank": 52,
+    "rank": 53,
     "name": "1 second hell",
     "creator": "FoldedZero",
     "verifier": "ModeraGD",
@@ -7007,7 +7034,7 @@
   },
   {
     "id": "143967625",
-    "rank": 53,
+    "rank": 54,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
