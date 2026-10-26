@@ -1388,7 +1388,7 @@
     "img": "https://img.youtube.com/vi/QqZ-uoep9SM/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/QqZ-uoep9SM",
     "listType": "demon",
-    "rawTier": 19.87,
+    "rawTier": 19.91,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -1565,7 +1565,7 @@
     "img": "https://img.youtube.com/vi/t3kUlS7bwEs/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/t3kUlS7bwEs",
     "listType": "demon",
-    "rawTier": 17.12,
+    "rawTier": 17.11,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2042,7 +2042,7 @@
     "img": "https://img.youtube.com/vi/wut3ekfQeeg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/wut3ekfQeeg",
     "listType": "demon",
-    "rawTier": 15.08,
+    "rawTier": 15.06,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2266,7 +2266,7 @@
     "img": "https://img.youtube.com/vi/PaNFNF1M6iE/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/PaNFNF1M6iE",
     "listType": "demon",
-    "rawTier": 12.06,
+    "rawTier": 12.11,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2320,7 +2320,7 @@
     "img": "https://img.youtube.com/vi/LhsUg_yadx4/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/LhsUg_yadx4",
     "listType": "demon",
-    "rawTier": 11.23,
+    "rawTier": 11.24,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3202,7 +3202,7 @@
     "img": "https://img.youtube.com/vi/7s4ql1CMdtw/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7s4ql1CMdtw",
     "listType": "demon",
-    "rawTier": 6.03,
+    "rawTier": 6.04,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4221,7 +4221,7 @@
     "img": "https://img.youtube.com/vi/o7GUSgTW4N0/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/o7GUSgTW4N0",
     "listType": "demon",
-    "rawTier": 2.27,
+    "rawTier": 2.26,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4265,35 +4265,8 @@
     ]
   },
   {
-    "id": "45622672",
-    "rank": 132,
-    "name": "Depressure",
-    "creator": "Serponge",
-    "verifier": "aldawg123",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
-    "listType": "demon",
-    "rawTier": 2.09,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-17T01:42:23.658Z",
-    "campus": "",
-    "victorList": [
-      {
-        "name": "aldawg123",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z"
-      }
-    ]
-  },
-  {
     "id": "131475001",
-    "rank": 133,
+    "rank": 132,
     "name": "Hyper Techno",
     "creator": "Bluepper",
     "verifier": "sSeanyboii",
@@ -4327,7 +4300,7 @@
   },
   {
     "id": "5098465",
-    "rank": 134,
+    "rank": 133,
     "name": "Speed of Light",
     "creator": "TheRealSalad",
     "verifier": "sSeanyboii",
@@ -4349,6 +4322,33 @@
         "video": "https://www.youtube.com/embed/5dp2bw7-Zek",
         "campus": "Main Campus",
         "date": "2026-06-21T17:21:55.661Z"
+      }
+    ]
+  },
+  {
+    "id": "45622672",
+    "rank": 134,
+    "name": "Depressure",
+    "creator": "Serponge",
+    "verifier": "aldawg123",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+    "listType": "demon",
+    "rawTier": 2.08,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "",
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z"
       }
     ]
   },
