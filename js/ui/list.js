@@ -1349,3 +1349,23 @@ window.routeToDetail = function(levelParam, params) {
     showLevelDetailPage(lvl, rank);
   }
 };
+
+// Ensure the dashboard renders when the page is opened directly.
+window.addEventListener('hashchange', () => {
+  if (window.location.hash === '#levels') {
+    requestAnimationFrame(() => {
+      renderLevelsDashboard();
+    });
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (
+    window.location.hash === '#levels' ||
+    window.location.hash === '#/demon/main/'
+  ) {
+    requestAnimationFrame(() => {
+      renderLevelsDashboard();
+    });
+  }
+});
