@@ -473,6 +473,61 @@
   }
   /* ---------------------------------- */
 
+
+  /* --- Level detail page: three-panel reference layout --- */
+  .detail-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+  .detail-back-btn { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:8px; background:var(--panel); color:var(--text); padding:10px 14px; text-decoration:none; font-size:13px; font-weight:700; cursor:pointer; }
+  .detail-back-btn:hover { border-color:var(--accent); color:var(--accent); }
+  .detail-layout { display:grid; grid-template-columns:minmax(230px, 25%) minmax(0, 1fr) minmax(220px, 25%); gap:8px; height:min(82vh, 820px); min-height:560px; }
+  .detail-sidebar, .detail-main-panel, .detail-records-panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; min-width:0; overflow:hidden; }
+  .detail-sidebar { display:flex; flex-direction:column; padding:12px 10px; }
+  .detail-list-tabs { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:12px; }
+  .detail-list-tab { border:0; border-bottom:3px solid transparent; background:transparent; color:var(--muted); padding:10px 4px; cursor:pointer; font-weight:800; font-size:13px; }
+  .detail-list-tab.active { color:var(--text); border-bottom-color:var(--accent); }
+  .detail-sidebar-search { display:flex; margin-bottom:12px; }
+  #detailLevelSearch { width:100%; min-width:0; background:var(--bg); border:1px solid var(--line); border-radius:8px; color:var(--text); padding:11px 12px; outline:none; }
+  .detail-level-list { overflow-y:auto; min-height:0; display:flex; flex-direction:column; gap:3px; }
+  .detail-level-item { display:flex; align-items:center; gap:12px; width:100%; border:0; border-radius:5px; background:rgba(127,127,127,.08); color:var(--text); padding:8px 10px; text-align:left; cursor:pointer; font-size:13px; }
+  .detail-level-item:hover { background:rgba(127,127,127,.16); }
+  .detail-level-item.active { background:#ff7900; color:#fff; }
+  .detail-level-rank { flex:0 0 48px; text-align:center; font-weight:800; }
+  .detail-level-name { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
+  .detail-main-panel { overflow-y:auto; padding:14px; }
+  .detail-main-panel h2 { margin:0 0 6px; font-size:26px; line-height:1.2; }
+  .detail-description { border-top:1px solid var(--line); padding:8px 2px 10px; margin-bottom:2px; color:var(--text); font-size:13px; line-height:1.55; }
+  .detail-video { aspect-ratio:16/9; width:100%; background:#08090d; border-radius:10px; overflow:hidden; margin:0 0 10px; }
+  .detail-video iframe { width:100%; height:100%; }
+  .detail-tags { display:flex; flex-wrap:wrap; gap:5px; margin:8px 0 10px; }
+  .detail-tag { border:1px solid var(--line); border-radius:6px; padding:4px 7px; font-size:11px; color:var(--text); background:rgba(127,127,127,.06); }
+  .detail-metadata { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px; }
+  .detail-metric { background:var(--panel); min-width:0; text-align:center; padding:10px 5px; }
+  .detail-metric-label { color:var(--accent); font-size:10px; text-transform:uppercase; margin-bottom:5px; }
+  .detail-metric-value { color:var(--text); font-size:clamp(15px,1.8vw,25px); overflow-wrap:anywhere; }
+  .detail-extra { margin-top:12px; color:var(--muted); font-size:12px; line-height:1.7; }
+  .detail-extra strong { color:var(--accent); font-weight:600; margin-right:7px; }
+  .detail-records-panel { padding:14px; overflow-y:auto; }
+  .detail-records-panel h3 { font-size:20px; margin:2px 0 8px; padding-bottom:7px; border-bottom:1px solid var(--line); }
+  .detail-records-panel .records-container { background:transparent; border:0; margin:0; padding:0; text-align:left; }
+  .detail-records-panel .records-container h3 { display:none; }
+  .detail-records-panel .records-table th { padding:8px 6px; font-size:11px; }
+  .detail-records-panel .records-table td { padding:8px 6px; font-size:11px; overflow-wrap:anywhere; }
+  .detail-records-panel .records-table { table-layout:fixed; }
+  @media (max-width: 900px) {
+    .detail-layout { grid-template-columns:minmax(180px, 30%) minmax(0,1fr); height:auto; min-height:0; }
+    .detail-sidebar { min-height:520px; max-height:75vh; }
+    .detail-main-panel { min-height:520px; }
+    .detail-records-panel { grid-column:1 / -1; min-height:120px; }
+  }
+  @media (max-width: 640px) {
+    .detail-toolbar { margin-bottom:10px; }
+    .detail-layout { display:flex; flex-direction:column; height:auto; }
+    .detail-sidebar { min-height:0; max-height:340px; }
+    .detail-main-panel { min-height:0; padding:12px; }
+    .detail-main-panel h2 { font-size:23px; }
+    .detail-records-panel { min-height:120px; }
+    .detail-metadata { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+
   .app-page { display: none; }
   .app-page.active-page { animation: fadeIn 0.3s; display: block; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -806,12 +861,33 @@
   </div>
 
   <div class="app-page" id="detailPage">
-    <a class="back" href="#levels">← Back to main dashboard list</a>
-    <h2 id="dTitle" style="margin: 10px 0 4px 0;"></h2>
-    <div id="dInfo" class="sub" style="margin-bottom: 16px;"></div>
-    <div class="video" id="video"></div>
-    <div class="stats" id="stats"></div>
-    <div class="records-container" id="dRecordsContainer"></div>
+    <div class="detail-toolbar">
+      <a class="detail-back-btn" href="#levels" onclick="goToLevelsDashboard()">← Back to list browsing</a>
+    </div>
+    <div class="detail-layout">
+      <aside class="detail-sidebar">
+        <div class="detail-list-tabs">
+          <button class="detail-list-tab active" id="detailTabDemons" type="button" onclick="window.setDetailListCategory('demon')">DEMON LIST</button>
+          <button class="detail-list-tab" id="detailTabChallenges" type="button" onclick="window.setDetailListCategory('challenge')">CHALLENGE LIST</button>
+        </div>
+        <div class="detail-sidebar-search">
+          <input id="detailLevelSearch" type="search" placeholder="Search levels..." oninput="window.filterDetailLevelList()" aria-label="Search levels in detail view">
+        </div>
+        <div class="detail-level-list" id="detailLevelList"></div>
+      </aside>
+      <main class="detail-main-panel">
+        <h2 id="dTitle">Level</h2>
+        <div id="dInfo" class="detail-description"></div>
+        <div class="detail-video" id="video"></div>
+        <div class="detail-tags" id="detailTags"></div>
+        <div class="detail-metadata" id="detailMetadata"></div>
+        <div class="detail-extra" id="detailExtra"></div>
+      </main>
+      <aside class="detail-records-panel">
+        <h3>Records</h3>
+        <div class="records-container" id="dRecordsContainer"></div>
+      </aside>
+    </div>
   </div>
 
   <div class="app-page" id="playerVideoPage">
