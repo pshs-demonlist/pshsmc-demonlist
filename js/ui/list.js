@@ -66,14 +66,106 @@ function getDashboardElements() {
 export const uiState = {
   allLevels: [],
   currentMainTab: 'demon',
-  currentSubTab: 'main', 
+  currentSubTab: 'main',
   currentStatsTab: 'demon'
+};
+
+let detailCurrentLevel = null;
+let detailListCategory = 'demon';
+
+function detailField(level, keys, fallback = '—') {
+  for (const key of keys) {
+    const value = level?.[key];
+    if (value !== undefined && value !== null && String(value).trim() !== '') {
+      return String(value).trim();
+    }
+  }
+  return fallback;
+}
+
+function renderDetailLevelList() {
+  const container = document.getElementById('detailLevelList');
+  const search = document.getElementById('detailLevelSearch');
+  if (!container) return;
+
+  const query = (search?.value || '').trim().toLowerCase();
+
+  const levels = uiState.allLevels
+    .filter(level => getNormalizedListType(level) === detailListCategory)
+    .filter(level => {
+      if (!query) return true;
+
+      return [
+        level.name,
+        level.levelName,
+        level.creator,
+        level.diff,
+        level.difficulty,
+        level.rank
+      ].some(value => String(value ?? '').toLowerCase().includes(query));
+    })
+    .sort((a, b) =>
+      parseInt(a.rank || 999, 10) - parseInt(b.rank || 999, 10)
+    );
+
+  container.replaceChildren();
+
+  if (!levels.length) {
+    const empty = document.createElement('div');
+    empty.className = 'muted';
+    empty.style.cssText = 'padding:16px 8px;text-align:center;';
+    empty.textContent = 'No matching levels.';
+    container.appendChild(empty);
+    return;
+  }
+
+  levels.forEach(level => {
+    const rank = parseInt(level.rank || 999, 10);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className =
+      'detail-level-item' +
+      (detailCurrentLevel === level ? ' active' : '');
+
+    const rankEl = document.createElement('span');
+    rankEl.className = 'detail-level-rank';
+    rankEl.textContent = `#${rank}`;
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'detail-level-name';
+    nameEl.textContent = level.name || level.levelName || 'Unnamed';
+
+    button.append(rankEl, nameEl);
+    button.addEventListener('click', () =>
+      showLevelDetailPage(level, rank)
+    );
+
+    container.appendChild(button);
+  });
+}
+
+window.filterDetailLevelList = renderDetailLevelList;
+
+window.setDetailListCategory = function(category) {
+  detailListCategory = category === 'challenge' ? 'challenge' : 'demon';
+
+  document.getElementById('detailTabDemons')
+    ?.classList.toggle('active', detailListCategory === 'demon');
+
+  document.getElementById('detailTabChallenges')
+    ?.classList.toggle('active', detailListCategory === 'challenge');
+
+  const search = document.getElementById('detailLevelSearch');
+  if (search) search.value = '';
+
+  renderDetailLevelList();
 };
 
 // --- URL ROUTING ENGINE ---
 export function syncURL(replace = false) {
   // Use hash routing for GitHub Pages to prevent 404 errors on refresh
-  const basePath = window.location.pathname; 
+  const basePath = window.location.pathname;
   let newHash = '';
 
   if (uiState.currentMainTab === 'stats') {
@@ -83,6 +175,7 @@ export function syncURL(replace = false) {
   }
 
   const queryEl = document.getElementById('search');
+
   if (queryEl && queryEl.value) {
     newHash += `?search=${encodeURIComponent(queryEl.value)}`;
   }
@@ -90,16 +183,30 @@ export function syncURL(replace = false) {
   const fullUrl = basePath + newHash;
 
   if (replace) {
-    window.history.replaceState({ main: uiState.currentMainTab, sub: uiState.currentSubTab }, '', fullUrl);
+    window.history.replaceState(
+      {
+        main: uiState.currentMainTab,
+        sub: uiState.currentSubTab
+      },
+      '',
+      fullUrl
+    );
   } else {
-    window.history.pushState({ main: uiState.currentMainTab, sub: uiState.currentSubTab }, '', fullUrl);
+    window.history.pushState(
+      {
+        main: uiState.currentMainTab,
+        sub: uiState.currentSubTab
+      },
+      '',
+      fullUrl
+    );
   }
 }
 
 // Listen for Back/Forward buttons
 window.addEventListener('popstate', (event) => {
   const hash = window.location.hash;
-  
+
   if (hash.startsWith('#/stats-viewer/')) {
     uiState.currentMainTab = 'stats';
   } else {
@@ -111,18 +218,29 @@ window.addEventListener('popstate', (event) => {
   // Restore Search if present in URL
   const searchMatch = hash.match(/\?search=([^&]*)/);
   const queryEl = document.getElementById('search');
+
   if (queryEl) {
     queryEl.value = searchMatch ? decodeURIComponent(searchMatch[1]) : '';
   }
 
   // Update tabs visually without pushing to URL again
-  const mainTabMap = { 'demon': 'tabDemons', 'challenge': 'tabChallenges', 'platformer': 'tabPlatformers' };
+  const mainTabMap = {
+    demon: 'tabDemons',
+    challenge: 'tabChallenges',
+    platformer: 'tabPlatformers'
+  };
+
   ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id === mainTabMap[uiState.currentMainTab]);
   });
 
-  const subTabMap = { 'main': 'subTabMain', 'extended': 'subTabExtended', 'legacy': 'subTabLegacy' };
+  const subTabMap = {
+    main: 'subTabMain',
+    extended: 'subTabExtended',
+    legacy: 'subTabLegacy'
+  };
+
   ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id === subTabMap[uiState.currentSubTab]);
@@ -176,9 +294,7 @@ export function processLiveDecayFilterAndNews() {
     };
   };
 
-  // ----------------------------------------------------------
   // DETECT REMOVED CHALLENGES
-  // ----------------------------------------------------------
 
   const currentLevelSnapshot = uiState.allLevels
     .map(lvl => ({
@@ -218,7 +334,6 @@ export function processLiveDecayFilterAndNews() {
     storedRemovalData = {};
   }
 
-  // Keep announcements from today only.
   Object.keys(storedRemovalData).forEach(dateKey => {
     if (dateKey !== targetTodayStr) {
       delete storedRemovalData[dateKey];
@@ -242,8 +357,6 @@ export function processLiveDecayFilterAndNews() {
     )
   );
 
-  // Compare against the previously saved list.
-  // The first visit establishes the baseline.
   if (previousSnapshot.length > 0) {
     previousSnapshot.forEach(oldLevel => {
       const oldName = String(
@@ -280,7 +393,6 @@ export function processLiveDecayFilterAndNews() {
     // Keep rendering the feed if browser storage is unavailable.
   }
 
-  // Add removal announcements to today's news.
   todaysRemovedChallenges.forEach(item => {
     validNews.push({
       type: 'removed',
@@ -290,9 +402,7 @@ export function processLiveDecayFilterAndNews() {
     });
   });
 
-  // ----------------------------------------------------------
   // EXISTING PLACEMENT NEWS LOGIC
-  // ----------------------------------------------------------
 
   const categories = {};
 
@@ -403,9 +513,7 @@ export function processLiveDecayFilterAndNews() {
     });
   });
 
-  // ----------------------------------------------------------
   // BUILD PLACEMENT AND VICTOR NEWS
-  // ----------------------------------------------------------
 
   uiState.allLevels.forEach(lvl => {
     const currentRank = parseInt(lvl.rank || 999, 10);
@@ -524,9 +632,7 @@ export function processLiveDecayFilterAndNews() {
 
   validNews.sort((a, b) => b.sortTime - a.sortTime);
 
-  // ----------------------------------------------------------
   // RENDER NEWS FEED
-  // ----------------------------------------------------------
 
   if (validNews.length === 0) {
     feed.replaceChildren();
@@ -646,39 +752,68 @@ export function processLiveDecayFilterAndNews() {
 
 function appendPlacementDescription(parent, text) {
   const value = String(text);
+
   if (value === 'as the only level in this category') {
     parent.textContent = value;
     return;
   }
 
   const top = value.match(/^at the very top of the list, above (.+)$/);
+
   if (top) {
     const strong = document.createElement('strong');
     strong.textContent = top[1];
-    parent.append(document.createTextNode('at the very top of the list, above '), strong);
+
+    parent.append(
+      document.createTextNode('at the very top of the list, above '),
+      strong
+    );
     return;
   }
 
   const bottom = value.match(/^below (.+), at the bottom of the list$/);
+
   if (bottom) {
     const strong = document.createElement('strong');
     strong.textContent = bottom[1];
-    parent.append(document.createTextNode('below '), strong, document.createTextNode(', at the bottom of the list'));
+
+    parent.append(
+      document.createTextNode('below '),
+      strong,
+      document.createTextNode(', at the bottom of the list')
+    );
     return;
   }
 
-  const normal = value.match(/^below (.+) and above (.+?)(?:, this pushes (.+) into the (Extended List|Legacy List))?$/);
+  const normal = value.match(
+    /^below (.+) and above (.+?)(?:, this pushes (.+) into the (Extended List|Legacy List))?$/
+  );
+
   if (normal) {
     const harder = document.createElement('strong');
     harder.textContent = normal[1];
+
     const easier = document.createElement('strong');
     easier.textContent = normal[2];
-    parent.append(document.createTextNode('below '), harder, document.createTextNode(' and above '), easier);
+
+    parent.append(
+      document.createTextNode('below '),
+      harder,
+      document.createTextNode(' and above '),
+      easier
+    );
+
     if (normal[3]) {
       const pushed = document.createElement('strong');
       pushed.textContent = normal[3];
-      parent.append(document.createTextNode(', this pushes '), pushed, document.createTextNode(` into the ${normal[4]}`));
+
+      parent.append(
+        document.createTextNode(', this pushes '),
+        pushed,
+        document.createTextNode(` into the ${normal[4]}`)
+      );
     }
+
     return;
   }
 
@@ -686,88 +821,110 @@ function appendPlacementDescription(parent, text) {
 }
 
 export function openLevelFromNews(lvlName) {
-  const lvl = uiState.allLevels.find(l => String(l.name || l.levelName).trim() === lvlName);
+  const lvl = uiState.allLevels.find(
+    l => String(l.name || l.levelName).trim() === lvlName
+  );
+
   if (!lvl) return;
+
   const cat = getNormalizedListType(lvl);
   switchMainListTab(cat);
-  
+
   const rank = parseInt(lvl.rank || 999, 10);
+
   if (rank <= 75) switchListSubTab('main');
   else if (rank <= 150) switchListSubTab('extended');
   else switchListSubTab('legacy');
-  
+
   showLevelDetailPage(lvl, rank);
 }
 
 // --- LEVEL DASHBOARD & TABS ---
+
 export function switchMainListTab(tab, bypassUrlSync = false) {
   uiState.currentMainTab = tab;
+
   ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  
+
   let activeId = 'tabDemons';
   if (tab === 'challenge') activeId = 'tabChallenges';
   if (tab === 'platformer') activeId = 'tabPlatformers';
-  
+
   const target = document.getElementById(activeId);
   if (target) target.classList.add('active');
-  
-  switchListSubTab('main', true); // Bypass the URL sync in sub-tab so we only push once
-  
+
+  switchListSubTab('main', true);
+
   if (!bypassUrlSync) syncURL();
 }
 
 export function switchListSubTab(tab, bypassUrlSync = false) {
   uiState.currentSubTab = tab;
+
   ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.remove('active');
   });
-  
-  const tabMap = { 'main': 'subTabMain', 'extended': 'subTabExtended', 'legacy': 'subTabLegacy' };
+
+  const tabMap = {
+    main: 'subTabMain',
+    extended: 'subTabExtended',
+    legacy: 'subTabLegacy'
+  };
+
   const target = document.getElementById(tabMap[tab]);
   if (target) target.classList.add('active');
-  
+
   const descEl = document.getElementById('listDescriptionText');
+
   if (descEl) {
-    if (tab === 'main') descEl.innerText = "The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points.";
-    else if (tab === 'extended') descEl.innerText = "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
-    else if (tab === 'legacy') descEl.innerText = "These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.";
+    if (tab === 'main') {
+      descEl.innerText =
+        'The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points.';
+    } else if (tab === 'extended') {
+      descEl.innerText =
+        "These are levels that don't quite make the cut for the Main List, but are still of extreme difficulty. They award a reduced amount of points.";
+    } else if (tab === 'legacy') {
+      descEl.innerText =
+        'These levels were once on the list but have since fallen off. They no longer award points, but records can still be submitted for legacy purposes.';
+    }
   }
-  
+
   renderLevelsDashboard();
-  
+
   if (!bypassUrlSync) syncURL();
 }
-
 
 export function renderLevelsDashboard() {
   const { list, search, campusFilter } = getDashboardElements();
   if (!list) return;
 
-  const rawQuery = search ? search.value.trim() : '';
-  const query = rawQuery.toLowerCase();
+  const query = search ? search.value.trim().toLowerCase() : '';
   const campusVal = campusFilter ? campusFilter.value : 'ALL';
 
-  // Detect exact rank searches: 1, 124, #124
-  const isRankSearch = /^#?\d+$/.test(rawQuery);
-  const requestedRank = isRankSearch
-    ? parseInt(rawQuery.replace(/^#/, ''), 10)
+  // A numeric query searches for that exact rank.
+  // Examples: "1", "124", "#124".
+  const numericRankMatch = query.match(/^#?(\d+)$/);
+  const exactRank = numericRankMatch
+    ? parseInt(numericRankMatch[1], 10)
     : null;
 
+  const searching = query.length > 0;
+
   let displayedItems = uiState.allLevels.filter(lvl => {
-    // Keep the currently selected category.
+    const rank = parseInt(lvl.rank || 999, 10);
+
+    // Keep the original selected category.
     if (getNormalizedListType(lvl) !== uiState.currentMainTab) {
       return false;
     }
 
-    const rank = parseInt(lvl.rank || 999, 10);
-
-    // When searching, include Main, Extended, and Legacy.
-    // When the search is empty, respect the selected subtab.
-    if (!query) {
+    // When searching, allow results from all three rank sections.
+    // Without a query, preserve the original Main/Extended/Legacy tabs.
+    if (!searching) {
       if (uiState.currentSubTab === 'main' && rank > 75) {
         return false;
       }
@@ -784,33 +941,39 @@ export function renderLevelsDashboard() {
       }
     }
 
-    // Preserve campus filtering.
     const lvlCampus = lvl._escapedCampus;
     const records = getRecordList(lvl);
 
     const campusMatch =
       campusVal === 'ALL' ||
       lvlCampus === campusVal ||
-      records.some(r => r._escapedCampus === campusVal);
+      records.some(record => record._escapedCampus === campusVal);
 
     if (!campusMatch) return false;
 
-    // Numeric searches match the exact rank only.
-    if (isRankSearch) {
-      return rank === requestedRank;
+    // Exact numeric rank search.
+    if (exactRank !== null) {
+      return rank === exactRank;
     }
 
-    // Normal text search across all three list sections.
+    if (!searching) return true;
+
+    const name = String(
+      lvl.name || lvl.levelName || ''
+    ).toLowerCase();
+
+    const creator = String(lvl.creator || '').toLowerCase();
+    const difficulty = String(
+      lvl.diff || lvl.difficulty || ''
+    ).toLowerCase();
+
+    const verifier = String(lvl.verifier || '').toLowerCase();
+
     return (
-      String(lvl.name || lvl.levelName || '')
-        .toLowerCase()
-        .includes(query) ||
-      String(lvl.creator || '')
-        .toLowerCase()
-        .includes(query) ||
-      String(lvl.diff || lvl.difficulty || '')
-        .toLowerCase()
-        .includes(query)
+      name.includes(query) ||
+      creator.includes(query) ||
+      difficulty.includes(query) ||
+      verifier.includes(query)
     );
   });
 
@@ -822,11 +985,14 @@ export function renderLevelsDashboard() {
 
   if (displayedItems.length === 0) {
     const empty = document.createElement('div');
+
     empty.style.textAlign = 'center';
     empty.style.padding = '24px';
     empty.style.opacity = '0.5';
     empty.style.fontSize = '13px';
-    empty.textContent = 'No tier entries match these filtering criteria.';
+    empty.textContent =
+      'No tier entries match these filtering criteria.';
+
     list.replaceChildren(empty);
     return;
   }
@@ -841,9 +1007,9 @@ export function renderLevelsDashboard() {
 
     if (!thumb && lvl.video?.includes('embed/')) {
       try {
-        thumb = `https://img.youtube.com/vi/${lvl.video
-          .split('embed/')[1]
-          .split('?')[0]}/maxdefault.jpg`;
+        thumb = `https://img.youtube.com/vi/${
+          lvl.video.split('embed/')[1].split('?')[0]
+        }/maxdefault.jpg`;
       } catch {}
     }
 
@@ -851,9 +1017,9 @@ export function renderLevelsDashboard() {
 
     const row = document.createElement('div');
     row.className = 'row';
-    row.addEventListener('click', () =>
-      showLevelDetailPage(lvl, rank)
-    );
+    row.addEventListener('click', () => {
+      showLevelDetailPage(lvl, rank);
+    });
 
     // Rank
     const rankDiv = document.createElement('div');
@@ -876,7 +1042,7 @@ export function renderLevelsDashboard() {
 
     thumbDiv.appendChild(img);
 
-    // Info
+    // Level information
     const info = document.createElement('div');
     info.className = 'info';
 
@@ -913,149 +1079,273 @@ export function renderLevelsDashboard() {
 
     info.append(title, creator, points, campus);
     row.append(rankDiv, thumbDiv, info);
+
     fragment.appendChild(row);
   });
 
   list.replaceChildren(fragment);
 }
 
+let searchRenderTimer = null;
 
+export function scheduleRenderLevelsDashboard() {
+  clearTimeout(searchRenderTimer);
+
+  searchRenderTimer = setTimeout(() => {
+    renderLevelsDashboard();
+  }, 150);
+}
 export function showLevelDetailPage(lvl, forceRank) {
+  if (!lvl) return;
+
+  detailCurrentLevel = lvl;
+  detailListCategory =
+    getNormalizedListType(lvl) === 'challenge' ? 'challenge' : 'demon';
+
   switchPage('detail');
+
   const finalRank = forceRank || lvl.rank || 999;
   const records = getRecordList(lvl);
 
-  const t = document.getElementById('dTitle');
+  const title = document.getElementById('dTitle');
   const info = document.getElementById('dInfo');
-  const vid = document.getElementById('video');
-  const stats = document.getElementById('stats');
-  const container = document.getElementById('dRecordsContainer');
+  const video = document.getElementById('video');
+  const recordsContainer = document.getElementById('dRecordsContainer');
+  const tagsContainer = document.getElementById('detailTags');
+  const metadata = document.getElementById('detailMetadata');
+  const extra = document.getElementById('detailExtra');
 
-  if (t) t.textContent = lvl.name || lvl.levelName || 'Unnamed Map';
+  document.getElementById('detailTabDemons')
+    ?.classList.toggle('active', detailListCategory === 'demon');
+
+  document.getElementById('detailTabChallenges')
+    ?.classList.toggle('active', detailListCategory === 'challenge');
+
+  if (title) {
+    title.textContent = lvl.name || lvl.levelName || 'Unnamed Level';
+  }
 
   if (info) {
     info.replaceChildren();
-    info.append(document.createTextNode('Creator: '));
-    const creator = document.createElement('strong');
-    creator.textContent = lvl.creator || 'Unknown';
-    const verifier = document.createElement('strong');
-    verifier.textContent = lvl.verifier || 'Unknown';
-    info.append(creator, document.createTextNode(' | Verifier: '), verifier, document.createElement('br'), document.createTextNode('ID Reference: '), document.createTextNode(lvl.id || 'N/A'));
+
+    const description = detailField(
+      lvl,
+      ['description', 'desc', 'shortDescription'],
+      ''
+    );
+
+    info.textContent =
+      description ||
+      `${lvl.name || lvl.levelName || 'This level'} is ranked #${finalRank} on the PSHS list.`;
   }
 
-  if (vid) {
-    vid.replaceChildren(createSafeVideoFrame(lvl.video));
+  if (video) {
+    video.replaceChildren(createSafeVideoFrame(lvl.video, '10px'));
   }
 
-  if (stats) {
-    stats.replaceChildren();
-    [
-      ['Rank Spectrum', `#${finalRank}`],
-      ['Point Value', calculateLevelPoints(finalRank).toFixed(2)],
-      ['Total Records', String(records.length)]
-    ].forEach(([label, value]) => {
-      const stat = document.createElement('div');
-      stat.className = 'stat';
-      const h4 = document.createElement('h4');
-      h4.textContent = label;
-      const p = document.createElement('p');
-      p.textContent = value;
-      stat.append(h4, p);
-      stats.appendChild(stat);
-    });
-  }
+  // Tags
+  if (tagsContainer) {
+    tagsContainer.replaceChildren();
 
-  if (container) {
-    container.replaceChildren();
-    const heading = document.createElement('h3');
-    heading.style.cssText = 'font-size:14px; margin-top:16px;';
-    heading.textContent = 'Verified Level Victors';
-    container.appendChild(heading);
+    let tags = lvl.tags || lvl.features || lvl.gimmicks || [];
 
-    if (records.length === 0) {
-      const empty = document.createElement('div');
-      empty.style.cssText = 'padding:12px; opacity:0.4; font-size:12px; text-align:center;';
-      empty.textContent = 'No campus data records approved.';
-      container.appendChild(empty);
-      return;
+    if (typeof tags === 'string') {
+      tags = tags
+        .split(/[,|]/)
+        .map(tag => tag.trim())
+        .filter(Boolean);
     }
 
-    const table = document.createElement('table');
-    table.className = 'records-table';
-    table.style.width = '100%';
+    if (!Array.isArray(tags)) tags = [];
 
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    ['Player', 'Campus', 'Proof'].forEach((label, index) => {
-      const th = document.createElement('th');
-      th.style.textAlign = index === 2 ? 'right' : 'left';
-      th.textContent = label;
-      headerRow.appendChild(th);
+    const defaults = [
+      detailField(lvl, ['version'], ''),
+      detailField(lvl, ['difficulty', 'diff'], '')
+    ];
+
+    tags = [
+      ...new Set(
+        [...defaults, ...tags.map(String)].filter(Boolean)
+      )
+    ].slice(0, 12);
+
+    tags.forEach(tag => {
+      const pill = document.createElement('span');
+      pill.className = 'detail-tag';
+      pill.textContent = tag;
+      tagsContainer.appendChild(pill);
     });
-    thead.appendChild(headerRow);
-
-    const tbody = document.createElement('tbody');
-    records.forEach(r => {
-      const row = document.createElement('tr');
-      const playerCell = document.createElement('td');
-      playerCell.append(document.createTextNode(String(r.username || r.name || r.player || r.user || '').trim()), document.createTextNode(' '));
-      const percent = document.createElement('strong');
-      percent.textContent = `(${r.percent || 100}%)`;
-      playerCell.appendChild(percent);
-
-      const campusCell = document.createElement('td');
-      campusCell.textContent = r.campus || 'Main Campus';
-
-      const proofCell = document.createElement('td');
-      proofCell.style.textAlign = 'right';
-      const proof = document.createElement('a');
-      proof.className = 'proof-btn';
-      proof.target = '_blank';
-      proof.rel = 'noopener noreferrer';
-      const safeProofUrl = isAllowedHttpUrl(r.video);
-      if (safeProofUrl) {
-        proof.href = safeProofUrl;
-        proof.textContent = 'Proof';
-      } else {
-        proof.textContent = 'No proof';
-        proof.setAttribute('aria-disabled', 'true');
-        proof.style.opacity = '0.5';
-        proof.style.pointerEvents = 'none';
-      }
-
-      proofCell.appendChild(proof);
-      row.append(playerCell, campusCell, proofCell);
-      tbody.appendChild(row);
-    });
-
-    table.append(thead, tbody);
-    container.appendChild(table);
   }
+
+  // Only show Level ID and List Points as metadata metrics.
+  if (metadata) {
+    metadata.replaceChildren();
+
+    const metrics = [
+      [
+        'Level ID',
+        detailField(lvl, ['id', 'levelId', 'levelID'])
+      ],
+      [
+        'List Points',
+        calculateLevelPoints(parseInt(finalRank, 10)).toFixed(2)
+      ]
+    ];
+
+    metrics.forEach(([label, value]) => {
+      const cell = document.createElement('div');
+      cell.className = 'detail-metric';
+
+      const heading = document.createElement('div');
+      heading.className = 'detail-metric-label';
+      heading.textContent = label;
+
+      const val = document.createElement('div');
+      val.className = 'detail-metric-value';
+      val.textContent = value;
+
+      cell.append(heading, val);
+      metadata.appendChild(cell);
+    });
+  }
+
+  // Additional level information.
+  if (extra) {
+    extra.replaceChildren();
+
+    const rows = [
+      ['Publisher', detailField(lvl, ['publisher', 'songPublisher'], '')],
+      ['Verifier', detailField(lvl, ['verifier'], 'Unknown')],
+      ['Creator(s)', detailField(lvl, ['creators', 'creator'], 'Unknown')]
+    ].filter(([, value]) => value);
+
+    rows.forEach(([label, value]) => {
+      const row = document.createElement('div');
+
+      const strong = document.createElement('strong');
+      strong.textContent = `${label}: `;
+
+      row.append(strong, document.createTextNode(value));
+      extra.appendChild(row);
+    });
+  }
+
+  // Records table.
+  if (recordsContainer) {
+    recordsContainer.replaceChildren();
+
+    if (!records.length) {
+      const empty = document.createElement('div');
+      empty.style.cssText =
+        'padding:12px 2px;opacity:.7;font-size:13px;';
+      empty.textContent = 'No records';
+
+      recordsContainer.appendChild(empty);
+    } else {
+      const table = document.createElement('table');
+      table.className = 'records-table';
+      table.style.width = '100%';
+
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+
+      ['Player', 'Campus', 'Proof'].forEach((label, index) => {
+        const th = document.createElement('th');
+        th.textContent = label;
+        th.style.textAlign = index === 2 ? 'right' : 'left';
+        headerRow.appendChild(th);
+      });
+
+      thead.appendChild(headerRow);
+
+      const tbody = document.createElement('tbody');
+
+      records.forEach(record => {
+        const row = document.createElement('tr');
+
+        const player = document.createElement('td');
+        player.textContent =
+          `${String(
+            record.username ||
+            record.name ||
+            record.player ||
+            record.user ||
+            'Unknown'
+          ).trim()} (${record.percent || 100}%)`;
+
+        const campus = document.createElement('td');
+        campus.textContent = record.campus || 'Main Campus';
+
+        const proofCell = document.createElement('td');
+        proofCell.style.textAlign = 'right';
+
+        const proof = document.createElement('a');
+        proof.className = 'proof-btn';
+        proof.target = '_blank';
+        proof.rel = 'noopener noreferrer';
+
+        const safeProofUrl = isAllowedHttpUrl(record.video);
+
+        if (safeProofUrl) {
+          proof.href = safeProofUrl;
+          proof.textContent = 'Proof';
+        } else {
+          proof.textContent = '—';
+          proof.setAttribute('aria-disabled', 'true');
+        }
+
+        proofCell.appendChild(proof);
+        row.append(player, campus, proofCell);
+        tbody.appendChild(row);
+      });
+
+      table.append(thead, tbody);
+      recordsContainer.appendChild(table);
+    }
+  }
+
+  renderDetailLevelList();
 }
 
-// Global UI Attachments
+// Global UI attachments.
 window.openLevelFromNews = openLevelFromNews;
 window.switchMainListTab = switchMainListTab;
 window.switchListSubTab = switchListSubTab;
 
-// Route hook used by the hash router to open a level detail by id, rank, or exact name:
-// Examples: #detail?level=12345   #detail?level=1   #detail?level=Example%20Name
+// Route hook used by the hash router to open a level detail by ID, rank,
+// or exact name.
 window.routeToDetail = function(levelParam, params) {
   if (!levelParam) return;
+
   const key = String(levelParam).trim();
-  // try numeric id/rank first
-  let lvl = uiState.allLevels.find(l => String(l.id) === key || String(l.rank) === key);
+
+  let lvl = uiState.allLevels.find(
+    level => String(level.id) === key || String(level.rank) === key
+  );
+
   if (!lvl) {
-    // try exact name match (case sensitive trimmed) and also a decoded match
-    lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === key);
+    lvl = uiState.allLevels.find(
+      level => String(level.name || level.levelName || '').trim() === key
+    );
+
     if (!lvl) {
-      const decoded = decodeURIComponent(key);
-      lvl = uiState.allLevels.find(l => String(l.name || l.levelName || '').trim() === decoded);
+      let decoded = key;
+
+      try {
+        decoded = decodeURIComponent(key);
+      } catch {
+        // Keep the original key if it is not valid encoded text.
+      }
+
+      lvl = uiState.allLevels.find(
+        level =>
+          String(level.name || level.levelName || '').trim() === decoded
+      );
     }
   }
+
   if (lvl) {
     const rank = parseInt(lvl.rank || 999, 10);
-    // showLevelDetailPage is already defined in this module
     showLevelDetailPage(lvl, rank);
   }
 };
