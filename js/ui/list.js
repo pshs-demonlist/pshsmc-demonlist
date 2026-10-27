@@ -742,42 +742,82 @@ export function switchListSubTab(tab, bypassUrlSync = false) {
   if (!bypassUrlSync) syncURL();
 }
 
+
 export function renderLevelsDashboard() {
   const { list, search, campusFilter } = getDashboardElements();
   if (!list) return;
 
-  const query = search ? search.value.toLowerCase() : '';
+  const rawQuery = search ? search.value.trim() : '';
+  const query = rawQuery.toLowerCase();
   const campusVal = campusFilter ? campusFilter.value : 'ALL';
-  
+
+  // Detect exact rank searches: 1, 124, #124
+  const isRankSearch = /^#?\d+$/.test(rawQuery);
+  const requestedRank = isRankSearch
+    ? parseInt(rawQuery.replace(/^#/, ''), 10)
+    : null;
+
   let displayedItems = uiState.allLevels.filter(lvl => {
-    if (getNormalizedListType(lvl) !== uiState.currentMainTab) return false;
+    // Keep the currently selected category.
+    if (getNormalizedListType(lvl) !== uiState.currentMainTab) {
+      return false;
+    }
 
     const rank = parseInt(lvl.rank || 999, 10);
-    if (uiState.currentSubTab === 'main' && rank > 75) return false;
-    if (uiState.currentSubTab === 'extended' && (rank <= 75 || rank > 150)) return false;
-    if (uiState.currentSubTab === 'legacy' && rank <= 150) return false;
 
+    // When searching, include Main, Extended, and Legacy.
+    // When the search is empty, respect the selected subtab.
+    if (!query) {
+      if (uiState.currentSubTab === 'main' && rank > 75) {
+        return false;
+      }
+
+      if (
+        uiState.currentSubTab === 'extended' &&
+        (rank <= 75 || rank > 150)
+      ) {
+        return false;
+      }
+
+      if (uiState.currentSubTab === 'legacy' && rank <= 150) {
+        return false;
+      }
+    }
+
+    // Preserve campus filtering.
     const lvlCampus = lvl._escapedCampus;
     const records = getRecordList(lvl);
 
     const campusMatch =
       campusVal === 'ALL' ||
       lvlCampus === campusVal ||
-      records.some(
-        r => r._escapedCampus === campusVal
-      );
-    
+      records.some(r => r._escapedCampus === campusVal);
+
     if (!campusMatch) return false;
 
+    // Numeric searches match the exact rank only.
+    if (isRankSearch) {
+      return rank === requestedRank;
+    }
+
+    // Normal text search across all three list sections.
     return (
-      String(lvl.name || lvl.levelName || '').toLowerCase().includes(query) ||
-      String(lvl.creator || '').toLowerCase().includes(query) ||
-      String(lvl.diff || lvl.difficulty || '').toLowerCase().includes(query) 
+      String(lvl.name || lvl.levelName || '')
+        .toLowerCase()
+        .includes(query) ||
+      String(lvl.creator || '')
+        .toLowerCase()
+        .includes(query) ||
+      String(lvl.diff || lvl.difficulty || '')
+        .toLowerCase()
+        .includes(query)
     );
   });
 
   displayedItems.sort(
-    (a, b) => parseInt(a.rank || 999, 10) - parseInt(b.rank || 999,10)
+    (a, b) =>
+      parseInt(a.rank || 999, 10) -
+      parseInt(b.rank || 999, 10)
   );
 
   if (displayedItems.length === 0) {
@@ -798,6 +838,7 @@ export function renderLevelsDashboard() {
     const pts = calculateLevelPoints(rank);
 
     let thumb = lvl.img || lvl.thumbnail;
+
     if (!thumb && lvl.video?.includes('embed/')) {
       try {
         thumb = `https://img.youtube.com/vi/${lvl.video
@@ -805,30 +846,36 @@ export function renderLevelsDashboard() {
           .split('?')[0]}/maxdefault.jpg`;
       } catch {}
     }
+
     thumb ||= CONFIG.IMAGES.FALLBACK_THUMBNAIL;
 
     const row = document.createElement('div');
     row.className = 'row';
-    row.addEventListener('click', () => showLevelDetailPage(lvl, rank));
+    row.addEventListener('click', () =>
+      showLevelDetailPage(lvl, rank)
+    );
 
     // Rank
     const rankDiv = document.createElement('div');
     rankDiv.className = 'rank';
     rankDiv.textContent = `#${rank}`;
-    
+
     // Thumbnail
     const thumbDiv = document.createElement('div');
     thumbDiv.className = 'thumb';
 
     const img = document.createElement('img');
     const safeThumb = isAllowedHttpUrl(thumb);
+
     img.src = safeThumb || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+
     img.onerror = function () {
       this.onerror = null;
       this.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
     };
+
     thumbDiv.appendChild(img);
-    
+
     // Info
     const info = document.createElement('div');
     info.className = 'info';
@@ -868,19 +915,10 @@ export function renderLevelsDashboard() {
     row.append(rankDiv, thumbDiv, info);
     fragment.appendChild(row);
   });
-  
+
   list.replaceChildren(fragment);
 }
 
-let searchRenderTimer = null;
-
-export function scheduleRenderLevelsDashboard() {
-  clearTimeout(searchRenderTimer);
-
-  searchRenderTimer = setTimeout(() => {
-    renderLevelsDashboard();
-  }, 150);
-}
 
 export function showLevelDetailPage(lvl, forceRank) {
   switchPage('detail');
