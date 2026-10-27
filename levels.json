@@ -1934,7 +1934,7 @@
     "img": "https://img.youtube.com/vi/i7Jnp11Yr9g/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/i7Jnp11Yr9g",
     "listType": "demon",
-    "rawTier": 15.29,
+    "rawTier": 15.28,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -1961,7 +1961,7 @@
     "img": "https://img.youtube.com/vi/m-QhTbhO1kM/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/m-QhTbhO1kM",
     "listType": "demon",
-    "rawTier": 15.2,
+    "rawTier": 15.21,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3209,7 +3209,7 @@
     "img": "https://img.youtube.com/vi/7s4ql1CMdtw/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7s4ql1CMdtw",
     "listType": "demon",
-    "rawTier": 6.04,
+    "rawTier": 6.03,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3454,7 +3454,7 @@
     "img": "https://img.youtube.com/vi/OHskMH6onUU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/OHskMH6onUU",
     "listType": "demon",
-    "rawTier": 4.51,
+    "rawTier": 4.52,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4272,8 +4272,35 @@
     ]
   },
   {
-    "id": "131475001",
+    "id": "45622672",
     "rank": 132,
+    "name": "Depressure",
+    "creator": "Serponge",
+    "verifier": "aldawg123",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+    "listType": "demon",
+    "rawTier": 2.09,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "",
+    "victorList": [
+      {
+        "name": "aldawg123",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
+        "campus": "",
+        "date": "2026-06-17T01:42:23.658Z"
+      }
+    ]
+  },
+  {
+    "id": "131475001",
+    "rank": 133,
     "name": "Hyper Techno",
     "creator": "Bluepper",
     "verifier": "sSeanyboii",
@@ -4307,7 +4334,7 @@
   },
   {
     "id": "5098465",
-    "rank": 133,
+    "rank": 134,
     "name": "Speed of Light",
     "creator": "TheRealSalad",
     "verifier": "sSeanyboii",
@@ -4329,33 +4356,6 @@
         "video": "https://www.youtube.com/embed/5dp2bw7-Zek",
         "campus": "Main Campus",
         "date": "2026-06-21T17:21:55.661Z"
-      }
-    ]
-  },
-  {
-    "id": "45622672",
-    "rank": 134,
-    "name": "Depressure",
-    "creator": "Serponge",
-    "verifier": "aldawg123",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/BmawW6MlVKI/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
-    "listType": "demon",
-    "rawTier": 2.08,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-17T01:42:23.658Z",
-    "campus": "",
-    "victorList": [
-      {
-        "name": "aldawg123",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/5bbC7WIM1Kw",
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z"
       }
     ]
   },
@@ -4723,7 +4723,7 @@
     "img": "https://img.youtube.com/vi/lkd2r6J2xMs/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/lkd2r6J2xMs",
     "listType": "demon",
-    "rawTier": 1.35,
+    "rawTier": 1.34,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
