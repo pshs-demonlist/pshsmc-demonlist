@@ -635,80 +635,50 @@
     .nav-menu { max-width: 100%; }
     footer { flex-direction: column; text-align: center; }
   }
-  /* =========================================================
-   LEVEL DETAIL PAGE — LARGE DESKTOP LAYOUT
-   Mobile layout remains unchanged.
-   ========================================================= */
-
+/* FIX: CENTER AND ENLARGE DESKTOP DETAIL PAGE */
 @media (min-width: 1024px) {
-  /* Give the detail page nearly the entire screen */
-  #detailPage,
-  .detail-page,
-  #levelDetailPage {
-    width: min(96vw, 1800px) !important;
-    max-width: 1800px !important;
-    min-height: calc(100vh - 32px) !important;
-    margin: 16px auto !important;
+  #detailPage {
+    width: 100%;
+    max-width: none;
+    margin-inline: auto;
+    padding: 16px 2vw 24px;
     box-sizing: border-box;
   }
 
-  /* Main three-column layout */
-  .detail-layout,
-  .level-detail-layout,
-  .detail-grid {
-    width: 100% !important;
-    min-height: calc(100vh - 100px) !important;
+  #detailPage .detail-toolbar {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto 12px;
+  }
+
+  #detailPage .detail-layout {
+    width: 100%;
+    max-width: 1800px;
+    margin-inline: auto;
+
     grid-template-columns:
       minmax(260px, 0.85fr)
-      minmax(500px, 1.7fr)
-      minmax(260px, 0.85fr) !important;
-    gap: 12px !important;
-    box-sizing: border-box;
+      minmax(0, 1.7fr)
+      minmax(260px, 0.85fr);
+
+    gap: 12px;
+    height: calc(100vh - 100px);
+    min-height: 600px;
   }
 
-  /* Enlarge the three panels */
-  .detail-sidebar,
-  .detail-main,
-  .detail-records,
-  .detail-panel,
-  .detail-left,
-  .detail-center,
-  .detail-right {
-    min-height: calc(100vh - 100px) !important;
-    box-sizing: border-box;
+  #detailPage .detail-sidebar,
+  #detailPage .detail-main-panel,
+  #detailPage .detail-records-panel {
+    min-width: 0;
+    height: 100%;
   }
 
-  /* Make the level video use the available central width */
-  #video,
-  #video iframe {
-    width: 100% !important;
-    max-width: 100% !important;
+  #detailPage .detail-main-panel {
+    padding: 18px;
   }
 
-  /* Slightly larger text and spacing */
-  .detail-main h1,
-  .detail-center h1 {
-    font-size: 1.5rem;
-  }
-
-  .detail-panel,
-  .detail-sidebar,
-  .detail-records {
-    padding: 14px !important;
-  }
-}
-
-/* Preserve the original mobile design */
-@media (max-width: 1023px) {
-  #detailPage,
-  .detail-page,
-  #levelDetailPage,
-  .detail-layout,
-  .level-detail-layout,
-  .detail-grid {
-    width: auto;
-    max-width: none;
-    min-height: 0;
+  #detailPage .detail-main-panel h2 {
+    font-size: 28px;
   }
 }
 </style>
