@@ -6884,63 +6884,8 @@
     ]
   },
   {
-    "id": "141753444",
-    "rank": 48,
-    "name": "Sakupen End 49-53",
-    "creator": "Nick240",
-    "verifier": "sSeanyboii",
-    "diff": "Medium Challenge",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "img": "https://img.youtube.com/vi/gKbRmuWfpRM/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/gKbRmuWfpRM",
-    "listType": "challenge",
-    "rawTier": 4,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-22T08:24:09.420Z",
-    "campus": "",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/gKbRmuWfpRM",
-        "campus": "",
-        "date": "2026-06-17T01:42:23.658Z"
-      },
-      {
-        "name": "dibless",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/lfN2a94sOXg",
-        "campus": "Main Campus",
-        "date": "2026-06-22T08:24:09.420Z"
-      },
-      {
-        "name": "IceRig",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/FPKF2M1giFU",
-        "campus": "Western Visayas Campus",
-        "date": "2026-06-30T09:47:00.000Z"
-      },
-      {
-        "name": "Lobster999",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/ZXjaidnzhO8",
-        "campus": "Central Visayas Campus",
-        "date": "2026-07-04T16:51:04.280Z"
-      },
-      {
-        "name": "Fortnitekid420",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/xM2Zxoe198Y",
-        "campus": "Zamboanga Peninsula Region Campus",
-        "date": "2026-07-12T22:12:41.710Z"
-      }
-    ]
-  },
-  {
     "id": "143250790",
-    "rank": 49,
+    "rank": 48,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -6981,7 +6926,7 @@
   },
   {
     "id": "143385344",
-    "rank": 50,
+    "rank": 49,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -7029,7 +6974,7 @@
   },
   {
     "id": "139324232",
-    "rank": 51,
+    "rank": 50,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -7070,7 +7015,7 @@
   },
   {
     "id": "108062313",
-    "rank": 52,
+    "rank": 51,
     "name": "1 second hell",
     "creator": "FoldedZero",
     "verifier": "ModeraGD",
@@ -7097,7 +7042,7 @@
   },
   {
     "id": "143967625",
-    "rank": 53,
+    "rank": 52,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
