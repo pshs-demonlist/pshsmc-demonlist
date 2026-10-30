@@ -4837,8 +4837,35 @@
     ]
   },
   {
-    "id": "131426183",
+    "id": "848722",
     "rank": 148,
+    "name": "Lights And Thunder",
+    "creator": "Lyod",
+    "verifier": "fortenrique",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/48cXVR6oSvk/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/48cXVR6oSvk",
+    "listType": "demon",
+    "rawTier": 1.62,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-10-30T10:52:21.923Z",
+    "campus": "Western Visayas Campus",
+    "victorList": [
+      {
+        "name": "fortenrique",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/48cXVR6oSvk",
+        "campus": "Western Visayas Campus",
+        "date": "2026-10-30T10:52:21.923Z"
+      }
+    ]
+  },
+  {
+    "id": "131426183",
+    "rank": 149,
     "name": "DJ",
     "creator": "Split72",
     "verifier": "sSeanyboii",
@@ -4872,7 +4899,7 @@
   },
   {
     "id": "149725478",
-    "rank": 149,
+    "rank": 150,
     "name": "AREA 52",
     "creator": "AtharZGD",
     "verifier": "dudsiez404",
@@ -4899,7 +4926,7 @@
   },
   {
     "id": "65765662",
-    "rank": 150,
+    "rank": 151,
     "name": "iS",
     "creator": "Grenate",
     "verifier": "dibless",
@@ -4933,7 +4960,7 @@
   },
   {
     "id": "56587109",
-    "rank": 151,
+    "rank": 152,
     "name": "phjork",
     "creator": "cerufiffy",
     "verifier": "sSeanyboii",
@@ -4967,7 +4994,7 @@
   },
   {
     "id": "128665322",
-    "rank": 152,
+    "rank": 153,
     "name": "red alert",
     "creator": "ratliffigd",
     "verifier": "dibless",
@@ -5001,7 +5028,7 @@
   },
   {
     "id": "93530247",
-    "rank": 153,
+    "rank": 154,
     "name": "Weird world",
     "creator": "Tinraz",
     "verifier": "sSeanyboii",
@@ -5028,7 +5055,7 @@
   },
   {
     "id": "56302791",
-    "rank": 154,
+    "rank": 155,
     "name": "Rise",
     "creator": "Wintter",
     "verifier": "sSeanyboii",
@@ -5055,7 +5082,7 @@
   },
   {
     "id": "56210242",
-    "rank": 155,
+    "rank": 156,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "eelektrance",
@@ -5110,7 +5137,7 @@
   },
   {
     "id": "87257787",
-    "rank": 156,
+    "rank": 157,
     "name": "V01D",
     "creator": "MinAY",
     "verifier": "sSeanyboii",
@@ -5137,7 +5164,7 @@
   },
   {
     "id": "142685157",
-    "rank": 157,
+    "rank": 158,
     "name": "GTA Z",
     "creator": "EVILF",
     "verifier": "dibless",
@@ -5171,7 +5198,7 @@
   },
   {
     "id": "5904109",
-    "rank": 158,
+    "rank": 159,
     "name": "Platinum Adventure",
     "creator": "Jerry4",
     "verifier": "sSeanyboii",
@@ -5233,7 +5260,7 @@
   },
   {
     "id": "119124920",
-    "rank": 159,
+    "rank": 160,
     "name": "UNSORTED M I X",
     "creator": "xvia",
     "verifier": "sSeanyboii",
@@ -5260,7 +5287,7 @@
   },
   {
     "id": "126502545",
-    "rank": 160,
+    "rank": 161,
     "name": "MachinA DeluXXe",
     "creator": "sink",
     "verifier": "sSeanyboii",
@@ -5287,7 +5314,7 @@
   },
   {
     "id": "55520",
-    "rank": 161,
+    "rank": 162,
     "name": "THE LIGHTNING ROAD",
     "creator": "Timeless Real",
     "verifier": "Akoay",
@@ -5349,7 +5376,7 @@
   },
   {
     "id": "13519",
-    "rank": 162,
+    "rank": 163,
     "name": "The Nightmare",
     "creator": "Jax",
     "verifier": "sSeanyboii",
