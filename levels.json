@@ -1017,33 +1017,6 @@
     ]
   },
   {
-    "id": "125881154",
-    "rank": 34,
-    "name": "cataclysm",
-    "creator": "mbedsun",
-    "verifier": "fortenrique",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/MLnVBdkfFeI/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/MLnVBdkfFeI",
-    "listType": "demon",
-    "rawTier": 24,
-    "aredlPlacement": 1432,
-    "aredlRank": 1432,
-    "platPosition": null,
-    "date": "2026-10-30T11:12:33.891Z",
-    "campus": "Western Visayas Campus",
-    "victorList": [
-      {
-        "name": "fortenrique",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/MLnVBdkfFeI",
-        "campus": "Western Visayas Campus",
-        "date": "2026-10-30T11:12:33.891Z"
-      }
-    ]
-  },
-  {
     "id": "85972099",
     "rank": 35,
     "name": "Shotgun",
