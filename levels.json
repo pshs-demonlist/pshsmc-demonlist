@@ -7294,32 +7294,5 @@
         "date": "2026-07-12T22:13:27.780Z"
       }
     ]
-  },
-  {
-    "id": "141753444",
-    "rank": 53,
-    "name": "Sakupen End 49-53",
-    "creator": "Nick240",
-    "verifier": "LeadEightyTwo",
-    "diff": "",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "img": "https://img.youtube.com/vi/mB1d3zRWp9Q/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/mB1d3zRWp9Q",
-    "listType": "challenge",
-    "rawTier": 0,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-10-27T22:38:47.467Z",
-    "campus": "Western Visayas Campus",
-    "victorList": [
-      {
-        "name": "LeadEightyTwo",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/mB1d3zRWp9Q",
-        "campus": "Western Visayas Campus",
-        "date": "2026-10-27T22:38:47.467Z"
-      }
-    ]
   }
 ]
