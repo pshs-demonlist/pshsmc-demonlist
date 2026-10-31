@@ -5576,35 +5576,8 @@
     ]
   },
   {
-    "id": "124986701",
-    "rank": 1,
-    "name": "Cotton Candy",
-    "creator": "AntiprimeGD",
-    "verifier": "Fortnitekid420",
-    "diff": "Extreme Challenge",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/sGTCDc_wBLY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/sGTCDc_wBLY",
-    "listType": "challenge",
-    "rawTier": 27.4,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-10-04T19:57:08.005Z",
-    "campus": "Zamboanga Peninsula Region Campus",
-    "victorList": [
-      {
-        "name": "Fortnitekid420",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/sGTCDc_wBLY",
-        "campus": "Zamboanga Peninsula Region Campus",
-        "date": "2026-10-04T19:57:08.005Z"
-      }
-    ]
-  },
-  {
     "id": "149713396",
-    "rank": 2,
+    "rank": 1,
     "name": "TriCk Extension 30",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -5631,7 +5604,7 @@
   },
   {
     "id": "55637201",
-    "rank": 3,
+    "rank": 2,
     "name": "D",
     "creator": "BoBoBoBoBoBoBo",
     "verifier": "wkwo1",
@@ -5658,7 +5631,7 @@
   },
   {
     "id": "144715111",
-    "rank": 4,
+    "rank": 3,
     "name": "Elementary for Aleph",
     "creator": "Fortnitekid420",
     "verifier": "Fortnitekid420",
@@ -5685,7 +5658,7 @@
   },
   {
     "id": "133438044",
-    "rank": 5,
+    "rank": 4,
     "name": "Shitty Britney No Sclears",
     "creator": "ATMNalywhy",
     "verifier": "Lobster999",
@@ -5712,7 +5685,7 @@
   },
   {
     "id": "46570823",
-    "rank": 6,
+    "rank": 5,
     "name": "Funk God",
     "creator": "sizzli",
     "verifier": "wkwo1",
@@ -5739,7 +5712,7 @@
   },
   {
     "id": "146508829",
-    "rank": 7,
+    "rank": 6,
     "name": "wave challenge 8",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -5768,6 +5741,33 @@
         "video": "https://www.youtube.com/embed/Xk3QE0kF-aM",
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-08-08T22:23:18.140Z"
+      }
+    ]
+  },
+  {
+    "id": "124986701",
+    "rank": 7,
+    "name": "Cotton Candy",
+    "creator": "AntiprimeGD",
+    "verifier": "Fortnitekid420",
+    "diff": "Insane Challenge",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "img": "https://img.youtube.com/vi/sGTCDc_wBLY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/sGTCDc_wBLY",
+    "listType": "challenge",
+    "rawTier": 19.9,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-10-04T19:57:08.005Z",
+    "campus": "Zamboanga Peninsula Region Campus",
+    "victorList": [
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/sGTCDc_wBLY",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-10-04T19:57:08.005Z"
       }
     ]
   },
