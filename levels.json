@@ -7043,8 +7043,35 @@
     ]
   },
   {
-    "id": "141063347",
+    "id": "151551131",
     "rank": 46,
+    "name": "D block shenanigans",
+    "creator": "someerando",
+    "verifier": "someerando",
+    "diff": "Medium Challenge",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "img": "https://img.youtube.com/vi/kV4OFu9XmUg/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/kV4OFu9XmUg",
+    "listType": "challenge",
+    "rawTier": 5.4,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-10-31T14:31:02.857Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "someerando",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/kV4OFu9XmUg",
+        "campus": "Main Campus",
+        "date": "2026-10-31T14:31:02.857Z"
+      }
+    ]
+  },
+  {
+    "id": "141063347",
+    "rank": 47,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -7099,7 +7126,7 @@
   },
   {
     "id": "38259302",
-    "rank": 47,
+    "rank": 48,
     "name": "Decode Wave 10x",
     "creator": "Tenechit",
     "verifier": "fortenrique",
@@ -7133,7 +7160,7 @@
   },
   {
     "id": "143250790",
-    "rank": 48,
+    "rank": 49,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -7174,7 +7201,7 @@
   },
   {
     "id": "143385344",
-    "rank": 49,
+    "rank": 50,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -7222,7 +7249,7 @@
   },
   {
     "id": "139324232",
-    "rank": 50,
+    "rank": 51,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -7263,7 +7290,7 @@
   },
   {
     "id": "108062313",
-    "rank": 51,
+    "rank": 52,
     "name": "1 second hell",
     "creator": "FoldedZero",
     "verifier": "ModeraGD",
@@ -7290,7 +7317,7 @@
   },
   {
     "id": "143967625",
-    "rank": 52,
+    "rank": 53,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
