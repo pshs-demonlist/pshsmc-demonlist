@@ -1511,7 +1511,7 @@
     "img": "https://img.youtube.com/vi/46IXDCNJ8Pk/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/46IXDCNJ8Pk",
     "listType": "demon",
-    "rawTier": 17.96,
+    "rawTier": 17.97,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2723,7 +2723,7 @@
     "img": "https://img.youtube.com/vi/bkhnzdd0eCc/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/bkhnzdd0eCc",
     "listType": "demon",
-    "rawTier": 8.77,
+    "rawTier": 8.78,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3127,35 +3127,8 @@
     ]
   },
   {
-    "id": "94716697",
-    "rank": 94,
-    "name": "CELESTIA",
-    "creator": "notxo",
-    "verifier": "sSeanyboii",
-    "diff": "Medium Demon",
-    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
-    "img": "https://img.youtube.com/vi/27tbhOlt_l8/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/27tbhOlt_l8",
-    "listType": "demon",
-    "rawTier": 6.88,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-17T01:42:23.658Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/27tbhOlt_l8",
-        "campus": "Main Campus",
-        "date": "2026-06-17T01:42:23.658Z"
-      }
-    ]
-  },
-  {
     "id": "21337579",
-    "rank": 95,
+    "rank": 94,
     "name": "Gold Temple",
     "creator": "Serponge",
     "verifier": "dibless",
@@ -3177,6 +3150,33 @@
         "video": "https://www.youtube.com/embed/nrRFV9jGZdU",
         "campus": "Main Campus",
         "date": "2026-06-22T16:17:17.312Z"
+      }
+    ]
+  },
+  {
+    "id": "94716697",
+    "rank": 95,
+    "name": "CELESTIA",
+    "creator": "notxo",
+    "verifier": "sSeanyboii",
+    "diff": "Medium Demon",
+    "face": "https://gdladder.com/images/demon_logos/medium_128.webp",
+    "img": "https://img.youtube.com/vi/27tbhOlt_l8/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/27tbhOlt_l8",
+    "listType": "demon",
+    "rawTier": 6.84,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-06-17T01:42:23.658Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/27tbhOlt_l8",
+        "campus": "Main Campus",
+        "date": "2026-06-17T01:42:23.658Z"
       }
     ]
   },
@@ -3313,7 +3313,7 @@
     "img": "https://img.youtube.com/vi/Bjx2HgOeqhA/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/Bjx2HgOeqhA",
     "listType": "demon",
-    "rawTier": 6.13,
+    "rawTier": 6.12,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3340,7 +3340,7 @@
     "img": "https://img.youtube.com/vi/7s4ql1CMdtw/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7s4ql1CMdtw",
     "listType": "demon",
-    "rawTier": 6.04,
+    "rawTier": 6.03,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3477,7 +3477,7 @@
     "img": "https://img.youtube.com/vi/XvxEkXLayHU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/XvxEkXLayHU",
     "listType": "demon",
-    "rawTier": 5.14,
+    "rawTier": 5.15,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4870,7 +4870,7 @@
     "img": "https://img.youtube.com/vi/c7H8f5milaU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/c7H8f5milaU",
     "listType": "demon",
-    "rawTier": 1.82,
+    "rawTier": 1.81,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -5428,7 +5428,7 @@
     "img": "https://img.youtube.com/vi/Dp3wSlUGpdc/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/Dp3wSlUGpdc",
     "listType": "demon",
-    "rawTier": 1.09,
+    "rawTier": 1.08,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
