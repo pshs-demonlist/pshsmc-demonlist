@@ -159,19 +159,38 @@ function addRatedPlusCampusOptions(levels) {
 }
 
 function showRatedPlusLoadError(error) {
-  if (uiState.currentMainTab !== 'ratedplus') return;
+  const onChallengeList = uiState.currentMainTab === 'challenge';
+  const onRatedPlusList = uiState.currentMainTab === 'ratedplus';
+  const onChallengeDetail =
+    detailListCategory === 'challenge' &&
+    document.getElementById('detailPage')?.classList.contains('active-page');
 
-  const { list } = getDashboardElements();
-  if (!list) return;
+  if (!onChallengeList && !onRatedPlusList && !onChallengeDetail) return;
 
-  const message = document.createElement('div');
-  message.className = 'empty';
-  message.style.cssText = 'padding:24px;text-align:center;';
-  message.textContent =
-    'Could not load Rated+ List. ' +
-    String(error?.message || error || 'Unknown loading error') +
-    ' — check that ratedplus.json exists in the repository.';
-  list.replaceChildren(message);
+  const messageText = String(
+    error?.message || error || 'Unknown loading error'
+  );
+
+  if (onChallengeList || onRatedPlusList) {
+    const { list } = getDashboardElements();
+    if (list) {
+      const message = document.createElement('div');
+      message.className = 'empty';
+      message.style.cssText = 'padding:24px;text-align:center;';
+      message.textContent = onChallengeList
+        ? 'Could not verify the Tiny/Short-only Challenge List because ratedplus.json could not be loaded. ' + messageText
+        : 'Could not load Rated+ List. ' + messageText +
+          ' — check that ratedplus.json exists in the repository.';
+      list.replaceChildren(message);
+    }
+  }
+
+  if (onChallengeDetail) {
+    const detailList = document.getElementById('detailLevelList');
+    if (detailList) {
+      detailList.textContent = 'Could not load the Challenge List filter: ' + messageText;
+    }
+  }
 }
 
 export async function loadRatedPlusLevels(forceReload = false) {
@@ -215,8 +234,15 @@ export async function loadRatedPlusLevels(forceReload = false) {
           '[Rated+] Loaded ' + uiState.ratedPlusLevels.length + ' levels.'
         );
 
-        if (uiState.currentMainTab === 'ratedplus') {
+        if (
+          uiState.currentMainTab === 'ratedplus' ||
+          uiState.currentMainTab === 'challenge'
+        ) {
           renderLevelsDashboard();
+        }
+
+        if (detailListCategory === 'challenge') {
+          renderDetailLevelList();
         }
 
         return uiState.ratedPlusLevels;
@@ -255,15 +281,50 @@ function detailField(level, keys, fallback = '—') {
   return fallback;
 }
 
+// The generated Rated+ file contains every Medium, Long, and XL Challenge.
+// Excluding those IDs from the regular Challenge List leaves Tiny/Short only.
+// Source levels.json retains all Challenges because Rated+ still needs them.
+function getVisibleChallengeListLevels() {
+  const ratedPlusChallengeIds = new Set(
+    uiState.ratedPlusLevels
+      .filter(level => getNormalizedListType(level) === 'challenge')
+      .map(level => String(level.id || '').trim())
+      .filter(Boolean)
+  );
+
+  return uiState.allLevels
+    .filter(level => getNormalizedListType(level) === 'challenge')
+    .filter(level => {
+      const id = String(level.id || '').trim();
+      return !id || !ratedPlusChallengeIds.has(id);
+    })
+    .sort((a, b) =>
+      parseInt(a.rank || 999999, 10) - parseInt(b.rank || 999999, 10)
+    )
+    .map((level, index) => ({
+      ...level,
+      _listDisplayRank: index + 1
+    }));
+}
+
 function renderDetailLevelList() {
   const container = document.getElementById('detailLevelList');
   const search = document.getElementById('detailLevelSearch');
   if (!container) return;
 
+  if (detailListCategory === 'challenge' && !uiState.ratedPlusLoaded) {
+    container.textContent = 'Loading Tiny/Short Challenge List...';
+    loadRatedPlusLevels().catch(showRatedPlusLoadError);
+    return;
+  }
+
   const query = (search?.value || '').trim().toLowerCase();
 
-  const levels = uiState.allLevels
-    .filter(level => getNormalizedListType(level) === detailListCategory)
+  const detailSource = detailListCategory === 'challenge'
+    ? getVisibleChallengeListLevels()
+    : uiState.allLevels.filter(level => getNormalizedListType(level) === detailListCategory);
+
+  const levels = detailSource
     .filter(level => {
       if (!query) return true;
 
@@ -273,11 +334,12 @@ function renderDetailLevelList() {
         level.creator,
         level.diff,
         level.difficulty,
-        level.rank
+        level._listDisplayRank ?? level.rank
       ].some(value => String(value ?? '').toLowerCase().includes(query));
     })
     .sort((a, b) =>
-      parseInt(a.rank || 999, 10) - parseInt(b.rank || 999, 10)
+      parseInt(a._listDisplayRank ?? a.rank ?? 999, 10) -
+      parseInt(b._listDisplayRank ?? b.rank ?? 999, 10)
     );
 
   container.replaceChildren();
@@ -292,13 +354,19 @@ function renderDetailLevelList() {
   }
 
   levels.forEach(level => {
-    const rank = parseInt(level.rank || 999, 10);
+    const rank = parseInt(level._listDisplayRank ?? level.rank ?? 999, 10);
 
     const button = document.createElement('button');
     button.type = 'button';
+    const isActiveLevel = detailCurrentLevel && (
+      String(detailCurrentLevel.id || '') === String(level.id || '') ||
+      String(detailCurrentLevel.name || detailCurrentLevel.levelName || '') ===
+        String(level.name || level.levelName || '')
+    );
+
     button.className =
       'detail-level-item' +
-      (detailCurrentLevel === level ? ' active' : '');
+      (isActiveLevel ? ' active' : '');
 
     const rankEl = document.createElement('span');
     rankEl.className = 'detail-level-rank';
@@ -332,6 +400,9 @@ window.setDetailListCategory = function(category) {
   if (search) search.value = '';
 
   renderDetailLevelList();
+  if (detailListCategory === 'challenge' && !uiState.ratedPlusLoaded) {
+    loadRatedPlusLevels().catch(showRatedPlusLoadError);
+  }
 };
 
 // --- URL ROUTING ENGINE ---
@@ -1074,6 +1145,17 @@ export function switchListSubTab(tab, bypassUrlSync = false) {
         descEl.innerText =
           'Ranks 151 onward of the combined Rated+ ranking. These levels remain searchable and viewable in the complete combined ranking.';
       }
+    } else if (uiState.currentMainTab === 'challenge') {
+      if (tab === 'main') {
+        descEl.innerText =
+          'The Challenge List contains only Tiny (0–9 seconds) and Short (10–29 seconds) Challenges. Medium, Long, and XL Challenges are included in Rated+.';
+      } else if (tab === 'extended') {
+        descEl.innerText =
+          'Ranks 76–150 of the Tiny and Short Challenge List. Medium, Long, and XL Challenges are ranked in Rated+ instead.';
+      } else if (tab === 'legacy') {
+        descEl.innerText =
+          'Ranks 151 onward of the Tiny and Short Challenge List. Medium, Long, and XL Challenges are ranked in Rated+ instead.';
+      }
     } else if (tab === 'main') {
       descEl.innerText =
         'The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points.';
@@ -1095,7 +1177,11 @@ export function renderLevelsDashboard() {
   const { list, search, campusFilter } = getDashboardElements();
   if (!list) return;
 
-  if (uiState.currentMainTab === 'ratedplus' && !uiState.ratedPlusLoaded) {
+  const needsRatedPlusDataset =
+    uiState.currentMainTab === 'ratedplus' ||
+    uiState.currentMainTab === 'challenge';
+
+  if (needsRatedPlusDataset && !uiState.ratedPlusLoaded) {
     if (uiState.ratedPlusLoadError && !uiState.ratedPlusLoadingPromise) {
       showRatedPlusLoadError(uiState.ratedPlusLoadError);
       return;
@@ -1104,7 +1190,9 @@ export function renderLevelsDashboard() {
     const loading = document.createElement('div');
     loading.className = 'empty';
     loading.style.cssText = 'padding:24px;text-align:center;';
-    loading.textContent = 'Loading Rated+ List from ratedplus.json...';
+    loading.textContent = uiState.currentMainTab === 'challenge'
+      ? 'Loading Challenge List and separating Medium/Long/XL Challenges into Rated+...'
+      : 'Loading Rated+ List from ratedplus.json...';
     list.replaceChildren(loading);
     loadRatedPlusLevels().catch(showRatedPlusLoadError);
     return;
@@ -1112,7 +1200,9 @@ export function renderLevelsDashboard() {
 
   const sourceLevels = uiState.currentMainTab === 'ratedplus'
     ? uiState.ratedPlusLevels
-    : uiState.allLevels;
+    : uiState.currentMainTab === 'challenge'
+      ? getVisibleChallengeListLevels()
+      : uiState.allLevels;
 
   const query = search ? search.value.trim().toLowerCase() : '';
   const campusVal = campusFilter ? campusFilter.value : 'ALL';
@@ -1127,7 +1217,7 @@ export function renderLevelsDashboard() {
   const searching = query.length > 0;
 
   let displayedItems = sourceLevels.filter(lvl => {
-    const rank = parseInt(lvl.rank || 999, 10);
+    const rank = parseInt(lvl._listDisplayRank ?? lvl.rank ?? 999, 10);
 
     // Normal tabs filter by their source list type. Rated+ is already
     // a pre-merged array, so it deliberately includes both demons and challenges.
@@ -1203,8 +1293,8 @@ export function renderLevelsDashboard() {
 
   displayedItems.sort(
     (a, b) =>
-      parseInt(a.rank || 999, 10) -
-      parseInt(b.rank || 999, 10)
+      parseInt(a._listDisplayRank ?? a.rank ?? 999, 10) -
+      parseInt(b._listDisplayRank ?? b.rank ?? 999, 10)
   );
 
   if (displayedItems.length === 0) {
@@ -1224,7 +1314,7 @@ export function renderLevelsDashboard() {
   const fragment = document.createDocumentFragment();
 
   displayedItems.forEach(lvl => {
-    const rank = parseInt(lvl.rank || 999, 10);
+    const rank = parseInt(lvl._listDisplayRank ?? lvl.rank ?? 999, 10);
     const pts = calculateLevelPoints(rank);
 
     let thumb = lvl.img || lvl.thumbnail;
@@ -1613,6 +1703,7 @@ window.addEventListener('hashchange', () => {
     }
 
     syncListTabButtonsFromState();
+    switchListSubTab(uiState.currentSubTab, true);
 
     requestAnimationFrame(() => {
       renderLevelsDashboard();
@@ -1634,6 +1725,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   syncListTabButtonsFromState();
+  if (routeMatch) switchListSubTab(uiState.currentSubTab, true);
 
   if (window.location.hash === '#levels' || routeMatch) {
     requestAnimationFrame(() => {
