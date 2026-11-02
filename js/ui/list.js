@@ -65,10 +65,182 @@ function getDashboardElements() {
 
 export const uiState = {
   allLevels: [],
+  ratedPlusLevels: [],
+  ratedPlusLoaded: false,
+  ratedPlusLoadingPromise: null,
+  ratedPlusLoadError: null,
   currentMainTab: 'demon',
   currentSubTab: 'main',
   currentStatsTab: 'demon'
 };
+
+// Rated+ is a separately generated file. Load it lazily so the normal
+// Demon and Challenge lists keep using the existing levels.json pipeline.
+const RATED_PLUS_JSON_URLS = [
+  'https://raw.githubusercontent.com/pshs-demonlist/pshsmc-demonlist/main/ratedplus.json',
+  'https://cdn.jsdelivr.net/gh/pshs-demonlist/pshsmc-demonlist@main/ratedplus.json'
+];
+
+function unwrapRatedPlusJson(payload) {
+  if (Array.isArray(payload)) return payload;
+
+  if (payload && typeof payload === 'object') {
+    for (const key of ['ratedPlusLevels', 'levels', 'data', 'items']) {
+      if (Array.isArray(payload[key])) return payload[key];
+    }
+  }
+
+  throw new Error('ratedplus.json did not contain a level array.');
+}
+
+function prepareRatedPlusLevel(level) {
+  const prepared = { ...level };
+  prepared._escapedCampus = String(
+    level._escapedCampus ?? level.campus ?? ''
+  ).trim();
+
+  // The current list renderer filters by record campus as well as
+  // level campus. Clone and normalize records so this works identically.
+  if (Array.isArray(level.victorList)) {
+    prepared.victorList = level.victorList.map(record => ({
+      ...record,
+      _escapedCampus: String(
+        record?._escapedCampus ?? record?.campus ?? ''
+      ).trim()
+    }));
+  }
+
+  if (Array.isArray(level.records)) {
+    prepared.records = level.records.map(record => ({
+      ...record,
+      _escapedCampus: String(
+        record?._escapedCampus ?? record?.campus ?? ''
+      ).trim()
+    }));
+  }
+
+  return prepared;
+}
+
+function addRatedPlusCampusOptions(levels) {
+  const select = document.getElementById('dashboardCampusFilter');
+  if (!select) return;
+
+  const existingValues = new Set(
+    Array.from(select.options).map(option => option.value)
+  );
+  const campuses = new Set();
+
+  levels.forEach(level => {
+    const levelCampus = String(level.campus || '').trim();
+    if (levelCampus) campuses.add(levelCampus);
+
+    getRecordList(level).forEach(record => {
+      const recordCampus = String(record.campus || '').trim();
+      if (recordCampus) campuses.add(recordCampus);
+    });
+  });
+
+  const selectedValue = select.value;
+
+  Array.from(campuses).sort((a, b) => a.localeCompare(b)).forEach(campus => {
+    if (existingValues.has(campus)) return;
+
+    const option = document.createElement('option');
+    option.value = campus;
+    option.textContent = campus;
+    select.appendChild(option);
+    existingValues.add(campus);
+  });
+
+  if (existingValues.has(selectedValue)) {
+    select.value = selectedValue;
+  }
+}
+
+function showRatedPlusLoadError(error) {
+  if (uiState.currentMainTab !== 'ratedplus') return;
+
+  const { list } = getDashboardElements();
+  if (!list) return;
+
+  const message = document.createElement('div');
+  message.className = 'empty';
+  message.style.cssText = 'padding:24px;text-align:center;';
+  message.textContent =
+    'Could not load Rated+ List. ' +
+    String(error?.message || error || 'Unknown loading error') +
+    ' — check that ratedplus.json exists in the repository.';
+  list.replaceChildren(message);
+}
+
+export async function loadRatedPlusLevels(forceReload = false) {
+  if (!forceReload && uiState.ratedPlusLoaded) {
+    return uiState.ratedPlusLevels;
+  }
+
+  if (!forceReload && uiState.ratedPlusLoadingPromise) {
+    return uiState.ratedPlusLoadingPromise;
+  }
+
+  const loadingTask = (async () => {
+    let lastError = null;
+
+    for (const baseUrl of RATED_PLUS_JSON_URLS) {
+      try {
+        const url = baseUrl + (baseUrl.includes('?') ? '&' : '?') +
+          'refresh=' + Date.now();
+        const response = await fetch(url, { cache: 'no-store' });
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status + ' from ' + baseUrl);
+        }
+
+        const payload = await response.json();
+        const levels = unwrapRatedPlusJson(payload);
+
+        if (!levels.length) {
+          throw new Error('ratedplus.json is currently empty.');
+        }
+
+        uiState.ratedPlusLevels = levels
+          .filter(level => level && typeof level === 'object')
+          .map(prepareRatedPlusLevel);
+
+        uiState.ratedPlusLoaded = true;
+        uiState.ratedPlusLoadError = null;
+        addRatedPlusCampusOptions(uiState.ratedPlusLevels);
+
+        console.info(
+          '[Rated+] Loaded ' + uiState.ratedPlusLevels.length + ' levels.'
+        );
+
+        if (uiState.currentMainTab === 'ratedplus') {
+          renderLevelsDashboard();
+        }
+
+        return uiState.ratedPlusLevels;
+      } catch (error) {
+        lastError = error;
+        console.warn('[Rated+] Source failed:', baseUrl, error);
+      }
+    }
+
+    throw lastError || new Error('All Rated+ data sources failed.');
+  })();
+
+  uiState.ratedPlusLoadingPromise = loadingTask;
+
+  try {
+    return await loadingTask;
+  } catch (error) {
+    uiState.ratedPlusLoadError = error;
+    showRatedPlusLoadError(error);
+    throw error;
+  } finally {
+    uiState.ratedPlusLoadingPromise = null;
+  }
+}
 
 let detailCurrentLevel = null;
 let detailListCategory = 'demon';
@@ -227,10 +399,11 @@ window.addEventListener('popstate', (event) => {
   const mainTabMap = {
     demon: 'tabDemons',
     challenge: 'tabChallenges',
-    platformer: 'tabPlatformers'
+    platformer: 'tabPlatformers',
+    ratedplus: 'tabRatedPlus'
   };
 
-  ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
+  ['tabDemons', 'tabChallenges', 'tabPlatformers', 'tabRatedPlus'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('active', id === mainTabMap[uiState.currentMainTab]);
   });
@@ -247,6 +420,10 @@ window.addEventListener('popstate', (event) => {
   });
 
   renderLevelsDashboard();
+
+  if (uiState.currentMainTab === 'ratedplus') {
+    loadRatedPlusLevels().catch(showRatedPlusLoadError);
+  }
 });
 
 export function processLiveDecayFilterAndNews() {
@@ -842,23 +1019,28 @@ export function openLevelFromNews(lvlName) {
 // --- LEVEL DASHBOARD & TABS ---
 
 export function switchMainListTab(tab, bypassUrlSync = false) {
-  uiState.currentMainTab = tab;
+  const allowedTabs = ['demon', 'challenge', 'platformer', 'ratedplus'];
+  uiState.currentMainTab = allowedTabs.includes(tab) ? tab : 'demon';
 
-  ['tabDemons', 'tabChallenges', 'tabPlatformers'].forEach(id => {
+  const tabMap = {
+    demon: 'tabDemons',
+    challenge: 'tabChallenges',
+    platformer: 'tabPlatformers',
+    ratedplus: 'tabRatedPlus'
+  };
+
+  ['tabDemons', 'tabChallenges', 'tabPlatformers', 'tabRatedPlus'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.classList.remove('active');
+    if (el) el.classList.toggle('active', id === tabMap[uiState.currentMainTab]);
   });
-
-  let activeId = 'tabDemons';
-  if (tab === 'challenge') activeId = 'tabChallenges';
-  if (tab === 'platformer') activeId = 'tabPlatformers';
-
-  const target = document.getElementById(activeId);
-  if (target) target.classList.add('active');
 
   switchListSubTab('main', true);
 
   if (!bypassUrlSync) syncURL();
+
+  if (uiState.currentMainTab === 'ratedplus') {
+    loadRatedPlusLevels().catch(showRatedPlusLoadError);
+  }
 }
 
 export function switchListSubTab(tab, bypassUrlSync = false) {
@@ -881,7 +1063,18 @@ export function switchListSubTab(tab, bypassUrlSync = false) {
   const descEl = document.getElementById('listDescriptionText');
 
   if (descEl) {
-    if (tab === 'main') {
+    if (uiState.currentMainTab === 'ratedplus') {
+      if (tab === 'main') {
+        descEl.innerText =
+          'The hardest levels in the combined Rated+ ranking, including every Demon List level and eligible Medium, Long, and XL Challenges.';
+      } else if (tab === 'extended') {
+        descEl.innerText =
+          'Ranks 76–150 of the combined Rated+ ranking. Demons and eligible Challenges are ordered together by their Rated+ comparison tier.';
+      } else if (tab === 'legacy') {
+        descEl.innerText =
+          'Ranks 151 onward of the combined Rated+ ranking. These levels remain searchable and viewable in the complete combined ranking.';
+      }
+    } else if (tab === 'main') {
       descEl.innerText =
         'The main section of the list. These levels are the hardest rated levels in the game. Records are accepted above a given threshold and award a large amount of points.';
     } else if (tab === 'extended') {
@@ -902,6 +1095,25 @@ export function renderLevelsDashboard() {
   const { list, search, campusFilter } = getDashboardElements();
   if (!list) return;
 
+  if (uiState.currentMainTab === 'ratedplus' && !uiState.ratedPlusLoaded) {
+    if (uiState.ratedPlusLoadError && !uiState.ratedPlusLoadingPromise) {
+      showRatedPlusLoadError(uiState.ratedPlusLoadError);
+      return;
+    }
+
+    const loading = document.createElement('div');
+    loading.className = 'empty';
+    loading.style.cssText = 'padding:24px;text-align:center;';
+    loading.textContent = 'Loading Rated+ List from ratedplus.json...';
+    list.replaceChildren(loading);
+    loadRatedPlusLevels().catch(showRatedPlusLoadError);
+    return;
+  }
+
+  const sourceLevels = uiState.currentMainTab === 'ratedplus'
+    ? uiState.ratedPlusLevels
+    : uiState.allLevels;
+
   const query = search ? search.value.trim().toLowerCase() : '';
   const campusVal = campusFilter ? campusFilter.value : 'ALL';
 
@@ -914,11 +1126,15 @@ export function renderLevelsDashboard() {
 
   const searching = query.length > 0;
 
-  let displayedItems = uiState.allLevels.filter(lvl => {
+  let displayedItems = sourceLevels.filter(lvl => {
     const rank = parseInt(lvl.rank || 999, 10);
 
-    // Keep the original selected category.
-    if (getNormalizedListType(lvl) !== uiState.currentMainTab) {
+    // Normal tabs filter by their source list type. Rated+ is already
+    // a pre-merged array, so it deliberately includes both demons and challenges.
+    if (
+      uiState.currentMainTab !== 'ratedplus' &&
+      getNormalizedListType(lvl) !== uiState.currentMainTab
+    ) {
       return false;
     }
 
@@ -941,13 +1157,17 @@ export function renderLevelsDashboard() {
       }
     }
 
-    const lvlCampus = lvl._escapedCampus;
+    const lvlCampus = String(
+      lvl._escapedCampus ?? lvl.campus ?? ''
+    ).trim();
     const records = getRecordList(lvl);
 
     const campusMatch =
       campusVal === 'ALL' ||
       lvlCampus === campusVal ||
-      records.some(record => record._escapedCampus === campusVal);
+      records.some(record =>
+        String(record._escapedCampus ?? record.campus ?? '').trim() === campusVal
+      );
 
     if (!campusMatch) return false;
 
@@ -968,12 +1188,16 @@ export function renderLevelsDashboard() {
     ).toLowerCase();
 
     const verifier = String(lvl.verifier || '').toLowerCase();
+    const ratedPlusTier = String(lvl.ratedPlusTier ?? '').toLowerCase();
+    const ratedPlusLength = String(lvl.ratedPlusLength || '').toLowerCase();
 
     return (
       name.includes(query) ||
       creator.includes(query) ||
       difficulty.includes(query) ||
-      verifier.includes(query)
+      verifier.includes(query) ||
+      ratedPlusTier.includes(query) ||
+      ratedPlusLength.includes(query)
     );
   });
 
@@ -1311,6 +1535,7 @@ export function showLevelDetailPage(lvl, forceRank) {
 window.openLevelFromNews = openLevelFromNews;
 window.switchMainListTab = switchMainListTab;
 window.switchListSubTab = switchListSubTab;
+window.loadRatedPlusLevels = loadRatedPlusLevels;
 
 // Route hook used by the hash router to open a level detail by ID, rank,
 // or exact name.
@@ -1351,21 +1576,71 @@ window.routeToDetail = function(levelParam, params) {
 };
 
 // Ensure the dashboard renders when the page is opened directly.
+function syncListTabButtonsFromState() {
+  const mainTabMap = {
+    demon: 'tabDemons',
+    challenge: 'tabChallenges',
+    platformer: 'tabPlatformers',
+    ratedplus: 'tabRatedPlus'
+  };
+
+  ['tabDemons', 'tabChallenges', 'tabPlatformers', 'tabRatedPlus'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === mainTabMap[uiState.currentMainTab]);
+  });
+
+  const subTabMap = {
+    main: 'subTabMain',
+    extended: 'subTabExtended',
+    legacy: 'subTabLegacy'
+  };
+
+  ['subTabMain', 'subTabExtended', 'subTabLegacy'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === subTabMap[uiState.currentSubTab]);
+  });
+}
+
 window.addEventListener('hashchange', () => {
-  if (window.location.hash === '#levels') {
+  const routeMatch = window.location.hash.match(
+    /^#\/(demon|challenge|platformer|ratedplus)\/(main|extended|legacy)\/?/
+  );
+
+  if (window.location.hash === '#levels' || routeMatch) {
+    if (routeMatch) {
+      uiState.currentMainTab = routeMatch[1];
+      uiState.currentSubTab = routeMatch[2];
+    }
+
+    syncListTabButtonsFromState();
+
     requestAnimationFrame(() => {
       renderLevelsDashboard();
+      if (uiState.currentMainTab === 'ratedplus') {
+        loadRatedPlusLevels().catch(showRatedPlusLoadError);
+      }
     });
   }
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (
-    window.location.hash === '#levels' ||
-    window.location.hash === '#/demon/main/'
-  ) {
+  const routeMatch = window.location.hash.match(
+    /^#\/(demon|challenge|platformer|ratedplus)\/(main|extended|legacy)\/?/
+  );
+
+  if (routeMatch) {
+    uiState.currentMainTab = routeMatch[1];
+    uiState.currentSubTab = routeMatch[2];
+  }
+
+  syncListTabButtonsFromState();
+
+  if (window.location.hash === '#levels' || routeMatch) {
     requestAnimationFrame(() => {
       renderLevelsDashboard();
+      if (uiState.currentMainTab === 'ratedplus') {
+        loadRatedPlusLevels().catch(showRatedPlusLoadError);
+      }
     });
   }
 });
