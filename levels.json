@@ -6004,49 +6004,8 @@
     ]
   },
   {
-    "id": "62366541",
-    "rank": 11,
-    "name": "diamond blade end",
-    "creator": "Bubbafish1",
-    "verifier": "LightBlu",
-    "diff": "Insane Challenge",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "img": "https://img.youtube.com/vi/jFxw4Q7za2g/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/jFxw4Q7za2g",
-    "listType": "challenge",
-    "rawTier": 19.2,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-09-19T23:54:00.637Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "LightBlu",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/jFxw4Q7za2g",
-        "campus": "Main Campus",
-        "date": "2026-09-19T23:54:00.637Z"
-      },
-      {
-        "name": "Lobster999",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/p4TUhnNm_0M",
-        "campus": "Central Visayas Campus",
-        "date": "2026-10-31T19:55:19.288Z"
-      },
-      {
-        "name": "AliceMargatr0id",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/74qwBg0s_nY",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-02T18:19:15.979Z"
-      }
-    ]
-  },
-  {
     "id": "150379952",
-    "rank": 12,
+    "rank": 11,
     "name": "taco bell",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6073,7 +6032,7 @@
   },
   {
     "id": "86935458",
-    "rank": 13,
+    "rank": 12,
     "name": "A Final Memorial (coin route)",
     "creator": "ItzKiba",
     "verifier": "AliceMargatr0id",
@@ -6100,7 +6059,7 @@
   },
   {
     "id": "143603952",
-    "rank": 14,
+    "rank": 13,
     "name": "mmmmw",
     "creator": "wkwo1",
     "verifier": "wkwo1",
@@ -6134,7 +6093,7 @@
   },
   {
     "id": "91194999",
-    "rank": 15,
+    "rank": 14,
     "name": "LGBT",
     "creator": "lexycat",
     "verifier": "sskazeye",
@@ -6170,6 +6129,47 @@
         "video": "https://www.youtube.com/embed/bmQMPP975RY",
         "campus": "Central Visayas Campus",
         "date": "2026-10-31T19:45:56.482Z"
+      }
+    ]
+  },
+  {
+    "id": "62366541",
+    "rank": 15,
+    "name": "diamond blade end",
+    "creator": "Bubbafish1",
+    "verifier": "LightBlu",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "img": "https://img.youtube.com/vi/jFxw4Q7za2g/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/jFxw4Q7za2g",
+    "listType": "challenge",
+    "rawTier": 13.9,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-09-19T23:54:00.637Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "LightBlu",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/jFxw4Q7za2g",
+        "campus": "Main Campus",
+        "date": "2026-09-19T23:54:00.637Z"
+      },
+      {
+        "name": "Lobster999",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/p4TUhnNm_0M",
+        "campus": "Central Visayas Campus",
+        "date": "2026-10-31T19:55:19.288Z"
+      },
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/74qwBg0s_nY",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-02T18:19:15.979Z"
       }
     ]
   },
