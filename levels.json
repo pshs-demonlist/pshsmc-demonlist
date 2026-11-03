@@ -1641,7 +1641,7 @@
     "img": "https://img.youtube.com/vi/t3kUlS7bwEs/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/t3kUlS7bwEs",
     "listType": "demon",
-    "rawTier": 17.11,
+    "rawTier": 17.12,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2024,7 +2024,7 @@
     "img": "https://img.youtube.com/vi/i7Jnp11Yr9g/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/i7Jnp11Yr9g",
     "listType": "demon",
-    "rawTier": 15.28,
+    "rawTier": 15.29,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3226,7 +3226,7 @@
     "img": "https://img.youtube.com/vi/nrRFV9jGZdU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/nrRFV9jGZdU",
     "listType": "demon",
-    "rawTier": 6.89,
+    "rawTier": 6.88,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3361,7 +3361,7 @@
     "img": "https://img.youtube.com/vi/xNXL8NYJ8Jo/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/uTkTGnuiFIc",
     "listType": "demon",
-    "rawTier": 6.33,
+    "rawTier": 6.32,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3456,7 +3456,7 @@
     "img": "https://img.youtube.com/vi/gknJ-1zqIQc/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/gknJ-1zqIQc",
     "listType": "demon",
-    "rawTier": 5.92,
+    "rawTier": 5.93,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3566,7 +3566,7 @@
     "img": "https://img.youtube.com/vi/XvxEkXLayHU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/XvxEkXLayHU",
     "listType": "demon",
-    "rawTier": 5.14,
+    "rawTier": 5.15,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3688,7 +3688,7 @@
     "img": "https://img.youtube.com/vi/OHskMH6onUU/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/OHskMH6onUU",
     "listType": "demon",
-    "rawTier": 4.51,
+    "rawTier": 4.5,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -5289,8 +5289,62 @@
     ]
   },
   {
-    "id": "56210242",
+    "id": "93530247",
     "rank": 158,
+    "name": "Weird world",
+    "creator": "Tinraz",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/zdcR9ZafefM/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+    "listType": "demon",
+    "rawTier": 1.17,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-07-08T14:35:37.989Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/zdcR9ZafefM",
+        "campus": "Main Campus",
+        "date": "2026-07-08T14:35:37.989Z"
+      }
+    ]
+  },
+  {
+    "id": "56302791",
+    "rank": 159,
+    "name": "Rise",
+    "creator": "Wintter",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/btYov9ytojY/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/btYov9ytojY",
+    "listType": "demon",
+    "rawTier": 1.16,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-07-01T22:52:30.075Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/btYov9ytojY",
+        "campus": "Main Campus",
+        "date": "2026-07-01T22:52:30.075Z"
+      }
+    ]
+  },
+  {
+    "id": "56210242",
+    "rank": 160,
     "name": "Shiver",
     "creator": "SpKale",
     "verifier": "eelektrance",
@@ -5299,7 +5353,7 @@
     "img": "https://img.youtube.com/vi/UCBy-iEOk6U/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/0zzEc-ryz9s",
     "listType": "demon",
-    "rawTier": 1.17,
+    "rawTier": 1.16,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -5340,60 +5394,6 @@
         "video": "https://www.youtube.com/embed/gWOiE2HEkT0",
         "campus": "Zamboanga Peninsula Region Campus",
         "date": "2026-07-05T17:41:56.523Z"
-      }
-    ]
-  },
-  {
-    "id": "93530247",
-    "rank": 159,
-    "name": "Weird world",
-    "creator": "Tinraz",
-    "verifier": "sSeanyboii",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/zdcR9ZafefM/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/zdcR9ZafefM",
-    "listType": "demon",
-    "rawTier": 1.17,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-07-08T14:35:37.989Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/zdcR9ZafefM",
-        "campus": "Main Campus",
-        "date": "2026-07-08T14:35:37.989Z"
-      }
-    ]
-  },
-  {
-    "id": "56302791",
-    "rank": 160,
-    "name": "Rise",
-    "creator": "Wintter",
-    "verifier": "sSeanyboii",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/btYov9ytojY/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/btYov9ytojY",
-    "listType": "demon",
-    "rawTier": 1.16,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-07-01T22:52:30.075Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/btYov9ytojY",
-        "campus": "Main Campus",
-        "date": "2026-07-01T22:52:30.075Z"
       }
     ]
   },
@@ -5936,8 +5936,35 @@
     ]
   },
   {
-    "id": "75010253",
+    "id": "151707218",
     "rank": 9,
+    "name": "LEADS DESTINATION",
+    "creator": "KowaretaGablor",
+    "verifier": "LeadEightyTwo",
+    "diff": "Insane Challenge",
+    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
+    "img": "https://img.youtube.com/vi/Y2zOfA5CCdE/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
+    "listType": "challenge",
+    "rawTier": 19.21,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-02T20:35:57.533Z",
+    "campus": "Western Visayas Campus",
+    "victorList": [
+      {
+        "name": "LeadEightyTwo",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
+        "campus": "Western Visayas Campus",
+        "date": "2026-11-02T20:35:57.533Z"
+      }
+    ]
+  },
+  {
+    "id": "75010253",
+    "rank": 10,
     "name": "Schabernack Chamber",
     "creator": "bomf",
     "verifier": "ModeraGD",
@@ -5971,7 +5998,7 @@
   },
   {
     "id": "62366541",
-    "rank": 10,
+    "rank": 11,
     "name": "diamond blade end",
     "creator": "Bubbafish1",
     "verifier": "LightBlu",
@@ -6012,7 +6039,7 @@
   },
   {
     "id": "150379952",
-    "rank": 11,
+    "rank": 12,
     "name": "taco bell",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6039,7 +6066,7 @@
   },
   {
     "id": "86935458",
-    "rank": 12,
+    "rank": 13,
     "name": "A Final Memorial (coin route)",
     "creator": "ItzKiba",
     "verifier": "AliceMargatr0id",
@@ -6066,7 +6093,7 @@
   },
   {
     "id": "143603952",
-    "rank": 13,
+    "rank": 14,
     "name": "mmmmw",
     "creator": "wkwo1",
     "verifier": "wkwo1",
@@ -6100,7 +6127,7 @@
   },
   {
     "id": "91194999",
-    "rank": 14,
+    "rank": 15,
     "name": "LGBT",
     "creator": "lexycat",
     "verifier": "sskazeye",
@@ -6141,7 +6168,7 @@
   },
   {
     "id": "63400900",
-    "rank": 15,
+    "rank": 16,
     "name": "Heartbeat mini wave",
     "creator": "hiyouhavepolio",
     "verifier": "LightBlu",
@@ -6168,7 +6195,7 @@
   },
   {
     "id": "143391818",
-    "rank": 16,
+    "rank": 17,
     "name": "3x 360fps FP",
     "creator": "Lightblu",
     "verifier": "Lobster999",
@@ -6195,7 +6222,7 @@
   },
   {
     "id": "69462216",
-    "rank": 17,
+    "rank": 18,
     "name": "Necromantic Forest",
     "creator": "NineDice",
     "verifier": "ModeraGD",
@@ -6222,7 +6249,7 @@
   },
   {
     "id": "117514744",
-    "rank": 18,
+    "rank": 19,
     "name": "CaolanPlazGD Challe",
     "creator": "spampurel",
     "verifier": "ModeraGD",
@@ -6249,7 +6276,7 @@
   },
   {
     "id": "55367155",
-    "rank": 19,
+    "rank": 20,
     "name": "Shitty Sonic Wave",
     "creator": "AcropolisBoy",
     "verifier": "sSeanyboii",
@@ -6276,7 +6303,7 @@
   },
   {
     "id": "132516414",
-    "rank": 20,
+    "rank": 21,
     "name": "Sakupen Nerfles",
     "creator": "vortrox",
     "verifier": "sSeanyboii",
@@ -6310,7 +6337,7 @@
   },
   {
     "id": "141898656",
-    "rank": 21,
+    "rank": 22,
     "name": "wave challenge 5",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6337,7 +6364,7 @@
   },
   {
     "id": "143545594",
-    "rank": 22,
+    "rank": 23,
     "name": "Content Farming",
     "creator": "dibless",
     "verifier": "dibless",
@@ -6371,7 +6398,7 @@
   },
   {
     "id": "104369404",
-    "rank": 23,
+    "rank": 24,
     "name": "MaybeWavy",
     "creator": "VRTZE",
     "verifier": "ModeraGD",
@@ -6412,7 +6439,7 @@
   },
   {
     "id": "144618661",
-    "rank": 24,
+    "rank": 25,
     "name": "Ninebreaker",
     "creator": "daBlooKat121",
     "verifier": "daBlooKat121",
@@ -6446,7 +6473,7 @@
   },
   {
     "id": "148129956",
-    "rank": 25,
+    "rank": 26,
     "name": "Elysian",
     "creator": "ModeraGD",
     "verifier": "ModeraGD",
@@ -6473,7 +6500,7 @@
   },
   {
     "id": "145584371",
-    "rank": 26,
+    "rank": 27,
     "name": "wave challenge 7",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6507,7 +6534,7 @@
   },
   {
     "id": "143523674",
-    "rank": 27,
+    "rank": 28,
     "name": "zoink thingy",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6534,7 +6561,7 @@
   },
   {
     "id": "137699339",
-    "rank": 28,
+    "rank": 29,
     "name": "Eurorave Challenge",
     "creator": "dibless",
     "verifier": "dibless",
@@ -6575,7 +6602,7 @@
   },
   {
     "id": "140202797",
-    "rank": 29,
+    "rank": 30,
     "name": "Nasr City",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6616,7 +6643,7 @@
   },
   {
     "id": "143536349",
-    "rank": 30,
+    "rank": 31,
     "name": "Deadlocked 1p5x",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6657,7 +6684,7 @@
   },
   {
     "id": "134490520",
-    "rank": 31,
+    "rank": 32,
     "name": "Shitty Silent Silhouette",
     "creator": "GILD56",
     "verifier": "LightBlu",
@@ -6684,7 +6711,7 @@
   },
   {
     "id": "128679516",
-    "rank": 32,
+    "rank": 33,
     "name": "wave challenge 1",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6711,7 +6738,7 @@
   },
   {
     "id": "133024591",
-    "rank": 33,
+    "rank": 34,
     "name": "wave challenge 2",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6738,7 +6765,7 @@
   },
   {
     "id": "141277411",
-    "rank": 34,
+    "rank": 35,
     "name": "Abbasiya",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6779,7 +6806,7 @@
   },
   {
     "id": "129931602",
-    "rank": 35,
+    "rank": 36,
     "name": "Weathrr grrl",
     "creator": "ModeraGD",
     "verifier": "ModeraGD",
@@ -6820,7 +6847,7 @@
   },
   {
     "id": "144238026",
-    "rank": 36,
+    "rank": 37,
     "name": "Shitty Cycles X",
     "creator": "GILD56",
     "verifier": "sSeanyboii",
@@ -6847,7 +6874,7 @@
   },
   {
     "id": "140948744",
-    "rank": 37,
+    "rank": 38,
     "name": "Maadi",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6888,7 +6915,7 @@
   },
   {
     "id": "48382858",
-    "rank": 38,
+    "rank": 39,
     "name": "WAVE CHALLENGE BUFF",
     "creator": "MangekyouGaming",
     "verifier": "aldawg123",
@@ -6929,7 +6956,7 @@
   },
   {
     "id": "141442369",
-    "rank": 39,
+    "rank": 40,
     "name": "Ramses",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6970,7 +6997,7 @@
   },
   {
     "id": "88430438",
-    "rank": 40,
+    "rank": 41,
     "name": "SLOWAVE",
     "creator": "RaynoXx",
     "verifier": "aldawg123",
@@ -7011,7 +7038,7 @@
   },
   {
     "id": "86175869",
-    "rank": 41,
+    "rank": 42,
     "name": "Limbo Keys",
     "creator": "Mindcap",
     "verifier": "Lobster999",
@@ -7038,7 +7065,7 @@
   },
   {
     "id": "141601536",
-    "rank": 42,
+    "rank": 43,
     "name": "Shubra",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -7093,7 +7120,7 @@
   },
   {
     "id": "142055246",
-    "rank": 43,
+    "rank": 44,
     "name": "the tourist",
     "creator": "wavical",
     "verifier": "sSeanyboii",
@@ -7134,7 +7161,7 @@
   },
   {
     "id": "143193238",
-    "rank": 44,
+    "rank": 45,
     "name": "Yes Machine end",
     "creator": "dibless",
     "verifier": "dibless",
@@ -7175,7 +7202,7 @@
   },
   {
     "id": "140148900",
-    "rank": 45,
+    "rank": 46,
     "name": "Padwurk",
     "creator": "dibless",
     "verifier": "dibless",
@@ -7223,7 +7250,7 @@
   },
   {
     "id": "143250512",
-    "rank": 46,
+    "rank": 47,
     "name": "ws",
     "creator": "dibless",
     "verifier": "dibless",
@@ -7264,7 +7291,7 @@
   },
   {
     "id": "151551131",
-    "rank": 47,
+    "rank": 48,
     "name": "D block shenanigans",
     "creator": "someerando",
     "verifier": "someerando",
@@ -7298,7 +7325,7 @@
   },
   {
     "id": "141063347",
-    "rank": 48,
+    "rank": 49,
     "name": "Margarinepotato",
     "creator": "eelektrance",
     "verifier": "eelektrance",
@@ -7353,7 +7380,7 @@
   },
   {
     "id": "38259302",
-    "rank": 49,
+    "rank": 50,
     "name": "Decode Wave 10x",
     "creator": "Tenechit",
     "verifier": "fortenrique",
@@ -7394,7 +7421,7 @@
   },
   {
     "id": "143250790",
-    "rank": 50,
+    "rank": 51,
     "name": "ws 2",
     "creator": "dibless",
     "verifier": "dibless",
@@ -7435,7 +7462,7 @@
   },
   {
     "id": "143385344",
-    "rank": 51,
+    "rank": 52,
     "name": "consisSONcy",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -7483,7 +7510,7 @@
   },
   {
     "id": "139324232",
-    "rank": 52,
+    "rank": 53,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -7524,7 +7551,7 @@
   },
   {
     "id": "108062313",
-    "rank": 53,
+    "rank": 54,
     "name": "1 second hell",
     "creator": "FoldedZero",
     "verifier": "ModeraGD",
@@ -7551,7 +7578,7 @@
   },
   {
     "id": "151687947",
-    "rank": 54,
+    "rank": 55,
     "name": "1 cps",
     "creator": "IceRig",
     "verifier": "IceRig",
