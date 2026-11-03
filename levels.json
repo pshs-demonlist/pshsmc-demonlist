@@ -6154,8 +6154,42 @@
     ]
   },
   {
-    "id": "63400900",
+    "id": "151707218",
     "rank": 15,
+    "name": "LEADS DESTINATION",
+    "creator": "KowaretaGablor",
+    "verifier": "LeadEightyTwo",
+    "diff": "Hard Challenge",
+    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
+    "img": "https://img.youtube.com/vi/Y2zOfA5CCdE/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
+    "listType": "challenge",
+    "rawTier": 13.8,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-02T20:35:57.533Z",
+    "campus": "Western Visayas Campus",
+    "victorList": [
+      {
+        "name": "LeadEightyTwo",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
+        "campus": "Western Visayas Campus",
+        "date": "2026-11-02T20:35:57.533Z"
+      },
+      {
+        "name": "Lobster999",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/hU57n5A2f94",
+        "campus": "Central Visayas Campus",
+        "date": "2026-11-03T12:58:52.352Z"
+      }
+    ]
+  },
+  {
+    "id": "63400900",
+    "rank": 16,
     "name": "Heartbeat mini wave",
     "creator": "hiyouhavepolio",
     "verifier": "LightBlu",
@@ -6182,7 +6216,7 @@
   },
   {
     "id": "143391818",
-    "rank": 16,
+    "rank": 17,
     "name": "3x 360fps FP",
     "creator": "Lightblu",
     "verifier": "Lobster999",
@@ -6209,7 +6243,7 @@
   },
   {
     "id": "69462216",
-    "rank": 17,
+    "rank": 18,
     "name": "Necromantic Forest",
     "creator": "NineDice",
     "verifier": "ModeraGD",
@@ -6236,7 +6270,7 @@
   },
   {
     "id": "150351147",
-    "rank": 18,
+    "rank": 19,
     "name": "Kwah",
     "creator": "Lobster999",
     "verifier": "Lobster999",
@@ -6263,7 +6297,7 @@
   },
   {
     "id": "117514744",
-    "rank": 19,
+    "rank": 20,
     "name": "CaolanPlazGD Challe",
     "creator": "spampurel",
     "verifier": "ModeraGD",
@@ -6290,7 +6324,7 @@
   },
   {
     "id": "55367155",
-    "rank": 20,
+    "rank": 21,
     "name": "Shitty Sonic Wave",
     "creator": "AcropolisBoy",
     "verifier": "sSeanyboii",
@@ -6317,7 +6351,7 @@
   },
   {
     "id": "132516414",
-    "rank": 21,
+    "rank": 22,
     "name": "Sakupen Nerfles",
     "creator": "vortrox",
     "verifier": "sSeanyboii",
@@ -6351,7 +6385,7 @@
   },
   {
     "id": "141898656",
-    "rank": 22,
+    "rank": 23,
     "name": "wave challenge 5",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6378,7 +6412,7 @@
   },
   {
     "id": "143545594",
-    "rank": 23,
+    "rank": 24,
     "name": "Content Farming",
     "creator": "dibless",
     "verifier": "dibless",
@@ -6412,7 +6446,7 @@
   },
   {
     "id": "104369404",
-    "rank": 24,
+    "rank": 25,
     "name": "MaybeWavy",
     "creator": "VRTZE",
     "verifier": "ModeraGD",
@@ -6453,7 +6487,7 @@
   },
   {
     "id": "144618661",
-    "rank": 25,
+    "rank": 26,
     "name": "Ninebreaker",
     "creator": "daBlooKat121",
     "verifier": "daBlooKat121",
@@ -6487,7 +6521,7 @@
   },
   {
     "id": "148129956",
-    "rank": 26,
+    "rank": 27,
     "name": "Elysian",
     "creator": "ModeraGD",
     "verifier": "ModeraGD",
@@ -6514,7 +6548,7 @@
   },
   {
     "id": "145584371",
-    "rank": 27,
+    "rank": 28,
     "name": "wave challenge 7",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6548,7 +6582,7 @@
   },
   {
     "id": "143523674",
-    "rank": 28,
+    "rank": 29,
     "name": "zoink thingy",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6570,40 +6604,6 @@
         "video": "https://www.youtube.com/embed/1xm6QsGHOsM",
         "campus": "Main Campus",
         "date": "2026-08-30T13:05:13.184Z"
-      }
-    ]
-  },
-  {
-    "id": "151707218",
-    "rank": 29,
-    "name": "LEADS DESTINATION",
-    "creator": "KowaretaGablor",
-    "verifier": "LeadEightyTwo",
-    "diff": "Hard Challenge",
-    "face": "https://gdladder.com/images/demon_logos/hard_128.webp",
-    "img": "https://img.youtube.com/vi/Y2zOfA5CCdE/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
-    "listType": "challenge",
-    "rawTier": 12,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-02T20:35:57.533Z",
-    "campus": "Western Visayas Campus",
-    "victorList": [
-      {
-        "name": "LeadEightyTwo",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/Y2zOfA5CCdE",
-        "campus": "Western Visayas Campus",
-        "date": "2026-11-02T20:35:57.533Z"
-      },
-      {
-        "name": "Lobster999",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/hU57n5A2f94",
-        "campus": "Central Visayas Campus",
-        "date": "2026-11-03T12:58:52.352Z"
       }
     ]
   },
