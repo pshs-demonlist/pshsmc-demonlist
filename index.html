@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pisay/PSHS Demonlist | Semi-official GD website of Pisay!</title>
 <meta name="description" content="Pisay Demonlist Geometry Dash PSHS Demonlist">
-<link rel="icon" href="./pngkey.com-highschool-of-the-dead-5897105.ico" type="image/x-icon">
+<link rel="icon" href="./assets/pngkey.com-highschool-of-the-dead-5897105.ico" type="image/x-icon">
 <style>
   :root {
     --bg: #0b0d12;
@@ -742,6 +742,48 @@
     font-size: 28px;
   }
 }
+
+  /* Submission redesign */
+  .nav-dropdown{position:relative}
+  .nav-dropdown-trigger{width:100%;background:transparent;border:0;text-align:left;font:inherit;display:flex;justify-content:space-between;align-items:center}
+  .nav-dropdown-menu{display:none;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:block}
+  .nav-dropdown-menu .nav-item{padding-left:34px}
+  .nav-submit-link{color:var(--accent)!important}
+  .submission-panel{margin-top:38px;padding:26px;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.16)}
+  .submission-heading,.previous-heading,.submission-actions,.notes-label-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .submission-eyebrow{font-size:11px;letter-spacing:1.7px;font-weight:800;color:var(--accent);margin:0 0 7px}
+  .submission-heading h2{font-size:26px;margin:0}
+  .submission-description,.previous-heading p{color:var(--muted);font-size:13px;margin:7px 0 0}
+  .submission-secure{border:1px solid var(--line);border-radius:30px;padding:7px 11px;color:var(--muted);font-size:11px;white-space:nowrap}
+  .submission-tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin:24px 0 20px}
+  .submission-tab{padding:11px 16px;background:transparent;border:0;border-bottom:2px solid transparent;color:var(--muted);font-weight:700;cursor:pointer}
+  .submission-tab.active{color:var(--text);border-bottom-color:var(--accent)}
+  .submission-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+  .submission-field{min-width:0;display:flex;flex-direction:column;gap:8px}
+  .submission-field label{font-size:13px;font-weight:700;color:var(--text)}
+  .submission-field.full-width{grid-column:1/-1}
+  .optional-label{font-size:11px;color:var(--muted);font-weight:400;margin-left:5px}
+  .submission-notes{resize:vertical;min-height:100px;font-family:inherit}
+  .notes-label-row #notesCounter{font-size:11px;color:var(--muted)}
+  .submission-actions{margin-top:20px;padding-top:17px;border-top:1px solid var(--line)}
+  .submission-footnote{font-size:12px;color:var(--muted);margin:0}
+  .submission-send{min-width:170px;padding:13px 18px;background:var(--accent);color:#fff}
+  .previous-submissions{margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+  .previous-heading h3{margin:0;font-size:17px}
+  .previous-refresh{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:8px 12px;cursor:pointer}
+  .previous-submissions-list{display:grid;gap:9px;margin-top:14px}
+  .previous-empty{border:1px dashed var(--line);border-radius:10px;padding:17px;color:var(--muted);font-size:13px;text-align:center}
+  .previous-submission-row{display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:13px;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:9px}
+  .previous-submission-thumb{width:76px;height:48px;object-fit:cover;border-radius:6px;background:#222}
+  .previous-submission-name{font-size:13px;font-weight:700;overflow-wrap:anywhere}
+  .previous-submission-rank{font-size:11px;color:var(--muted);margin-top:4px}
+  .submission-status{font-size:10px;font-weight:800;letter-spacing:.5px;border-radius:20px;padding:6px 9px;white-space:nowrap}
+  .submission-status.accepted{background:rgba(54,211,153,.13);color:#36d399}
+  .submission-status.rejected{background:rgba(239,68,68,.13);color:#ef6b6b}
+  .submission-status.pending{background:rgba(148,163,184,.13);color:var(--muted)}
+  @media(max-width:650px){.submission-panel{padding:17px}.submission-form-grid{grid-template-columns:1fr}.submission-field.full-width{grid-column:auto}.submission-heading,.submission-actions,.previous-heading{align-items:flex-start;flex-direction:column}.submission-send{width:100%}.previous-submission-row{grid-template-columns:62px minmax(0,1fr)}.previous-submission-thumb{width:62px;height:42px}.submission-status{grid-column:2;justify-self:start}}
+
 </style>
 </head>
 <body>
@@ -758,17 +800,18 @@
 <div id="offlineBanner" class="offline-banner" hidden></div>
 
 <nav class="nav-menu" id="navMenu">
-  <a class="nav-item" href="#landing">Home Dashboard</a>
-  <a class="nav-item" href="#levels" onclick="goToLevelsDashboard()">View the Lists</a>
-  <a class="nav-item" href="#stats">Stats Viewer</a>
-  <span class="nav-item" onclick="openGuidelinesModal()">Submission Guidelines</span>
-  <span
-    id="themeToggle"
-    class="nav-item theme-toggle-item"
-    onclick="toggleThemeMode()"
-  >
-    Toggle Light Mode
-  </span>
+  <a class="nav-item" href="#landing" onclick="closeNavMenu()">Home Dashboard</a>
+  <a class="nav-item" href="#levels" onclick="goToLevelsDashboard(); closeNavMenu();">Lists</a>
+  <a class="nav-item" href="#stats" onclick="switchPage('stats'); closeNavMenu();">Stats Viewer</a>
+  <div class="nav-dropdown">
+    <button class="nav-item nav-dropdown-trigger" type="button" aria-haspopup="true">Challenges/Games <span aria-hidden="true">▾</span></button>
+    <div class="nav-dropdown-menu">
+      <a class="nav-item" href="https://aredl.net/games/roulette" target="_blank" rel="noopener noreferrer">Roulette</a>
+    </div>
+  </div>
+  <a class="nav-item nav-submit-link" href="#levels" onclick="goToSubmissionBox(); closeNavMenu();">Submit a Record</a>
+  <span class="nav-item" onclick="openGuidelinesModal(); closeNavMenu();">Submission Guidelines</span>
+  <span id="themeToggle" class="nav-item theme-toggle-item" onclick="toggleThemeMode()">Toggle Light Mode</span>
 </nav>
 
 <div class="modal-overlay" id="guidelinesModal" onclick="closeGuidelinesModal()">
@@ -894,76 +937,94 @@
       </div>
     </div>
 
-    <div class="section" id="submissionBox" style="margin-top: 40px;">
-      <h3>Submit a record or propose a new level</h3>
-      
-      <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
+    <section class="submission-panel" id="submissionBox">
+      <div class="submission-heading">
         <div>
-          <label class="muted">Target List category</label>
-          <select id="listType" class="select" onchange="handleListTypeChange()">
-            <option value="demon">Demonlist</option>
-            <option value="challenge">Challenge List</option>
+          <p class="submission-eyebrow">PLAYER RECORDS</p>
+          <h2>Submit a Record</h2>
+          <p class="submission-description">Send your completion for moderator review.</p>
+        </div>
+        <span class="submission-secure">Review required</span>
+      </div>
+
+      <div class="submission-tabs" role="tablist" aria-label="Submission list">
+        <button class="submission-tab active" id="submitTabDemon" type="button" role="tab" aria-selected="true" onclick="setSubmissionListType('demon')">Classic</button>
+        <button class="submission-tab" id="submitTabChallenge" type="button" role="tab" aria-selected="false" onclick="setSubmissionListType('challenge')">Challenge List</button>
+      </div>
+
+      <div class="submission-form-grid">
+        <div class="submission-field full-width">
+          <label for="existingLevel">Level</label>
+          <select id="existingLevel" class="select" required>
+            <option value="">Loading levels...</option>
           </select>
         </div>
-        <div></div>
-      </div>
-
-      <div class="grid" style="grid-template-columns: 1fr 1fr;">
-        <div>
-          <label class="muted">Submission type</label>
-          <select id="submissionType" class="select" onchange="toggleFormFields()">
-            <option value="record">Record submission</option>
-            <option value="newLevel">New level proposal</option>
+        <div class="submission-field">
+          <label for="username">Geometry Dash Username</label>
+          <input id="username" class="input" type="text" maxlength="40" placeholder="Your in-game username" autocomplete="username" required />
+        </div>
+        <div class="submission-field">
+          <label for="campus">Campus</label>
+          <input id="campus" class="input" type="text" maxlength="80" placeholder="e.g. Main Campus" required />
+        </div>
+        <div class="submission-field full-width">
+          <label for="recordLink">Completion Link</label>
+          <input id="recordLink" class="input" type="url" placeholder="https://www.youtube.com/watch?v=..." required />
+        </div>
+        <div class="submission-field">
+          <label for="device">Device</label>
+          <select id="device" class="select" required>
+            <option value="">Select device</option>
+            <option value="PC">PC</option>
+            <option value="Mobile">Mobile</option>
           </select>
         </div>
-        <div id="existingLevelWrap">
-          <label class="muted">Choose level</label>
-          <select id="existingLevel" class="select"></select>
+        <div class="submission-field">
+          <label for="modMenu">Mod Menu</label>
+          <select id="modMenu" class="select" required>
+            <option value="">Select mod menu</option>
+            <option>None</option>
+            <option>Mega Hack v9</option>
+            <option>Mega Hack v8</option>
+            <option>Mega Hack v7</option>
+            <option>Mega Hack v6</option>
+            <option>QOLMod</option>
+            <option>Eclipse</option>
+            <option>iCreate</option>
+            <option>Prism Menu</option>
+            <option>GDHM</option>
+            <option>GDH</option>
+            <option>Other</option>
+          </select>
         </div>
-      </div>
-
-      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
-        <div>
-          <label class="muted">Username</label>
-          <input id="username" class="input" type="text" placeholder="Your username" />
+        <div class="submission-field">
+          <label for="customId">Custom ID <span class="optional-label">Optional</span></label>
+          <input id="customId" class="input" type="text" maxlength="30" placeholder="Only if needed" />
         </div>
-        <div>
-          <label class="muted">Record link (YouTube)</label>
-          <input id="recordLink" class="input" type="text" placeholder="https://www.youtube.com/watch?v=..." />
-        </div>
-      </div>
-
-      <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
-        <div>
-          <label class="muted">Campus Name</label>
-          <input id="campus" class="input" type="text" placeholder="e.g. Main Campus, Central Luzon Campus" />
-        </div>
-      </div>
-
-      <div id="newLevelFields" style="display:none; margin-top:12px;">
-        <h3 style="margin:0 0 12px;">New level details</h3>
-        <div class="grid" style="grid-template-columns: 1fr 1fr;">
-          <div><label class="muted">Level name</label><input id="newName" class="input" type="text" placeholder="Level name" /></div>
-          <div><label class="muted">Creator</label><input id="newCreator" class="input" type="text" placeholder="Level creator" /></div>
-        </div>
-        <div class="grid" style="margin-top:12px; grid-template-columns: 1fr 1fr;">
-          <div><label class="muted">Level ID</label><input id="newLevelId" class="input" type="text" placeholder="e.g. 10565740" /></div>
-        </div>
-      </div>
-
-      <div id="challengeDifficultyWrap" style="display:none; margin-top:12px;">
-        <div class="grid" style="grid-template-columns: 1fr 1fr;">
-          <div>
-            <label class="muted">Difficulty (Required for Challenges)</label>
-            <input id="challengeDifficulty" class="input" type="number" step="0.1" placeholder="e.g. 5.5" />
+        <div class="submission-field full-width">
+          <div class="notes-label-row">
+            <label for="additionalNotes">Additional Notes <span class="optional-label">Optional</span></label>
+            <span id="notesCounter">0 / 2,000</span>
           </div>
+          <textarea id="additionalNotes" class="input submission-notes" maxlength="2000" rows="4" placeholder="If you selected Other for your mod menu, specify it here."></textarea>
         </div>
       </div>
 
-      <div style="margin-top: 16px;">
-        <button class="btn btn-primary" id="submitBtn">Send for review</button>
+      <div class="submission-actions">
+        <p class="submission-footnote">Make sure your completion link is accessible to moderators.</p>
+        <button class="btn btn-primary submission-send" id="submitBtn" type="button">Submit Record <span aria-hidden="true">→</span></button>
       </div>
-    </div>
+
+      <div class="previous-submissions">
+        <div class="previous-heading">
+          <div><h3>Previous Submissions</h3><p>Enter your username and campus to view your records.</p></div>
+          <button type="button" class="previous-refresh" id="refreshSubmissionsBtn">Refresh</button>
+        </div>
+        <div id="previousSubmissionsList" class="previous-submissions-list" aria-live="polite">
+          <div class="previous-empty">Your previous submissions will appear here.</div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <div class="app-page" id="statsPage">
