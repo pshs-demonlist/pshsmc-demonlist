@@ -970,3 +970,5 @@
     padding: 10px 12px;
   }
 }
+
+#newLevelFields[hidden] { display: none !important; }

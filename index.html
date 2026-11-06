@@ -180,6 +180,20 @@
           <select id="existingLevel" class="select" required>
             <option value="">Loading levels...</option>
           </select>
+          <p class="field-help">Choose an existing level, or select “Add a new level…” to submit a record for a level not listed yet.</p>
+        </div>
+        <div class="submission-field full-width" id="newLevelFields" hidden>
+          <div class="submission-form-grid new-level-fields-grid">
+            <div class="submission-field">
+              <label for="newLevelName">New Level Name</label>
+              <input id="newLevelName" class="input" type="text" maxlength="160" placeholder="Enter the level name" />
+            </div>
+            <div class="submission-field">
+              <label for="newCreator">Level Creator</label>
+              <input id="newCreator" class="input" type="text" maxlength="100" placeholder="Enter the creator's name" />
+            </div>
+          </div>
+          <p class="field-help">The level will be added to the list only after a moderator approves the record.</p>
         </div>
         <div class="submission-field full-width" id="challengeLengthField" hidden>
           <label for="levelLength">Level Length</label>
@@ -232,8 +246,9 @@
           </select>
         </div>
         <div class="submission-field">
-          <label for="customId">Custom ID <span class="optional-label">Optional</span></label>
-          <input id="customId" class="input" type="text" maxlength="30" placeholder="Only if needed" />
+          <label for="customId" id="customIdLabel">Custom ID <span class="optional-label">Optional</span></label>
+          <input id="customId" class="input" type="text" inputmode="numeric" maxlength="30" placeholder="Only if needed" />
+          <p class="field-help" id="customIdHelp">Optional ID override for an existing level. Required when adding a new level.</p>
         </div>
         <div class="submission-field full-width">
           <div class="notes-label-row">

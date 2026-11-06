@@ -5,6 +5,7 @@ import { uiState } from './list.js';
 import { CONFIG } from '../config.js';
 
 const LEVEL_LENGTHS = ['tiny', 'short', 'medium', 'long', 'xl'];
+const NEW_LEVEL_OPTION = '__add_new_level__';
 let activeSubmissionList = 'demon';
 
 function getLevelName(level) {
@@ -48,11 +49,47 @@ export function populateExistingLevelsDropdown() {
     select.appendChild(option);
   });
 
+  const addNewOption = document.createElement('option');
+  addNewOption.value = NEW_LEVEL_OPTION;
+  addNewOption.textContent = '＋ Add a new level…';
+  select.appendChild(addNewOption);
+
   if ([...select.options].some(option => option.value === previousValue)) {
     select.value = previousValue;
   }
   if (filtered.length === 0) {
-    placeholder.textContent = 'No levels are currently available in this list';
+    placeholder.textContent = 'No existing levels available — add a new one';
+  }
+  updateNewLevelVisibility();
+}
+
+
+function updateNewLevelVisibility() {
+  const select = document.getElementById('existingLevel');
+  const wrapper = document.getElementById('newLevelFields');
+  const nameField = document.getElementById('newLevelName');
+  const creatorField = document.getElementById('newCreator');
+  const customIdField = document.getElementById('customId');
+  const customIdLabel = document.getElementById('customIdLabel');
+  const customIdHelp = document.getElementById('customIdHelp');
+  const isNewLevel = select?.value === NEW_LEVEL_OPTION;
+
+  if (wrapper) wrapper.hidden = !isNewLevel;
+  if (nameField) nameField.required = Boolean(isNewLevel);
+  if (creatorField) creatorField.required = Boolean(isNewLevel);
+  if (customIdField) {
+    customIdField.required = Boolean(isNewLevel);
+    customIdField.placeholder = isNewLevel ? 'Required: numeric Geometry Dash level ID' : 'Only if needed';
+  }
+  if (customIdLabel) {
+    customIdLabel.innerHTML = isNewLevel
+      ? 'Level ID <span class="optional-label">Required</span>'
+      : 'Custom ID <span class="optional-label">Optional</span>';
+  }
+  if (customIdHelp) {
+    customIdHelp.textContent = isNewLevel
+      ? 'Enter the numeric Geometry Dash level ID. The new level is added only after moderator approval.'
+      : 'Optional ID override for an existing level.';
   }
 }
 
@@ -140,6 +177,12 @@ function formatSubmissionDate(value, fallbackValue) {
   }).format(date);
 }
 
+function getRecordThumbnail(recordLink) {
+  const value = String(recordLink || '').trim();
+  const match = value.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/i);
+  return match?.[1] ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : '';
+}
+
 function createPreviousSubmissionBar(item) {
   const level = getSubmissionLevel(item);
   const row = document.createElement('article');
@@ -149,7 +192,7 @@ function createPreviousSubmissionBar(item) {
   background.className = 'previous-level-bar-image';
   background.alt = '';
   background.loading = 'lazy';
-  background.src = level?.img || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+  background.src = level?.img || getRecordThumbnail(item.recordLink) || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
   background.onerror = () => {
     background.onerror = null;
     background.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
@@ -233,10 +276,13 @@ export function bindSubmitHandler() {
   button.dataset.bound = 'true';
 
   const notesField = document.getElementById('additionalNotes');
+  const levelSelectForEvents = document.getElementById('existingLevel');
   notesField?.addEventListener('input', updateNotesCounter);
+  levelSelectForEvents?.addEventListener('change', updateNewLevelVisibility);
   document.getElementById('refreshSubmissionsBtn')?.addEventListener('click', refreshPreviousSubmissions);
   updateNotesCounter();
   updateChallengeLengthVisibility();
+  updateNewLevelVisibility();
 
   button.addEventListener('click', async () => {
     const originalText = button.textContent;
@@ -249,6 +295,8 @@ export function bindSubmitHandler() {
       const customIdField = document.getElementById('customId');
       const levelSelect = document.getElementById('existingLevel');
       const levelLengthField = document.getElementById('levelLength');
+      const newLevelNameField = document.getElementById('newLevelName');
+      const newCreatorField = document.getElementById('newCreator');
 
       const username = usernameField?.value.trim() || '';
       const campus = campusField?.value.trim() || '';
@@ -258,8 +306,14 @@ export function bindSubmitHandler() {
       const notes = notesField?.value || '';
       const customId = customIdField?.value.trim() || '';
       const selectedOption = levelSelect?.options[levelSelect.selectedIndex];
-      const levelName = levelSelect?.value || '';
-      const selectedLevelId = String(selectedOption?.dataset.id || '').trim();
+      const isNewLevel = levelSelect?.value === NEW_LEVEL_OPTION;
+      const levelName = isNewLevel
+        ? String(newLevelNameField?.value || '').trim()
+        : (levelSelect?.value || '');
+      const creator = isNewLevel
+        ? String(newCreatorField?.value || '').trim()
+        : String(selectedOption?.dataset.creator || '').trim();
+      const selectedLevelId = isNewLevel ? '' : String(selectedOption?.dataset.id || '').trim();
       const levelLength = activeSubmissionList === 'challenge'
         ? String(levelLengthField?.value || '').trim().toLowerCase()
         : '';
@@ -267,7 +321,15 @@ export function bindSubmitHandler() {
       if (!username || !campus || !recordLink || !device || !modMenu || !levelName) {
         throw new Error('Please complete all required fields.');
       }
-      if (!selectedLevelId) throw new Error('The selected level is missing its database ID. Please refresh the page.');
+      if (isNewLevel && (!creator || !/^\d+$/.test(customId))) {
+        throw new Error('For a new level, enter its creator and numeric Geometry Dash Level ID.');
+      }
+      if (!isNewLevel && !selectedLevelId) {
+        throw new Error('The selected level is missing its database ID. Please refresh the page.');
+      }
+      if (customId && !/^\d+$/.test(customId)) {
+        throw new Error('The Level ID / Custom ID must contain numbers only.');
+      }
       if (activeSubmissionList === 'challenge' && !LEVEL_LENGTHS.includes(levelLength)) {
         throw new Error('Please select a Level Length for your Challenge List submission.');
       }
@@ -296,11 +358,12 @@ export function bindSubmitHandler() {
         campus,
         recordLink,
         levelName,
-        // Keep the optional custom ID in the submission row, while sending the
-        // canonical selected level ID separately for ratedplus_lengths.json.
+        // For a new level, Custom ID is its actual Geometry Dash ID. For an
+        // existing level it remains an optional ID override.
         id: customId || selectedLevelId,
         selectedLevelId,
-        creator: selectedOption?.dataset.creator || '',
+        creator,
+        isNewLevel,
         device,
         modMenu,
         notes,
@@ -314,7 +377,11 @@ export function bindSubmitHandler() {
       if (customIdField) customIdField.value = '';
       if (notesField) notesField.value = '';
       if (levelLengthField) levelLengthField.value = '';
+      if (newLevelNameField) newLevelNameField.value = '';
+      if (newCreatorField) newCreatorField.value = '';
+      if (levelSelect) levelSelect.value = '';
       updateNotesCounter();
+      updateNewLevelVisibility();
       await refreshPreviousSubmissions();
     } catch (error) {
       console.error('[Submission Error]', error);
