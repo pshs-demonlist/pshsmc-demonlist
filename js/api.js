@@ -1,6 +1,5 @@
 // js/api.js
 import { CONFIG } from './config.js';
-import * as UI from './ui/index.js';
 
 const DATABASE_CACHE_KEY = "pshs-demonlist-cache";
 
@@ -174,7 +173,11 @@ export async function fetchPreviousSubmissions(username, campus) {
 
   let response;
   try {
-    response = await fetch(url.toString(), { method: 'GET', redirect: 'follow' });
+    response = await fetch(url.toString(), {
+      method: 'GET',
+      redirect: 'follow',
+      cache: 'no-store'
+    });
   } catch (error) {
     throw new Error(
       'The browser could not reach the submission history endpoint. Check the Apps Script deployment and try again.'

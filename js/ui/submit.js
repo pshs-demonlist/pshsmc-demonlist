@@ -30,7 +30,10 @@ export function populateExistingLevelsDropdown() {
   select.appendChild(placeholder);
 
   const filtered = (uiState.allLevels || [])
-    .filter(level => getNormalizedListType(level) === activeSubmissionList)
+    .filter(level => {
+      const id = String(level?.id || '').trim();
+      return getNormalizedListType(level) === activeSubmissionList && /^\d+$/.test(id);
+    })
     .slice()
     .sort((a, b) => {
       const rankDifference = getLevelPlacement(a) - getLevelPlacement(b);
@@ -42,8 +45,12 @@ export function populateExistingLevelsDropdown() {
     const option = document.createElement('option');
     const rank = getLevelPlacement(level);
     const rankText = Number.isFinite(rank) ? `#${rank} ` : '';
-    option.value = getLevelName(level);
-    option.dataset.id = String(level.id || '').trim();
+    // Use the unique Geometry Dash ID as the option value. Level names are
+    // not guaranteed to be unique, so using the name here can select the wrong
+    // entry when two levels share a name.
+    option.value = String(level.id || '').trim();
+    option.dataset.id = option.value;
+    option.dataset.name = getLevelName(level);
     option.dataset.creator = String(level.creator || '').trim();
     option.textContent = `${rankText}${getLevelName(level)}${level.creator ? ` — ${level.creator}` : ''}`;
     select.appendChild(option);
@@ -147,6 +154,13 @@ function getSubmissionLevel(item) {
   }
 
   const wantedName = String(item.levelName || '').trim().toLowerCase();
+  const wantedCreator = String(item.creator || '').trim().toLowerCase();
+  const byNameAndCreator = matchingList.find(level =>
+    getLevelName(level).toLowerCase() === wantedName &&
+    String(level.creator || '').trim().toLowerCase() === wantedCreator
+  );
+  if (byNameAndCreator) return byNameAndCreator;
+
   return matchingList.find(level =>
     getLevelName(level).toLowerCase() === wantedName
   ) || null;
@@ -251,7 +265,9 @@ function renderPreviousSubmissions(items) {
 
 export async function refreshPreviousSubmissions() {
   const username = document.getElementById('username')?.value.trim();
-  const campus = document.getElementById('campus')?.value.trim();
+  const campus = String(document.getElementById('campus')?.value || '')
+    .trim()
+    .replace(/\s+/g, ' ');
   const container = document.getElementById('previousSubmissionsList');
   if (!container) return;
 
@@ -299,7 +315,9 @@ export function bindSubmitHandler() {
       const newCreatorField = document.getElementById('newCreator');
 
       const username = usernameField?.value.trim() || '';
-      const campus = campusField?.value.trim() || '';
+      // Campus stays a free-text field. Collapse accidental repeated spaces,
+      // but do not force the user into a fixed campus list or rewrite the name.
+      const campus = String(campusField?.value || '').trim().replace(/\s+/g, ' ');
       const recordLink = recordLinkField?.value.trim() || '';
       const device = deviceField?.value.trim() || '';
       const modMenu = modMenuField?.value.trim() || '';
@@ -309,7 +327,7 @@ export function bindSubmitHandler() {
       const isNewLevel = levelSelect?.value === NEW_LEVEL_OPTION;
       const levelName = isNewLevel
         ? String(newLevelNameField?.value || '').trim()
-        : (levelSelect?.value || '');
+        : String(selectedOption?.dataset.name || '').trim();
       const creator = isNewLevel
         ? String(newCreatorField?.value || '').trim()
         : String(selectedOption?.dataset.creator || '').trim();
