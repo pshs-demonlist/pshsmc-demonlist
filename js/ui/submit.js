@@ -4,7 +4,17 @@ import { submitRecordData, fetchPreviousSubmissions } from '../api.js';
 import { uiState } from './list.js';
 import { CONFIG } from '../config.js';
 
+const LEVEL_LENGTHS = ['tiny', 'short', 'medium', 'long', 'xl'];
 let activeSubmissionList = 'demon';
+
+function getLevelName(level) {
+  return String(level?.name || level?.levelName || 'Unnamed').trim();
+}
+
+function getLevelPlacement(level) {
+  const rank = Number(level?.rank);
+  return Number.isFinite(rank) && rank > 0 ? rank : Number.POSITIVE_INFINITY;
+}
 
 export function populateExistingLevelsDropdown() {
   const select = document.getElementById('existingLevel');
@@ -20,14 +30,21 @@ export function populateExistingLevelsDropdown() {
 
   const filtered = (uiState.allLevels || [])
     .filter(level => getNormalizedListType(level) === activeSubmissionList)
-    .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+    .slice()
+    .sort((a, b) => {
+      const rankDifference = getLevelPlacement(a) - getLevelPlacement(b);
+      if (rankDifference !== 0) return rankDifference;
+      return getLevelName(a).localeCompare(getLevelName(b));
+    });
 
   filtered.forEach(level => {
     const option = document.createElement('option');
-    option.value = String(level.name || level.levelName || '');
-    option.dataset.id = String(level.id || '');
-    option.dataset.creator = String(level.creator || '');
-    option.textContent = `${level.name || level.levelName || 'Unnamed'}${level.creator ? ` — ${level.creator}` : ''}`;
+    const rank = getLevelPlacement(level);
+    const rankText = Number.isFinite(rank) ? `#${rank} ` : '';
+    option.value = getLevelName(level);
+    option.dataset.id = String(level.id || '').trim();
+    option.dataset.creator = String(level.creator || '').trim();
+    option.textContent = `${rankText}${getLevelName(level)}${level.creator ? ` — ${level.creator}` : ''}`;
     select.appendChild(option);
   });
 
@@ -36,6 +53,18 @@ export function populateExistingLevelsDropdown() {
   }
   if (filtered.length === 0) {
     placeholder.textContent = 'No levels are currently available in this list';
+  }
+}
+
+function updateChallengeLengthVisibility() {
+  const wrapper = document.getElementById('challengeLengthField');
+  const select = document.getElementById('levelLength');
+  const visible = activeSubmissionList === 'challenge';
+
+  if (wrapper) wrapper.hidden = !visible;
+  if (select) {
+    select.required = visible;
+    if (!visible) select.value = '';
   }
 }
 
@@ -49,6 +78,7 @@ export function setSubmissionListType(type) {
   classicTab?.setAttribute('aria-selected', String(activeSubmissionList === 'demon'));
   challengeTab?.setAttribute('aria-selected', String(activeSubmissionList === 'challenge'));
 
+  updateChallengeLengthVisibility();
   populateExistingLevelsDropdown();
 }
 
@@ -58,7 +88,7 @@ export function handleListTypeChange() {
 }
 
 export function toggleFormFields() {
-  // Kept as a no-op so older inline handlers do not break.
+  // Kept as a no-op for compatibility with any old inline references.
 }
 
 function updateNotesCounter() {
@@ -81,7 +111,7 @@ function getSubmissionLevel(item) {
 
   const wantedName = String(item.levelName || '').trim().toLowerCase();
   return matchingList.find(level =>
-    String(level.name || level.levelName || '').trim().toLowerCase() === wantedName
+    getLevelName(level).toLowerCase() === wantedName
   ) || null;
 }
 
@@ -90,6 +120,77 @@ function setPreviousMessage(container, message) {
   messageElement.className = 'previous-empty';
   messageElement.textContent = message;
   container.replaceChildren(messageElement);
+}
+
+function formatSubmissionDate(value, fallbackValue) {
+  const parsed = value ? new Date(value) : null;
+  const fallback = fallbackValue ? new Date(fallbackValue) : null;
+  const date = parsed && !Number.isNaN(parsed.getTime())
+    ? parsed
+    : fallback && !Number.isNaN(fallback.getTime())
+      ? fallback
+      : null;
+
+  if (!date) return 'Date unavailable';
+  return new Intl.DateTimeFormat('en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    year: 'numeric',
+    timeZone: 'Asia/Manila'
+  }).format(date);
+}
+
+function createPreviousSubmissionBar(item) {
+  const level = getSubmissionLevel(item);
+  const row = document.createElement('article');
+  row.className = 'previous-level-bar';
+
+  const background = document.createElement('img');
+  background.className = 'previous-level-bar-image';
+  background.alt = '';
+  background.loading = 'lazy';
+  background.src = level?.img || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+  background.onerror = () => {
+    background.onerror = null;
+    background.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
+  };
+
+  const overlay = document.createElement('div');
+  overlay.className = 'previous-level-bar-overlay';
+
+  const left = document.createElement('div');
+  left.className = 'previous-level-bar-title';
+  const rank = document.createElement('span');
+  rank.className = 'previous-level-bar-rank';
+  const placement = Number(level?.rank);
+  rank.textContent = Number.isFinite(placement) && placement > 0 ? `#${placement}` : '#—';
+
+  const name = document.createElement('span');
+  name.className = 'previous-level-bar-name';
+  name.textContent = item.levelName || 'Unknown level';
+  left.append(rank, name);
+
+  const statusKey = ['accepted', 'rejected', 'pending'].includes(String(item.status || '').toLowerCase())
+    ? String(item.status).toLowerCase()
+    : 'pending';
+  const status = document.createElement('span');
+  status.className = `previous-level-bar-status ${statusKey}`;
+  status.textContent = statusKey.toUpperCase();
+
+  const dateBlock = document.createElement('div');
+  dateBlock.className = 'previous-level-bar-date';
+  const dateLabel = document.createElement('span');
+  dateLabel.textContent = 'Last updated on:';
+  const dateValue = document.createElement('time');
+  // The reference bar's date is the level's latest list update date.
+  // Fall back to the submission timestamp when the level has no date.
+  dateValue.textContent = formatSubmissionDate(level?.date, item.date);
+  dateBlock.append(dateLabel, dateValue);
+
+  overlay.append(left, status, dateBlock);
+  row.append(background, overlay);
+  row.setAttribute('aria-label', `${rank.textContent} ${name.textContent}, ${status.textContent}`);
+  return row;
 }
 
 function renderPreviousSubmissions(items) {
@@ -102,42 +203,7 @@ function renderPreviousSubmissions(items) {
     return;
   }
 
-  items.forEach(item => {
-    const level = getSubmissionLevel(item);
-    const row = document.createElement('div');
-    row.className = 'previous-submission-row';
-
-    const thumb = document.createElement('img');
-    thumb.className = 'previous-submission-thumb';
-    thumb.alt = '';
-    thumb.loading = 'lazy';
-    thumb.src = level?.img || CONFIG.IMAGES.FALLBACK_THUMBNAIL;
-    thumb.onerror = () => {
-      thumb.onerror = null;
-      thumb.src = CONFIG.IMAGES.FALLBACK_THUMBNAIL;
-    };
-
-    const info = document.createElement('div');
-    const name = document.createElement('div');
-    name.className = 'previous-submission-name';
-    name.textContent = item.levelName || 'Unknown level';
-
-    const rank = document.createElement('div');
-    rank.className = 'previous-submission-rank';
-    const placement = Number(level?.rank) > 0 ? `#${level.rank}` : 'Placement unavailable';
-    rank.textContent = `${placement} · ${item.listType === 'challenge' ? 'Challenge List' : 'Classic'}`;
-    info.append(name, rank);
-
-    const statusKey = ['accepted', 'rejected', 'pending'].includes(String(item.status || '').toLowerCase())
-      ? String(item.status).toLowerCase()
-      : 'pending';
-    const status = document.createElement('span');
-    status.className = `submission-status ${statusKey}`;
-    status.textContent = statusKey.toUpperCase();
-
-    row.append(thumb, info, status);
-    container.appendChild(row);
-  });
+  items.forEach(item => container.appendChild(createPreviousSubmissionBar(item)));
 }
 
 export async function refreshPreviousSubmissions() {
@@ -170,6 +236,7 @@ export function bindSubmitHandler() {
   notesField?.addEventListener('input', updateNotesCounter);
   document.getElementById('refreshSubmissionsBtn')?.addEventListener('click', refreshPreviousSubmissions);
   updateNotesCounter();
+  updateChallengeLengthVisibility();
 
   button.addEventListener('click', async () => {
     const originalText = button.textContent;
@@ -181,22 +248,31 @@ export function bindSubmitHandler() {
       const modMenuField = document.getElementById('modMenu');
       const customIdField = document.getElementById('customId');
       const levelSelect = document.getElementById('existingLevel');
+      const levelLengthField = document.getElementById('levelLength');
 
       const username = usernameField?.value.trim() || '';
       const campus = campusField?.value.trim() || '';
       const recordLink = recordLinkField?.value.trim() || '';
-      const device = deviceField?.value || '';
-      const modMenu = modMenuField?.value || '';
-      const notes = notesField?.value.trim() || '';
+      const device = deviceField?.value.trim() || '';
+      const modMenu = modMenuField?.value.trim() || '';
+      const notes = notesField?.value || '';
       const customId = customIdField?.value.trim() || '';
       const selectedOption = levelSelect?.options[levelSelect.selectedIndex];
       const levelName = levelSelect?.value || '';
+      const selectedLevelId = String(selectedOption?.dataset.id || '').trim();
+      const levelLength = activeSubmissionList === 'challenge'
+        ? String(levelLengthField?.value || '').trim().toLowerCase()
+        : '';
 
       if (!username || !campus || !recordLink || !device || !modMenu || !levelName) {
         throw new Error('Please complete all required fields.');
       }
+      if (!selectedLevelId) throw new Error('The selected level is missing its database ID. Please refresh the page.');
+      if (activeSubmissionList === 'challenge' && !LEVEL_LENGTHS.includes(levelLength)) {
+        throw new Error('Please select a Level Length for your Challenge List submission.');
+      }
       if (notes.length > 2000) throw new Error('Additional Notes cannot exceed 2,000 characters.');
-      if (modMenu === 'Other' && !notes) {
+      if (modMenu === 'Other' && !notes.trim()) {
         throw new Error('Please specify your mod menu in Additional Notes.');
       }
 
@@ -213,24 +289,31 @@ export function bindSubmitHandler() {
       button.disabled = true;
       button.textContent = 'Submitting…';
 
-      await submitRecordData({
+      const payload = {
         type: 'record',
         listType: activeSubmissionList,
         username,
         campus,
         recordLink,
         levelName,
-        id: customId || selectedOption?.dataset.id || '',
+        // Keep the optional custom ID in the submission row, while sending the
+        // canonical selected level ID separately for ratedplus_lengths.json.
+        id: customId || selectedLevelId,
+        selectedLevelId,
         creator: selectedOption?.dataset.creator || '',
         device,
         modMenu,
-        notes
-      });
+        notes,
+        additionalNotes: notes,
+        levelLength
+      };
 
+      await submitRecordData(payload);
       window.alert('Your record has been submitted for moderator review.');
       if (recordLinkField) recordLinkField.value = '';
       if (customIdField) customIdField.value = '';
       if (notesField) notesField.value = '';
+      if (levelLengthField) levelLengthField.value = '';
       updateNotesCounter();
       await refreshPreviousSubmissions();
     } catch (error) {

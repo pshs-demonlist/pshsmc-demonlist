@@ -2,7 +2,7 @@
 import { renderLevelsDashboard } from './list.js';
 
 // --- ROUTING & PAGE NAVIGATION ---
-const CORE_PAGES = ['landingPage', 'levelsPage', 'statsPage', 'detailPage', 'playerVideoPage'];
+const CORE_PAGES = ['landingPage', 'levelsPage', 'roulettePage', 'statsPage', 'detailPage', 'playerVideoPage'];
 let ignoreNextHashChange = false;
 
 function parseHashHash(h) {
