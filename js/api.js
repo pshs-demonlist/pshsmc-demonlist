@@ -73,7 +73,7 @@ export async function loadDatabase() {
     }
   }
 
-  if (!rawData) return false;
+  if (!rawData) return { success: false, levels: [], fromCache: false };
 
   let levels = [];
   if (Array.isArray(rawData)) { 
@@ -114,42 +114,85 @@ export async function loadDatabase() {
 };
 
 export async function submitRecordData(payload) {
-  const res = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
-  });
-
-  // If the server explicitly says something is wrong (like a 422, 400, or 500 status code)
-  if (!res.ok && res.type !== 'opaque') {
-    let serverMessage = `HTTP Error ${res.status}`;
-    try {
-      const errData = await res.json();
-      if (errData && errData.message) serverMessage = errData.message;
-    } catch {
-      // If it's HTML or text, try reading it as text to catch the raw 422 message
-      try {
-        const textError = await res.text();
-        serverMessage = textError.substring(0, 200); // Grab the first 200 characters of the error page
-      } catch {}
+  let response;
+  try {
+    response = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      redirect: 'follow'
+    });
+  } catch (error) {
+    // A cross-origin Apps Script request can be processed even when the browser
+    // cannot read Google's redirected response. Do not automatically retry:
+    // that could create a duplicate record. Ask the player to check Previous Submissions.
+    if (error instanceof TypeError || error?.name === 'AbortError') {
+      throw new Error(
+        'The browser could not confirm the server response. Your submission may have reached the sheet. ' +
+        'Refresh Previous Submissions before trying again so you do not send a duplicate.'
+      );
     }
-    throw new Error(`Submission failed: ${serverMessage}`);
+    throw error;
   }
 
-  // Parse response if it's accessible
-  if (res.type !== 'opaque') {
-    try {
-      const data = await res.json();
-      if (data && data.status === 'error') {
-        throw new Error(data.message || "The server rejected your submission.");
-      }
-    } catch (jsonError) {
-      // If parsing fails but res.ok was true, the server didn't send valid JSON
-      console.error("Failed to parse server response:", jsonError);
-      throw new Error("Server responded with invalid data format.");
-    }
+  if (response.type === 'opaque') {
+    throw new Error(
+      'The server response could not be verified. Refresh Previous Submissions before trying again.'
+    );
   }
 
-  // Only return true if everything explicitly passed validation without throwing
-  return true;
+  let data;
+  let responseText = '';
+  try {
+    responseText = await response.text();
+    data = JSON.parse(responseText);
+  } catch (error) {
+    const detail = responseText
+      ? ` Response received: ${responseText.slice(0, 160)}`
+      : '';
+    throw new Error(
+      `The server returned an unreadable response. Your submission may have reached the sheet. ` +
+      `Refresh Previous Submissions before trying again to avoid a duplicate.${detail}`
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(data?.message || `Submission failed with HTTP ${response.status}.`);
+  }
+  if (!data || data.status !== 'ok') {
+    throw new Error(data?.message || 'The server did not confirm the submission.');
+  }
+
+  return data;
+}
+
+export async function fetchPreviousSubmissions(username, campus) {
+  const url = new URL(CONFIG.API.APPS_SCRIPT_URL);
+  url.searchParams.set('action', 'previousSubmissions');
+  url.searchParams.set('username', username);
+  url.searchParams.set('campus', campus);
+
+  let response;
+  try {
+    response = await fetch(url.toString(), { method: 'GET', redirect: 'follow' });
+  } catch (error) {
+    throw new Error(
+      'The browser could not reach the submission history endpoint. Check the Apps Script deployment and try again.'
+    );
+  }
+
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+  let data;
+  try {
+    data = await response.json();
+  } catch (_) {
+    throw new Error('The submission history endpoint returned unreadable data.');
+  }
+
+  if (!data || data.status !== 'ok') {
+    throw new Error(data?.message || 'Unable to retrieve submissions.');
+  }
+
+  return Array.isArray(data.submissions) ? data.submissions : [];
 }

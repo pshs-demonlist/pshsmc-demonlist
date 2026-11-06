@@ -81,3 +81,4 @@ window.renderStatsLeaderboard = UI.renderStatsLeaderboard;
 window.viewPlayerVideo = UI.viewPlayerVideo;
 window.toggleFormFields = UI.toggleFormFields;
 window.handleListTypeChange = UI.handleListTypeChange;
+window.setSubmissionListType = UI.setSubmissionListType;
