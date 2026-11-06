@@ -40,6 +40,7 @@ async function initApp() {
   safeExecute(UI.populateCampusDropdownFilters, "Campus Filters");
   safeExecute(UI.renderLevelsDashboard, "Main Dashboard View");
   safeExecute(UI.populateExistingLevelsDropdown, "Form Dropdowns");
+  safeExecute(UI.initializeRoulette, "Roulette Challenge");
   safeExecute(UI.renderStatsLeaderboard, "Stats Viewer View");
 
   // Initialize the hash router now that data is available so deep links resolve correctly
@@ -60,6 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   initApp();
   UI.bindSubmitHandler();
+  UI.bindRouletteControls();
 });
 
 // --- GLOBAL BINDINGS FOR HTML ONCLICK ATTRIBUTES ---
