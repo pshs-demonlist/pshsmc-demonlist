@@ -389,24 +389,44 @@ export function bindSubmitHandler() {
         levelLength
       };
 
-      await submitRecordData(payload);
-      window.alert('Your record has been submitted for moderator review.');
-      if (recordLinkField) recordLinkField.value = '';
-      if (customIdField) customIdField.value = '';
-      if (notesField) notesField.value = '';
-      if (levelLengthField) levelLengthField.value = '';
-      if (newLevelNameField) newLevelNameField.value = '';
-      if (newCreatorField) newCreatorField.value = '';
-      if (levelSelect) levelSelect.value = '';
-      updateNotesCounter();
-      updateNewLevelVisibility();
-      await refreshPreviousSubmissions();
-    } catch (error) {
-      console.error('[Submission Error]', error);
-      window.alert(`Submission Error: ${error.message}`);
-    } finally {
-      button.disabled = false;
-      button.textContent = originalText;
-    }
-  });
+      const result = await submitRecordData(payload);
+
+if (result.status === 'error') {
+  throw new Error(result.message || 'The server rejected the submission.');
+}
+
+if (result.status === 'unconfirmed') {
+  window.alert(
+    'Submission status unconfirmed.\n\n' +
+    result.message +
+    '\n\nPlease check Previous Submissions before trying again. ' +
+    'Do not submit again yet, as that could create a duplicate.'
+  );
+} else {
+  window.alert(
+    'Your record has been submitted for moderator review.'
+  );
+
+  // Clear the form only after confirmation.
+  if (recordLinkField) recordLinkField.value = '';
+  if (customIdField) customIdField.value = '';
+  if (notesField) notesField.value = '';
+  if (levelLengthField) levelLengthField.value = '';
+  if (newLevelNameField) newLevelNameField.value = '';
+  if (newCreatorField) newCreatorField.value = '';
+  if (levelSelect) levelSelect.value = '';
+
+  updateNotesCounter();
+  updateNewLevelVisibility();
+}
+
+// Refresh history regardless of whether confirmation was received.
+await refreshPreviousSubmissions();
+
+} catch (error) {
+  console.error('[Submission Error]', error);
+  window.alert(`Submission Error: ${error.message}`);
+} finally {
+  button.disabled = false;
+  button.textContent = originalText;
 }
