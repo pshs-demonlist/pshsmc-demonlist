@@ -113,53 +113,52 @@ export async function loadDatabase() {
 };
 
 
+async function verifySubmission(payload) {
+  try {
+    const submissions = await fetchPreviousSubmissions(
+      payload.username,
+      payload.campus
+    );
+
+    const expectedListType =
+      String(payload.listType || 'demon').toLowerCase();
+
+    const expectedId = String(
+      payload.id || payload.selectedLevelId || ''
+    ).trim();
+
+    const expectedLink = String(payload.recordLink || '')
+      .trim()
+      .replace(/\/+$/, '');
+
+    return submissions.some(item => {
+      const itemListType =
+        String(item.listType || 'demon').toLowerCase();
+
+      const itemId = String(item.levelId || '').trim();
+
+      const itemLink = String(item.recordLink || '')
+        .trim()
+        .replace(/\/+$/, '');
+
+      return (
+        itemListType === expectedListType &&
+        itemId === expectedId &&
+        itemLink === expectedLink
+      );
+    });
+  } catch (error) {
+    console.warn('[Submission Verification] Could not check history:', error);
+    return false;
+  }
+}
+
 export async function submitRecordData(payload) {
-  const verifySubmission = async () => {
-    try {
-      const submissions = await fetchPreviousSubmissions(
-        payload.username,
-        payload.campus
-      );
-
-      return submissions.some(item =>
-        String(item.levelId || '').trim() ===
-          String(payload.id || payload.selectedLevelId || '').trim() &&
-        String(item.recordLink || '').trim() ===
-          String(payload.recordLink || '').trim()
-      );
-    } catch (error) {
-      console.warn('Could not verify submission:', error);
-      return false;
-    }
-  };
-
-  const confirmOrReport = async (originalError) => {
-    // Give the spreadsheet a moment to become visible to the history endpoint.
-    for (let attempt = 0; attempt < 4; attempt++) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      if (await verifySubmission()) {
-        return {
-          status: 'ok',
-          verified: true,
-          message: 'Submission successfully verified.'
-        };
-      }
-    }
-
-    // Never label an uncertain result as a confirmed failure.
-    return {
-      status: 'unconfirmed',
-      verified: false,
-      message:
-        'Your submission may have been received, but we could not verify it. ' +
-        'Check Previous Submissions before submitting again.',
-      originalError: String(originalError || '')
-    };
-  };
+  let response;
+  let data;
 
   try {
-    const response = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
+    response = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'text/plain;charset=utf-8'
@@ -168,46 +167,58 @@ export async function submitRecordData(payload) {
       redirect: 'follow'
     });
 
-    if (!response.ok) {
-      return await confirmOrReport(
-        `HTTP ${response.status}`
-      );
-    }
-
     const responseText = await response.text();
 
-    let data;
     try {
       data = JSON.parse(responseText);
     } catch (_) {
-      return await confirmOrReport(
-        'Unreadable server response'
-      );
+      console.warn('[Submission] Server returned unreadable data.');
     }
-
-    if (data?.status === 'ok') {
-      return data;
-    }
-
-    // A real server rejection should be checked against the spreadsheet
-    // before being reported, in case the write already occurred.
-    if (await verifySubmission()) {
-      return {
-        status: 'ok',
-        verified: true,
-        message: 'Submission successfully verified.'
-      };
-    }
-
-    return {
-      status: 'error',
-      verified: false,
-      message: data?.message || 'The server rejected the submission.'
-    };
-
   } catch (error) {
-    return await confirmOrReport(error);
+    console.warn('[Submission] Could not read server response:', error);
   }
+
+  // A successful server response confirms the submission.
+  if (response?.ok && data?.status === 'ok') {
+    return {
+      status: 'ok',
+      verified: true,
+      message: data.message || 'Submission received.'
+    };
+  }
+
+  // Even if the server reports an error, the spreadsheet row may
+  // already have been written before the error occurred.
+  const verified = await verifySubmission(payload);
+
+  if (verified) {
+    return {
+      status: 'ok',
+      verified: true,
+      message: 'Submission found in submission history.'
+    };
+  }
+
+  // Do not automatically retry. The POST might have reached Apps Script.
+  if (
+    !response ||
+    response.type === 'opaque' ||
+    !data ||
+    !response.ok
+  ) {
+    return {
+      status: 'unconfirmed',
+      verified: false,
+      message:
+        'The website could not confirm the server response. Your submission may have been received.'
+    };
+  }
+
+  return {
+    status: 'error',
+    verified: false,
+    message: data.message || 'The server rejected the submission.'
+  };
 }
 
 
