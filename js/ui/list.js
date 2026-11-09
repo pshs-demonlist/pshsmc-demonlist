@@ -1495,7 +1495,7 @@ export function showLevelDetailPage(lvl, forceRank) {
   if (metadata) {
     metadata.replaceChildren();
 
-    cconst rawListPercent = detailField(
+    const rawListPercent = detailField(
   lvl,
   ['listpercent', 'listPercent'],
   ''
