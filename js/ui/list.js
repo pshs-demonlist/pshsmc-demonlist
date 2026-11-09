@@ -1495,16 +1495,35 @@ export function showLevelDetailPage(lvl, forceRank) {
   if (metadata) {
     metadata.replaceChildren();
 
-    const metrics = [
-      [
-        'Level ID',
-        detailField(lvl, ['id', 'levelId', 'levelID'])
-      ],
-      [
-        'List Points',
-        calculateLevelPoints(parseInt(finalRank, 10)).toFixed(2)
-      ]
-    ];
+    cconst rawListPercent = detailField(
+  lvl,
+  ['listpercent', 'listPercent'],
+  ''
+);
+
+const formattedListPercent = (() => {
+  const value = String(rawListPercent ?? '').trim();
+
+  if (!value) return '—';
+  if (value.endsWith('%')) return value;
+
+  return value + '%';
+})();
+
+const metrics = [
+  [
+    'Level ID',
+    detailField(lvl, ['id', 'levelId', 'levelID'])
+  ],
+  [
+    'List Points',
+    calculateLevelPoints(parseInt(finalRank, 10)).toFixed(2)
+  ],
+  [
+    'List%',
+    formattedListPercent
+  ]
+];
 
     metrics.forEach(([label, value]) => {
       const cell = document.createElement('div');
