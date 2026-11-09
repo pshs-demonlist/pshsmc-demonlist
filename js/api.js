@@ -112,58 +112,104 @@ export async function loadDatabase() {
   };
 };
 
+
 export async function submitRecordData(payload) {
-  let response;
+  const verifySubmission = async () => {
+    try {
+      const submissions = await fetchPreviousSubmissions(
+        payload.username,
+        payload.campus
+      );
+
+      return submissions.some(item =>
+        String(item.levelId || '').trim() ===
+          String(payload.id || payload.selectedLevelId || '').trim() &&
+        String(item.recordLink || '').trim() ===
+          String(payload.recordLink || '').trim()
+      );
+    } catch (error) {
+      console.warn('Could not verify submission:', error);
+      return false;
+    }
+  };
+
+  const confirmOrReport = async (originalError) => {
+    // Give the spreadsheet a moment to become visible to the history endpoint.
+    for (let attempt = 0; attempt < 4; attempt++) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      if (await verifySubmission()) {
+        return {
+          status: 'ok',
+          verified: true,
+          message: 'Submission successfully verified.'
+        };
+      }
+    }
+
+    // Never label an uncertain result as a confirmed failure.
+    return {
+      status: 'unconfirmed',
+      verified: false,
+      message:
+        'Your submission may have been received, but we could not verify it. ' +
+        'Check Previous Submissions before submitting again.',
+      originalError: String(originalError || '')
+    };
+  };
+
   try {
-    response = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
+    const response = await fetch(CONFIG.API.APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
       body: JSON.stringify(payload),
       redirect: 'follow'
     });
-  } catch (error) {
-    // A cross-origin Apps Script request can be processed even when the browser
-    // cannot read Google's redirected response. Do not automatically retry:
-    // that could create a duplicate record. Ask the player to check Previous Submissions.
-    if (error instanceof TypeError || error?.name === 'AbortError') {
-      throw new Error(
-        'The browser could not confirm the server response. Your submission may have reached the sheet. ' +
-        'Refresh Previous Submissions before trying again so you do not send a duplicate.'
+
+    if (!response.ok) {
+      return await confirmOrReport(
+        `HTTP ${response.status}`
       );
     }
-    throw error;
-  }
 
-  if (response.type === 'opaque') {
-    throw new Error(
-      'The server response could not be verified. Refresh Previous Submissions before trying again.'
-    );
-  }
+    const responseText = await response.text();
 
-  let data;
-  let responseText = '';
-  try {
-    responseText = await response.text();
-    data = JSON.parse(responseText);
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (_) {
+      return await confirmOrReport(
+        'Unreadable server response'
+      );
+    }
+
+    if (data?.status === 'ok') {
+      return data;
+    }
+
+    // A real server rejection should be checked against the spreadsheet
+    // before being reported, in case the write already occurred.
+    if (await verifySubmission()) {
+      return {
+        status: 'ok',
+        verified: true,
+        message: 'Submission successfully verified.'
+      };
+    }
+
+    return {
+      status: 'error',
+      verified: false,
+      message: data?.message || 'The server rejected the submission.'
+    };
+
   } catch (error) {
-    const detail = responseText
-      ? ` Response received: ${responseText.slice(0, 160)}`
-      : '';
-    throw new Error(
-      `The server returned an unreadable response. Your submission may have reached the sheet. ` +
-      `Refresh Previous Submissions before trying again to avoid a duplicate.${detail}`
-    );
+    return await confirmOrReport(error);
   }
-
-  if (!response.ok) {
-    throw new Error(data?.message || `Submission failed with HTTP ${response.status}.`);
-  }
-  if (!data || data.status !== 'ok') {
-    throw new Error(data?.message || 'The server did not confirm the submission.');
-  }
-
-  return data;
 }
+
 
 export async function fetchPreviousSubmissions(username, campus) {
   const url = new URL(CONFIG.API.APPS_SCRIPT_URL);
