@@ -751,37 +751,8 @@
     "ratedPlusLength": null
   },
   {
-    "id": "55184818",
-    "rank": 24,
-    "name": "Glide",
-    "creator": "crohn44",
-    "verifier": "AliceMargatr0id",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/x51bzpuj36U/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/x51bzpuj36U",
-    "listType": "demon",
-    "rawTier": 22.85,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-09T13:40:47.788Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "AliceMargatr0id",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/x51bzpuj36U",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-09T13:40:47.788Z"
-      }
-    ],
-    "ratedPlusTier": 22.85,
-    "ratedPlusLength": null
-  },
-  {
     "id": "133438044",
-    "rank": 25,
+    "rank": 24,
     "name": "Shitty Britney No Sclears",
     "creator": "ATMNalywhy",
     "verifier": "Lobster999",
@@ -810,7 +781,7 @@
   },
   {
     "id": "63377357",
-    "rank": 26,
+    "rank": 25,
     "name": "Halberd",
     "creator": "notlsa",
     "verifier": "AliceMargatr0id",
@@ -832,6 +803,35 @@
         "video": "https://www.youtube.com/embed/OXAlA_Pmygs",
         "campus": "Davao Region Campus",
         "date": "2026-07-04T11:58:00.997Z"
+      }
+    ],
+    "ratedPlusTier": 22.04,
+    "ratedPlusLength": null
+  },
+  {
+    "id": "55184818",
+    "rank": 26,
+    "name": "Glide",
+    "creator": "crohn44",
+    "verifier": "AliceMargatr0id",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/x51bzpuj36U/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/x51bzpuj36U",
+    "listType": "demon",
+    "rawTier": 22.85,
+    "aredlPlacement": 1089,
+    "aredlRank": 1089,
+    "platPosition": null,
+    "date": "2026-11-09T13:40:47.788Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/x51bzpuj36U",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-09T13:40:47.788Z"
       }
     ],
     "ratedPlusTier": 22.04,
