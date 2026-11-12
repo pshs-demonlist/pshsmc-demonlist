@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T14:10:27.805Z",
+  "updatedAt": "2026-11-12T12:47:17.500Z",
   "lengths": {
     "38259302": {
       "name": "Decode Wave 10x",
@@ -63,6 +63,10 @@
     },
     "117514744": {
       "name": "CaolanPlazGD Challe",
+      "length": "short"
+    },
+    "120314027": {
+      "name": "Samsung Washing Mach",
       "length": "short"
     },
     "121969801": {
