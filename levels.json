@@ -8034,5 +8034,32 @@
         "date": "2026-07-12T22:13:27.780Z"
       }
     ]
+  },
+  {
+    "id": "152252748",
+    "rank": 58,
+    "name": "sailent clubburger",
+    "creator": "LightBlu",
+    "verifier": "LightBlu",
+    "diff": "",
+    "face": "",
+    "img": "https://img.youtube.com/vi/c0t5RK0ucmc/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/c0t5RK0ucmc",
+    "listType": "challenge",
+    "rawTier": 0,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:56:01.846Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "LightBlu",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/c0t5RK0ucmc",
+        "campus": "Main Campus",
+        "date": "2026-11-12T12:56:01.846Z"
+      }
+    ]
   }
 ]
