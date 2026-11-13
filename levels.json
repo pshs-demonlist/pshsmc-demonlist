@@ -6135,8 +6135,35 @@
     ]
   },
   {
-    "id": "146508829",
+    "id": "128859490",
     "rank": 6,
+    "name": "Beecat",
+    "creator": "CelestialCat",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Challenge",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+    "listType": "challenge",
+    "rawTier": 21.3,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:31:46.875Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-12T12:31:46.875Z"
+      }
+    ]
+  },
+  {
+    "id": "146508829",
+    "rank": 7,
     "name": "wave challenge 8",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6170,7 +6197,7 @@
   },
   {
     "id": "124986701",
-    "rank": 7,
+    "rank": 8,
     "name": "Cotton Candy",
     "creator": "AntiprimeGD",
     "verifier": "Fortnitekid420",
@@ -6197,7 +6224,7 @@
   },
   {
     "id": "121969801",
-    "rank": 8,
+    "rank": 9,
     "name": "Shitty TS2",
     "creator": "Machu0624",
     "verifier": "sSeanyboii",
@@ -6231,7 +6258,7 @@
   },
   {
     "id": "152252748",
-    "rank": 9,
+    "rank": 10,
     "name": "sailent clubburger",
     "creator": "LightBlu",
     "verifier": "LightBlu",
@@ -6258,7 +6285,7 @@
   },
   {
     "id": "75010253",
-    "rank": 10,
+    "rank": 11,
     "name": "Schabernack Chamber",
     "creator": "bomf",
     "verifier": "ModeraGD",
@@ -6292,7 +6319,7 @@
   },
   {
     "id": "150379952",
-    "rank": 11,
+    "rank": 12,
     "name": "taco bell",
     "creator": "sSeanyboii",
     "verifier": "sSeanyboii",
@@ -6326,7 +6353,7 @@
   },
   {
     "id": "86935458",
-    "rank": 12,
+    "rank": 13,
     "name": "A Final Memorial (coin route)",
     "creator": "ItzKiba",
     "verifier": "AliceMargatr0id",
@@ -6348,33 +6375,6 @@
         "video": "https://www.youtube.com/embed/CG9KZXHQijI",
         "campus": "Davao Region Campus",
         "date": "2026-11-03T12:02:15.264Z"
-      }
-    ]
-  },
-  {
-    "id": "128859490",
-    "rank": 13,
-    "name": "Beecat",
-    "creator": "CelestialCat",
-    "verifier": "cosmopopz",
-    "diff": "Insane Challenge",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-    "listType": "challenge",
-    "rawTier": 18.27,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-12T12:31:46.875Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "cosmopopz",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-12T12:31:46.875Z"
       }
     ]
   },
