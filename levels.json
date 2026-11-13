@@ -8061,5 +8061,32 @@
         "date": "2026-07-12T22:13:27.780Z"
       }
     ]
+  },
+  {
+    "id": "128859490",
+    "rank": 59,
+    "name": "Beecat",
+    "creator": "CelestialCat",
+    "verifier": "cosmopopz",
+    "diff": "",
+    "face": "",
+    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+    "listType": "challenge",
+    "rawTier": 0,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:31:46.875Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-12T12:31:46.875Z"
+      }
+    ]
   }
 ]
