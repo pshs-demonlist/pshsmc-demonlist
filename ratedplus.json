@@ -932,8 +932,37 @@
     "ratedPlusLength": null
   },
   {
-    "id": "56089612",
+    "id": "128859490",
     "rank": 30,
+    "name": "Beecat",
+    "creator": "CelestialCat",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Challenge",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+    "listType": "challenge",
+    "rawTier": 21.3,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:31:46.875Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-12T12:31:46.875Z"
+      }
+    ],
+    "ratedPlusTier": 21.3,
+    "ratedPlusLength": "long"
+  },
+  {
+    "id": "56089612",
+    "rank": 31,
     "name": "Zettabyte",
     "creator": "Jenkins",
     "verifier": "AliceMargatr0id",
@@ -969,7 +998,7 @@
   },
   {
     "id": "69491632",
-    "rank": 31,
+    "rank": 32,
     "name": "Crowd Control",
     "creator": "zDeadlox",
     "verifier": "cosmopopz",
@@ -998,7 +1027,7 @@
   },
   {
     "id": "54917442",
-    "rank": 32,
+    "rank": 33,
     "name": "CYCLONE",
     "creator": "BIANOX",
     "verifier": "cosmopopz",
@@ -1027,7 +1056,7 @@
   },
   {
     "id": "20761188",
-    "rank": 33,
+    "rank": 34,
     "name": "Allegiance",
     "creator": "nikroplays",
     "verifier": "cosmopopz",
@@ -1070,7 +1099,7 @@
   },
   {
     "id": "30219145",
-    "rank": 34,
+    "rank": 35,
     "name": "HyperSonic",
     "creator": "ViPriN",
     "verifier": "cosmopopz",
@@ -1099,7 +1128,7 @@
   },
   {
     "id": "110980754",
-    "rank": 35,
+    "rank": 36,
     "name": "Liz",
     "creator": "issanagay",
     "verifier": "ModeraGD",
@@ -1128,7 +1157,7 @@
   },
   {
     "id": "112412828",
-    "rank": 36,
+    "rank": 37,
     "name": "Clarity",
     "creator": "Hypno",
     "verifier": "AliceMargatr0id",
@@ -1157,7 +1186,7 @@
   },
   {
     "id": "3979721",
-    "rank": 37,
+    "rank": 38,
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
@@ -1228,7 +1257,7 @@
   },
   {
     "id": "85972099",
-    "rank": 38,
+    "rank": 39,
     "name": "Shotgun",
     "creator": "Lofu",
     "verifier": "ModeraGD",
@@ -1257,7 +1286,7 @@
   },
   {
     "id": "61910810",
-    "rank": 39,
+    "rank": 40,
     "name": "TANTRUM",
     "creator": "DanZmeN",
     "verifier": "cosmopopz",
@@ -1286,7 +1315,7 @@
   },
   {
     "id": "127135884",
-    "rank": 40,
+    "rank": 41,
     "name": "Fun Friday",
     "creator": "Zeronium",
     "verifier": "Lobster999",
@@ -1315,7 +1344,7 @@
   },
   {
     "id": "119259720",
-    "rank": 41,
+    "rank": 42,
     "name": "Without U",
     "creator": "NoobyPro27",
     "verifier": "cosmopopz",
@@ -1344,7 +1373,7 @@
   },
   {
     "id": "138356396",
-    "rank": 42,
+    "rank": 43,
     "name": "BRUTAL",
     "creator": "Tshack",
     "verifier": "Fortnitekid420",
@@ -1387,7 +1416,7 @@
   },
   {
     "id": "76196489",
-    "rank": 43,
+    "rank": 44,
     "name": "troll level",
     "creator": "lexycat",
     "verifier": "AliceMargatr0id",
@@ -1416,7 +1445,7 @@
   },
   {
     "id": "81148582",
-    "rank": 44,
+    "rank": 45,
     "name": "Sweater Weather",
     "creator": "VelYT",
     "verifier": "IceRig",
@@ -1459,7 +1488,7 @@
   },
   {
     "id": "61079355",
-    "rank": 45,
+    "rank": 46,
     "name": "Acu",
     "creator": "neigefeu",
     "verifier": "voxigmd",
@@ -1558,7 +1587,7 @@
   },
   {
     "id": "114933189",
-    "rank": 46,
+    "rank": 47,
     "name": "Through The Decay",
     "creator": "Sparktwo",
     "verifier": "IceRig",
@@ -1587,7 +1616,7 @@
   },
   {
     "id": "80575901",
-    "rank": 47,
+    "rank": 48,
     "name": "in canon",
     "creator": "cordeaux",
     "verifier": "AliceMargatr0id",
@@ -1616,7 +1645,7 @@
   },
   {
     "id": "23298409",
-    "rank": 48,
+    "rank": 49,
     "name": "Duelo Maestro",
     "creator": "Nacho21",
     "verifier": "AliceMargatr0id",
@@ -1645,7 +1674,7 @@
   },
   {
     "id": "121969801",
-    "rank": 49,
+    "rank": 50,
     "name": "Shitty TS2",
     "creator": "Machu0624",
     "verifier": "sSeanyboii",
@@ -1681,7 +1710,7 @@
   },
   {
     "id": "14145098",
-    "rank": 50,
+    "rank": 51,
     "name": "Invisible Deadlocked",
     "creator": "KrMaL",
     "verifier": "sSeanyboii",
@@ -1724,7 +1753,7 @@
   },
   {
     "id": "86935458",
-    "rank": 51,
+    "rank": 52,
     "name": "A Final Memorial (coin route)",
     "creator": "ItzKiba",
     "verifier": "AliceMargatr0id",
@@ -1750,35 +1779,6 @@
     ],
     "ratedPlusTier": 18.4,
     "ratedPlusLength": "xl"
-  },
-  {
-    "id": "128859490",
-    "rank": 52,
-    "name": "Beecat",
-    "creator": "CelestialCat",
-    "verifier": "cosmopopz",
-    "diff": "Insane Challenge",
-    "face": "https://gdladder.com/images/demon_logos/insane_128.webp",
-    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-    "listType": "challenge",
-    "rawTier": 18.27,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-12T12:31:46.875Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "cosmopopz",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-12T12:31:46.875Z"
-      }
-    ],
-    "ratedPlusTier": 18.27,
-    "ratedPlusLength": "long"
   },
   {
     "id": "61137742",
