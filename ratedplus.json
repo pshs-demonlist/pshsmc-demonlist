@@ -961,37 +961,8 @@
     "ratedPlusLength": null
   },
   {
-    "id": "128859490",
-    "rank": 30,
-    "name": "Beecat",
-    "creator": "CelestialCat",
-    "verifier": "cosmopopz",
-    "diff": "Extreme Challenge",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-    "listType": "challenge",
-    "rawTier": 21.3,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-12T12:31:46.875Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "cosmopopz",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-12T12:31:46.875Z"
-      }
-    ],
-    "ratedPlusTier": 21.3,
-    "ratedPlusLength": "long"
-  },
-  {
     "id": "56089612",
-    "rank": 31,
+    "rank": 30,
     "name": "Zettabyte",
     "creator": "Jenkins",
     "verifier": "AliceMargatr0id",
@@ -1028,7 +999,7 @@
   },
   {
     "id": "69491632",
-    "rank": 32,
+    "rank": 31,
     "name": "Crowd Control",
     "creator": "zDeadlox",
     "verifier": "cosmopopz",
@@ -1058,7 +1029,7 @@
   },
   {
     "id": "54917442",
-    "rank": 33,
+    "rank": 32,
     "name": "CYCLONE",
     "creator": "BIANOX",
     "verifier": "cosmopopz",
@@ -1088,7 +1059,7 @@
   },
   {
     "id": "20761188",
-    "rank": 34,
+    "rank": 33,
     "name": "Allegiance",
     "creator": "nikroplays",
     "verifier": "cosmopopz",
@@ -1132,7 +1103,7 @@
   },
   {
     "id": "30219145",
-    "rank": 35,
+    "rank": 34,
     "name": "HyperSonic",
     "creator": "ViPriN",
     "verifier": "cosmopopz",
@@ -1162,7 +1133,7 @@
   },
   {
     "id": "110980754",
-    "rank": 36,
+    "rank": 35,
     "name": "Liz",
     "creator": "issanagay",
     "verifier": "ModeraGD",
@@ -1192,7 +1163,7 @@
   },
   {
     "id": "112412828",
-    "rank": 37,
+    "rank": 36,
     "name": "Clarity",
     "creator": "Hypno",
     "verifier": "AliceMargatr0id",
@@ -1222,7 +1193,7 @@
   },
   {
     "id": "3979721",
-    "rank": 38,
+    "rank": 37,
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
@@ -1294,7 +1265,7 @@
   },
   {
     "id": "85972099",
-    "rank": 39,
+    "rank": 38,
     "name": "Shotgun",
     "creator": "Lofu",
     "verifier": "ModeraGD",
@@ -1324,7 +1295,7 @@
   },
   {
     "id": "61910810",
-    "rank": 40,
+    "rank": 39,
     "name": "TANTRUM",
     "creator": "DanZmeN",
     "verifier": "cosmopopz",
@@ -1354,7 +1325,7 @@
   },
   {
     "id": "127135884",
-    "rank": 41,
+    "rank": 40,
     "name": "Fun Friday",
     "creator": "Zeronium",
     "verifier": "Lobster999",
@@ -1381,6 +1352,35 @@
     "listpercent": "64",
     "ratedPlusTier": 20.73,
     "ratedPlusLength": null
+  },
+  {
+    "id": "128859490",
+    "rank": 41,
+    "name": "Beecat",
+    "creator": "CelestialCat",
+    "verifier": "cosmopopz",
+    "diff": "Extreme Challenge",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/MWTEoKHIW_o/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+    "listType": "challenge",
+    "rawTier": 20.17,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:31:46.875Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "cosmopopz",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/MWTEoKHIW_o",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-12T12:31:46.875Z"
+      }
+    ],
+    "ratedPlusTier": 20.17,
+    "ratedPlusLength": "long"
   },
   {
     "id": "119259720",
@@ -1768,7 +1768,7 @@
     "img": "https://img.youtube.com/vi/OtThYkW_LGg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/OtThYkW_LGg",
     "listType": "demon",
-    "rawTier": 18.64,
+    "rawTier": 18.65,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -1798,7 +1798,7 @@
       }
     ],
     "listpercent": "64",
-    "ratedPlusTier": 18.64,
+    "ratedPlusTier": 18.65,
     "ratedPlusLength": null
   },
   {
@@ -2481,7 +2481,7 @@
     "img": "https://img.youtube.com/vi/g32Y1pCg2Ko/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/g32Y1pCg2Ko",
     "listType": "demon",
-    "rawTier": 15.19,
+    "rawTier": 15.2,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2497,7 +2497,7 @@
       }
     ],
     "listpercent": "64",
-    "ratedPlusTier": 15.19,
+    "ratedPlusTier": 15.2,
     "ratedPlusLength": null
   },
   {
@@ -2541,7 +2541,7 @@
     "img": "https://img.youtube.com/vi/wut3ekfQeeg/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/wut3ekfQeeg",
     "listType": "demon",
-    "rawTier": 15.06,
+    "rawTier": 15.07,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2557,7 +2557,7 @@
       }
     ],
     "listpercent": "64",
-    "ratedPlusTier": 15.06,
+    "ratedPlusTier": 15.07,
     "ratedPlusLength": null
   },
   {
@@ -2830,7 +2830,7 @@
     "img": "",
     "video": "https://www.youtube.com/embed/eO-48T0yaSM",
     "listType": "demon",
-    "rawTier": 13.04,
+    "rawTier": 13.03,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -2846,7 +2846,7 @@
       }
     ],
     "listpercent": "64",
-    "ratedPlusTier": 13.04,
+    "ratedPlusTier": 13.03,
     "ratedPlusLength": null
   },
   {
@@ -3353,7 +3353,7 @@
     "img": "https://img.youtube.com/vi/8KGlpZcMNBA/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/8KGlpZcMNBA",
     "listType": "demon",
-    "rawTier": 11.02,
+    "rawTier": 10.99,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3369,7 +3369,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 11.02,
+    "ratedPlusTier": 10.99,
     "ratedPlusLength": null
   },
   {
@@ -3473,7 +3473,7 @@
     "img": "https://img.youtube.com/vi/qnGctCfis_k/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/bQ06DXrynYU",
     "listType": "demon",
-    "rawTier": 10.15,
+    "rawTier": 10.11,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3489,7 +3489,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 10.15,
+    "ratedPlusTier": 10.11,
     "ratedPlusLength": null
   },
   {
@@ -3503,7 +3503,7 @@
     "img": "https://img.youtube.com/vi/dw_7lFG0cRA/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/dw_7lFG0cRA",
     "listType": "demon",
-    "rawTier": 9.84,
+    "rawTier": 9.83,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3519,7 +3519,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 9.84,
+    "ratedPlusTier": 9.83,
     "ratedPlusLength": null
   },
   {
@@ -3600,7 +3600,7 @@
     "img": "https://img.youtube.com/vi/bkhnzdd0eCc/mqdefault.jpg",
     "video": "https://www.youtube.com/embed/bkhnzdd0eCc",
     "listType": "demon",
-    "rawTier": 8.78,
+    "rawTier": 8.77,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3623,7 +3623,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 8.78,
+    "ratedPlusTier": 8.77,
     "ratedPlusLength": null
   },
   {
@@ -3861,7 +3861,7 @@
     "img": "https://img.youtube.com/vi/apDmVgg6Y5Q/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/H3OIQNZkIrE",
     "listType": "demon",
-    "rawTier": 7.06,
+    "rawTier": 7.05,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -3884,7 +3884,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 7.06,
+    "ratedPlusTier": 7.05,
     "ratedPlusLength": null
   },
   {
@@ -4321,7 +4321,7 @@
     "img": "https://img.youtube.com/vi/xNXL8NYJ8Jo/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/uTkTGnuiFIc",
     "listType": "demon",
-    "rawTier": 6.32,
+    "rawTier": 6.31,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4351,7 +4351,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 6.32,
+    "ratedPlusTier": 6.31,
     "ratedPlusLength": null
   },
   {
@@ -4365,7 +4365,7 @@
     "img": "https://img.youtube.com/vi/S2eVhWMC844/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/S2eVhWMC844",
     "listType": "demon",
-    "rawTier": 6.29,
+    "rawTier": 6.3,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4381,7 +4381,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 6.29,
+    "ratedPlusTier": 6.3,
     "ratedPlusLength": null
   },
   {
@@ -4881,7 +4881,7 @@
     "img": "https://img.youtube.com/vi/7m8hD0z0YF4/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/7m8hD0z0YF4",
     "listType": "demon",
-    "rawTier": 3.96,
+    "rawTier": 3.95,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4897,7 +4897,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 3.96,
+    "ratedPlusTier": 3.95,
     "ratedPlusLength": null
   },
   {
@@ -4911,7 +4911,7 @@
     "img": "https://img.youtube.com/vi/VRtkdJXRsJQ/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/VRtkdJXRsJQ",
     "listType": "demon",
-    "rawTier": 3.88,
+    "rawTier": 3.87,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -4927,7 +4927,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 3.88,
+    "ratedPlusTier": 3.87,
     "ratedPlusLength": null
   },
   {
@@ -5884,45 +5884,8 @@
     "ratedPlusLength": null
   },
   {
-    "id": "131475001",
-    "rank": 161,
-    "name": "Hyper Techno",
-    "creator": "Bluepper",
-    "verifier": "sSeanyboii",
-    "diff": "Easy Demon",
-    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
-    "img": "https://img.youtube.com/vi/dUfBatyk3vA/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/dUfBatyk3vA",
-    "listType": "demon",
-    "rawTier": 2.1,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-06-28T15:38:21.687Z",
-    "campus": "Main Campus",
-    "victorList": [
-      {
-        "name": "sSeanyboii",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/dUfBatyk3vA",
-        "campus": "Main Campus",
-        "date": "2026-06-28T15:38:21.687Z"
-      },
-      {
-        "name": "robotrobin",
-        "percent": 100,
-        "video": "https://drive.google.com/file/d/1NBcmYWobwkdcqhFP5zl1rWly2JzS_PNC/view?usp=sharing",
-        "campus": "Main Campus",
-        "date": "2026-11-07T06:45:30.000Z"
-      }
-    ],
-    "listpercent": "100",
-    "ratedPlusTier": 2.1,
-    "ratedPlusLength": null
-  },
-  {
     "id": "139324232",
-    "rank": 162,
+    "rank": 161,
     "name": "mYsTeRy MaNsIoN",
     "creator": "dibless3",
     "verifier": "dibless",
@@ -5963,6 +5926,43 @@
     "listpercent": "100",
     "ratedPlusTier": 2.1,
     "ratedPlusLength": "long"
+  },
+  {
+    "id": "131475001",
+    "rank": 162,
+    "name": "Hyper Techno",
+    "creator": "Bluepper",
+    "verifier": "sSeanyboii",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/dUfBatyk3vA/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/dUfBatyk3vA",
+    "listType": "demon",
+    "rawTier": 2.09,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-06-28T15:38:21.687Z",
+    "campus": "Main Campus",
+    "victorList": [
+      {
+        "name": "sSeanyboii",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/dUfBatyk3vA",
+        "campus": "Main Campus",
+        "date": "2026-06-28T15:38:21.687Z"
+      },
+      {
+        "name": "robotrobin",
+        "percent": 100,
+        "video": "https://drive.google.com/file/d/1NBcmYWobwkdcqhFP5zl1rWly2JzS_PNC/view?usp=sharing",
+        "campus": "Main Campus",
+        "date": "2026-11-07T06:45:30.000Z"
+      }
+    ],
+    "listpercent": "100",
+    "ratedPlusTier": 2.09,
+    "ratedPlusLength": null
   },
   {
     "id": "5098465",
@@ -6530,7 +6530,7 @@
     "img": "https://img.youtube.com/vi/lkd2r6J2xMs/maxresdefault.jpg",
     "video": "https://www.youtube.com/embed/lkd2r6J2xMs",
     "listType": "demon",
-    "rawTier": 1.34,
+    "rawTier": 1.33,
     "aredlPlacement": null,
     "aredlRank": null,
     "platPosition": null,
@@ -6553,7 +6553,7 @@
       }
     ],
     "listpercent": "100",
-    "ratedPlusTier": 1.34,
+    "ratedPlusTier": 1.33,
     "ratedPlusLength": null
   },
   {
