@@ -904,6 +904,13 @@
         "video": "https://www.youtube.com/embed/fmdCCzJArL0",
         "campus": "Davao Region Campus",
         "date": "2026-07-05T13:30:14.136Z"
+      },
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/ESIaKGJz2u0",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-11-16T05:22:35.534Z"
       }
     ]
   },
@@ -1133,8 +1140,35 @@
     ]
   },
   {
-    "id": "85972099",
+    "id": "119732476",
     "rank": 37,
+    "name": "IGAKU",
+    "creator": "ReymundoTK",
+    "verifier": "sskazeye",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/y3ey_6BND7Y/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/y3ey_6BND7Y",
+    "listType": "demon",
+    "rawTier": 20.87,
+    "aredlPlacement": 1535,
+    "aredlRank": 1535,
+    "platPosition": null,
+    "date": "2026-11-16T04:56:37.479Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "sskazeye",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/y3ey_6BND7Y",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-11-16T04:56:37.479Z"
+      }
+    ]
+  },
+  {
+    "id": "85972099",
+    "rank": 38,
     "name": "Shotgun",
     "creator": "Lofu",
     "verifier": "ModeraGD",
@@ -1161,7 +1195,7 @@
   },
   {
     "id": "61910810",
-    "rank": 38,
+    "rank": 39,
     "name": "TANTRUM",
     "creator": "DanZmeN",
     "verifier": "cosmopopz",
@@ -1188,7 +1222,7 @@
   },
   {
     "id": "127135884",
-    "rank": 39,
+    "rank": 40,
     "name": "Fun Friday",
     "creator": "Zeronium",
     "verifier": "Lobster999",
@@ -1215,7 +1249,7 @@
   },
   {
     "id": "119259720",
-    "rank": 40,
+    "rank": 41,
     "name": "Without U",
     "creator": "NoobyPro27",
     "verifier": "cosmopopz",
@@ -1242,7 +1276,7 @@
   },
   {
     "id": "138356396",
-    "rank": 41,
+    "rank": 42,
     "name": "BRUTAL",
     "creator": "Tshack",
     "verifier": "Fortnitekid420",
@@ -1283,7 +1317,7 @@
   },
   {
     "id": "76196489",
-    "rank": 42,
+    "rank": 43,
     "name": "troll level",
     "creator": "lexycat",
     "verifier": "AliceMargatr0id",
@@ -1310,7 +1344,7 @@
   },
   {
     "id": "81148582",
-    "rank": 43,
+    "rank": 44,
     "name": "Sweater Weather",
     "creator": "VelYT",
     "verifier": "IceRig",
@@ -1351,7 +1385,7 @@
   },
   {
     "id": "61079355",
-    "rank": 44,
+    "rank": 45,
     "name": "Acu",
     "creator": "neigefeu",
     "verifier": "voxigmd",
@@ -1448,7 +1482,7 @@
   },
   {
     "id": "114933189",
-    "rank": 45,
+    "rank": 46,
     "name": "Through The Decay",
     "creator": "Sparktwo",
     "verifier": "IceRig",
@@ -1470,33 +1504,6 @@
         "video": "https://www.youtube.com/embed/JBo69lK4-CY",
         "campus": "Western Visayas Campus",
         "date": "2026-08-29T15:20:54.485Z"
-      }
-    ]
-  },
-  {
-    "id": "119732476",
-    "rank": 46,
-    "name": "IGAKU",
-    "creator": "ReymundoTK",
-    "verifier": "sskazeye",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/y3ey_6BND7Y/maxresdefault.jpg",
-    "video": "https://www.youtube.com/embed/y3ey_6BND7Y",
-    "listType": "demon",
-    "rawTier": 20.87,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-16T04:56:37.479Z",
-    "campus": "Ilocos Region Campus",
-    "victorList": [
-      {
-        "name": "sskazeye",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/y3ey_6BND7Y",
-        "campus": "Ilocos Region Campus",
-        "date": "2026-11-16T04:56:37.479Z"
       }
     ]
   },
