@@ -1200,7 +1200,8 @@
         "campus": "Ilocos Region Campus",
         "date": "2026-11-16T04:56:37.479Z"
       }
-    ]
+    ],
+    "listpercent": "65"
   },
   {
     "id": "85972099",
@@ -1738,7 +1739,8 @@
         "campus": "Central Visayas Campus",
         "date": "2026-11-18T08:11:59.692Z"
       }
-    ]
+    ],
+    "listpercent": "60"
   },
   {
     "id": "5155022",
@@ -1870,7 +1872,8 @@
         "campus": "Central Visayas Campus",
         "date": "2026-11-18T10:39:32.552Z"
       }
-    ]
+    ],
+    "listpercent": "78"
   },
   {
     "id": "13437081",
@@ -2093,7 +2096,8 @@
         "campus": "Central Visayas Campus",
         "date": "2026-11-19T12:49:17.549Z"
       }
-    ]
+    ],
+    "listpercent": "65"
   },
   {
     "id": "7054561",
@@ -2176,7 +2180,8 @@
         "campus": "Central Visayas Campus",
         "date": "2026-11-19T12:51:09.205Z"
       }
-    ]
+    ],
+    "listpercent": "68"
   },
   {
     "id": "56568010",
@@ -2638,7 +2643,7 @@
         "date": "2026-08-28T21:30:09.157Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "44062068",
@@ -2687,7 +2692,7 @@
         "date": "2026-08-23T14:44:21.141Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "40945673",
@@ -2722,7 +2727,7 @@
         "date": "2026-10-24T20:30:26.685Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "10162215",
@@ -2750,7 +2755,7 @@
         "date": "2026-10-20T12:56:29.869Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "113554991",
@@ -2778,7 +2783,7 @@
         "date": "2026-07-07T11:34:14.773Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "3013070",
@@ -2805,7 +2810,8 @@
         "campus": "Central Visayas Campus",
         "date": "2026-11-17T13:39:08.547Z"
       }
-    ]
+    ],
+    "listpercent": "100"
   },
   {
     "id": "67300705",
@@ -6531,7 +6537,8 @@
         "campus": "Davao Region Campus",
         "date": "2026-11-12T12:31:46.875Z"
       }
-    ]
+    ],
+    "listpercent": "77"
   },
   {
     "id": "146508829",
@@ -7272,7 +7279,7 @@
         "date": "2026-07-12T22:04:21.072Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "104369404",
@@ -7348,7 +7355,7 @@
         "date": "2026-07-12T22:05:01.202Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "148129956",
@@ -7567,7 +7574,7 @@
         "date": "2026-07-12T22:06:09.028Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "134490520",
@@ -7595,7 +7602,7 @@
         "date": "2026-08-13T16:45:15.751Z"
       }
     ],
-    "listpercent": "64"
+    "listpercent": "100"
   },
   {
     "id": "128679516",
