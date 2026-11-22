@@ -1303,6 +1303,7 @@
         "date": "2026-11-16T04:56:37.479Z"
       }
     ],
+    "listpercent": "65",
     "ratedPlusTier": 20.81,
     "ratedPlusLength": null
   },
@@ -1422,6 +1423,7 @@
         "date": "2026-11-12T12:31:46.875Z"
       }
     ],
+    "listpercent": "77",
     "ratedPlusTier": 20.17,
     "ratedPlusLength": "long"
   },
@@ -1967,6 +1969,7 @@
         "date": "2026-11-18T08:11:59.692Z"
       }
     ],
+    "listpercent": "60",
     "ratedPlusTier": 17.85,
     "ratedPlusLength": null
   },
@@ -2105,6 +2108,7 @@
         "date": "2026-11-18T10:39:32.552Z"
       }
     ],
+    "listpercent": "78",
     "ratedPlusTier": 17.03,
     "ratedPlusLength": null
   },
@@ -2340,6 +2344,7 @@
         "date": "2026-11-19T12:49:17.549Z"
       }
     ],
+    "listpercent": "65",
     "ratedPlusTier": 16.22,
     "ratedPlusLength": null
   },
@@ -2427,6 +2432,7 @@
         "date": "2026-11-19T12:51:09.205Z"
       }
     ],
+    "listpercent": "68",
     "ratedPlusTier": 15.91,
     "ratedPlusLength": null
   },
@@ -3025,7 +3031,7 @@
         "date": "2026-08-28T21:30:09.157Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 13.03,
     "ratedPlusLength": null
   },
@@ -3062,7 +3068,7 @@
         "date": "2026-07-12T22:04:21.072Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 13,
     "ratedPlusLength": "long"
   },
@@ -3113,7 +3119,7 @@
         "date": "2026-08-23T14:44:21.141Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 12.95,
     "ratedPlusLength": null
   },
@@ -3150,7 +3156,7 @@
         "date": "2026-10-24T20:30:26.685Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 12.86,
     "ratedPlusLength": null
   },
@@ -3187,7 +3193,7 @@
         "date": "2026-07-12T22:05:01.202Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 12.6,
     "ratedPlusLength": "long"
   },
@@ -3217,7 +3223,7 @@
         "date": "2026-10-20T12:56:29.869Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 12.1,
     "ratedPlusLength": null
   },
@@ -3261,7 +3267,7 @@
         "date": "2026-07-12T22:06:09.028Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 12,
     "ratedPlusLength": "long"
   },
@@ -3291,7 +3297,7 @@
         "date": "2026-07-07T11:34:14.773Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 11.95,
     "ratedPlusLength": null
   },
@@ -3321,7 +3327,7 @@
         "date": "2026-08-13T16:45:15.751Z"
       }
     ],
-    "listpercent": "64",
+    "listpercent": "100",
     "ratedPlusTier": 11.9,
     "ratedPlusLength": "long"
   },
@@ -3351,6 +3357,7 @@
         "date": "2026-11-17T13:39:08.547Z"
       }
     ],
+    "listpercent": "100",
     "ratedPlusTier": 11.76,
     "ratedPlusLength": null
   },
