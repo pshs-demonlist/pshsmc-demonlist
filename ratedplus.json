@@ -903,8 +903,37 @@
     "ratedPlusLength": null
   },
   {
-    "id": "20077821",
+    "id": "18697406",
     "rank": 29,
+    "name": "Retention",
+    "creator": "WOOGI1411",
+    "verifier": "AliceMargatr0id",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/bOF__VuNIq8/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/bOF__VuNIq8",
+    "listType": "demon",
+    "rawTier": 21.76,
+    "aredlPlacement": 1220,
+    "aredlRank": 1220,
+    "platPosition": null,
+    "date": "2026-11-24T13:23:58.388Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/bOF__VuNIq8",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-24T13:23:58.388Z"
+      }
+    ],
+    "ratedPlusTier": 21.76,
+    "ratedPlusLength": null
+  },
+  {
+    "id": "20077821",
+    "rank": 30,
     "name": "Red World Rebirth",
     "creator": "Riot",
     "verifier": "AliceMargatr0id",
@@ -926,35 +955,6 @@
         "video": "https://www.youtube.com/embed/Akk1BDDFckw",
         "campus": "Davao Region Campus",
         "date": "2026-07-06T21:02:03.582Z"
-      }
-    ],
-    "ratedPlusTier": 21.77,
-    "ratedPlusLength": null
-  },
-  {
-    "id": "18697406",
-    "rank": 30,
-    "name": "Retention",
-    "creator": "WOOGI1411",
-    "verifier": "AliceMargatr0id",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/bOF__VuNIq8/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/bOF__VuNIq8",
-    "listType": "demon",
-    "rawTier": 21.76,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-24T13:23:58.388Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "AliceMargatr0id",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/bOF__VuNIq8",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-24T13:23:58.388Z"
       }
     ],
     "ratedPlusTier": 21.76,
@@ -1652,6 +1652,13 @@
         "video": "https://www.youtube.com/embed/zpvCJtm9yZY",
         "campus": "Western Visayas Campus",
         "date": "2026-10-26T22:24:00.735Z"
+      },
+      {
+        "name": "zenorezi",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/VWWJFH1XLMs",
+        "campus": "Western Visayas Campus",
+        "date": "2026-11-20T12:55:27.382Z"
       }
     ],
     "ratedPlusTier": 20.16,
