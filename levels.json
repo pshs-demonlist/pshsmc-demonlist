@@ -820,8 +820,35 @@
     ]
   },
   {
-    "id": "20077821",
+    "id": "18697406",
     "rank": 28,
+    "name": "Retention",
+    "creator": "WOOGI1411",
+    "verifier": "AliceMargatr0id",
+    "diff": "Extreme Demon",
+    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
+    "img": "https://img.youtube.com/vi/bOF__VuNIq8/mqdefault.jpg",
+    "video": "https://www.youtube.com/embed/bOF__VuNIq8",
+    "listType": "demon",
+    "rawTier": 21.76,
+    "aredlPlacement": 1220,
+    "aredlRank": 1220,
+    "platPosition": null,
+    "date": "2026-11-24T13:23:58.388Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/bOF__VuNIq8",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-24T13:23:58.388Z"
+      }
+    ]
+  },
+  {
+    "id": "20077821",
+    "rank": 29,
     "name": "Red World Rebirth",
     "creator": "Riot",
     "verifier": "AliceMargatr0id",
@@ -848,7 +875,7 @@
   },
   {
     "id": "56089612",
-    "rank": 29,
+    "rank": 30,
     "name": "Zettabyte",
     "creator": "Jenkins",
     "verifier": "AliceMargatr0id",
@@ -882,7 +909,7 @@
   },
   {
     "id": "69491632",
-    "rank": 30,
+    "rank": 31,
     "name": "Crowd Control",
     "creator": "zDeadlox",
     "verifier": "cosmopopz",
@@ -916,7 +943,7 @@
   },
   {
     "id": "54917442",
-    "rank": 31,
+    "rank": 32,
     "name": "CYCLONE",
     "creator": "BIANOX",
     "verifier": "cosmopopz",
@@ -943,7 +970,7 @@
   },
   {
     "id": "20761188",
-    "rank": 32,
+    "rank": 33,
     "name": "Allegiance",
     "creator": "nikroplays",
     "verifier": "cosmopopz",
@@ -984,7 +1011,7 @@
   },
   {
     "id": "30219145",
-    "rank": 33,
+    "rank": 34,
     "name": "HyperSonic",
     "creator": "ViPriN",
     "verifier": "cosmopopz",
@@ -1011,7 +1038,7 @@
   },
   {
     "id": "110980754",
-    "rank": 34,
+    "rank": 35,
     "name": "Liz",
     "creator": "issanagay",
     "verifier": "ModeraGD",
@@ -1045,7 +1072,7 @@
   },
   {
     "id": "112412828",
-    "rank": 35,
+    "rank": 36,
     "name": "Clarity",
     "creator": "Hypno",
     "verifier": "AliceMargatr0id",
@@ -1072,7 +1099,7 @@
   },
   {
     "id": "3979721",
-    "rank": 36,
+    "rank": 37,
     "name": "Cataclysm",
     "creator": "GGboy",
     "verifier": "sadboi202",
@@ -1141,7 +1168,7 @@
   },
   {
     "id": "119732476",
-    "rank": 37,
+    "rank": 38,
     "name": "IGAKU",
     "creator": "ReymundoTK",
     "verifier": "sskazeye",
@@ -1168,7 +1195,7 @@
   },
   {
     "id": "85972099",
-    "rank": 38,
+    "rank": 39,
     "name": "Shotgun",
     "creator": "Lofu",
     "verifier": "ModeraGD",
@@ -1195,7 +1222,7 @@
   },
   {
     "id": "61910810",
-    "rank": 39,
+    "rank": 40,
     "name": "TANTRUM",
     "creator": "DanZmeN",
     "verifier": "cosmopopz",
@@ -1222,7 +1249,7 @@
   },
   {
     "id": "127135884",
-    "rank": 40,
+    "rank": 41,
     "name": "Fun Friday",
     "creator": "Zeronium",
     "verifier": "Lobster999",
@@ -1249,7 +1276,7 @@
   },
   {
     "id": "119259720",
-    "rank": 41,
+    "rank": 42,
     "name": "Without U",
     "creator": "NoobyPro27",
     "verifier": "cosmopopz",
@@ -1276,7 +1303,7 @@
   },
   {
     "id": "138356396",
-    "rank": 42,
+    "rank": 43,
     "name": "BRUTAL",
     "creator": "Tshack",
     "verifier": "Fortnitekid420",
@@ -1317,7 +1344,7 @@
   },
   {
     "id": "76196489",
-    "rank": 43,
+    "rank": 44,
     "name": "troll level",
     "creator": "lexycat",
     "verifier": "AliceMargatr0id",
@@ -1344,7 +1371,7 @@
   },
   {
     "id": "81148582",
-    "rank": 44,
+    "rank": 45,
     "name": "Sweater Weather",
     "creator": "VelYT",
     "verifier": "IceRig",
@@ -1385,7 +1412,7 @@
   },
   {
     "id": "61079355",
-    "rank": 45,
+    "rank": 46,
     "name": "Acu",
     "creator": "neigefeu",
     "verifier": "voxigmd",
@@ -1477,12 +1504,19 @@
         "video": "https://www.youtube.com/embed/zpvCJtm9yZY",
         "campus": "Western Visayas Campus",
         "date": "2026-10-26T22:24:00.735Z"
+      },
+      {
+        "name": "zenorezi",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/VWWJFH1XLMs",
+        "campus": "Western Visayas Campus",
+        "date": "2026-11-20T12:55:27.382Z"
       }
     ]
   },
   {
     "id": "114933189",
-    "rank": 46,
+    "rank": 47,
     "name": "Through The Decay",
     "creator": "Sparktwo",
     "verifier": "IceRig",
@@ -1504,33 +1538,6 @@
         "video": "https://www.youtube.com/embed/JBo69lK4-CY",
         "campus": "Western Visayas Campus",
         "date": "2026-08-29T15:20:54.485Z"
-      }
-    ]
-  },
-  {
-    "id": "18697406",
-    "rank": 47,
-    "name": "Retention",
-    "creator": "WOOGI1411",
-    "verifier": "AliceMargatr0id",
-    "diff": "Extreme Demon",
-    "face": "https://gdladder.com/images/demon_logos/extreme_128.webp",
-    "img": "https://img.youtube.com/vi/bOF__VuNIq8/mqdefault.jpg",
-    "video": "https://www.youtube.com/embed/bOF__VuNIq8",
-    "listType": "demon",
-    "rawTier": 21.76,
-    "aredlPlacement": null,
-    "aredlRank": null,
-    "platPosition": null,
-    "date": "2026-11-24T13:23:58.388Z",
-    "campus": "Davao Region Campus",
-    "victorList": [
-      {
-        "name": "AliceMargatr0id",
-        "percent": 100,
-        "video": "https://www.youtube.com/embed/bOF__VuNIq8",
-        "campus": "Davao Region Campus",
-        "date": "2026-11-24T13:23:58.388Z"
       }
     ]
   },
