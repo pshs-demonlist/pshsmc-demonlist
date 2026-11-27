@@ -6332,6 +6332,33 @@
     ]
   },
   {
+    "id": "56916170",
+    "rank": 186,
+    "name": "Bang Gang (2P)",
+    "creator": "Danzmen",
+    "verifier": "AliceMargatr0id",
+    "diff": "Easy Demon",
+    "face": "https://gdladder.com/images/demon_logos/easy_128.webp",
+    "img": "https://img.youtube.com/vi/5ffexCe7ZHA/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/5ffexCe7ZHA",
+    "listType": "demon",
+    "rawTier": 0,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-20T13:17:01.050Z",
+    "campus": "Davao Region Campus",
+    "victorList": [
+      {
+        "name": "AliceMargatr0id",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/5ffexCe7ZHA",
+        "campus": "Davao Region Campus",
+        "date": "2026-11-20T13:17:01.050Z"
+      }
+    ]
+  },
+  {
     "id": "149713396",
     "rank": 1,
     "name": "TriCk Extension 30",
