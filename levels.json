@@ -8613,5 +8613,32 @@
         "date": "2026-11-12T12:47:18.517Z"
       }
     ]
+  },
+  {
+    "id": "152427821",
+    "rank": 62,
+    "name": "MesmEZrised",
+    "creator": "Fortnitekid420",
+    "verifier": "Fortnitekid420",
+    "diff": "",
+    "face": "",
+    "img": "https://img.youtube.com/vi/Zj7X0rwloUQ/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/Zj7X0rwloUQ",
+    "listType": "challenge",
+    "rawTier": 0,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-15T09:11:20.189Z",
+    "campus": "Zamboanga Peninsula Region Campus",
+    "victorList": [
+      {
+        "name": "Fortnitekid420",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/Zj7X0rwloUQ",
+        "campus": "Zamboanga Peninsula Region Campus",
+        "date": "2026-11-15T09:11:20.189Z"
+      }
+    ]
   }
 ]
