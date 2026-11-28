@@ -8586,5 +8586,32 @@
         "date": "2026-11-25T14:33:31.943Z"
       }
     ]
+  },
+  {
+    "id": "120314027",
+    "rank": 61,
+    "name": "Samsung Washing Mach",
+    "creator": "skyh3ros",
+    "verifier": "ModeraGD",
+    "diff": "",
+    "face": "",
+    "img": "https://img.youtube.com/vi/HoQLo4fHr9Q/maxresdefault.jpg",
+    "video": "https://www.youtube.com/embed/HoQLo4fHr9Q",
+    "listType": "challenge",
+    "rawTier": 0,
+    "aredlPlacement": null,
+    "aredlRank": null,
+    "platPosition": null,
+    "date": "2026-11-12T12:47:18.517Z",
+    "campus": "Ilocos Region Campus",
+    "victorList": [
+      {
+        "name": "ModeraGD",
+        "percent": 100,
+        "video": "https://www.youtube.com/embed/HoQLo4fHr9Q",
+        "campus": "Ilocos Region Campus",
+        "date": "2026-11-12T12:47:18.517Z"
+      }
+    ]
   }
 ]
